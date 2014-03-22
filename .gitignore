@@ -6,3 +6,4 @@ forge*
 MinecraftForge*
 *.txt
 .classpath
+.project
