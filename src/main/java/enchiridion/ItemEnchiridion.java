@@ -3,13 +3,13 @@ package enchiridion;
 import java.util.List;
 import java.util.Map.Entry;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -17,14 +17,13 @@ import enchiridion.CustomBooks.BookInfo;
 import enchiridion.api.Formatting;
 
 public class ItemEnchiridion extends Item {
-	public Icon pages;
-	public Icon[] icons;
+	public IIcon pages;
+	public IIcon[] icons;
 	public static final int COUNT = 2;
 	public static final int GUIDE = 0;
 	public static final int BINDER = 1;
 
-	public ItemEnchiridion(int id) {
-		super(id);
+	public ItemEnchiridion() {
 		setHasSubtypes(true);
 		setCreativeTab(CreativeTab.books);
 	}
@@ -89,7 +88,7 @@ public class ItemEnchiridion extends Item {
     }
 	
 	@SideOnly(Side.CLIENT)
-	 public Icon getIcon(ItemStack stack, int pass) {
+	 public IIcon getIcon(ItemStack stack, int pass) {
         if(stack.getItemDamage() != GUIDE) return super.getIcon(stack, pass);
         else if(pass == 0) {
         	return icons[stack.getItemDamage()];
@@ -110,8 +109,8 @@ public class ItemEnchiridion extends Item {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
-		icons = new Icon[COUNT];
+	public void registerIcons(IIconRegister iconRegister) {
+		icons = new IIcon[COUNT];
 
 		for (int i = 0; i < icons.length; i++) {
 			String name = getName(i);

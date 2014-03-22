@@ -1,8 +1,8 @@
 package enchiridion.api.pages;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -12,15 +12,16 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.oredict.OreDictionary;
 
+import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.GL11;
 import org.w3c.dom.Element;
 
-import enchiridion.BookLogHandler;
+import cpw.mods.fml.common.FMLLog;
 import enchiridion.api.GuiGuide;
 import enchiridion.api.GuideHandler;
 import enchiridion.api.XMLHelper;
@@ -59,7 +60,7 @@ public abstract class PageParser {
 	public abstract void read(Element xml);
 	public abstract void parse();
 	
-	public void drawFluidStack(int x, int y, Icon icon, int width, int height) {
+	public void drawFluidStack(int x, int y, IIcon icon, int width, int height) {
 		if (icon == null) {
 			return;
 		}
@@ -82,9 +83,11 @@ public abstract class PageParser {
 		if(stack == null || stack.getItem() == null) return;
 		
 		try {
-            if(renderer == null) {
-                renderer = Minecraft.getMinecraft().renderGlobal.globalRenderBlocks;
-            }
+			if(renderer == null) {
+				Field field = Minecraft.getMinecraft().renderGlobal.getClass().getDeclaredField("renderBlocksRg");
+				field.setAccessible(true);
+				renderer = (RenderBlocks) field.get(Minecraft.getMinecraft().renderGlobal);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}	
@@ -102,7 +105,7 @@ public abstract class PageParser {
 	        GL11.glDisable(GL11.GL_LIGHTING);
 		} catch (Exception e) {
 			//e.printStackTrace();
-			try {				
+			try {
 				ArrayList<ItemStack> ores = OreDictionary.getOres(OreDictionary.getOreID(stack));
 				ItemStack stack2 = ores.get(GuideHandler.rand.nextInt(ores.size()));
 				GL11.glTranslatef(0.0F, 0.0F, 32.0F);
@@ -114,7 +117,7 @@ public abstract class PageParser {
 		        	itemRenderer.renderItemIntoGUI(font, gui.getMC().getTextureManager(), stack2, x, y, false);
 		        }
 			} catch (Exception e2) {
-				BookLogHandler.log(Level.WARNING, "Rendering failed when trying to render an item!" + stack);
+				FMLLog.getLogger().log(Level.ERROR, "Enchrididion: " + "Rendering failed when trying to render an item!" + stack);
 				//e2.printStackTrace();
 			}
 		} 

@@ -4,32 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class DisplayRegistry {
 	/** Caches **/
-	private static final HashMap<String, Icon> fluidsCache = new HashMap();
+	private static final HashMap<String, IIcon> fluidsCache = new HashMap();
 	private static final HashMap<String, ItemStack> itemCache = new HashMap();
 	private static final HashMap<String, Integer[]> metaCache = new HashMap();
 	private static final ArrayList<String> oreDicCache = new ArrayList<String>();
 	
 	static {
-		registerShorthand("brick", new ItemStack(Item.brick));
-		registerShorthand("brickBlock", new ItemStack(Block.brick));
-		registerShorthand("quartzSlab", new ItemStack(Block.stoneSingleSlab, 1, 7));
-		registerShorthand("stoneSlab", new ItemStack(Block.stoneSingleSlab, 1, 0));
-		registerShorthand("minecraft:bookshelf", new ItemStack(Block.bookShelf));
-		registerShorthand("minecraft:hopper", new ItemStack(Block.hopperBlock));
-		registerShorthand("minecraft:sponge", new ItemStack(Block.sponge));
-		registerShorthand("piston", new ItemStack(Block.pistonBase));
-		registerShorthand("reeds", new ItemStack(Item.reed));
-		registerMetaCycling(Item.itemsList[Block.cloth.blockID], "wool", new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
+		registerMetaCycling(Item.getItemFromBlock(Blocks.wool), "wool", new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
 	}
 
 	// Registers Ore Dictionary names to cycle, by default no ore dictionary names will cycle
@@ -50,7 +41,6 @@ public class DisplayRegistry {
 	}
 	
 	public static ItemStack getIcon(String str) {
-		//System.out.println(str);
 		if (itemCache.containsKey(str)) return itemCache.get(str);
 		else {
 			if(OreDictionary.getOres(str).size() > 0) itemCache.put(str, OreDictionary.getOres(str).get(0));
@@ -63,7 +53,7 @@ public class DisplayRegistry {
 		}
 	}
 
-	public static Icon getFluidIcon(String str) {
+	public static IIcon getFluidIcon(String str) {
 		if (fluidsCache.containsKey(str))
 			return fluidsCache.get(str);
 		else {
