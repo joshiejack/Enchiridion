@@ -2,12 +2,11 @@ package enchiridion.api;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.logging.Level;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-import org.apache.logging.log4j.Level;
 import org.w3c.dom.NodeList;
 
 import cpw.mods.fml.common.FMLLog;
@@ -44,7 +43,7 @@ public class GuideHandler {
 		return guides;
 	}
 	
-	/** returns a list of all the registered Guis **/
+	/** returns a list of all the registred Guis **/
 	public static HashMap<String, Object> getGuis() {
 		return guis;
 	}
@@ -56,7 +55,7 @@ public class GuideHandler {
 	 */
 	public static void registerBookReader(String xml, IBookReader reader) {
 		if(handlers.containsKey(xml)) {
-			FMLLog.getLogger().log(Level.WARN, "Overwriting the handler for " + xml);
+            FMLLog.getLogger().log(Level.WARNING, "Enchiridion API: Overwriting the handler for " + xml);
 		}
 		
 		handlers.put(xml, reader);
@@ -64,13 +63,13 @@ public class GuideHandler {
 	
 	//JUST the book registry, can mostly be ignored, just used by my custom book loader
 	public static void registerModBook(ItemStack stack, String modAssets) {
-		String key = Item.itemRegistry.getNameForObject(stack.getItem()) + ":" + stack.getItemDamage();
+		String key = stack.getUnlocalizedName().substring(5) + ":" + stack.getItemDamage();
 		guides.put(key, modAssets);
 	}
 	
 	//Use this if you don't want a custom background image, uses the default book cover instead
 	public static void registerBook(ItemStack stack, String modAssets, String book, Integer color) {
-		String key = Item.itemRegistry.getNameForObject(stack.getItem()) + ":" + stack.getItemDamage();
+		String key = stack.getUnlocalizedName().substring(5) + ":" + stack.getItemDamage();
 		guides.put(key, modAssets +  ":" + book);
 		guis.put(key, new GuiGuide(color, modAssets + ":" + book));
 	}
@@ -83,7 +82,7 @@ public class GuideHandler {
 	 * @param color - The color of the books border
 	 */
 	public static void registerBook(ItemStack stack, String modAssets, String book, String background, Integer color) {
-		String key = Item.itemRegistry.getNameForObject(stack.getItem()) + ":" + stack.getItemDamage();
+		String key = stack.getUnlocalizedName().substring(5) + ":" + stack.getItemDamage();
 		guides.put(key, modAssets +  ":" + book);
 		guis.put(key, new GuiGuide(color, modAssets + ":" + book));
 		GuiGuide.cover_left_cache.put(key, new ResourceLocation(modAssets, background));
@@ -110,12 +109,12 @@ public class GuideHandler {
 		return stack;
 	} */
 
-	/** This calls the book readers and is what you should return for your book in your CommonProxy, use the players current held item e.g. 
+	/** This is to be called in your common proxy, check if the item the player is holding is the guide, if so return the following 
 	 *	return GuideHandler.getGui(player.getCurrentEquippedItem());
-	 * @param The currently held item
+	 * @param /The currently held item
 	 * @return some sort of instance of GuiGuide */
 	public static Object getGui(ItemStack stack) {
-		String key = Item.itemRegistry.getNameForObject(stack.getItem()) + ":" + stack.getItemDamage();
+		String key = stack.getUnlocalizedName().substring(5) + ":" + stack.getItemDamage();
 		return handlers.get(guides.get(key)).getGui(stack, key);
 	}
 	

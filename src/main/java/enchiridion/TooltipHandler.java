@@ -2,21 +2,19 @@ package enchiridion;
 
 import java.util.List;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class TooltipHandler {
 	public static boolean PRINT;
 
-	@SubscribeEvent
+	@ForgeSubscribe
 	public void addToolTip(ItemTooltipEvent event) {
 		ItemStack stack = event.itemStack;
 		List list = event.toolTip;
-		String str = Item.itemRegistry.getNameForObject(stack.getItem());
+        String str = stack.getUnlocalizedName().substring(5);
 		if(stack.getHasSubtypes()) str = str + " " + stack.getItemDamage();
-		if(stack.hasTagCompound()) str = str + " 0 " + stack.stackTagCompound.toString();
 		list.add(str);
 		
 		

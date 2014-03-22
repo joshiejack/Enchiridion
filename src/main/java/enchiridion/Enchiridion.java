@@ -3,8 +3,8 @@ package enchiridion;
 import java.io.File;
 
 import net.minecraft.item.Item;
+import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
@@ -19,6 +19,7 @@ import enchiridion.api.GuideHandler;
 public class Enchiridion {
 	public static final String modid = "books";
 	public static Item items;
+    public static int id;
 
 	@SidedProxy(clientSide = "enchiridion.ClientProxy", serverSide = "enchiridion.CommonProxy")
 	public static CommonProxy proxy;
@@ -33,10 +34,10 @@ public class Enchiridion {
 	public void preInit(FMLPreInitializationEvent event) {
 		root = new File(event.getModConfigurationDirectory() + File.separator + "books");
 		Config.init(new Configuration(new File(root + File.separator + "enchiridion.cfg")));
-		items = new ItemEnchiridion().setUnlocalizedName("item");
-		GameRegistry.registerItem(items, "items");
+		items = new ItemEnchiridion(id).setUnlocalizedName("item");
+		GameRegistry.registerItem(items, "enchiridion:items");
 		proxy.preInit();
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+        NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		if(GuideHandler.DEBUG_ENABLED) {
 			MinecraftForge.EVENT_BUS.register(new TooltipHandler());
 		}

@@ -5,13 +5,9 @@ buildscript {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
     }
 }
 
@@ -27,7 +23,7 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-version = config.mod_version
+version = config.minecraft_version + "-" + config.mod_version
 group= "com.github.joshiejack.enchiridion" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Enchiridion"
 
@@ -56,4 +52,3 @@ processResources
         exclude '**/*.properties'
     }
 }
-

@@ -48,7 +48,7 @@ public class GuiGuide extends GuiScreen {
 	public Node page2;
 	
 	public FontRenderer getFont() {
-		return this.fontRendererObj;
+		return this.fontRenderer;
 	}
 	
 	public Minecraft getMC() {
@@ -63,7 +63,7 @@ public class GuiGuide extends GuiScreen {
 		return this.zLevel;
 	}
 
-	public GuiGuide(int hex, String xml) {
+	public GuiGuide(int hex, String xml) {		
 		this.hex = hex;
 		this.xml = xml;
 		if(cover_left_cache.get(xml) == null) cover_left_cache.put(xml, new ResourceLocation("books", "textures/gui/guide_cover_left.png"));
