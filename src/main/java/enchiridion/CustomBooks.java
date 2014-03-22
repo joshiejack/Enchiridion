@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -17,7 +18,6 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-import org.apache.logging.log4j.Level;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -59,7 +59,7 @@ public class CustomBooks {
 			String zipName = file.getName();
 			// Continue if the file i a zip
 			if (zipName.substring(zipName.lastIndexOf(".") + 1, zipName.length()).equals("zip")) {
-				FMLLog.getLogger().log(Level.TRACE, "[Enchiridion] Attempting to read data for the installed Guide Book: " + zipName);
+				BookLogHandler.log(Level.INFO, "[Enchiridion] Attempting to read data for the installed Guide Book: " + zipName);
 				try {
 					ZipFile zipfile = new ZipFile(file);
 					Enumeration enumeration = zipfile.entries();
@@ -79,7 +79,7 @@ public class CustomBooks {
 									PageImage.addToCache(identifier, linked);
 								} catch (Exception e) {
 									e.printStackTrace();
-									FMLLog.getLogger().log(Level.WARN, "[Enchiridion] Failed to Read Image Data of " + fileName);
+									BookLogHandler.log(Level.WARNING, "[Enchiridion] Failed to Read Image Data of " + fileName);
 								}
 							} else if (extension.equals("xml")) {
 								try {
@@ -91,7 +91,7 @@ public class CustomBooks {
 									ClientProxy.bookCache.put(id, doc);
 								} catch (Exception e) {
 									e.printStackTrace();
-									FMLLog.getLogger().log(Level.WARN, "[Enchiridion] Failed to Read XML Data of " + fileName);
+									BookLogHandler.log(Level.WARNING, "[Enchiridion] Failed to Read XML Data of " + fileName);
 								}
 							}
 						}
@@ -100,7 +100,7 @@ public class CustomBooks {
 					zipfile.close();
 					FMLLog.getLogger().log(Level.INFO, "[Enchiridion] Sucessfully finished reading the installed Guide Book: " + zipName);
 				} catch (Exception e) {
-					FMLLog.getLogger().log(Level.ERROR, "[Enchiridion] Failed to read the installed Guide Book: " + zipName);
+					BookLogHandler.log(Level.WARNING, "[Enchiridion] Failed to read the installed Guide Book: " + zipName);
 				}
 			}
 		}
@@ -123,7 +123,7 @@ public class CustomBooks {
 						ClientProxy.bookCache.put(xmlName.substring(0, xmlName.lastIndexOf('.')), doc);
 						FMLLog.getLogger().log(Level.INFO, "[Enchiridion] Sucessfully loaded debug mode custom book xml " + xmlName);
 					} catch (Exception e) {
-						FMLLog.getLogger().log(Level.WARN, "[Enchiridion] Failed to load debug mode custom book xml " + xmlName);
+						BookLogHandler.log(Level.WARNING, "[Enchiridion] Failed to load debug mode custom book xml " + xmlName);
 					}
 				}
 			}

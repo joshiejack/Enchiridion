@@ -7,34 +7,20 @@ import java.util.Map.Entry;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemStack;
 
-import org.lwjgl.input.Keyboard;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
 import enchiridion.CustomBooks.BookInfo;
 import enchiridion.api.GuiGuide;
 import enchiridion.api.GuideHandler;
 import enchiridion.api.IBookReader;
 
 public class ClientProxy extends CommonProxy implements IBookReader {
-	public static KeyBinding open_binder;
 	private static DocumentBuilderFactory factory;
 	public static final HashMap<String, Document> bookCache = new HashMap();
-	
-	//At Preinit register the key binding
-	//At Init put all the custom books in to the cache, at PostInit, put all the modded books in to the cache
-	// At PostInit process all the custom book registrations
-	
-	@Override
-	public void preInit() {
-		open_binder = new KeyBinding("key.binder", Keyboard.KEY_APOSTROPHE, "key.categories.gameplay");
-		ClientRegistry.registerKeyBinding(open_binder);
-	}
 	
 	@Override
 	public void init() {
