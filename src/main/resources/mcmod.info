@@ -1,0 +1,16 @@
+[
+{
+  "modid": "Enchiridion",
+  "name": "Enchiridion",
+  "description": "Custom books in minecraft!",
+  "version": "${mod_version}",
+  "mcversion": "${minecraft_version}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["joshie"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

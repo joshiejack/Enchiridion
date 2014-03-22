@@ -1,0 +1,8 @@
+eclipse/*
+bin/*
+.settings/*
+build/*
+forge*
+MinecraftForge*
+*.txt
+.classpath
