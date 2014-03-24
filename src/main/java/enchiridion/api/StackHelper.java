@@ -36,7 +36,8 @@ public class StackHelper {
 		} catch (NumberFormatException numberformatexception) {
             for(Item item: Item.itemsList) {
                 if(item != null) {
-                    if(item.getUnlocalizedName().substring(5).equals(str)) {
+                	String text = item.getUnlocalizedName();
+                    if(text.length() > 5 && text.substring(5).equals(str)) {
                         return item;
                     }
                 }

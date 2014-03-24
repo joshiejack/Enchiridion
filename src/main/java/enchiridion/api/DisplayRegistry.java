@@ -50,7 +50,7 @@ public class DisplayRegistry {
 	}
 	
 	public static ItemStack getIcon(String str) {
-		//System.out.println(str);
+		if(str.equals("")) return null;
 		if (itemCache.containsKey(str)) return itemCache.get(str);
 		else {
 			if(OreDictionary.getOres(str).size() > 0) itemCache.put(str, OreDictionary.getOres(str).get(0));
