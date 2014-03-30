@@ -16,6 +16,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import org.w3c.dom.Document;
@@ -32,12 +33,12 @@ import enchiridion.api.pages.PageImage.LinkedTexture;
 
 public class CustomBooks {
 	public static final String id = "booksid";
-	public static final ArrayList<String> onWorldStart = new ArrayList();
 	public static final HashMap<String, BookInfo> bookInfo = new HashMap();
 
 	public static class BookInfo {
+		boolean onWorldStart = false;
 		ItemStack onCrafting;
-		ItemStack[] crafting;
+		Object[] crafting;
 		String author, displayName;
 		public Integer bookColor;
 		public String background;
@@ -137,11 +138,26 @@ public class CustomBooks {
 		BookInfo info = new BookInfo(displayName, author, color);
 		info.displayName = Formatting.getColor(XMLHelper.getAttribute(XMLHelper.getNode(xml, "name"), "color")) + info.displayName;
 		info.author = Formatting.getColor(XMLHelper.getAttribute(XMLHelper.getNode(xml, "author"), "color")) + info.author;
-		if (XMLHelper.getAttribAsBoolean(xml, "gen")) onWorldStart.add(key);
+		if (XMLHelper.getAttribAsBoolean(xml, "gen")) info.onWorldStart = true;
 		info.background = XMLHelper.getElement(xml, "background");
 		String onCrafting = XMLHelper.getElement(xml, "onCrafting");
 		if (onCrafting != null && !onCrafting.equals("")) {
-			ItemStack stack = StackHelper.getStackFromString(onCrafting);
+			info.onCrafting = StackHelper.getStackFromString(onCrafting);
+		}
+		
+		String crafting = XMLHelper.getElement(xml, "crafting");
+		if(crafting != null & !crafting.equals("")) {
+			String[] items = crafting.split("\\|");
+			Object[] recipe = new Object[items.length];
+			for(int i = 0; i < recipe.length; i++) {
+				if(items[i].startsWith("OD:")) {
+					recipe[i] = items[i].substring(3);
+				} else if(!items[i].equals("")) {
+					recipe[i] = StackHelper.getStackFromString(items[i]);
+				}
+			}
+			
+			info.crafting = recipe;
 		}
 		
 		bookInfo.put(key, info);
@@ -167,5 +183,12 @@ public class CustomBooks {
 	
 	public static BookInfo getBookInfo(ItemStack stack) {
 		return bookInfo.get(getID(stack));
+	}
+
+	public static ItemStack create(String key) {
+		ItemStack guide = new ItemStack(Enchiridion.items.itemID, 1, ItemEnchiridion.GUIDE);
+		guide.setTagCompound(new NBTTagCompound());
+		guide.stackTagCompound.setString(CustomBooks.id, key);
+		return guide;
 	}
 }

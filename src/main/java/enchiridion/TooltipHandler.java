@@ -1,6 +1,7 @@
 package enchiridion;
 
 import java.util.List;
+import java.util.logging.Level;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.ForgeSubscribe;
@@ -18,6 +19,6 @@ public class TooltipHandler {
 		list.add(str);
 		
 		
-		if(PRINT) System.out.println("Key for " + stack.getDisplayName() + " = " + str);
+		if(PRINT) BookLogHandler.log(Level.INFO, "Key for " + stack.getDisplayName() + " = " + str);
 	}
 }

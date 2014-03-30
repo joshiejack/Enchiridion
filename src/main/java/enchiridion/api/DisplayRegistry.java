@@ -77,14 +77,18 @@ public class DisplayRegistry {
 	public static void updateIcons() {
 		for (String str : oreDicCache) {
 			ArrayList<ItemStack> ores = OreDictionary.getOres(str);
-			itemCache.put(str, ores.get(GuideHandler.rand.nextInt(ores.size())));
+			if(ores != null && ores.size() > 0) {
+				itemCache.put(str, ores.get(GuideHandler.rand.nextInt(ores.size())));
+			}
 		}
 
 		for (Entry<String, Integer[]> meta : metaCache.entrySet()) {
 			ItemStack stack = itemCache.get(meta.getKey());
 			if(stack != null) {
-				stack.setItemDamage(meta.getValue()[GuideHandler.rand.nextInt(meta.getValue().length)]);
-				itemCache.put(meta.getKey(), stack);
+				if(meta != null && meta.getValue().length > 0) {
+					stack.setItemDamage(meta.getValue()[GuideHandler.rand.nextInt(meta.getValue().length)]);
+					itemCache.put(meta.getKey(), stack);
+				}
 			}
 		}
 	}

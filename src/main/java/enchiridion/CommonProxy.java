@@ -1,6 +1,7 @@
 package enchiridion;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
 import enchiridion.api.GuideHandler;
@@ -8,12 +9,18 @@ import enchiridion.api.GuideHandler;
 public class CommonProxy implements IGuiHandler {
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		return null;
+		ItemStack stack = player.getCurrentEquippedItem();
+		if(stack != null && stack.itemID == Enchiridion.items.itemID && stack.getItemDamage() == ItemEnchiridion.BINDER) {
+			return new ContainerBinder(player.inventory, new InventoryBinder(player));
+		} else return null;
 	}
 
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		return (player.getCurrentEquippedItem() != null)? GuideHandler.getGui(player.getCurrentEquippedItem()): null;
+		ItemStack stack = player.getCurrentEquippedItem();
+		if(stack != null && stack.itemID == Enchiridion.items.itemID && stack.getItemDamage() == ItemEnchiridion.BINDER) {
+			return new GuiBinder(player.inventory, new InventoryBinder(player));
+		} else return (player.getCurrentEquippedItem() != null)? GuideHandler.getGui(player.getCurrentEquippedItem()): null;
 	}
 
 	public void preInit() {}

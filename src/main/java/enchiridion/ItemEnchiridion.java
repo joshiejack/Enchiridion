@@ -30,21 +30,22 @@ public class ItemEnchiridion extends Item {
 	}
 
 	@Override
-	public String getItemStackDisplayName(ItemStack stack) {
-		if (stack.getItemDamage() != GUIDE) return super.getItemStackDisplayName(stack);
-		else if (stack.hasTagCompound()) {
+	public String getItemDisplayName(ItemStack stack) {
+		int meta = stack.getItemDamage();
+		if(meta == GUIDE && stack.hasTagCompound()) {
 			return CustomBooks.getBookInfo(stack).displayName;
-		} else return super.getItemStackDisplayName(stack);
+		} else return Formatting.translate("item." + getName(meta) + ".name");
 	}
 	
 	public String getName(int meta) {
 		switch(meta) {
 			case GUIDE: 	return "guide";
 			case BINDER:	return "binder";
-			default:		return null;
+			default:		return "guide";
 		}
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean var) {
 		if (stack.getItemDamage() == GUIDE) {
@@ -56,15 +57,34 @@ public class ItemEnchiridion extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		int meta = stack.getItemDamage();
-		switch (meta) {
-			case GUIDE: player.openGui(Enchiridion.instance, 0, player.worldObj, 0, 0, 0);
-			default: player.openGui(Enchiridion.instance, 0, player.worldObj, 0, 0, 0);
-		}
+		if(stack.getItemDamage() == BINDER) {
+			if(stack.stackSize == 1) player.openGui(Enchiridion.instance, 0, player.worldObj, 0, 0, 0);
+		} else player.openGui(Enchiridion.instance, 0, player.worldObj, 0, 0, 0);
 
 		return stack;
 	}
 	
+	//Only called on binders
+	public int addToStorage(World world, ItemStack theBinder, ItemStack book) {
+		int size = book.stackSize;
+		int placed = 0;
+		InventoryBinder binder = new InventoryBinder(world, theBinder);
+		for(int i = 0; i < binder.getSizeInventory(); i++) {
+			ItemStack item = binder.getStackInSlot(i);
+			if(item == null) {
+				ItemStack clone = book.copy();
+				clone.stackSize = 1;
+				binder.setInventorySlotContents(i, clone);
+				placed++;
+			}
+			
+			if(placed == size) break;
+		}
+		
+		return placed;
+	}
+	
+	@Override
 	@SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int pass) {
         if(stack.getItemDamage() != GUIDE) return 16777215;
@@ -78,41 +98,42 @@ public class ItemEnchiridion extends Item {
         return 16777215;
     }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
     public boolean requiresMultipleRenderPasses() {
         return true;
     }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderPasses(int meta) {
 		return meta == GUIDE? 2: 1;
     }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	 public Icon getIcon(ItemStack stack, int pass) {
-        if(stack.getItemDamage() != GUIDE) return super.getIcon(stack, pass);
-        else if(pass == 0) {
+        if(pass == 0) {
         	return icons[stack.getItemDamage()];
-        }
-        
-        return pages;
+        } else return pages;
     }
 
+	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		for (Entry<String, BookInfo> books : CustomBooks.bookInfo.entrySet()) {
-			ItemStack guide = new ItemStack(item, 1, GUIDE);
-			guide.setTagCompound(new NBTTagCompound());
-			guide.stackTagCompound.setString(CustomBooks.id, books.getKey());
-			list.add(guide);
+	public void getSubItems(int id, CreativeTabs tab, List list) {
+		if(CustomBooks.bookInfo.size() > 0) {
+			for (Entry<String, BookInfo> books : CustomBooks.bookInfo.entrySet()) {
+				list.add(CustomBooks.create(books.getKey()));
+			}
 		}
+		
+		list.add(new ItemStack(id, 1, BINDER));
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		icons = new Icon[COUNT];
-
 		for (int i = 0; i < icons.length; i++) {
 			String name = getName(i);
 			if(name != null) {
