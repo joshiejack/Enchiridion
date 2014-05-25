@@ -85,7 +85,7 @@ public class GuiGuide extends GuiScreen {
 	}
 	
 	@Override
-	public void initGui() {
+	public void initGui() {		
 		if(lastPage.containsKey(xml)) {
 			currentPage = (Integer) lastPage.get(xml);
 		} else {

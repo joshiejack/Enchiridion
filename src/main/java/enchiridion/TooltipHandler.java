@@ -5,6 +5,9 @@ import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+
+import org.apache.logging.log4j.Level;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class TooltipHandler {
@@ -20,6 +23,6 @@ public class TooltipHandler {
 		list.add(str);
 		
 		
-		if(PRINT) System.out.println("Key for " + stack.getDisplayName() + " = " + str);
+		if(PRINT) BookLogHandler.log(Level.INFO, "Key for " + stack.getDisplayName() + " = " + str);
 	}
 }

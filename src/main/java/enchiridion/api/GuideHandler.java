@@ -56,7 +56,7 @@ public class GuideHandler {
 	 */
 	public static void registerBookReader(String xml, IBookReader reader) {
 		if(handlers.containsKey(xml)) {
-			FMLLog.getLogger().log(Level.WARN, "Overwriting the handler for " + xml);
+			FMLLog.getLogger().log(Level.WARN, "[Enchiridion]Overwriting the handler for " + xml);
 		}
 		
 		handlers.put(xml, reader);
@@ -116,7 +116,11 @@ public class GuideHandler {
 	 * @return some sort of instance of GuiGuide */
 	public static Object getGui(ItemStack stack) {
 		String key = Item.itemRegistry.getNameForObject(stack.getItem()) + ":" + stack.getItemDamage();
-		return handlers.get(guides.get(key)).getGui(stack, key);
+		if(handlers.get(guides.get(key)) != null) return handlers.get(guides.get(key)).getGui(stack, key);
+		else {
+			FMLLog.getLogger().log(Level.WARN, "The book you are currently trying to open, has errored and probably has an xml error");
+			return null;
+		}
 	}
 	
 	public static NodeList getDocument(String xml) {

@@ -55,6 +55,7 @@ public class ClientProxy extends CommonProxy implements IBookReader {
 		//Now that we have the images and the documents in the cache registered we need to go through them all and 'register' their info
 		//Since mod books have their own lore, images etc, we will asume any books without the book info is not a custom book
 		for (Entry<String, Document> docs : bookCache.entrySet()) {
+			if(docs.getValue() == null || docs.getKey() == null) continue;
 			if(docs.getValue().getElementsByTagName("info").getLength() > 0) {
 				CustomBooks.setup(docs.getKey(), (Element) docs.getValue().getElementsByTagName("info").item(0));
 			}

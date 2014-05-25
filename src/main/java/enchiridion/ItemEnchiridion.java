@@ -8,7 +8,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
@@ -27,20 +26,24 @@ public class ItemEnchiridion extends Item {
 		setHasSubtypes(true);
 		setCreativeTab(CreativeTab.books);
 	}
+	
+	public static boolean isBookBinder(ItemStack stack) {
+		return stack != null && stack.getItem() instanceof ItemEnchiridion && stack.getItemDamage() == BINDER;
+	}
 
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		if (stack.getItemDamage() != GUIDE) return super.getItemStackDisplayName(stack);
-		else if (stack.hasTagCompound()) {
+		int meta = stack.getItemDamage();
+		if(meta == GUIDE && stack.hasTagCompound()) {
 			return CustomBooks.getBookInfo(stack).displayName;
-		} else return super.getItemStackDisplayName(stack);
+		} else return Formatting.translate("item." + getName(meta) + ".name");
 	}
 	
 	public String getName(int meta) {
 		switch(meta) {
 			case GUIDE: 	return "guide";
 			case BINDER:	return "binder";
-			default:		return null;
+			default:		return "guide";
 		}
 	}
 
@@ -55,13 +58,31 @@ public class ItemEnchiridion extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		int meta = stack.getItemDamage();
-		switch (meta) {
-			case GUIDE: player.openGui(Enchiridion.instance, 0, player.worldObj, 0, 0, 0);
-			default: player.openGui(Enchiridion.instance, 0, player.worldObj, 0, 0, 0);
-		}
+		if(stack.getItemDamage() == BINDER) {
+			if(stack.stackSize == 1) player.openGui(Enchiridion.instance, 0, player.worldObj, 0, 0, 0);
+		} else player.openGui(Enchiridion.instance, 0, player.worldObj, 0, 0, 0);
 
 		return stack;
+	}
+	
+	//Only called on binders
+	public int addToStorage(World world, ItemStack theBinder, ItemStack book) {
+		int size = book.stackSize;
+		int placed = 0;
+		InventoryBinder binder = new InventoryBinder(world, theBinder);
+		for(int i = 0; i < binder.getSizeInventory(); i++) {
+			ItemStack item = binder.getStackInSlot(i);
+			if(item == null) {
+				ItemStack clone = book.copy();
+				clone.stackSize = 1;
+				binder.setInventorySlotContents(i, clone);
+				placed++;
+			}
+
+			if(placed == size) break;
+		}
+
+		return placed;
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -87,24 +108,23 @@ public class ItemEnchiridion extends Item {
 		return meta == GUIDE? 2: 1;
     }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	 public IIcon getIcon(ItemStack stack, int pass) {
-        if(stack.getItemDamage() != GUIDE) return super.getIcon(stack, pass);
-        else if(pass == 0) {
+        if(pass == 0) {
         	return icons[stack.getItemDamage()];
-        }
-        
-        return pages;
-    }
+        } else return pages;
+	}
 
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		for (Entry<String, BookInfo> books : CustomBooks.bookInfo.entrySet()) {
-			ItemStack guide = new ItemStack(item, 1, GUIDE);
-			guide.setTagCompound(new NBTTagCompound());
-			guide.stackTagCompound.setString(CustomBooks.id, books.getKey());
-			list.add(guide);
+		if(CustomBooks.bookInfo.size() > 0) {
+			for (Entry<String, BookInfo> books : CustomBooks.bookInfo.entrySet()) {
+				list.add(CustomBooks.create(books.getKey()));
+			}
 		}
+		
+		list.add(new ItemStack(item, 1, BINDER));
 	}
 	
 	@Override
