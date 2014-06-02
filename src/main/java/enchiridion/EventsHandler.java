@@ -15,24 +15,26 @@ public class EventsHandler {
 	//Places any books in the binder
 	@SubscribeEvent
 	public void onItemPickUp(EntityItemPickupEvent event) {
-		ItemStack stack = event.item.getEntityItem();
-		if(ContainerBinder.isBook(stack)) {
-			EntityPlayer player = event.entityPlayer;
-			for(ItemStack invent: player.inventory.mainInventory) {
-				if(invent != null) {
-					if(ItemEnchiridion.isBookBinder(invent) && invent.stackSize == 1) {
-						ItemEnchiridion binder = (ItemEnchiridion)invent.getItem();
-						int placed = binder.addToStorage(player.worldObj, invent, stack);
-						if(placed > 0) {
-							ItemStack clone = stack.copy();
-							clone.stackSize-= placed;
-							if(clone.stackSize > 0) {
-								event.item.setEntityItemStack(clone);
-							} else event.item.setDead();
-
-							
-							event.setCanceled(true);
-							return;
+		if(Config.binder_enabled) {
+			ItemStack stack = event.item.getEntityItem();
+			if(ContainerBinder.isBook(stack)) {
+				EntityPlayer player = event.entityPlayer;
+				for(ItemStack invent: player.inventory.mainInventory) {
+					if(invent != null) {
+						if(ItemEnchiridion.isBookBinder(invent) && invent.stackSize == 1) {
+							ItemEnchiridion binder = (ItemEnchiridion)invent.getItem();
+							int placed = binder.addToStorage(player.worldObj, invent, stack);
+							if(placed > 0) {
+								ItemStack clone = stack.copy();
+								clone.stackSize-= placed;
+								if(clone.stackSize > 0) {
+									event.item.setEntityItemStack(clone);
+								} else event.item.setDead();
+	
+								
+								event.setCanceled(true);
+								return;
+							}
 						}
 					}
 				}

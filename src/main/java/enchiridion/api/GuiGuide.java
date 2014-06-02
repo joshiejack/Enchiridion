@@ -32,6 +32,7 @@ public class GuiGuide extends GuiScreen {
 	private static ResourceLocation page_right;
 	
 	public static HashMap lastPage = new HashMap();
+	public static int loopRate = 96;
 	
 	protected float red, green, blue;
 	protected int leftX = 212;
@@ -205,9 +206,11 @@ public class GuiGuide extends GuiScreen {
 		drawLeftPage(x - 212, y);
 		drawRightPage(x, y);
 		
-		guiTick++;
-		if(guiTick %96 == 0) {
-			DisplayRegistry.updateIcons();
+		if(loopRate >= 1) {
+			guiTick++;
+			if(guiTick %loopRate == 0) {
+				DisplayRegistry.updateIcons();
+			}
 		}
 		
 		super.drawScreen(i, j, f);

@@ -60,9 +60,11 @@ public class Enchiridion {
 	public void init(FMLInitializationEvent event) {
 		proxy.init();
 		
-		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(new ItemStack(items, 1, ItemEnchiridion.BINDER), new Object[] {
-			"SP", "SP", 'S', Items.string, 'P', Items.paper
-		}));
+		if(Config.binder_recipe) {
+			CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(new ItemStack(items, 1, ItemEnchiridion.BINDER), new Object[] {
+				"SP", "SP", 'S', Items.string, 'P', Items.paper
+			}));
+		}
 	}
 
 	@Mod.EventHandler

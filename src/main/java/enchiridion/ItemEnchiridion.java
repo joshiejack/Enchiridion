@@ -28,6 +28,7 @@ public class ItemEnchiridion extends Item {
 	}
 	
 	public static boolean isBookBinder(ItemStack stack) {
+		if(!Config.binder_enabled) return false;
 		return stack != null && stack.getItem() instanceof ItemEnchiridion && stack.getItemDamage() == BINDER;
 	}
 
@@ -58,7 +59,7 @@ public class ItemEnchiridion extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if(stack.getItemDamage() == BINDER) {
+		if(isBookBinder(stack)) {
 			if(stack.stackSize == 1) player.openGui(Enchiridion.instance, 0, player.worldObj, 0, 0, 0);
 		} else player.openGui(Enchiridion.instance, 0, player.worldObj, 0, 0, 0);
 

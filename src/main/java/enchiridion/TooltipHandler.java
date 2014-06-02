@@ -19,7 +19,7 @@ public class TooltipHandler {
 		List list = event.toolTip;
 		String str = Item.itemRegistry.getNameForObject(stack.getItem());
 		if(stack.getHasSubtypes()) str = str + " " + stack.getItemDamage();
-		if(stack.hasTagCompound()) str = str + " 0 " + stack.stackTagCompound.toString();
+		if(Config.display_nbt && stack.hasTagCompound()) str = str + " " + stack.stackTagCompound.toString();
 		list.add(str);
 		
 		
