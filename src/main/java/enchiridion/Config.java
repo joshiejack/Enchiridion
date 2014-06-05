@@ -22,7 +22,7 @@ public class Config {
 			config.load();
 			Config.binder_enabled = config.get("Settings", "Enable Book Binder", true).getBoolean(true);
 			Config.binder_recipe = config.get("Settings", "Enable Book Binder Recipe", true).getBoolean(true);
-			Config.prefixes = config.get("Settings", "Book Strings", prefix_dft, "This is a list of words that are considered books, and can be put in to book binders, if they are found in the unlocalized name of an item.").getStringList();
+			Config.prefixes = config.get("Settings", "Book Strings", prefix_dft, "This is a list of words that are considered books, and can be put in to book binders, if they are found in the registered name of an item.").getStringList();
 			TooltipHandler.PRINT = config.get("Settings", "Print Item Codes to the Console", false).getBoolean(false);
 			if(FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 				Config.display_nbt = config.get("Settings", "Debug Mode > Display NBT", true).getBoolean(true);

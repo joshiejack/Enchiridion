@@ -27,8 +27,8 @@ import enchiridion.api.GuideHandler;
 import enchiridion.api.XMLHelper;
 
 public abstract class PageParser {
-	public static RenderBlocks renderer;
-	protected static RenderItem itemRenderer = (RenderItem) RenderManager.instance.entityRenderMap.get(EntityItem.class);
+	public static RenderBlocks renderer = RenderBlocks.getInstance();
+	protected static RenderItem itemRenderer = RenderItem.getInstance();
 	protected static final ResourceLocation elements = new ResourceLocation("books", "textures/gui/guide_elements.png");
 	public static HashMap<String, PageParser> parsers = new HashMap();
 	
@@ -81,17 +81,6 @@ public abstract class PageParser {
 	
 	protected void drawItemStack(ItemStack stack, int x, int y) {
 		if(stack == null || stack.getItem() == null) return;
-		
-		try {
-			if(renderer == null) {
-				Field field = Minecraft.getMinecraft().renderGlobal.getClass().getDeclaredField("renderBlocksRg");
-				field.setAccessible(true);
-				renderer = (RenderBlocks) field.get(Minecraft.getMinecraft().renderGlobal);
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}	
-		
 		try {
 	        GL11.glTranslatef(0.0F, 0.0F, 32.0F);
 	        FontRenderer font = null;
@@ -104,7 +93,6 @@ public abstract class PageParser {
 	        
 	        GL11.glDisable(GL11.GL_LIGHTING);
 		} catch (Exception e) {
-			//e.printStackTrace();
 			try {
 				ArrayList<ItemStack> ores = OreDictionary.getOres(OreDictionary.getOreID(stack));
 				ItemStack stack2 = ores.get(GuideHandler.rand.nextInt(ores.size()));
