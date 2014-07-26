@@ -1,14 +1,17 @@
 package enchiridion;
 
 import java.util.List;
+import java.util.Map.Entry;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 import org.apache.logging.log4j.Level;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import enchiridion.CustomBooks.BookInfo;
 
 public class TooltipHandler {
 	public static boolean PRINT;

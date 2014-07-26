@@ -27,7 +27,7 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-version = config.minecraft_version + "-" + config.mod_version
+version = "1.7.X" + "-" + config.mod_version
 group= "com.github.joshiejack.enchiridion" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Enchiridion"
 
@@ -55,4 +55,19 @@ processResources
         exclude '**/*.info'
         exclude '**/*.properties'
     }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.java
+    classifier = 'src'
+}
+
+task devJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
+}
+
+artifacts {
+    archives devJar
+    archives sourceJar
 }

@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -13,8 +14,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 
 import org.apache.logging.log4j.Level;
@@ -41,6 +45,7 @@ public class CustomBooks {
 		String author, displayName;
 		public Integer bookColor;
 		public String background;
+		public String path;
 
 		public BookInfo(String displayName, String author, Integer bookColor) {
 			this.displayName = displayName;
@@ -159,7 +164,10 @@ public class CustomBooks {
 			info.crafting = recipe;
 		}
 		
+		info.path = XMLHelper.getElement(xml, "icon");
+		
 		bookInfo.put(key, info);
+		icons.put(key, new CustomIconAtlas(key, info.path));
 	}
 
 	public static Document getDebugMode(String xml) {
@@ -189,5 +197,16 @@ public class CustomBooks {
 		guide.setTagCompound(new NBTTagCompound());
 		guide.stackTagCompound.setString(CustomBooks.id, key);
 		return guide;
+	}
+	
+	private static HashMap<String, CustomIconAtlas> icons = new HashMap();
+	
+	public static IIcon getIcon(ItemStack stack) {
+		BookInfo info = bookInfo.get(getID(stack));
+		if(info != null && info.path != null) {
+			return TextureHandler.map.getTextureExtry(info.path);
+		}
+		
+		return ((ItemEnchiridion)stack.getItem()).icons[stack.getItemDamage()];
 	}
 }
