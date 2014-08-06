@@ -15,9 +15,9 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.w3c.dom.Element;
 
+import enchiridion.Config;
 import enchiridion.Enchiridion;
 import enchiridion.api.GuiGuide;
-import enchiridion.api.GuideHandler;
 import enchiridion.api.XMLHelper;
 
 public class PageImage extends PageParser {
@@ -61,7 +61,7 @@ public class PageImage extends PageParser {
 			tm.bindTexture(resource);
 			gui.drawTexturedModalRect(x, y, 0, 0, 256, 256);
 		} else {
-			if(!GuideHandler.DEBUG_ENABLED) {
+			if(!Config.DEBUG_ENABLED) {
 				LinkedTexture tex = imageCache.get(key);
 				if(tex != null) {
 					drawImage(tex.texture, tex.resource, x + (100 - tex.width) / 2, y + (100 - tex.height) / 2, tex.width, tex.height);

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Level;
 import org.w3c.dom.NodeList;
 
 import cpw.mods.fml.common.FMLLog;
+import enchiridion.Config;
 import enchiridion.api.pages.PageCrafting;
 import enchiridion.api.pages.PageImage;
 import enchiridion.api.pages.PageParagraph;
@@ -20,6 +21,7 @@ import enchiridion.api.pages.PageText;
 import enchiridion.api.pages.PageUnderline;
 
 public class GuideHandler {
+	@Deprecated
 	public static boolean DEBUG_ENABLED;
 	
 	/** Registries **/
@@ -124,7 +126,7 @@ public class GuideHandler {
 	}
 	
 	public static NodeList getDocument(String xml) {
-		if(DEBUG_ENABLED) {
+		if(Config.DEBUG_ENABLED) {
 			try {
 				if(handlers.get(xml) == null) handlers.put(xml, handlers.get("DEFAULT"));
 				return handlers.get(xml).getDocumentDebugMode(xml).getElementsByTagName("page");

@@ -25,7 +25,6 @@ import org.w3c.dom.Element;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLLog;
 import enchiridion.api.Formatting;
-import enchiridion.api.GuideHandler;
 import enchiridion.api.StackHelper;
 import enchiridion.api.XMLHelper;
 import enchiridion.api.pages.PageImage;
@@ -107,7 +106,7 @@ public class CustomBooks {
 			}
 		}
 
-		if (GuideHandler.DEBUG_ENABLED) {
+		if (Config.DEBUG_ENABLED) {
 			File debugFolder = new File(Enchiridion.root + File.separator + "debug");
 
 			if (!debugFolder.exists()) {
@@ -163,8 +162,10 @@ public class CustomBooks {
 		
 		info.path = XMLHelper.getElement(xml, "icon");
 		
-		bookInfo.put(key, info);
-		icons.put(key, new CustomIconAtlas(key, info.path));
+		bookInfo.put(key, info);		
+		if(!isNull(info.path)) {
+			icons.put(key, new CustomIconAtlas(key, info.path));
+		}
 	}
 
 	public static Document getDebugMode(String xml) {
@@ -199,11 +200,16 @@ public class CustomBooks {
 	private static HashMap<String, CustomIconAtlas> icons = new HashMap();
 	
 	public static IIcon getIcon(ItemStack stack) {
-		BookInfo info = bookInfo.get(getID(stack));
-		if(info != null && info.path != null) {
-			return TextureHandler.map.getTextureExtry(info.path);
-		}
-		
-		return ((ItemEnchiridion)stack.getItem()).icons[stack.getItemDamage()];
-	}
+        BookInfo info = bookInfo.get(getID(stack));        
+        if (info != null && !isNull(info.path)) {
+            IIcon icon = TextureHandler.map.getTextureExtry(info.path);
+            if(icon != null) return icon;
+        }
+
+        return null;
+    }
+
+    public static boolean isNull(String path) {
+        return path == null || path.equals("");
+    }
 }

@@ -17,7 +17,7 @@ public class TextureHandler {
 			for (Entry<String, BookInfo> books : CustomBooks.bookInfo.entrySet()) {
 				String id = books.getKey();
 				BookInfo info = books.getValue();
-				if(info.path != null) {
+				if(!CustomBooks.isNull(info.path)) {
 					map.setTextureEntry(info.path, new CustomIconAtlas(books.getKey(), info.path));
 				}
 			}

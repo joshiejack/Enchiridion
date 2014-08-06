@@ -14,8 +14,6 @@ import net.minecraft.util.ResourceLocation;
 
 import org.apache.logging.log4j.Level;
 
-import enchiridion.api.GuideHandler;
-
 public class CustomIconAtlas extends TextureAtlasSprite {	
 	private String zip;
 	private String name;
@@ -33,7 +31,7 @@ public class CustomIconAtlas extends TextureAtlasSprite {
 	@Override
 	public boolean load(IResourceManager manager, ResourceLocation sss) {
 		try {
-			if(!GuideHandler.DEBUG_ENABLED) {
+			if(!Config.DEBUG_ENABLED) {
 				ZipFile zipfile = new ZipFile(new File(Enchiridion.root + File.separator + zip + ".zip"));
 				ZipEntry zipentry = zipfile.getEntry(name + ".png");
 				BufferedImage img = ImageIO.read(zipfile.getInputStream(zipentry));
@@ -44,7 +42,7 @@ public class CustomIconAtlas extends TextureAtlasSprite {
 			} else {
 				try {
 					File debugFolder = new File(Enchiridion.root + File.separator + "debug");
-					BufferedImage img = ImageIO.read(new File(debugFolder + name + ".png"));
+					BufferedImage img = ImageIO.read(new File(debugFolder + File.separator + name + ".png"));
 					BufferedImage[] abufferedimage = new BufferedImage[1];
 					abufferedimage[0] = img;
 					super.loadSprite(abufferedimage, null, false);

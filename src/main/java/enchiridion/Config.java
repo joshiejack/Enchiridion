@@ -11,7 +11,6 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import enchiridion.api.GuiGuide;
-import enchiridion.api.GuideHandler;
 import enchiridion.api.StackHelper;
 
 public class Config {
@@ -60,9 +59,9 @@ public class Config {
 			Config.spawn_binder = config.get("Settings", "Preloaded Binder > Enable", false, "Enabling this will spawn you in the world with a Book Binder").getBoolean(false);
 			setPreloadedBooks(config.get("Settings", "Preloaded Binder > Book List", new String[0], "Add a list of itemstacks here in the form of: (itemName meta nbtTags), feel free to omit meta or nbt").getStringList());
 			TooltipHandler.PRINT = config.get("Settings", "Print Item Codes to the Console", false).getBoolean(false);
+			Config.DEBUG_ENABLED = config.get("Settings", "Debug Mode Enabled", false).getBoolean(false);
 			if(FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 				Config.display_nbt = config.get("Settings", "Debug Mode > Display NBT", true).getBoolean(true);
-				GuideHandler.DEBUG_ENABLED = config.get("Settings", "Debug Mode Enabled", false).getBoolean(false);
 				GuiGuide.loopRate = config.get("Settings", "Icon Update Rate", 96).getInt();
 			}
 		} catch (Exception e) {
@@ -72,4 +71,6 @@ public class Config {
 			config.save();
 		}
 	}
+
+	public static boolean DEBUG_ENABLED;
 }

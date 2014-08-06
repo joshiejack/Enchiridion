@@ -7,6 +7,7 @@ import enchiridion.api.Formatting;
 import enchiridion.api.XMLHelper;
 
 public class PageText extends PageParser {
+	boolean isAliased;
 	int wrap;
 	String bold, italics, underline, color, text;
 
@@ -21,6 +22,7 @@ public class PageText extends PageParser {
 		underline = (XMLHelper.getAttribAsBoolean(xml, "underline"))? Formatting.UNDERLINE: "";
 		wrap = XMLHelper.getAttribAsInteger(xml, "wrap", 216);
 		text = XMLHelper.getSelf(xml);
+		isAliased = XMLHelper.getAttribAsBoolean(xml, "alias");
 	}
 	
 	@Override
@@ -39,6 +41,7 @@ public class PageText extends PageParser {
 
 	@Override
 	public void parse() {
+		font.setUnicodeFlag(isAliased);
 		font.drawSplitString(color + bold + italics + underline + text, x, y, wrap, 4210752);
 	}
 }

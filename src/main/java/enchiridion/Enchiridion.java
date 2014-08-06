@@ -23,7 +23,6 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import enchiridion.CustomBooks.BookInfo;
-import enchiridion.api.GuideHandler;
 
 @Mod(modid = "Enchiridion", name = "Enchiridion", dependencies="required-after:Forge@[10.12.1.1082,)")
 public class Enchiridion {
@@ -53,7 +52,7 @@ public class Enchiridion {
 		FMLCommonHandler.instance().bus().register(handler);
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 		if(FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-			if(GuideHandler.DEBUG_ENABLED) {
+			if(Config.DEBUG_ENABLED) {
 				MinecraftForge.EVENT_BUS.register(new TooltipHandler());
 			}
 		}

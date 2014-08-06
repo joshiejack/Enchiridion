@@ -36,7 +36,8 @@ public class ItemEnchiridion extends Item {
 	public String getItemStackDisplayName(ItemStack stack) {
 		int meta = stack.getItemDamage();
 		if(meta == GUIDE && stack.hasTagCompound()) {
-			return CustomBooks.getBookInfo(stack).displayName;
+			BookInfo info = CustomBooks.getBookInfo(stack);
+			return info != null? info.displayName: "NULL BOOK";
 		} else return Formatting.translate("item." + getName(meta) + ".name");
 	}
 	
@@ -52,7 +53,8 @@ public class ItemEnchiridion extends Item {
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean var) {
 		if (stack.getItemDamage() == GUIDE) {
 			if (stack.hasTagCompound()) {
-				list.add(Formatting.translate("enchiridion.by") + " " + CustomBooks.getBookInfo(stack).author);
+				BookInfo info = CustomBooks.getBookInfo(stack);
+				list.add(Formatting.translate("enchiridion.by") + " " + (info != null? info.author: "Dead Author"));
 			}
 		}
 	}
@@ -92,7 +94,7 @@ public class ItemEnchiridion extends Item {
         else if(pass == 0) {
         	if (stack.hasTagCompound()) {
         		BookInfo info = CustomBooks.getBookInfo(stack);
-        		return info.bookColor;
+        		return info != null? info.bookColor: 16777215;
         	}
         } 
         
@@ -113,8 +115,13 @@ public class ItemEnchiridion extends Item {
 	@SideOnly(Side.CLIENT)
 	 public IIcon getIcon(ItemStack stack, int pass) {
 		if(stack.getItemDamage() == GUIDE && stack.hasTagCompound()) {
-			return CustomBooks.getIcon(stack);
-		} else if(pass == 0) {
+			IIcon icon = CustomBooks.getIcon(stack);
+			if(icon != null) {
+				return icon;
+			}
+		}
+		
+		if(pass == 0) {
         	return icons[stack.getItemDamage()];
         } else return pages;
 	}
