@@ -19,12 +19,13 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import enchiridion.CustomBooks.BookInfo;
 
-@Mod(modid = "Enchiridion", name = "Enchiridion", dependencies="required-after:Forge@[10.12.1.1082,)")
+@Mod(modid = "Enchiridion", name = "Enchiridion", dependencies="required-after:Forge@[10.12.1.1082,)", version="1.1")
 public class Enchiridion {
 	public static final String modid = "books";
 	public static Item items;
@@ -60,6 +61,11 @@ public class Enchiridion {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		BookBinderHelper.blacklistBook(Config.book_stacks_remove);
+		BookBinderHelper.blacklistBooks(Config.book_strings_remove);
+		BookBinderHelper.registerBook(Config.book_stacks_add);
+		BookBinderHelper.registerBooks(Config.book_strings_add);
+		
 		proxy.init();
 		
 		if(FMLCommonHandler.instance().getSide() == Side.CLIENT) {
@@ -92,7 +98,7 @@ public class Enchiridion {
         for (FMLInterModComms.IMCMessage message : event.getMessages()) {
             if (message.key.equalsIgnoreCase("addBook")) {
                 if (message.isStringMessage()) {
-                	Config.additions.add(message.getStringValue());
+                	BookBinderHelper.registerBooks(new String[] { message.getStringValue() });
                 }
             }
         }

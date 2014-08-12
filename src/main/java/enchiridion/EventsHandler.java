@@ -19,7 +19,7 @@ public class EventsHandler {
 	public void onItemPickUp(EntityItemPickupEvent event) {
 		if(Config.binder_enabled && Config.enable_autopick) {
 			ItemStack stack = event.item.getEntityItem();
-			if(ContainerBinder.isBook(stack)) {
+			if(BookBinderHelper.isBook(stack)) {
 				EntityPlayer player = event.entityPlayer;
 				for(ItemStack invent: player.inventory.mainInventory) {
 					if(invent != null) {
@@ -77,14 +77,14 @@ public class EventsHandler {
 			}
 		}
 		
-		if(Config.spawn_binder && Config.preload_books != null && !getPlayerData(event.player).hasKey("SpawnedBookBinder")) {
+		if(BookBinderHelper.spawn_binder && BookBinderHelper.preload_books != null && !getPlayerData(event.player).hasKey("SpawnedBookBinder")) {
 			ItemStack binder = new ItemStack(Enchiridion.items, 1, ItemEnchiridion.BINDER);
 			NBTTagList nbttaglist = new NBTTagList();
-			for (int i = 0; i < Config.preload_books.length; i++) {
-				if (Config.preload_books[i] != null) {
+			for (int i = 0; i < BookBinderHelper.preload_books.length; i++) {
+				if (BookBinderHelper.preload_books[i] != null) {
 					NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 					nbttagcompound1.setByte("Slot", (byte) i);
-					Config.preload_books[i].writeToNBT(nbttagcompound1);
+					BookBinderHelper.preload_books[i].writeToNBT(nbttagcompound1);
 					nbttaglist.appendTag(nbttagcompound1);
 				}
 			}

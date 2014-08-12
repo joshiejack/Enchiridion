@@ -5,7 +5,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ContainerBinder extends Container {
@@ -58,7 +57,7 @@ public class ContainerBinder extends Container {
 					return null;
 				}
 			} else {
-				if (isBook(stack)) {
+				if (BookBinderHelper.isBook(stack)) {
 					for (int i = 0; i < 21; i++) {
 						if (((Slot) this.inventorySlots.get(i)).getHasStack()) {
 							continue;
@@ -128,28 +127,13 @@ public class ContainerBinder extends Container {
 		storage.getGUINetworkData(id, val);
 	}
 
-	public static boolean isBook(ItemStack stack) {
-		String name = Item.itemRegistry.getNameForObject(stack.getItem());
-		if(name != null) {
-			for(String bad: Config.removals) {
-				if(name.equals(bad)) return false;
-			}
-			
-			for(String good: Config.additions) {
-				if(name.contains(good)) return true;
-			}
-		}
-
-		return stack.getItem() instanceof ItemEnchiridion && stack.getItemDamage() == ItemEnchiridion.GUIDE;
-	}
-
 	@Override
 	public ItemStack slotClick(int slotID, int button, int par3, EntityPlayer player) {
 		Slot slot = (slotID < 0 || slotID > this.inventorySlots.size()) ? null : (Slot) this.inventorySlots.get(slotID);
 		if (slot != null && shouldClose(slot, player)) return null;
 		if (slot != null && slot.getStack() != null && button == 1 && slotID < 21 && par3 == 0) {
 			ItemStack stack = slot.getStack().copy();
-			if (stack != null && isBook(stack) && player.worldObj.isRemote) {
+			if (stack != null && BookBinderHelper.isBook(stack) && player.worldObj.isRemote) {
 				ItemStack held = player.getCurrentEquippedItem().copy();
 				player.setCurrentItemOrArmor(0, stack);
 				player.inventoryContainer.detectAndSendChanges();
@@ -178,7 +162,7 @@ public class ContainerBinder extends Container {
 
 		@Override
 		public boolean isItemValid(ItemStack stack) {
-			return isBook(stack);
+			return BookBinderHelper.isBook(stack);
 		}
 
 		@Override
