@@ -1,13 +1,12 @@
-package joshie.enchiridion.wiki;
+package joshie.enchiridion.wiki.data;
 
 import java.util.ArrayList;
 
 import joshie.enchiridion.wiki.elements.Element;
-import net.minecraft.item.ItemStack;
 
 import com.google.gson.annotations.Expose;
 
-public class WikiContents extends WikiData {
+public class DataPage extends Data {
     @Expose
     private ArrayList<Element> components = new ArrayList();
     @Expose
@@ -15,12 +14,12 @@ public class WikiContents extends WikiData {
     private int maxY = 500;
     private int scroll;
     
-    public WikiContents(){}
-    public WikiContents(String string, ItemStack stack) {
-        super(string, stack);
+    public DataPage(){}
+    public DataPage(String string) {
+        super(string);
     }
     
-    public WikiContents refreshY() {
+    public DataPage refreshY() {
         maxY = 0;
         for(Element component: components) {
             int y = (int) ((component.y + component.height));

@@ -54,7 +54,7 @@ public class GuiMenu extends GuiExtension implements ITextEditable {
                 int pageY = 0;
                 for (WikiCategory category : getTab().getCategories()) {
                     if (mouseY >= pageY + 79 && mouseY <= pageY + 119) {
-                        if (!isEditing || button > 0) {
+                        if (!isEditMode() || button > 0) {
                             if (category.isVisible()) {
                                 category.setHidden();
                             } else category.setVisible();
@@ -70,12 +70,11 @@ public class GuiMenu extends GuiExtension implements ITextEditable {
                     if (category.isVisible()) {
                         for (WikiPage page : category.getPages()) {
                             if (mouseY >= pageY + 80 + 38 && mouseY <= 80 + pageY + 80) {
-                                if (!isEditing) {
+                                if (!isEditMode()) {
                                     setPage(category.getTab().getMod().getKey(), category.getTab().getKey(), category.getKey(), page.getKey());
                                 } else {
                                     edit_category = null;
                                     edit_page = page;
-
                                     GuiTextEdit.select(this);
                                 }
                             }
@@ -88,6 +87,8 @@ public class GuiMenu extends GuiExtension implements ITextEditable {
                 }
             }
         }
+
+        System.out.println(edit_category);
     }
 
     @Override
@@ -109,12 +110,10 @@ public class GuiMenu extends GuiExtension implements ITextEditable {
 
     @Override
     public void setText(String text) {
-        if (EClientProxy.font.getStringWidth(text) <= 126) {
-            if (edit_category != null) {
-                edit_category.setTranslation(text);
-            } else if (edit_page != null) {
-                edit_page.setTranslation(text);
-            }
+        if (edit_category != null) {
+            edit_category.setTranslation(text);
+        } else if (edit_page != null) {
+            edit_page.setTranslation(text);
         }
     }
 

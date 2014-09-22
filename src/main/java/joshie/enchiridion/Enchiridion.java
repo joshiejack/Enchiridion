@@ -8,9 +8,9 @@ import static joshie.enchiridion.lib.EnchiridionInfo.MODPATH;
 
 import java.io.File;
 
-import joshie.enchiridion.wiki.WikiData;
 import joshie.enchiridion.wiki.WikiRegistry;
-import joshie.enchiridion.wiki.WikiTitles;
+import joshie.enchiridion.wiki.data.Data;
+import joshie.enchiridion.wiki.data.WikiData;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -35,7 +35,7 @@ public class Enchiridion {
         proxy.preInit();
 
         WikiRegistry.instance().registerMod(MODID, MODPATH);
-        WikiTitles.instance().addData("enchiridion.default.basics.menu.en_US", new WikiData("Menu"));
+        WikiData.instance().addData("enchiridion.default.basics.menu.en_US", new Data("Menu"));
     }
 
     @EventHandler

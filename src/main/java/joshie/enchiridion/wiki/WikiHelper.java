@@ -20,6 +20,7 @@ import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.enchiridion.wiki.gui.GuiLighting;
 import joshie.enchiridion.wiki.gui.GuiMain;
 import joshie.enchiridion.wiki.gui.GuiMenu;
+import joshie.enchiridion.wiki.gui.GuiSearch;
 import joshie.enchiridion.wiki.gui.GuiTabs;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
 import joshie.lib.helpers.StackHelper;
@@ -47,12 +48,12 @@ public class WikiHelper {
     public static int height;
 
     public static Gson getGson() {
-        if(gson == null) {
+        if (gson == null) {
             GsonBuilder builder = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation();
             builder.registerTypeAdapter(Element.class, new WikiAbstractAdapter());
             gson = builder.create();
         }
-        
+
         return gson;
     }
 
@@ -79,7 +80,7 @@ public class WikiHelper {
     public static void drawTexture(int x, int y, int xStart, int yStart, int xEnd, int yEnd) {
         WikiHelper.gui.drawTexturedModalRect(x, y, xStart, yStart, xEnd, yEnd);
     }
-    
+
     public static void clearEditGUIs() {
         GuiLayers.clear();
         GuiItemSelect.clear();
@@ -122,6 +123,7 @@ public class WikiHelper {
     }
 
     public static ArrayList<GuiExtension> content = new ArrayList();
+
     public static void init() {
         content = new ArrayList();
         content.add(new GuiBackground());
@@ -133,6 +135,7 @@ public class WikiHelper {
         content.add(new GuiMenu());
         content.add(new GuiLayers());
         content.add(new GuiTextEdit());
+        content.add(new GuiSearch());
     }
 
     public static WikiMod getMod() {
@@ -195,5 +198,13 @@ public class WikiHelper {
 
     public static boolean isTabSelected(WikiTab tab) {
         return tab == gui.tab;
+    }
+
+    public static void setPage(WikiPage page) {
+        gui.page = page;
+    }
+
+    public static void setMod(WikiMod mod) {
+        gui.mod = mod;
     }
 }

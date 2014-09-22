@@ -18,6 +18,13 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glStencilFunc;
 import static org.lwjgl.opengl.GL11.glStencilMask;
 import static org.lwjgl.opengl.GL11.glStencilOp;
+
+import java.util.ArrayList;
+
+import org.lwjgl.opengl.GL11;
+
+import joshie.enchiridion.wiki.WikiPage;
+import joshie.enchiridion.wiki.data.WikiData;
 import joshie.enchiridion.wiki.elements.Element;
 
 public class GuiCanvas extends GuiExtension {
@@ -36,6 +43,7 @@ public class GuiCanvas extends GuiExtension {
         glStencilFunc(GL_EQUAL, 0, 0xFF);
         glStencilFunc(GL_EQUAL, 1, 0xFF);
         drawRect(0, 0, 2048, 5000 + 10, 0xEE000000);
+        drawRect(630, -45, 910, -10, 0xFF000000);
         getPage().display();
         glDisable(GL_STENCIL_TEST);
         glDisable(GL_BLEND);

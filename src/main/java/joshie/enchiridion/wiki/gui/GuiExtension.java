@@ -72,12 +72,20 @@ public abstract class GuiExtension {
         WikiHelper.setPage(mod, tab, cat, page);
     }
     
+    public void setMod(WikiMod mod) {
+        WikiHelper.setMod(mod);
+    }
+    
     public WikiMod getMod() {
         return WikiHelper.getMod();
     }
     
     public void setTab(WikiTab tab) {
         WikiHelper.setTab(tab);
+    }
+    
+    public void setPage(WikiPage page) {
+        WikiHelper.setPage(page);
     }
     
     public boolean isTabSelected(WikiTab tab) {
@@ -121,12 +129,25 @@ public abstract class GuiExtension {
     }
 
     protected void drawContentBox(String title, int pageY, int page_bg_1, int page_bg_2) {
-        horizontalGradient(5, pageY + 80 + 38, 270, 80 + pageY + 40, 0x44354755, 0X44192B39);
-        verticalGradient(5, pageY + 80 + 40, 270, 80 + pageY + 42, 0x44172A39, 0x44091D28);
-        horizontalGradient(5, pageY + 80 + 42, 270, 80 + pageY + 77, page_bg_1, page_bg_2);
-        horizontalGradient(5, pageY + 80 + 77, 270, 80 + pageY + 78, 0x44354755, 0X44192B39);
-        verticalGradient(5, pageY + 80 + 78, 270, 80 + pageY + 80, 0x44172A39, 0x44091D28);
-        drawScaledText(2F, title, 13, 53 + 80 + pageY, 0xFFC2C29C);
+        drawContentBox(title, pageY, page_bg_1, page_bg_2, 5, 80);
+    }
+    
+    protected void drawSearchBox(String title, int pageY, int page_bg_1, int page_bg_2, int x, int y) {
+        horizontalGradient(x, pageY + y + 38, x + 265, y + pageY + 40, 0xFF354755, 0XFF192B39);
+        verticalGradient(x, pageY + y + 40, x + 265, y + pageY + 42, 0xFF172A39, 0xFF091D28);
+        horizontalGradient(x, pageY + y + 42, x + 265, y + pageY + 77, page_bg_1, page_bg_2);
+        horizontalGradient(x, pageY + y + 77, x + 265, y + pageY + 78, 0xFF354755, 0XFF192B39);
+        verticalGradient(x, pageY + y + 78, x + 265, y + pageY + 80, 0xFF172A39, 0xFF091D28);
+        drawScaledText(2F, title, x + 8, 53 + y + pageY, 0xFFC2C29C);
+    }
+    
+    protected void drawContentBox(String title, int pageY, int page_bg_1, int page_bg_2, int x, int y) {
+        horizontalGradient(x, pageY + y + 38, x + 265, y + pageY + 40, 0x44354755, 0X44192B39);
+        verticalGradient(x, pageY + y + 40, x + 265, y + pageY + 42, 0x44172A39, 0x44091D28);
+        horizontalGradient(x, pageY + y + 42, x + 265, y + pageY + 77, page_bg_1, page_bg_2);
+        horizontalGradient(x, pageY + y + 77, x + 265, y + pageY + 78, 0x44354755, 0X44192B39);
+        verticalGradient(x, pageY + y + 78, x + 265, y + pageY + 80, 0x44172A39, 0x44091D28);
+        drawScaledText(2F, title, x + 8, 53 + y + pageY, 0xFFC2C29C);
     }
     
     public void keyTyped(char character, int key) {

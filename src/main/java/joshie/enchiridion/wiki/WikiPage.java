@@ -4,26 +4,33 @@ import java.io.File;
 import java.util.ArrayList;
 
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.wiki.data.DataPage;
+import joshie.enchiridion.wiki.data.WikiData;
 import joshie.enchiridion.wiki.elements.Element;
+import joshie.enchiridion.wiki.gui.GuiExtension;
 import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.lib.helpers.ClientHelper;
 
 import org.lwjgl.opengl.GL11;
 
 public class WikiPage extends WikiPart {
-    public WikiPage(String key, String lang, WikiContents contents) {
+    public WikiPage(String key, String lang, DataPage contents) {
         super(key);
-        WikiTitles.instance().addContent(key, contents);
+        WikiData.instance().addData(key, contents);
     }
 
     public WikiPage(String key) {
-        this(key, ClientHelper.getLang(), new WikiContents());
+        this(key, ClientHelper.getLang(), new DataPage());
     }
 
     private WikiCategory category;
     public WikiPage setCategory(WikiCategory category) {
         this.category = category;
         return this;
+    }
+
+    public WikiCategory getCategory() {
+        return category;
     }
 
     @Override
@@ -86,8 +93,8 @@ public class WikiPage extends WikiPart {
     }
 
     @Override
-    public WikiContents getData() {
-        return WikiTitles.instance().getContent(getUnlocalized() + "." + ClientHelper.getLang());
+    public DataPage getData() {
+        return WikiData.instance().getPage(getUnlocalized() + "." + ClientHelper.getLang());
     }
 
     public void display() {        

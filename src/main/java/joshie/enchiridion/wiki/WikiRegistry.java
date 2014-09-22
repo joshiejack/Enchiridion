@@ -7,7 +7,10 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import joshie.enchiridion.Enchiridion;
-import joshie.lib.helpers.ClientHelper;
+import joshie.enchiridion.wiki.data.Data;
+import joshie.enchiridion.wiki.data.DataPage;
+import joshie.enchiridion.wiki.data.DataTab;
+import joshie.enchiridion.wiki.data.WikiData;
 
 import org.apache.commons.io.FileUtils;
 
@@ -89,12 +92,10 @@ public class WikiRegistry {
                 }
                 
                 key = key + "." + lang;
-                
-                System.out.println(key);
-                
-                WikiData data = WikiHelper.getGson().fromJson(FileUtils.readFileToString(file), WikiData.class);
-                if(data == null) data = new WikiData(key);
-                WikiTitles.instance().addData(key, data);
+                                
+                Data data = WikiHelper.getGson().fromJson(FileUtils.readFileToString(file), path.length == 3? DataTab.class: Data.class);
+                if(data == null) data = new Data(key);
+                WikiData.instance().addData(key, data);
             } catch (Exception e) { e.printStackTrace(); } 
         }
     }
@@ -104,9 +105,10 @@ public class WikiRegistry {
     }
 
     private void register(String mod, String tab, String cat, String key, String lang, String json) {          
-        WikiContents contents = WikiHelper.getGson().fromJson(json, WikiContents.class);
-        if(contents == null) contents = new WikiContents();
-        getPage(mod, tab, cat, key); //Creates the pages
-        WikiTitles.instance().addContent(getPage(mod, tab, cat, key).getUnlocalized() + "." + lang, contents);
+        DataPage contents = WikiHelper.getGson().fromJson(json, DataPage.class);
+        if(contents == null) contents = new DataPage();
+        WikiPage page = getPage(mod, tab, cat, key);
+        WikiData.instance().addData(page.getUnlocalized() + "." + lang, contents);
+        WikiData.instance().addPage(page);
     }
 }

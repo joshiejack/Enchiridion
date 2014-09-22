@@ -4,7 +4,10 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.wiki.data.DataTab;
+import joshie.enchiridion.wiki.data.WikiData;
 import joshie.lib.helpers.ClientHelper;
+import net.minecraft.item.ItemStack;
 
 public class WikiTab extends WikiPart {
     private HashMap<String, WikiCategory> categories = new HashMap();
@@ -56,5 +59,20 @@ public class WikiTab extends WikiPart {
     public void markDirty() {
         super.markDirty();
         mod.markDirty();
+    }
+    
+    @Override
+    public DataTab getData() {
+        return WikiData.instance().getTab(getUnlocalized() + "." + ClientHelper.getLang());
+    }
+    
+    public ItemStack getItemStack() {
+        return getData().getStack();
+    }
+    
+    public WikiPart setStack(ItemStack stack) {
+        getData().setStack(stack);
+        this.markDirty();
+        return this;
     }
 }

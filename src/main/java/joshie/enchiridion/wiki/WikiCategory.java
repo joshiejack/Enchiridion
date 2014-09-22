@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.wiki.data.WikiData;
 import joshie.lib.helpers.ClientHelper;
 
 public class WikiCategory extends WikiPart {
@@ -21,6 +22,7 @@ public class WikiCategory extends WikiPart {
         } else {
             page = new WikiPage(key).setCategory(this);
             pages.put(key, page);
+            WikiData.instance().addPage(page);
             return page;
         }
     }

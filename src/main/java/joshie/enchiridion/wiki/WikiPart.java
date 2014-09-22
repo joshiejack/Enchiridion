@@ -6,8 +6,9 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.wiki.data.Data;
+import joshie.enchiridion.wiki.data.WikiData;
 import joshie.lib.helpers.ClientHelper;
-import net.minecraft.item.ItemStack;
 
 public class WikiPart {
     private final String key;
@@ -26,24 +27,15 @@ public class WikiPart {
     }
 
     public String getTitle() {
-        return WikiTitles.instance().translateToLocal(getUnlocalized());
+        return WikiData.instance().translateToLocal(getUnlocalized());
     }
     
-    public ItemStack getItemStack() {
-        return getData().getStack();
-    }
-    
-    public WikiPart setStack(ItemStack stack) {
-        getData().setStack(stack);
-        this.markDirty();
-        return this;
-    }
-    
-    public WikiData getData() {
-        return WikiTitles.instance().getData(getUnlocalized() + "." + ClientHelper.getLang());
+    public Data getData() {
+        return WikiData.instance().getData(getUnlocalized() + "." + ClientHelper.getLang());
     }
 
     public void setTranslation(String text) {
+        System.out.println("HI");
         getData().setTranslation(text);
         this.markDirty();
     }

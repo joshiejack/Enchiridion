@@ -9,3 +9,5 @@ enchiridion.item=Item
 enchiridion.box=Box
 enchiridion.link=Link
 enchiridion.recipe=Recipe
+enchiridion.search=Search
+enchiridion.noresults=No Results...
