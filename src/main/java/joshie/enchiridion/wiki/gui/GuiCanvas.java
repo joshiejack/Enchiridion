@@ -31,7 +31,7 @@ public class GuiCanvas extends GuiExtension {
         glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
         glStencilMask(0xFF);
         glClear(GL_STENCIL_BUFFER_BIT);
-        drawRect(275, 44, 997, getHeight() + 10, 0x22000000);
+        drawRect(295, 44, 1002, getHeight() + 10, 0x22000000);
         glStencilMask(0x00);
         glStencilFunc(GL_EQUAL, 0, 0xFF);
         glStencilFunc(GL_EQUAL, 1, 0xFF);
@@ -59,7 +59,7 @@ public class GuiCanvas extends GuiExtension {
     
     @Override
     public void scroll(boolean scrolledDown) {
-        if(mouseX >= 250 && mouseX <= 1024) {
+        if(mouseX >= 290 && mouseX <= 1024) {
             getPage().scroll(scrolledDown? -100: 100);
         }
     }

@@ -10,7 +10,7 @@ public class GuiBackground extends GuiExtension {
         glDisable(GL_LIGHTING);
         drawRect(-20, -3, 1044, 0, 0xFFEBECBA);
         drawRect(-20, 40, 1044, 43, 0xFFEBECBA);
-        drawRect(250, 43, 253, getHeight(), 0xFFC2C29C);
+        drawRect(275, 43, 278, getHeight(), 0xFFC2C29C);
 
         /** Side Bars **/
         drawRect(-3, 43, 0, getHeight(), 0xFFC2C29C);
@@ -28,8 +28,6 @@ public class GuiBackground extends GuiExtension {
         /* Middle Dark Bar **/
         verticalGradient(303, 20, 700, 40, 0xFF09111E, 0xFF1B2C43);
         verticalGradient(303, 0, 700, 20, 0xFF1B2C43, 0xFF09111E);
-        /* Tab Title */
-        drawScaledCentredText(2.5F, getTab().getTitle(), 400, 14, 0xFFFFFF);
 
         /* Top right Blue Bar **/
         drawRect(1044, -3, 1047, 43, 0xFFC2C29C);
@@ -40,8 +38,8 @@ public class GuiBackground extends GuiExtension {
         /* Menu Selection */
         //#2A535E
         drawRect(0, 43, 5, getHeight(), 0xEE2A535E);
-        horizontalGradient(5, 43, 245, getHeight(), 0xEE0E1924, 0xEE0E1924);
-        drawRect(245, 43, 250, getHeight(), 0xEE2A535E);
+        horizontalGradient(5, 43, 270, getHeight(), 0xEE0E1924, 0xEE0E1924);
+        drawRect(270, 43, 275, getHeight(), 0xEE2A535E);
 
         glEnable(GL_LIGHTING);
     }

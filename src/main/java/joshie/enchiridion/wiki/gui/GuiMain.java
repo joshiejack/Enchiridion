@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import joshie.enchiridion.Configuration;
+import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.gui.GuiScalable;
 import joshie.enchiridion.lib.EnchiridionInfo;
 import joshie.enchiridion.wiki.WikiCategory;
@@ -57,6 +58,7 @@ public class GuiMain extends GuiScalable {
     @Override
     public void initGui() {
         super.initGui();
+        WikiHelper.init();
         if (page == null) {
             page = WikiRegistry.instance().getPage("Enchiridion", "Default", "Basics", "Menu");
             tab = WikiRegistry.instance().getTab("Enchiridion", "Default");
@@ -69,7 +71,7 @@ public class GuiMain extends GuiScalable {
             } else setMode(DisplayMode.getInstance());
         }
         
-        page.getContent().refreshY();
+        page.getData().refreshY();
 
         Keyboard.enableRepeatEvents(true);
     }
@@ -86,7 +88,7 @@ public class GuiMain extends GuiScalable {
     public void drawScaledText(Minecraft mc, float scale, String text, int x, int y, int color) {
         glPushMatrix();
         glScalef(scale, scale, 1.0F);
-        mc.fontRenderer.drawString(text, getLeft(scale, x), getTop(scale, y), color);
+        EClientProxy.font.drawString(text, getLeft(scale, x), getTop(scale, y), color);
         glPopMatrix();
     }
 
@@ -97,7 +99,7 @@ public class GuiMain extends GuiScalable {
     public void drawScaledCentredText(Minecraft mc, float scale, String text, int x, int y, int color) {
         glPushMatrix();
         glScalef(scale, scale, 1.0F);
-        mc.fontRenderer.drawString(text, getLeft(scale, x) - mc.fontRenderer.getStringWidth(text) / 2, getTop(scale, y), color);
+        EClientProxy.font.drawString(text, getLeft(scale, x) - EClientProxy.font.getStringWidth(text) / 2, getTop(scale, y), color);
         glPopMatrix();
     }
 
@@ -181,6 +183,9 @@ public class GuiMain extends GuiScalable {
     protected void keyTyped(char character, int key) {
         super.keyTyped(character, key);
         page.keyTyped(character, key);
+        for (GuiExtension element : WikiHelper.content) {
+            element.keyTyped(character, key);
+        }
     }
 
     @Override

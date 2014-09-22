@@ -8,7 +8,7 @@ import joshie.enchiridion.wiki.gui.GuiMain;
 import com.google.gson.annotations.Expose;
 
 public abstract class Element {
-    public static final int BASE_X = 275;
+    public static final int BASE_X = 280;
     public static final int BASE_Y = 65;
 
     @Expose
@@ -64,9 +64,15 @@ public abstract class Element {
 
         display(isEditMode);
     }
+    
+    public void markDirty() {
+        WikiHelper.getPage().markDirty();
+    }
 
     /** Called when the gui is initialized **/
-    public abstract void addEditButtons(List list);
+    public void addEditButtons(List list) {
+        return;
+    }
 
     public void whileSelected() {
         return;
@@ -137,7 +143,7 @@ public abstract class Element {
     }
 
     protected boolean isMouseOver(int x, int y) {
-        return x >= left && x <= right && y >= top && y <= bottom;
+        return y > -15 && x >= left && x <= right && y >= top && y <= bottom;
     }
 
     /** The stuff shall follow the almighty cursor **/

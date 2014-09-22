@@ -8,6 +8,7 @@ import static joshie.enchiridion.lib.EnchiridionInfo.MODPATH;
 
 import java.io.File;
 
+import joshie.enchiridion.wiki.WikiData;
 import joshie.enchiridion.wiki.WikiRegistry;
 import joshie.enchiridion.wiki.WikiTitles;
 import cpw.mods.fml.common.Mod;
@@ -34,7 +35,7 @@ public class Enchiridion {
         proxy.preInit();
 
         WikiRegistry.instance().registerMod(MODID, MODPATH);
-        WikiTitles.instance().addLocalization("enchiridion.default.basics.menu.en_US", "Menu");
+        WikiTitles.instance().addData("enchiridion.default.basics.menu.en_US", new WikiData("Menu"));
     }
 
     @EventHandler

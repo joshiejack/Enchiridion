@@ -11,6 +11,7 @@ import joshie.enchiridion.wiki.elements.ElementItem;
 import joshie.enchiridion.wiki.elements.ElementLink;
 import joshie.enchiridion.wiki.elements.ElementRecipe;
 import joshie.enchiridion.wiki.elements.ElementText;
+import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.enchiridion.wiki.mode.ButtonBase;
 import joshie.enchiridion.wiki.mode.ButtonSwitchMode;
 import joshie.enchiridion.wiki.mode.SaveMode;

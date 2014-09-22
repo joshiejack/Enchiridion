@@ -54,6 +54,6 @@ public class ElementBox extends Element {
     
     @Override
     public void onDeselected() {
-        
+        markDirty();
     }
 }

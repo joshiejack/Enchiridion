@@ -14,8 +14,6 @@ public class ButtonWikiTextEffects extends ButtonWikiTextEdit {
 
     @Override
     public void affect(Element component) {
-        if(component instanceof ElementText) {
-            ((ElementText)component).add(effect);
-        }
+        //Do fuck all
     }
 }

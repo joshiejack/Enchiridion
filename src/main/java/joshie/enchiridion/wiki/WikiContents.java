@@ -1,14 +1,13 @@
 package joshie.enchiridion.wiki;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import joshie.enchiridion.wiki.elements.Element;
-import joshie.lib.helpers.ClientHelper;
+import net.minecraft.item.ItemStack;
 
 import com.google.gson.annotations.Expose;
 
-public class WikiContents {
+public class WikiContents extends WikiData {
     @Expose
     private ArrayList<Element> components = new ArrayList();
     @Expose
@@ -16,7 +15,11 @@ public class WikiContents {
     private int maxY = 500;
     private int scroll;
     
-    public WikiContents() {}
+    public WikiContents(){}
+    public WikiContents(String string, ItemStack stack) {
+        super(string, stack);
+    }
+    
     public WikiContents refreshY() {
         maxY = 0;
         for(Element component: components) {

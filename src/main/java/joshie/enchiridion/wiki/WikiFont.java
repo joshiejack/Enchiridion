@@ -90,7 +90,7 @@ public class WikiFont extends FontRenderer {
         } else if (CharReplace.CURSOR.is(character)) {
             this.cursor = true;
         } else if (CharReplace.CURSOR_HIDE.is(character)) {
-            
+
         } else {
             return 0;
         }
@@ -105,7 +105,7 @@ public class WikiFont extends FontRenderer {
             int j;
             int k;
 
-            if (isFormatCode(string, i) <= 0) {
+            if (isFormatCode(string, i) <= 0) {                
                 if (this.isColored) {
                     float red = (renderColor >> 16 & 255) / 255.0F;
                     float green = (renderColor >> 8 & 255) / 255.0F;
@@ -134,7 +134,12 @@ public class WikiFont extends FontRenderer {
                     this.posY -= f1;
                 }
 
-                float f = this.renderCharAtPos(j, character, this.italicStyle);
+                float f;
+                if(CharReplace.HIDE.is(character)) {
+                    f = 1F;
+                } else {
+                    f = this.renderCharAtPos(j, character, this.italicStyle);
+                }
 
                 if (flag1) {
                     this.posX += f1;
@@ -159,6 +164,8 @@ public class WikiFont extends FontRenderer {
 
                     ++f;
                 }
+                
+                
 
                 Tessellator tessellator;
 
@@ -187,7 +194,7 @@ public class WikiFont extends FontRenderer {
                     GL11.glEnable(GL11.GL_TEXTURE_2D);
                 }
 
-                if (this.cursor) {
+                if (this.cursor) {        
                     float red = (0xCCCCCC >> 16 & 255) / 255.0F;
                     float green = (0xCCCCCC >> 8 & 255) / 255.0F;
                     float blue = (0xCCCCCC & 255) / 255.0F;
@@ -195,7 +202,6 @@ public class WikiFont extends FontRenderer {
                     tessellator = Tessellator.instance;
                     GL11.glDisable(GL11.GL_TEXTURE_2D);
                     tessellator.startDrawingQuads();
-                    int l = this.cursor ? -1 : 0;
                     tessellator.addVertex((double) (this.posX - 0.75F), (double) (this.posY + (float) this.FONT_HEIGHT), 0.0D);
                     tessellator.addVertex((double) (this.posX) - 0.25F, (double) (this.posY + (float) this.FONT_HEIGHT), 0.0D);
                     tessellator.addVertex((double) (this.posX) - 0.25F, (double) (this.posY + (float) this.FONT_HEIGHT - 10.0F), 0.0D);
@@ -205,7 +211,7 @@ public class WikiFont extends FontRenderer {
                     this.cursor = false;
                     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 }
-                
+
                 this.posX += (float) ((int) f);
             }
         }
@@ -217,7 +223,8 @@ public class WikiFont extends FontRenderer {
         STRIKE_S("[s]", 5), STRIKE_F("[/s]", 6), 
         UNDER_S("[u]", 7), UNDER_F("[/u]", 8), 
         RANDOM_S("[r]", 9), RANDOM_F("[/r]", 10), 
-        CURSOR("[*cursor*]", 11), CURSOR_HIDE("[*/cursor*]", 12);
+        CURSOR("[*cursor*]", 11), CURSOR_HIDE("[*/cursor*]", 12),
+        HIDE("@99[]", 13);
 
         protected final String search;
         protected final char character;
@@ -233,8 +240,32 @@ public class WikiFont extends FontRenderer {
     }
 
     @Override
-    public void drawSplitString(String string, int x, int y, int length, int color) {
+    public int drawString(String string, int x, int y, int color) {
+        String clone = new StringBuilder(string + CharReplace.HIDE.character).toString();
+        for (CharReplace character : CharReplace.values()) {
+            clone = clone.replace(character.search, "" + character.character);
+        }
+
+        return super.drawString(clone, x, y, color);
+    }
+
+    @Override
+    public int getStringWidth(String string) {
         String clone = new StringBuilder(string).toString();
+        for (CharReplace character : CharReplace.values()) {
+            clone = clone.replace(character.search, "");
+        }
+        
+        if(clone.contains("" + CharReplace.CURSOR.character) || clone.contains("" + CharReplace.CURSOR_HIDE.character)) {
+            return super.getStringWidth(clone) - 10;
+        }
+
+        return super.getStringWidth(clone);
+    }
+
+    @Override
+    public void drawSplitString(String string, int x, int y, int length, int color) {
+        String clone = new StringBuilder(string + CharReplace.HIDE.character).toString();
         for (CharReplace character : CharReplace.values()) {
             clone = clone.replace(character.search, "" + character.character);
         }

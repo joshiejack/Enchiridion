@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import joshie.enchiridion.Enchiridion;
+import joshie.lib.helpers.ClientHelper;
 
 import org.apache.commons.io.FileUtils;
 
@@ -58,6 +59,11 @@ public class WikiRegistry {
     public WikiPage getPage(String mod, String tab, String cat, String key) {
         return getCat(mod, tab, cat).get(key);
     }
+
+    /** List of all mods **/
+    public Collection<WikiMod> getMods() {
+        return mods.values();
+    }
     
     /** Call this to register a mod, it will search the mods zip file for wiki pages **/
     public void registerMod(String modid, String rootpath) {
@@ -74,6 +80,22 @@ public class WikiRegistry {
             try {
                 register(mod, tab, cat, key, getLang(file), FileUtils.readFileToString(file));
             } catch (Exception e) { e.printStackTrace(); }
+        } else {
+            try {
+                String lang = getLang(file);
+                String key = path[0];
+                for(int i = 1; i < path.length - 1; i++) {
+                    key = key + "." + path[i];
+                }
+                
+                key = key + "." + lang;
+                
+                System.out.println(key);
+                
+                WikiData data = WikiHelper.getGson().fromJson(FileUtils.readFileToString(file), WikiData.class);
+                if(data == null) data = new WikiData(key);
+                WikiTitles.instance().addData(key, data);
+            } catch (Exception e) { e.printStackTrace(); } 
         }
     }
     
@@ -84,6 +106,7 @@ public class WikiRegistry {
     private void register(String mod, String tab, String cat, String key, String lang, String json) {          
         WikiContents contents = WikiHelper.getGson().fromJson(json, WikiContents.class);
         if(contents == null) contents = new WikiContents();
-        getPage(mod, tab, cat, key).setContents(lang, contents); //Creates the pages
+        getPage(mod, tab, cat, key); //Creates the pages
+        WikiTitles.instance().addContent(getPage(mod, tab, cat, key).getUnlocalized() + "." + lang, contents);
     }
 }

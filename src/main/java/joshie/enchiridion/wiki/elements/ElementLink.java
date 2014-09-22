@@ -1,17 +1,16 @@
 package joshie.enchiridion.wiki.elements;
 
-import java.awt.Cursor;
 import java.util.List;
 
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ChatAllowedCharacters;
+import joshie.enchiridion.EClientProxy;
+import joshie.enchiridion.api.ITextEditable;
+import joshie.enchiridion.wiki.gui.GuiTextEdit;
 
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import com.google.gson.annotations.Expose;
 
-public class ElementLink extends Element {
+public class ElementLink extends Element implements ITextEditable {
     @Expose
     private int color = 0xFFFFFFFF;
     String path = "";
@@ -23,7 +22,7 @@ public class ElementLink extends Element {
     String cat;
     @Expose
     String page;
-    
+
     @Override
     public ElementLink setToDefault() {
         this.width = 100;
@@ -40,8 +39,8 @@ public class ElementLink extends Element {
     public void display(boolean isEditMode) {
         if (isEditMode) {
             GL11.glPushMatrix();
-            GL11.glScalef(size, size, size);            
-            wiki.mc.fontRenderer.drawSplitString(path, getX(), getY(), width, color);
+            GL11.glScalef(size, size, size);
+            EClientProxy.font.drawSplitString(GuiTextEdit.getText(this, path), getX(), getY(), width, color);
             GL11.glPopMatrix();
         }
     }
@@ -61,38 +60,13 @@ public class ElementLink extends Element {
     }
 
     @Override
-    public void keyTyped(char character, int key) {
-        if (isSelected) {
-            if (character == 22) {
-                add(GuiScreen.getClipboardString());
-            } else if (key == 14) {
-                delete();
-            } else if (key == 28 || key == 156) {
-                add("\n");
-            } else if (ChatAllowedCharacters.isAllowedCharacter(character)) {
-                add(Character.toString(character));
-            }
-        }
-    }
-
-    public void add(String string) {
-        path += string;
-    }
-
-    private void delete() {
-        if (path != null && path.length() > 0) {
-            path = path.substring(0, path.length() - 1);
-        }
-    }
-
-    @Override
     public void addEditButtons(List list) {
         return;
     }
 
     @Override
     public void onSelected() {
-        return;
+        GuiTextEdit.select(this);
     }
 
     @Override
@@ -104,5 +78,25 @@ public class ElementLink extends Element {
             cat = arr[2];
             page = arr[3];
         }
+        
+        markDirty();
+    }
+
+    @Override
+    public void setText(String text) {
+        if (isSelected) {
+            this.path = text;
+            markDirty();
+        }
+    }
+
+    @Override
+    public String getText() {
+        return this.path;
+    }
+
+    @Override
+    public boolean canEdit(Object... objects) {
+        return isSelected;
     }
 }

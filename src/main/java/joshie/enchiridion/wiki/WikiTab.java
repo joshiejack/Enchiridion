@@ -3,25 +3,19 @@ package joshie.enchiridion.wiki;
 import java.util.Collection;
 import java.util.HashMap;
 
-import net.minecraft.util.StatCollector;
+import joshie.enchiridion.Enchiridion;
+import joshie.lib.helpers.ClientHelper;
 
-public class WikiTab {
+public class WikiTab extends WikiPart {
     private HashMap<String, WikiCategory> categories = new HashMap();
-    private final String key;
 
-    public WikiTab (String key) {
-        this.key = key;
-    }
-    
-    private WikiMod mod;
-    public WikiTab setMod(WikiMod mod) {
-        this.mod = mod;
-        return this;
+    public WikiTab(String key) {
+        super(key);
     }
 
     public WikiCategory get(String key) {
         WikiCategory cat = categories.get(key);
-        if(cat != null) {
+        if (cat != null) {
             return cat;
         } else {
             cat = new WikiCategory(key).setTab(this);
@@ -30,23 +24,37 @@ public class WikiTab {
         }
     }
 
-    public String getKey() {
-        return key;
-    }
-    
-    public String getUnlocalized() {
-        return mod.getUnlocalized() + "." + getKey();
+    public Collection<WikiCategory> getCategories() {
+        return categories.values();
     }
 
-    public String getTitle() {
-        return WikiTitles.instance().translateToLocal(getUnlocalized());
+    private WikiMod mod;
+
+    public WikiTab setMod(WikiMod mod) {
+        this.mod = mod;
+        return this;
     }
 
     public WikiMod getMod() {
         return mod;
     }
+
+    @Override
+    public String getUnlocalized() {
+        return mod.getUnlocalized() + "." + getKey();
+    }
+
+    @Override
+    public String getPath() {
+        WikiMod mod = getMod();
+        WikiTab tab = this;
+        String lang = ClientHelper.getLang();
+        return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + lang + ".json";
+    }
     
-    public Collection<WikiCategory> getCategories() {
-        return categories.values();
+    @Override
+    public void markDirty() {
+        super.markDirty();
+        mod.markDirty();
     }
 }

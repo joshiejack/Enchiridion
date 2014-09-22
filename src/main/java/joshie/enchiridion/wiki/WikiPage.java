@@ -2,26 +2,18 @@ package joshie.enchiridion.wiki;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.wiki.elements.Element;
+import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.lib.helpers.ClientHelper;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GLContext;
 
-public class WikiPage {
-    private HashMap<String, WikiContents> translations = new HashMap();
-    private final String key;
-
+public class WikiPage extends WikiPart {
     public WikiPage(String key, String lang, WikiContents contents) {
-        this.key = key;
-        setContents(lang, contents);
-    }
-
-    public void setContents(String lang, WikiContents contents) {
-        translations.put(lang, contents.refreshY());
+        super(key);
+        WikiTitles.instance().addContent(key, contents);
     }
 
     public WikiPage(String key) {
@@ -29,16 +21,12 @@ public class WikiPage {
     }
 
     private WikiCategory category;
-
     public WikiPage setCategory(WikiCategory category) {
         this.category = category;
         return this;
     }
 
-    public String getKey() {
-        return key;
-    }
-
+    @Override
     public String getPath() {
         WikiMod mod = category.getTab().getMod();
         WikiTab tab = category.getTab();
@@ -48,31 +36,35 @@ public class WikiPage {
 
         return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + page.getKey() + "\\" + lang + ".json";
     }
-
-    public String getUnlocalized() {
-        return category.getUnlocalized() + "." + getKey();
+    
+    @Override
+    public void markDirty() {
+        super.markDirty();
+        category.markDirty();
     }
 
-    public String getTitle() {
-        return WikiTitles.instance().translateToLocal(getUnlocalized());
+    @Override
+    public String getUnlocalized() {
+        return category.getUnlocalized() + "." + getKey();
     }
 
     public static final String s = File.separator;
     private Element selected;
     private int scroll;
     private boolean isEditMode;
-    private WikiCategory cat;
 
     public Element getSelected() {
         return selected;
     }
 
     public void add(Element component) {
-        getContent().add(component);
+        getData().add(component);
+        this.markDirty();
     }
 
     public void remove(Element component) {
-        getContent().remove(component);
+        getData().remove(component);
+        this.markDirty();
     }
 
     public boolean isEditMode() {
@@ -89,26 +81,21 @@ public class WikiPage {
         }
 
         this.isEditMode = isEditMode;
+        WikiHelper.clearEditGUIs();
+        GuiLayers.setActive(isEditMode);
     }
 
-    public WikiContents getContent() {
-        String lang = ClientHelper.getLang();
-        WikiContents content = translations.get(lang);
-        if (content == null) content = translations.get("en_US");
-        if (content == null) {
-            content = new WikiContents();
-            translations.put(lang, content);
-        }
-
-        return content;
+    @Override
+    public WikiContents getData() {
+        return WikiTitles.instance().getContent(getUnlocalized() + "." + ClientHelper.getLang());
     }
 
     public void display() {        
-        ArrayList<Element> elements = getContent().getComponents();
+        ArrayList<Element> elements = getData().getComponents();
         for (int i = 0; i < elements.size(); i++) {
             GL11.glPushMatrix();
             GL11.glTranslatef(0F, 0F, ((elements.size() - i) * 120));
-            (elements.get(i)).setWiki(WikiHelper.gui).display((int) getContent().getScroll(), isEditMode);
+            (elements.get(i)).setWiki(WikiHelper.gui).display((int) getData().getScroll(), isEditMode);
             GL11.glPopMatrix();
         }
     }
@@ -151,7 +138,7 @@ public class WikiPage {
             //If we currently have nothing selected
             if (selected == null) {
                 //Loop through all the components, to 'select one'
-                for (Element component : getContent().getComponents()) {
+                for (Element component : getData().getComponents()) {
                     //If the click returns true, then we will set the currently selected item to it
                     if (component.clickButton(x, y, button)) {
                         selected = component;
@@ -163,7 +150,7 @@ public class WikiPage {
                 if (!selected.clickButton(x, y, button)) {
                     selected = null;
                     //Loop through all the components, to 'select one'
-                    for (Element component : getContent().getComponents()) {
+                    for (Element component : getData().getComponents()) {
                         //If the click returns true, then we will set the currently selected item to it
                         if (component.clickButton(x, y, button)) {
                             selected = component;
@@ -186,7 +173,7 @@ public class WikiPage {
             }
         } else {
             //If not edit mode, loop through everything and call release button on them
-            for (Element component : getContent().getComponents()) {
+            for (Element component : getData().getComponents()) {
                 component.releaseButton(x, y, button, false);
             }
         }
@@ -202,6 +189,6 @@ public class WikiPage {
     }
 
     public void scroll(int amount) {
-        getContent().scroll(isEditMode(), amount);
+        getData().scroll(isEditMode(), amount);
     }
 }

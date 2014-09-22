@@ -3,15 +3,13 @@ package joshie.enchiridion.wiki.mode;
 import static joshie.enchiridion.wiki.WikiHelper.gui;
 import static joshie.enchiridion.wiki.gui.GuiMain.button_id;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.List;
 
-import joshie.enchiridion.Enchiridion;
-import joshie.enchiridion.wiki.WikiHelper;
-import joshie.enchiridion.wiki.WikiTitles;
+import joshie.enchiridion.wiki.WikiCategory;
+import joshie.enchiridion.wiki.WikiMod;
+import joshie.enchiridion.wiki.WikiPage;
+import joshie.enchiridion.wiki.WikiRegistry;
+import joshie.enchiridion.wiki.WikiTab;
 import joshie.enchiridion.wiki.mode.edit.EditMode;
 
 public class SaveMode extends WikiMode {
@@ -37,27 +35,31 @@ public class SaveMode extends WikiMode {
         gui.page.setEditMode(false);
         if (isDirty) {
             try {
-                gui.page.getContent().refreshY();
+                for (WikiMod mod : WikiRegistry.instance().getMods()) {
+                    if (mod.isDirty()) {
+                        for (WikiTab tab : mod.getTabs()) {
+                            if (tab.isDirty()) {
+                                for (WikiCategory cat : tab.getCategories()) {
+                                    if (cat.isDirty()) {
+                                        for(WikiPage page: cat.getPages()) {
+                                            if(page.isDirty()) {
+                                                page.getData().refreshY();
+                                                page.save();
+                                            }
+                                        }
+                                        
+                                        cat.save();
+                                    }
+                                }
 
-                {
-                    String path = gui.page.getPath();
-                    File parent = new File(path).getParentFile();
-                    if (!parent.exists() && !parent.mkdirs()) {
-                        throw new IllegalStateException("Couldn't create dir: " + parent);
+                                tab.save();
+                            }
+                        }
+
+                        mod.save();
                     }
-                    
-                    Writer writer = new OutputStreamWriter(new FileOutputStream(path), "UTF-8");
-                    writer.write(WikiHelper.getGson().toJson(gui.page.getContent()));
-                    writer.close();
                 }
-
-                {
-                    String path = Enchiridion.root + "/translations.json";
-                    Writer writer = new OutputStreamWriter(new FileOutputStream(path), "UTF-8");
-                    writer.write(WikiHelper.getGson().toJson(WikiTitles.instance()));
-                    writer.close();
-                }
-
+                
                 isDirty = false;
             } catch (Exception e) {
                 e.printStackTrace();

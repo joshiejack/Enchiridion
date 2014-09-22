@@ -3,12 +3,14 @@ package joshie.enchiridion.wiki;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class WikiMod {
-    private HashMap<String, WikiTab> tabs = new HashMap();
-    private final String key;
+import joshie.enchiridion.Enchiridion;
+import joshie.lib.helpers.ClientHelper;
 
+public class WikiMod extends WikiPart {
+    private HashMap<String, WikiTab> tabs = new HashMap();
+    
     public WikiMod(String key) {
-        this.key = key;
+        super(key);
     }
 
     public WikiTab get(String key) {
@@ -22,19 +24,14 @@ public class WikiMod {
         }
     }
 
-    public String getKey() {
-        return key;
-    }
-
-    public String getUnlocalized() {
-        return getKey();
-    }
-    
-    public String getTitle() {
-        return WikiTitles.instance().translateToLocal(getUnlocalized());
-    }
-
     public Collection<WikiTab> getTabs() {
         return tabs.values();
+    }
+    
+    @Override
+    public String getPath() {
+        WikiMod mod = this;
+        String lang = ClientHelper.getLang();
+        return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + lang + ".json";
     }
 }
