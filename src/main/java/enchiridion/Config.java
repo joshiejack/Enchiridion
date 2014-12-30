@@ -37,7 +37,7 @@ public class Config {
 			TooltipHandler.PRINT = config.get("Settings", "Print Item Codes to the Console", false).getBoolean(false);
 			
 			if(FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-				Config.display_nbt = config.get("Settings", "Debug Mode > Display NBT", true).getBoolean(true);
+				Config.display_nbt = config.get("Settings", "Debug Mode > Display NBT", true).getBoolean(false);
 				GuiGuide.loopRate = config.get("Settings", "Icon Update Rate", 96).getInt();
 			}
 		} catch (Exception e) {
