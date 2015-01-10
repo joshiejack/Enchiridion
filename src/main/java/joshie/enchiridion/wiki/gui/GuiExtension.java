@@ -36,6 +36,10 @@ public abstract class GuiExtension {
         return WikiHelper.height;
     }
     
+    public void drawTexture(int x, int y, int xStart, int yStart, int xEnd, int yEnd) {
+        WikiHelper.drawTexture(x, y, xStart, yStart, xEnd, yEnd);
+    }
+    
     public void drawRect(int x, int y, int x2, int y2, int color) {
         WikiHelper.drawRect(x, y, x2, y2, color);
     }

@@ -10,8 +10,8 @@ import static org.lwjgl.opengl.GL11.GL_BLEND;
 
 import java.util.ArrayList;
 
-import joshie.enchiridion.Configuration;
 import joshie.enchiridion.library.GuiLibrary;
+import joshie.enchiridion.library.GuiShelves;
 import joshie.enchiridion.wiki.elements.Element;
 import joshie.enchiridion.wiki.elements.ElementItem;
 import joshie.enchiridion.wiki.gui.GuiBackground;
@@ -27,7 +27,6 @@ import joshie.enchiridion.wiki.gui.GuiSearch;
 import joshie.enchiridion.wiki.gui.GuiSidebar;
 import joshie.enchiridion.wiki.gui.GuiTabs;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
-import joshie.enchiridion.wiki.mode.DisplayMode;
 import joshie.enchiridion.wiki.mode.SaveMode;
 import joshie.enchiridion.wiki.mode.WikiMode;
 import joshie.lib.helpers.StackHelper;
@@ -82,10 +81,6 @@ public class WikiHelper {
 
     public static void drawScaledText(float scale, String text, int x, int y, int color) {
         gui.drawScaledText(gui.mc, scale, text, x, y, color);
-    }
-
-    public static void drawTexture(int x, int y, int xStart, int yStart, int xEnd, int yEnd) {
-        WikiHelper.gui.drawTexturedModalRect(x, y, xStart, yStart, xEnd, yEnd);
     }
 
     public static void clearEditGUIs() {
@@ -176,14 +171,17 @@ public class WikiHelper {
         library.add(new GuiBackground());
         library.add(new GuiLighting());
         library.add(new GuiLibrary());
+        library.add(new GuiShelves());
         library.add(new GuiLighting());
         library.add(new GuiMode());
         
-        selected = wiki;
+        if(selected == null) {
+            selected = wiki;
+        }
     }
     
     public static boolean isLibrary() {
-        return selected.equals(library);
+        return getGui().equals(library);
     }
 
     public static WikiMod getMod() {
