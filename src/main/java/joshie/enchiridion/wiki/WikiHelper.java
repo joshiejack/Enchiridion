@@ -25,6 +25,8 @@ import joshie.enchiridion.wiki.gui.GuiLighting;
 import joshie.enchiridion.wiki.gui.GuiMain;
 import joshie.enchiridion.wiki.gui.GuiMenu;
 import joshie.enchiridion.wiki.gui.GuiMode;
+import joshie.enchiridion.wiki.gui.GuiScrollbarMenu;
+import joshie.enchiridion.wiki.gui.GuiScrollbarPage;
 import joshie.enchiridion.wiki.gui.GuiSearch;
 import joshie.enchiridion.wiki.gui.GuiSidebar;
 import joshie.enchiridion.wiki.gui.GuiTabs;
@@ -168,6 +170,8 @@ public class WikiHelper {
         wiki.add(new GuiItemSelect());
         wiki.add(new GuiLighting());
         wiki.add(new GuiMenu());
+        wiki.add(new GuiScrollbarMenu());
+        wiki.add(new GuiScrollbarPage());
         wiki.add(new GuiLayers());
         wiki.add(new GuiTextEdit());
         wiki.add(new GuiSearch());
