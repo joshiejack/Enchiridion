@@ -40,7 +40,9 @@ public class WikiData {
                 String search = str.toLowerCase();
                 if (search.startsWith("@")) {
                     if (page.getCategory().getTab().getMod().getTitle().toLowerCase().contains(search.substring(1))) {
-                        sorted.add(page);
+                        if(page.getData().isPrioritised()) {
+                            sorted.add(0, page);
+                        } else sorted.add(page);
                     }
                 } else if (page.getTitle().toLowerCase().contains(search)) {
                     sorted.add(page);

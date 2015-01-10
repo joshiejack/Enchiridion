@@ -120,7 +120,7 @@ public class GuiMain extends GuiScalable {
         theLeft = getLeft();
 
         WikiHelper.updateGUI();
-        for (GuiExtension element : WikiHelper.content) {
+        for (GuiExtension element : WikiHelper.getGui()) {
             element.draw();
         }
 
@@ -164,7 +164,7 @@ public class GuiMain extends GuiScalable {
     @Override
     protected void mouseClicked(int x, int y, int button) {
         if (!clickedButton(x, y, button)) {
-            for (GuiExtension element : WikiHelper.content) {
+            for (GuiExtension element : WikiHelper.getGui()) {
                 element.clicked(button);
             }
         }
@@ -173,7 +173,7 @@ public class GuiMain extends GuiScalable {
     @Override
     protected void mouseMovedOrUp(int x, int y, int button) {
         if (!releasedButton(x, y, button)) {
-            for (GuiExtension element : WikiHelper.content) {
+            for (GuiExtension element : WikiHelper.getGui()) {
                 element.release(button);
             }
         }
@@ -183,7 +183,7 @@ public class GuiMain extends GuiScalable {
     protected void keyTyped(char character, int key) {
         super.keyTyped(character, key);
         page.keyTyped(character, key);
-        for (GuiExtension element : WikiHelper.content) {
+        for (GuiExtension element : WikiHelper.getGui()) {
             element.keyTyped(character, key);
         }
     }
@@ -193,7 +193,7 @@ public class GuiMain extends GuiScalable {
         super.handleMouseInput();
         WikiHelper.updateMouse();
         int wheel = Mouse.getDWheel();
-        for (GuiExtension element : WikiHelper.content) {
+        for (GuiExtension element : WikiHelper.getGui()) {
             if(wheel != 0) {
                 element.scroll(wheel < 0);
             }

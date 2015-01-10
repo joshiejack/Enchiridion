@@ -10,6 +10,7 @@ import static org.lwjgl.opengl.GL11.GL_BLEND;
 
 import java.util.ArrayList;
 
+import joshie.enchiridion.library.GuiLibrary;
 import joshie.enchiridion.wiki.elements.Element;
 import joshie.enchiridion.wiki.elements.ElementItem;
 import joshie.enchiridion.wiki.gui.GuiBackground;
@@ -20,7 +21,9 @@ import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.enchiridion.wiki.gui.GuiLighting;
 import joshie.enchiridion.wiki.gui.GuiMain;
 import joshie.enchiridion.wiki.gui.GuiMenu;
+import joshie.enchiridion.wiki.gui.GuiMode;
 import joshie.enchiridion.wiki.gui.GuiSearch;
+import joshie.enchiridion.wiki.gui.GuiSidebar;
 import joshie.enchiridion.wiki.gui.GuiTabs;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
 import joshie.lib.helpers.StackHelper;
@@ -122,20 +125,47 @@ public class WikiHelper {
         gui.setPage(mod, tab, cat, page);
     }
 
-    public static ArrayList<GuiExtension> content = new ArrayList();
+    private static ArrayList<GuiExtension> wiki = new ArrayList();
+    private static ArrayList<GuiExtension> library = new ArrayList();
+    private static ArrayList<GuiExtension> selected;
+    
+    public static ArrayList<GuiExtension> getGui() {
+        return selected;
+    }
+    
+    public static void switchGui() {
+        if(selected.equals(wiki)) {
+            selected = library;
+        } else selected = wiki;
+    }
 
     public static void init() {
-        content = new ArrayList();
-        content.add(new GuiBackground());
-        content.add(new GuiLighting());
-        content.add(new GuiCanvas());
-        content.add(new GuiTabs());
-        content.add(new GuiItemSelect());
-        content.add(new GuiLighting());
-        content.add(new GuiMenu());
-        content.add(new GuiLayers());
-        content.add(new GuiTextEdit());
-        content.add(new GuiSearch());
+        wiki = new ArrayList();
+        wiki.add(new GuiBackground());
+        wiki.add(new GuiSidebar());
+        wiki.add(new GuiLighting());
+        wiki.add(new GuiCanvas());
+        wiki.add(new GuiTabs());
+        wiki.add(new GuiItemSelect());
+        wiki.add(new GuiLighting());
+        wiki.add(new GuiMenu());
+        wiki.add(new GuiLayers());
+        wiki.add(new GuiTextEdit());
+        wiki.add(new GuiSearch());
+        wiki.add(new GuiMode());
+        
+        library = new ArrayList();
+        library.add(new GuiBackground());
+        library.add(new GuiLighting());
+        library.add(new GuiLibrary());
+        library.add(new GuiLighting());
+        library.add(new GuiMode());
+        
+        selected = wiki;
+    }
+    
+    public static boolean isLibrary() {
+        return selected.equals(library);
     }
 
     public static WikiMod getMod() {

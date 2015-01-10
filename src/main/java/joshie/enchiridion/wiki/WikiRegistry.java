@@ -92,7 +92,7 @@ public class WikiRegistry {
                 }
                 
                 key = key + "." + lang;
-                                
+                
                 Data data = WikiHelper.getGson().fromJson(FileUtils.readFileToString(file), path.length == 3? DataTab.class: Data.class);
                 if(data == null) data = new Data(key);
                 WikiData.instance().addData(key, data);

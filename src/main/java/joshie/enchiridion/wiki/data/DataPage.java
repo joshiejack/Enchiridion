@@ -13,6 +13,8 @@ public class DataPage extends Data {
     private int scrollMax = -1;
     private int maxY = 500;
     private int scroll;
+    @Expose
+    private boolean isPriority;
     
     public DataPage(){}
     public DataPage(String string) {
@@ -75,5 +77,9 @@ public class DataPage extends Data {
     
     public int getScroll() {
         return scroll;
+    }
+    
+    public boolean isPrioritised() {
+        return isPriority;
     }
 }

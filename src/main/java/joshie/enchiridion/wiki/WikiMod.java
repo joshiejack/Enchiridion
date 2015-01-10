@@ -4,7 +4,10 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.wiki.data.DataTab;
+import joshie.enchiridion.wiki.data.WikiData;
 import joshie.lib.helpers.ClientHelper;
+import net.minecraft.item.ItemStack;
 
 public class WikiMod extends WikiPart {
     private HashMap<String, WikiTab> tabs = new HashMap();

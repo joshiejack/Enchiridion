@@ -88,7 +88,6 @@ public class GuiMenu extends GuiExtension implements ITextEditable {
             }
         }
 
-        System.out.println(edit_category);
     }
 
     @Override

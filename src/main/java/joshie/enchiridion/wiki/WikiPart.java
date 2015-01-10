@@ -35,7 +35,6 @@ public class WikiPart {
     }
 
     public void setTranslation(String text) {
-        System.out.println("HI");
         getData().setTranslation(text);
         this.markDirty();
     }

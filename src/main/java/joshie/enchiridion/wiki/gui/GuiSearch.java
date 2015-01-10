@@ -28,9 +28,6 @@ public class GuiSearch extends GuiExtension implements ITextEditable {
         if (getIntFromMouse(920, 1044, -45, -6, 0, 1) == 1) {
             x = 130;
         }
-        
-        drawScaledTexture(texture, 920, -45, x, 104, 124, 39, 1F);
-        drawScaledCentredText(2F, "[b]" + ETranslate.translate("search") + "[/b]", 978, -32, 0xFFFFFF);
 
         if (visible > 0) {
             visible--;
@@ -81,10 +78,6 @@ public class GuiSearch extends GuiExtension implements ITextEditable {
             GuiTextEdit.select(this);
         }
 
-        if (getIntFromMouse(920, 1040, -45, -10, 0, 1) == 1) {
-            WikiData.instance().updateSearch(this.search);
-        }
-
         if (visible > 0) {
             ArrayList<WikiPage> pages = WikiData.instance().getPages();
             if (pages.size() > 0) {
@@ -103,7 +96,7 @@ public class GuiSearch extends GuiExtension implements ITextEditable {
     public void setText(String text) {
         if (EClientProxy.font.getStringWidth(text) <= 130) {
             this.visible = 200;
-            this.search = text;
+            this.search = text.replace("\n", "");
             WikiData.instance().updateSearch(this.search);
         }
     }
