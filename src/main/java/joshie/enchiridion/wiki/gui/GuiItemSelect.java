@@ -1,8 +1,10 @@
 package joshie.enchiridion.wiki.gui;
 
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledStack;
+import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
+import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -76,11 +78,15 @@ public class GuiItemSelect extends GuiExtension implements ITextEditable {
     @Override
     public void draw() {
         if (selectable != null) {
+            //Draw the Search box
+            drawScaledTexture(texture, 0, 1, 0, 147, 254, 39, 1F);
+            drawScaledTexture(texture, 126, 1, 100, 147, 154, 39, 1F);
+            
             if (sorted == null) {
                 updateSearch();
             }
 
-            drawScaledText(2F, GuiTextEdit.getText(this, search), 20, 15, 0xFFFFFFFF);
+            drawScaledText(2F, GuiTextEdit.getText(this, search), 9, 13, 0xFFFFFFFF);
 
             int j = 0;
             int k = 0;

@@ -10,6 +10,7 @@ import static org.lwjgl.opengl.GL11.GL_BLEND;
 
 import java.util.ArrayList;
 
+import joshie.enchiridion.Configuration;
 import joshie.enchiridion.library.GuiLibrary;
 import joshie.enchiridion.wiki.elements.Element;
 import joshie.enchiridion.wiki.elements.ElementItem;
@@ -26,6 +27,9 @@ import joshie.enchiridion.wiki.gui.GuiSearch;
 import joshie.enchiridion.wiki.gui.GuiSidebar;
 import joshie.enchiridion.wiki.gui.GuiTabs;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
+import joshie.enchiridion.wiki.mode.DisplayMode;
+import joshie.enchiridion.wiki.mode.SaveMode;
+import joshie.enchiridion.wiki.mode.WikiMode;
 import joshie.lib.helpers.StackHelper;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.renderer.RenderHelper;
@@ -125,18 +129,32 @@ public class WikiHelper {
         gui.setPage(mod, tab, cat, page);
     }
 
-    private static ArrayList<GuiExtension> wiki = new ArrayList();
-    private static ArrayList<GuiExtension> library = new ArrayList();
+    public static ArrayList<GuiExtension> wiki = new ArrayList();
+    public static ArrayList<GuiExtension> library = new ArrayList();
     private static ArrayList<GuiExtension> selected;
     
     public static ArrayList<GuiExtension> getGui() {
         return selected;
     }
     
-    public static void switchGui() {
-        if(selected.equals(wiki)) {
-            selected = library;
-        } else selected = wiki;
+    /** Switches from the wiki gui to the library gui and vice versa **/
+    public static void switchGui(WikiMode mode, ArrayList<GuiExtension> list) {
+        if(!selected.equals(mode)) {
+            //If the previous mode was Save, then save it
+            if(gui.mode.equals(SaveMode.getInstance())) {
+                SaveMode.getInstance().markDirty();
+            }
+            
+            //Otherwise switch the gui over to the new mode
+            gui.setMode(mode);
+            
+            //Set the selected to this list
+            selected = list;
+        }
+    }
+    
+    public static void switchGui(ArrayList<GuiExtension> list) {
+        switchGui(gui.mode, list);
     }
 
     public static void init() {

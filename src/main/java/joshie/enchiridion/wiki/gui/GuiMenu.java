@@ -21,6 +21,14 @@ public class GuiMenu extends GuiExtension implements ITextEditable {
     public static void clear() {
         isEditing = false;
     }
+    
+    public static void setEditing() {
+        isEditing = true;
+    }
+    
+    public static boolean isEditing() {
+        return isEditing;
+    }
 
     @Override
     public void draw() {

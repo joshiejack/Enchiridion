@@ -198,4 +198,9 @@ public class WikiPage extends WikiPart {
     public void scroll(int amount) {
         getData().scroll(isEditMode(), amount);
     }
+
+    public void switchPriority() {
+        getData().switchPriority();
+        this.markDirty();
+    }
 }

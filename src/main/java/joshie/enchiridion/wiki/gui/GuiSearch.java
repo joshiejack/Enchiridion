@@ -54,7 +54,7 @@ public class GuiSearch extends GuiExtension implements ITextEditable {
         
         drawScaledTexture(texture, 630, -45, 0, 57, 254, 39, 1F);
         drawScaledTexture(texture, 756, -45, 100, 57, 154, 39, 1F);
-        drawScaledText(2F, GuiTextEdit.getText(this, search), 641, -33, 0xFFFFFF);
+        drawScaledText(2F, GuiTextEdit.getText(this, search), 641, -32, 0xFFFFFF);
     }
 
     @Override

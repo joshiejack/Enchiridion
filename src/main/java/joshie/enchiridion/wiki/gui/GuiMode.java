@@ -5,18 +5,11 @@ import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
-import static joshie.lib.helpers.OpenGLHelper.end;
-import static joshie.lib.helpers.OpenGLHelper.start;
-
-import java.util.Collection;
-
+import joshie.enchiridion.Configuration;
 import joshie.enchiridion.lib.ETranslate;
 import joshie.enchiridion.wiki.WikiHelper;
-import joshie.enchiridion.wiki.WikiMod;
-import joshie.enchiridion.wiki.WikiRegistry;
-import joshie.enchiridion.wiki.data.WikiData;
-
-import org.lwjgl.opengl.GL11;
+import joshie.enchiridion.wiki.mode.DisplayMode;
+import joshie.enchiridion.wiki.mode.SaveMode;
 
 public class GuiMode extends GuiExtension {
     public static String search = "";
@@ -55,7 +48,13 @@ public class GuiMode extends GuiExtension {
     @Override
     public void clicked(int button) {
         if (getIntFromMouse(920, 1040, -45, -5, 0, 1) == 1) {
-            WikiHelper.switchGui();
+           if(WikiHelper.isLibrary()) {
+               if (Configuration.EDIT_ENABLED) {
+                   WikiHelper.switchGui(SaveMode.getInstance(), WikiHelper.wiki);
+               } else WikiHelper.switchGui(DisplayMode.getInstance(), WikiHelper.wiki);
+           } else {
+               WikiHelper.switchGui(DisplayMode.getInstance(), WikiHelper.library);
+           }
         }
     }
 }

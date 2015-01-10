@@ -26,7 +26,7 @@ public class SaveMode extends WikiMode {
 
     @Override
     public List addButtons(List list) {
-        list.add(new ButtonSwitchMode(button_id++, 900, 14, 1, 1, "edit", 2F, EditMode.getInstance()));
+        list.add(new ButtonSwitchMode(button_id++, 975, 14, 1, 1, "edit", 2F, EditMode.getInstance()));
         return list;
     }
 

@@ -13,3 +13,6 @@ enchiridion.search=Search
 enchiridion.noresults=No Results...
 enchiridion.library=Library
 enchiridion.wiki=Wiki
+enchiridion.menu=Menu
+enchiridion.priority.add=Star
+enchiridion.priority.remove=Unstar

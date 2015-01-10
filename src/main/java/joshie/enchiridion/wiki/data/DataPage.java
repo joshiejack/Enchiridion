@@ -82,4 +82,8 @@ public class DataPage extends Data {
     public boolean isPrioritised() {
         return isPriority;
     }
+    
+    public void switchPriority() {
+        isPriority = !isPriority;
+    }
 }

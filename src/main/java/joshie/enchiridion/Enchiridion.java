@@ -8,6 +8,7 @@ import static joshie.enchiridion.lib.EnchiridionInfo.MODPATH;
 
 import java.io.File;
 
+import joshie.enchiridion.library.ModBooks;
 import joshie.enchiridion.wiki.WikiRegistry;
 import joshie.enchiridion.wiki.data.Data;
 import joshie.enchiridion.wiki.data.WikiData;
@@ -41,6 +42,7 @@ public class Enchiridion {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.init();
+        ModBooks.init();
     }
 
     @EventHandler
