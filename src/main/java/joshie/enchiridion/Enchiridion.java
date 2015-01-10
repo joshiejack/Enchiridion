@@ -36,7 +36,6 @@ public class Enchiridion {
         proxy.preInit();
 
         WikiRegistry.instance().registerMod(MODID, MODPATH);
-        WikiData.instance().addData("enchiridion.default.basics.menu.en_US", new Data("Menu"));
     }
 
     @EventHandler

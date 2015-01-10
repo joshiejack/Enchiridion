@@ -12,11 +12,13 @@ import java.util.ArrayList;
 
 import joshie.enchiridion.library.GuiLibrary;
 import joshie.enchiridion.library.GuiShelves;
+import joshie.enchiridion.wiki.data.WikiData;
 import joshie.enchiridion.wiki.elements.Element;
 import joshie.enchiridion.wiki.elements.ElementItem;
 import joshie.enchiridion.wiki.gui.GuiBackground;
 import joshie.enchiridion.wiki.gui.GuiCanvas;
 import joshie.enchiridion.wiki.gui.GuiExtension;
+import joshie.enchiridion.wiki.gui.GuiHistory;
 import joshie.enchiridion.wiki.gui.GuiItemSelect;
 import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.enchiridion.wiki.gui.GuiLighting;
@@ -81,6 +83,10 @@ public class WikiHelper {
 
     public static void drawScaledText(float scale, String text, int x, int y, int color) {
         gui.drawScaledText(gui.mc, scale, text, x, y, color);
+    }
+
+    public static void drawTexture(int x, int y, int xStart, int yStart, int xEnd, int yEnd) {
+        gui.drawTexturedModalRect(x, y, xStart, yStart, xEnd, yEnd);
     }
 
     public static void clearEditGUIs() {
@@ -166,6 +172,7 @@ public class WikiHelper {
         wiki.add(new GuiTextEdit());
         wiki.add(new GuiSearch());
         wiki.add(new GuiMode());
+        wiki.add(new GuiHistory());
         
         library = new ArrayList();
         library.add(new GuiBackground());
@@ -252,5 +259,9 @@ public class WikiHelper {
 
     public static void setMod(WikiMod mod) {
         gui.mod = mod;
+    }
+
+    public static void delete() {
+        WikiData.instance().removePage(gui.page);
     }
 }

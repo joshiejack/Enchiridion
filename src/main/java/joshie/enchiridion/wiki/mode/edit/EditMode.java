@@ -25,6 +25,11 @@ public class EditMode extends WikiMode {
     public List addButtons(List list) {
         int yCoord = 50;
         list.add(new ButtonSwitchMode(button_id, 973, 14, 1, 1, "save", 2F, SaveMode.getInstance()));
+        list.add(new ButtonAddPage(button_id, 723, 14, 1, 1, 2F));
+        list.add(new ButtonDeletePage(button_id, 843, 14, 1, 1, 2F));
+        //list.add(new ButtonConfirm(button_id, 933, 14, 1, 1, "yes", 2F));
+        //list.add(new ButtonConfirm(button_id, 933, 14, 1, 1, "no", 2F));
+        //list.add(new ButtonConfirm(button_id, 933, 14, 1, 1, "add", 2F));
         list.add(new ButtonWikiLayersVsMenu(button_id++, 1040, yCoord));
         list.add(new ButtonWikiPriority(button_id++, 1040, yCoord += 50));
         list.add(new ButtonWikiEdit(button_id++, 1040, yCoord += 50, ElementText.class, list));

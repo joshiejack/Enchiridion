@@ -1,7 +1,5 @@
 package joshie.enchiridion.wiki.gui;
 
-import static joshie.enchiridion.wiki.WikiHelper.mouseX;
-import static joshie.enchiridion.wiki.WikiHelper.mouseY;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glScalef;
@@ -13,7 +11,6 @@ import joshie.enchiridion.Configuration;
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.gui.GuiScalable;
 import joshie.enchiridion.lib.EnchiridionInfo;
-import joshie.enchiridion.wiki.WikiCategory;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.WikiMod;
 import joshie.enchiridion.wiki.WikiPage;
@@ -46,7 +43,7 @@ public class GuiMain extends GuiScalable {
     public static WikiMode mode = null;
 
     public void setPage(String mod, String tab, String cat, String page) {
-        this.page = WikiRegistry.instance().getPage(mod, tab, cat, page);
+        GuiHistory.newPage(WikiRegistry.instance().getPage(mod, tab, cat, page));
     }
 
     public void setMode(WikiMode mode) {
@@ -60,9 +57,10 @@ public class GuiMain extends GuiScalable {
         super.initGui();
         WikiHelper.init();
         if (page == null) {
-            page = WikiRegistry.instance().getPage("Enchiridion", "Default", "Basics", "Menu");
-            tab = WikiRegistry.instance().getTab("Enchiridion", "Default");
-            mod = WikiRegistry.instance().getMod("Enchiridion");
+            page = WikiRegistry.instance().getPage("Enchiridion 2", "Enchiridion 2", "Enchiridion 2", "About");
+            tab = WikiRegistry.instance().getTab("Enchiridion 2", "Enchiridion 2");
+            mod = WikiRegistry.instance().getMod("Enchiridion 2");
+            setPage("Enchiridion 2", "Enchiridion 2", "Enchiridion 2", "About");
         }
 
         if (mode == null) {

@@ -79,14 +79,14 @@ public class GuiItemSelect extends GuiExtension implements ITextEditable {
     public void draw() {
         if (selectable != null) {
             //Draw the Search box
-            drawScaledTexture(texture, 0, 1, 0, 147, 254, 39, 1F);
+            drawScaledTexture(texture, 10, 1, 0, 147, 254, 39, 1F);
             drawScaledTexture(texture, 126, 1, 100, 147, 154, 39, 1F);
             
             if (sorted == null) {
                 updateSearch();
             }
 
-            drawScaledText(2F, GuiTextEdit.getText(this, search), 9, 13, 0xFFFFFFFF);
+            drawScaledText(2F, GuiTextEdit.getText(this, search), 19, 13, 0xFFFFFFFF);
 
             int j = 0;
             int k = 0;

@@ -1,10 +1,17 @@
 package joshie.enchiridion.wiki.data;
 
+import static joshie.enchiridion.wiki.WikiHelper.gui;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import joshie.enchiridion.Configuration;
+import joshie.enchiridion.wiki.WikiCategory;
 import joshie.enchiridion.wiki.WikiPage;
+import joshie.enchiridion.wiki.gui.GuiHistory;
+import joshie.enchiridion.wiki.mode.DisplayMode;
+import joshie.enchiridion.wiki.mode.SaveMode;
 import joshie.lib.helpers.ClientHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -26,6 +33,19 @@ public class WikiData {
 
     public void addPage(WikiPage page) {
         pages.add(page);
+    }
+    
+    public void removePage(WikiPage page) {
+        pages.remove(page);
+        translate.remove(page.getUnlocalized() + "." + ClientHelper.getLang());
+        WikiCategory cat = page.getCategory();
+        cat.getPages().remove(page);
+        cat.markDirty();
+        GuiHistory.delete();
+        SaveMode.getInstance().markDirty();
+        if (Configuration.EDIT_ENABLED) {
+            gui.setMode(SaveMode.getInstance());
+        } else gui.setMode(DisplayMode.getInstance());
     }
 
     public ArrayList<WikiPage> getPages() {
@@ -84,7 +104,7 @@ public class WikiData {
         }
     }
 
-    public DataTab getTab(String string) {
+    public DataTab getTab(String string) {        
         DataTab data = (DataTab) translate.get(string);
         if (data != null) {
             return data;
