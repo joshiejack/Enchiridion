@@ -2,6 +2,7 @@ package joshie.enchiridion.wiki.data;
 
 import java.util.ArrayList;
 
+import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.Element;
 
 import com.google.gson.annotations.Expose;
@@ -30,11 +31,27 @@ public class DataPage extends Data {
             }
         }
         
+        //Update the maximum scroll
+        int screenMaxHeight = WikiHelper.height - 235;
+        if(maxY >= screenMaxHeight) {
+            scrollMax = maxY;
+        } else scrollMax = 0;
+        
         return this;
     }
     
     public void scroll(boolean isEditMode, int amount) {        
         scroll = Math.min((isEditMode ? Short.MAX_VALUE: scrollMax >= 0? scrollMax: maxY), Math.max(0, scroll - amount));
+    }
+    
+    public int getScrollMaximum(boolean isEditMode) {
+        int sMax;
+        int screenMaxHeight = WikiHelper.height - 235;
+        if(maxY >= screenMaxHeight) {
+            sMax = maxY;
+        } else sMax = 0;
+        
+        return (isEditMode ? Short.MAX_VALUE: scrollMax >= 0? scrollMax: sMax);
     }
     
     /* Add an element to the components list */

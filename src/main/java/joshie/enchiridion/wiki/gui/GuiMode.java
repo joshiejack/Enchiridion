@@ -47,7 +47,7 @@ public class GuiMode extends GuiExtension {
 
     @Override
     public void clicked(int button) {
-        if (getIntFromMouse(920, 1040, -45, -5, 0, 1) == 1) {
+        if (getIntFromMouse(920, 1040, -45, -6, 0, 1) == 1) {
            if(WikiHelper.isLibrary()) {
                if (Configuration.EDIT_ENABLED) {
                    WikiHelper.switchGui(SaveMode.getInstance(), WikiHelper.wiki);
