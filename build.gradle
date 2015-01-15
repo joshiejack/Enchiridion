@@ -60,7 +60,6 @@ processResources {
 
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
-        exclude '**/*.info'
         exclude '**/*build.properties'
         exclude '**/todolist.txt'
     }
