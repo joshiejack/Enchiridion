@@ -27,17 +27,25 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-version = "1.7.X" + "-" + config.mod_version
-group= "com.github.joshiejack.enchiridion" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "Enchiridion"
+buildnumber = ""
+if (System.getenv().BUILD_NUMBER) {
+    buildnumber = "-" + System.getenv().BUILD_NUMBER
+}
+
+version = config.minecraft_version + "-" + config.mod_version + buildnumber
+group= "com.github.joshie.enchiridion" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "Enchiridion 2"
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
 
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
     assetDir = "eclipse/assets"
 }
 
-processResources
-{
+processResources {
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include '**/*.info'
@@ -53,21 +61,39 @@ processResources
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude '**/*.info'
-        exclude '**/*.properties'
+        exclude '**/*build.properties'
+        exclude '**/todolist.txt'
     }
 }
 
-task sourceJar(type: Jar) {
-    from sourceSets.main.java
-    classifier = 'src'
+jar {
+    archiveName="Enchiridion 2-" + config.minecraft_version + "-" + config.mod_version + buildnumber + ".jar"
 }
 
-task devJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'dev'
+task sourceJar(type: Jar) {
+    archiveName="Enchiridion 2-" + config.minecraft_version + buildnumber + "-src.jar"
+    from sourceSets.main.java
 }
+
+task deobfJar(type: Jar) {
+    archiveName="Enchiridion 2-" + config.minecraft_version + buildnumber + "-deobf.jar"
+    from sourceSets.main.output
+}
+
+task apiJar(type: Jar) {
+    archiveName="Enchiridion 2-API-" + config.minecraft_version + buildnumber + ".jar"
+    from(sourceSets.main.java) {
+        include "joshie/enchiridion/api/**"
+    }
+    
+    classifier = 'api'
+}
+
+maricultureJar.dependsOn('reobf')
+maritechJar.dependsOn('reobf')
 
 artifacts {
-    archives devJar
+    archives deobfJar
+    archives apiJar
     archives sourceJar
 }
