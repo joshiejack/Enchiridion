@@ -97,6 +97,7 @@ public class WikiHelper {
         GuiItemSelect.clear();
         GuiMenu.clear();
         GuiTextEdit.clear();
+        GuiColorEdit.clear();
     }
 
     public static void fixLighting() {
