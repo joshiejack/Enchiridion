@@ -10,8 +10,7 @@ import java.io.File;
 
 import joshie.enchiridion.library.ModBooks;
 import joshie.enchiridion.wiki.WikiRegistry;
-import joshie.enchiridion.wiki.data.Data;
-import joshie.enchiridion.wiki.data.WikiData;
+import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -33,6 +32,7 @@ public class Enchiridion {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         root = new File(event.getModConfigurationDirectory() + separator + MODPATH);
+        EConfig.init(new Configuration(new File(root + File.separator + "enchiridion2.cfg")));
         proxy.preInit();
 
         WikiRegistry.instance().registerMod(MODID, MODPATH);

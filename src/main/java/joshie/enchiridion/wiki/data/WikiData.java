@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import joshie.enchiridion.Configuration;
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.wiki.WikiCategory;
 import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.gui.GuiHistory;
@@ -43,7 +43,7 @@ public class WikiData {
         cat.markDirty();
         GuiHistory.delete();
         SaveMode.getInstance().markDirty();
-        if (Configuration.EDIT_ENABLED) {
+        if (EConfig.EDIT_ENABLED) {
             gui.setMode(SaveMode.getInstance());
         } else gui.setMode(DisplayMode.getInstance());
     }

@@ -7,7 +7,7 @@ import static org.lwjgl.opengl.GL11.glScalef;
 import java.util.ArrayList;
 import java.util.List;
 
-import joshie.enchiridion.Configuration;
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.gui.GuiScalable;
 import joshie.enchiridion.lib.EnchiridionInfo;
@@ -64,7 +64,7 @@ public class GuiMain extends GuiScalable {
         }
 
         if (mode == null) {
-            if (Configuration.EDIT_ENABLED) {
+            if (EConfig.EDIT_ENABLED) {
                 setMode(SaveMode.getInstance());
             } else setMode(DisplayMode.getInstance());
         }

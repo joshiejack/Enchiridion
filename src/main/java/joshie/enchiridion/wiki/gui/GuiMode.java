@@ -5,7 +5,7 @@ import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
-import joshie.enchiridion.Configuration;
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.lib.ETranslate;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.mode.DisplayMode;
@@ -49,7 +49,7 @@ public class GuiMode extends GuiExtension {
     public void clicked(int button) {
         if (getIntFromMouse(920, 1040, -45, -6, 0, 1) == 1) {
            if(WikiHelper.isLibrary()) {
-               if (Configuration.EDIT_ENABLED) {
+               if (EConfig.EDIT_ENABLED) {
                    WikiHelper.switchGui(SaveMode.getInstance(), WikiHelper.wiki);
                } else WikiHelper.switchGui(DisplayMode.getInstance(), WikiHelper.wiki);
            } else {

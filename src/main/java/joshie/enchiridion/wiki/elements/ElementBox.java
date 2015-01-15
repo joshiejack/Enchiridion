@@ -2,15 +2,13 @@ package joshie.enchiridion.wiki.elements;
 
 import java.util.List;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
+import joshie.enchiridion.api.IColorSelectable;
+import joshie.enchiridion.wiki.WikiHelper;
+import joshie.enchiridion.wiki.gui.GuiColorEdit;
 
 import com.google.gson.annotations.Expose;
 
-import joshie.enchiridion.wiki.WikiHelper;
-import joshie.enchiridion.wiki.gui.GuiMain;
-
-public class ElementBox extends Element {
+public class ElementBox extends Element implements IColorSelectable {
     @Expose
     private int color = 0xFFFFFFFF;
     
@@ -49,11 +47,17 @@ public class ElementBox extends Element {
     
     @Override
     public void onSelected(int x, int y) {
-        
+        GuiColorEdit.select(this);
     }
     
     @Override
     public void onDeselected() {
+        markDirty();
+    }
+
+    @Override
+    public void setColor(int hex) {
+        this.color = hex;
         markDirty();
     }
 }
