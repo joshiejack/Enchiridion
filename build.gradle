@@ -71,26 +71,16 @@ jar {
 }
 
 task sourceJar(type: Jar) {
-    archiveName="Enchiridion 2-" + config.minecraft_version + buildnumber + "-src.jar"
+    archiveName="Enchiridion 2-" + config.minecraft_version + "-" + config.mod_version + buildnumber + "-src.jar"
     from sourceSets.main.java
 }
 
 task deobfJar(type: Jar) {
-    archiveName="Enchiridion 2-" + config.minecraft_version + buildnumber + "-deobf.jar"
+    archiveName="Enchiridion 2-" + config.minecraft_version + "-" + config.mod_version + buildnumber + "-deobf.jar"
     from sourceSets.main.output
-}
-
-task apiJar(type: Jar) {
-    archiveName="Enchiridion 2-API-" + config.minecraft_version + buildnumber + ".jar"
-    from(sourceSets.main.java) {
-        include "joshie/enchiridion/api/**"
-    }
-    
-    classifier = 'api'
 }
 
 artifacts {
     archives deobfJar
-    archives apiJar
     archives sourceJar
 }
