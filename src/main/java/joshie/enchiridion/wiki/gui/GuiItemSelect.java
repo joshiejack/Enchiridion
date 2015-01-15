@@ -17,7 +17,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class GuiItemSelect extends GuiExtension implements ITextEditable {
+public class GuiItemSelect extends GuiExtension implements ITextEditable, IGuiDisablesMenu {
     public static IItemSelectable selectable = null;
     private static ArrayList<ItemStack> items;
     private static ArrayList<ItemStack> sorted;

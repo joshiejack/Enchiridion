@@ -5,18 +5,23 @@ import java.util.List;
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.wiki.WikiHelper;
+import joshie.enchiridion.wiki.gui.GuiMenu;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
+import joshie.enchiridion.wiki.gui.IGuiDisablesMenu;
 import joshie.enchiridion.wiki.mode.ButtonBase;
 import joshie.enchiridion.wiki.mode.edit.ButtonWikiTextEdit;
-import joshie.enchiridion.wiki.mode.edit.ButtonWikiTextEffects;
+import joshie.enchiridion.wiki.mode.edit.ButtonWikiTextMode;
 import joshie.enchiridion.wiki.mode.edit.ButtonWikiTextSize;
-import joshie.lib.util.Text;
+import joshie.lib.helpers.OpenGLHelper;
 
 import org.lwjgl.opengl.GL11;
 
 import com.google.gson.annotations.Expose;
 
-public class ElementText extends Element implements ITextEditable {
+public class ElementText extends Element implements ITextEditable, IGuiDisablesMenu {
+    //Whether text elements should display bbcode or display the formatted text
+    public static boolean showBBCode = true;
+
     @Expose
     private String text = "";
     private boolean init;
@@ -37,32 +42,38 @@ public class ElementText extends Element implements ITextEditable {
 
         GL11.glPushMatrix();
         GL11.glScalef(size, size, size);
-        EClientProxy.font.drawSplitString(GuiTextEdit.getText(this, text), (int) ((WikiHelper.theLeft + BASE_X + left) / size), ((int) ((WikiHelper.theTop + BASE_Y + top) / size)), (int) ((width * 2) / size) + 4, 0xFFFFFFFF);
+        if (showBBCode && isEditMode) {
+            EClientProxy.font.drawUnformattedSplitString(GuiTextEdit.getText(this, text), (int) ((WikiHelper.theLeft + BASE_X + left) / size), ((int) ((WikiHelper.theTop + BASE_Y + top) / size)), (int) ((width * 2) / size) + 4, 0xFFFFFFFF);
+        } else {
+            EClientProxy.font.drawSplitString(GuiTextEdit.getText(this, text), (int) ((WikiHelper.theLeft + BASE_X + left) / size), ((int) ((WikiHelper.theTop + BASE_Y + top) / size)), (int) ((width * 2) / size) + 4, 0xFFFFFFFF);
+        }
+
         GL11.glPopMatrix();
     }
 
     @Override
     public void addEditButtons(List list) {
-        /* int yCoord = 50;
-        list.add(new ButtonWikiTextEffects(wiki, wiki.button_id++, 75, yCoord, Text.END, "disable"));
-        list.add(new ButtonWikiTextEffects(wiki, wiki.button_id++, 75, yCoord += 50, Text.BOLD, "bold"));
-        list.add(new ButtonWikiTextEffects(wiki, wiki.button_id++, 75, yCoord += 50, Text.ITALIC, "italics"));
-        list.add(new ButtonWikiTextEffects(wiki, wiki.button_id++, 75, yCoord += 50, Text.UNDERLINE, "underline"));
-        list.add(new ButtonWikiTextEffects(wiki, wiki.button_id++, 75, yCoord += 50, Text.STRIKETHROUGH, "strikethrough"));
-        list.add(new ButtonWikiTextEffects(wiki, wiki.button_id++, 75, yCoord += 50, Text.OBFUSCATED, "obfuscated"));
+        int yCoord = 10;
+        list.add(new ButtonWikiTextMode(wiki, wiki.button_id++, 75, yCoord += 50, "mode"));
+        list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, 0.01F, "larger.slightly"));
         list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, 0.1F, "larger"));
-        list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, -0.1F, "smaller")); */
+        list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, 0.5F, "larger.greatly"));
+        list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, -0.01F, "smaller.slightly"));
+        list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, -0.1F, "smaller"));
+        list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, -0.5F, "smaller.greatly"));
     }
 
     @Override
-    public void onSelected() {
+    public void onSelected(int x, int y) {
+        WikiHelper.clearEditGUIs();
+        
         for (ButtonBase button : wiki.buttons) {
             if (button instanceof ButtonWikiTextEdit) {
                 button.visible = true;
             }
         }
 
-        GuiTextEdit.select(this);
+        GuiTextEdit.select(this, getText().length());
     }
 
     @Override

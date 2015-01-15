@@ -35,7 +35,7 @@ public class ElementImage extends Element {
     }
     
     @Override
-    public void onSelected() {
+    public void onSelected(int x, int y) {
         // TODO Auto-generated method stub
         
     }

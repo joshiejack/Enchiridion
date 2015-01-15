@@ -86,7 +86,7 @@ public class ElementItem extends Element implements IItemSelectable {
     }
 
     @Override
-    public void onSelected() {
+    public void onSelected(int x, int y) {
         GuiItemSelect.select(this);
     }
     

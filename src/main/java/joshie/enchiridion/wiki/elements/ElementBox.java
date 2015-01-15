@@ -48,7 +48,7 @@ public class ElementBox extends Element {
     }
     
     @Override
-    public void onSelected() {
+    public void onSelected(int x, int y) {
         
     }
     

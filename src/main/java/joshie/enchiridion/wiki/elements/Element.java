@@ -2,8 +2,11 @@ package joshie.enchiridion.wiki.elements;
 
 import java.util.List;
 
+import org.lwjgl.opengl.GL11;
+
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiMain;
+import joshie.lib.helpers.OpenGLHelper;
 
 import com.google.gson.annotations.Expose;
 
@@ -55,13 +58,14 @@ public abstract class Element {
     public void display(int scroll, boolean isEditMode) {
         this.scroll = scroll;
         recalculate();
+
         if (isEditMode && isSelected) {
             WikiHelper.drawRect((int) (BASE_X + left - (size * 4)), (int) (BASE_Y + top - (size * 4)), BASE_X + left, BASE_Y + top, 0xFF2693FF);
             WikiHelper.drawRect(BASE_X + right, (int) (BASE_Y + top - (size * 4)), (int) (BASE_X + right + (size * 4)), BASE_Y + top, 0xFF2693FF);
             WikiHelper.drawRect((int) (BASE_X + left - (size * 4)), BASE_Y + bottom, BASE_X + left, (int) (BASE_Y + bottom + (size * 4)), 0xFF2693FF);
             WikiHelper.drawRect(BASE_X + right, BASE_Y + bottom, (int) (BASE_X + right + (size * 4)), (int) (BASE_Y + bottom + (size * 4)), 0XFFFFFF00);
         }
-
+        
         display(isEditMode);
     }
     
@@ -78,7 +82,7 @@ public abstract class Element {
         return;
     }
 
-    public void onSelected() {
+    public void onSelected(int x, int y) {
         return;
     }
 
@@ -175,6 +179,9 @@ public abstract class Element {
 
     //Return true if the item has been selected, Return false if it has been deselected
     public boolean clickButton(int x, int y, int button) {
+        int relX = x - this.x;
+        int relY = y - this.y;
+        
         if (button == 0) {
             if (isSelected) {
                 if (x <= 0) {
@@ -183,13 +190,13 @@ public abstract class Element {
                     isSelected = isDragging = true;
                     lastX = x;
                     lastY = y;
-                    onSelected();
+                    onSelected(relX, relY);
                     return true;
                 } else if (isMouseOver(x, y)) {
                     isSelected = isMoving = true;
                     lastX = x;
                     lastY = y;
-                    onSelected();
+                    onSelected(relX, relY);
                     return true;
                 } else {
                     isSelected = false;
@@ -201,13 +208,14 @@ public abstract class Element {
                     isSelected = isDragging = true;
                     lastX = x;
                     lastY = y;
-                    onSelected();
+                    onSelected(relX, relY);
                     return true;
                 } else if (isMouseOver(x, y)) {
                     isSelected = isMoving = true;
                     lastX = x;
                     lastY = y;
-                    onSelected();
+                    onSelected(relX, relY);
+                    System.out.println("CLICKED INSIDE");
                     return true;
                 } else return false;
             }

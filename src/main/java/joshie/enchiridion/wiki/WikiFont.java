@@ -194,7 +194,7 @@ public class WikiFont extends FontRenderer {
                     GL11.glEnable(GL11.GL_TEXTURE_2D);
                 }
 
-                if (this.cursor) {        
+                if (this.cursor) {                            
                     float red = (0xCCCCCC >> 16 & 255) / 255.0F;
                     float green = (0xCCCCCC >> 8 & 255) / 255.0F;
                     float blue = (0xCCCCCC & 255) / 255.0F;
@@ -270,6 +270,13 @@ public class WikiFont extends FontRenderer {
             clone = clone.replace(character.search, "" + character.character);
         }
 
+        super.drawSplitString(clone, x, y, length, color);
+    }
+
+    public void drawUnformattedSplitString(String string, int x, int y, int length, int color) {
+        String clone = new StringBuilder(string + CharReplace.HIDE.character).toString();
+        clone = clone.replace(CharReplace.CURSOR.search, "" + CharReplace.CURSOR.character);
+        clone = clone.replace(CharReplace.CURSOR_HIDE.search, "" + CharReplace.CURSOR_HIDE.character);
         super.drawSplitString(clone, x, y, length, color);
     }
 }

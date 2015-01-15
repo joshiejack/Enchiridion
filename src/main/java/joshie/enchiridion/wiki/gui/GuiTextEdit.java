@@ -17,15 +17,19 @@ public class GuiTextEdit extends GuiExtension {
         GuiTextEdit.position = 0;
         GuiMenu.isEditing = false;
     }
-
+    
     public static void select(ITextEditable editable) {
-        if(!(editable instanceof GuiItemSelect)) {
+        select(editable, editable.getText().length());
+    }
+
+    public static void select(ITextEditable editable, int position) {
+        if(!(editable instanceof IGuiDisablesMenu)) {
             WikiHelper.clearEditGUIs();
             GuiMenu.isEditing = true;
         }
         
         GuiTextEdit.editable = editable;
-        GuiTextEdit.position = editable.getText().length();
+        GuiTextEdit.position = position;
     }
 
     @Override

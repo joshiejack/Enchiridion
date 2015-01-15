@@ -16,7 +16,7 @@ import org.lwjgl.input.Keyboard;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class EClientProxy extends ECommonProxy {
-    public static FontRenderer font;
+    public static WikiFont font;
 
     @Override
     public void setupClient() {

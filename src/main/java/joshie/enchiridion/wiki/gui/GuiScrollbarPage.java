@@ -22,7 +22,7 @@ public class GuiScrollbarPage extends GuiScrollbar {
 
     @Override
     public int getScrollbarHeight() {
-        int scrollbarMaximum = getHeight() - 235; //Maximum Height of the Scrollbar aka 100%
+        int scrollbarMaximum = getHeight() - 235; //Maximum Height of the Scrollbar aka 100% USE UR BRAIN FOR SOME MATHS BOY
         return scrollbarMaximum;
     }
 

@@ -26,6 +26,7 @@ import org.lwjgl.opengl.GL11;
 import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.data.WikiData;
 import joshie.enchiridion.wiki.elements.Element;
+import joshie.lib.helpers.OpenGLHelper;
 
 public class GuiCanvas extends GuiExtension {
     @Override

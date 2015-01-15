@@ -7,13 +7,13 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.wiki.data.DataPage;
 import joshie.enchiridion.wiki.data.WikiData;
 import joshie.enchiridion.wiki.elements.Element;
-import joshie.enchiridion.wiki.gui.GuiExtension;
+import joshie.enchiridion.wiki.elements.ElementItem;
 import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.lib.helpers.ClientHelper;
 
 import org.lwjgl.opengl.GL11;
 
-public class WikiPage extends WikiPart {
+public class WikiPage extends WikiPart {    
     public WikiPage(String key, String lang, DataPage contents) {
         super(key);
         WikiData.instance().addData(key, contents);
@@ -97,7 +97,9 @@ public class WikiPage extends WikiPart {
         return WikiData.instance().getPage(getUnlocalized() + "." + ClientHelper.getLang());
     }
 
-    public void display() {        
+    public void display() {       
+        //Render a null stack, to fix stuff
+        WikiHelper.renderStack(null, 0, 0);
         ArrayList<Element> elements = getData().getComponents();
         for (int i = 0; i < elements.size(); i++) {
             GL11.glPushMatrix();

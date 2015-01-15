@@ -65,7 +65,7 @@ public class ElementLink extends Element implements ITextEditable {
     }
 
     @Override
-    public void onSelected() {
+    public void onSelected(int x, int y) {
         GuiTextEdit.select(this);
     }
 
