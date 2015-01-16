@@ -5,6 +5,7 @@ import static joshie.enchiridion.lib.EnchiridionInfo.JAVAPATH;
 import static joshie.enchiridion.lib.EnchiridionInfo.MODID;
 import static joshie.enchiridion.lib.EnchiridionInfo.MODNAME;
 import static joshie.enchiridion.lib.EnchiridionInfo.MODPATH;
+import static joshie.enchiridion.lib.EnchiridionInfo.VERSION;
 
 import java.io.File;
 
@@ -20,7 +21,7 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = MODID, name = MODNAME)
+@Mod(modid = MODID, name = MODNAME, version = VERSION)
 public class Enchiridion {
     @SidedProxy(clientSide = JAVAPATH + "EClientProxy", serverSide = JAVAPATH + "ECommonProxy")
     public static ECommonProxy proxy;
