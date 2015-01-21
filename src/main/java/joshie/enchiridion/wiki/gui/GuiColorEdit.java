@@ -84,7 +84,7 @@ public class GuiColorEdit extends GuiExtension implements ITextEditable, IGuiDis
             if(this.selectable != null) {
                 try {
                     this.selectable.setColor((int) Long.parseLong(hex, 16));
-                } catch (Exception e) { e.printStackTrace(); System.out.println( "ERROR");}
+                } catch (Exception e) { e.printStackTrace(); }
             }
         } else this.hex = text;
     }

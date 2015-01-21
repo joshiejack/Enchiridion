@@ -63,9 +63,7 @@ public class WikiPart {
             if (!parent.exists() && !parent.mkdirs()) {
                 throw new IllegalStateException("Couldn't create dir: " + parent);
             }
-            
-            System.out.println(getPath());
-    
+                
             Writer writer = new OutputStreamWriter(new FileOutputStream(getPath()), "UTF-8");
             writer.write(WikiHelper.getGson().toJson(getData()));
             writer.close();
