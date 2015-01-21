@@ -35,35 +35,24 @@ public class Enchiridion {
         root = new File(event.getModConfigurationDirectory() + separator + MODPATH);
         EConfig.init(new Configuration(new File(root + File.separator + "enchiridion2.cfg")));
         proxy.preInit();
-
-        WikiRegistry.instance().registerMod(MODID, MODPATH);
+        
+        //Search through all the mods for relevant pages
+        WikiRegistry.instance().registerMods();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.init();
-        ModBooks.init();
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit();
+        ModBooks.init();
     }
 
     @EventHandler
     public void onReceiveIntercomMessage(FMLInterModComms.IMCEvent event) {
-        for (FMLInterModComms.IMCMessage message : event.getMessages()) {
-            if (message.key.equalsIgnoreCase("registerMod")) {
-                if (message.isStringMessage()) {
-                    String value = message.getStringValue();
-                    String[] split = value.split("$");
-                    if(split.length == 2) {
-                        WikiRegistry.instance().registerMod(split[0], split[1]);
-                    } else {
-                        WikiRegistry.instance().registerMod(value, "assets/" + value + "/wiki/");
-                    }
-                }
-            }
-        }
+        
     }
 }

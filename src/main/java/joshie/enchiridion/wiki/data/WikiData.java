@@ -105,13 +105,13 @@ public class WikiData {
     }
 
     public DataTab getTab(String string) {        
-        DataTab data = (DataTab) translate.get(string);
-        if (data != null) {
-            return data;
-        } else {
+    	Data data = translate.get(string);
+    	if(data instanceof DataTab) {
+    		return (DataTab) data;
+    	} else {
             data = new DataTab(string, new ItemStack(Blocks.stone));
             translate.put(string, data);
-            return data;
+            return (DataTab) data;
         }
     }
 }

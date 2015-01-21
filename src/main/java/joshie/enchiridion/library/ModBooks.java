@@ -11,11 +11,13 @@ public class ModBooks {
     public static void init() {
         if(Loader.isModLoaded("Mariculture")) {
             guide = GameRegistry.findItem("Mariculture", "guide");
-            LibraryRegistry.registerSwitch(new ItemStack(guide, 1, 0));
-            LibraryRegistry.registerSwitch(new ItemStack(guide, 1, 1));
-            LibraryRegistry.registerSwitch(new ItemStack(guide, 1, 2));
-            LibraryRegistry.registerSwitch(new ItemStack(guide, 1, 3));
-            LibraryRegistry.registerSwitch(new ItemStack(guide, 1, 4));
+            if(guide != null) {
+	            LibraryRegistry.registerSwitch(new ItemStack(guide, 1, 0));
+	            LibraryRegistry.registerSwitch(new ItemStack(guide, 1, 1));
+	            LibraryRegistry.registerSwitch(new ItemStack(guide, 1, 2));
+	            LibraryRegistry.registerSwitch(new ItemStack(guide, 1, 3));
+	            LibraryRegistry.registerSwitch(new ItemStack(guide, 1, 4));
+            }
         }
     }
 }

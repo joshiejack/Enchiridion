@@ -4,7 +4,9 @@ import static joshie.enchiridion.wiki.WikiHelper.gui;
 
 import java.util.List;
 
+import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.Element;
+import joshie.enchiridion.wiki.gui.GuiCanvas;
 import joshie.enchiridion.wiki.mode.ButtonBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

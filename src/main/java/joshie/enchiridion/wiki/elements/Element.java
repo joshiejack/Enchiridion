@@ -147,14 +147,14 @@ public abstract class Element {
     }
 
     protected boolean isMouseOver(int x, int y) {
-        return y > -15 && x >= left && x <= right && y >= top && y <= bottom;
+        return y > -250 && x >= left && x <= right && y >= top && y <= bottom;
     }
 
     /** The stuff shall follow the almighty cursor **/
     public void follow(int x, int y) {
         if (isMoving) {
             this.x += (x - lastX);
-            this.y += (y - lastY);
+            this.y += (y - lastY);            
             this.lastX = x;
             this.lastY = y;
         } else if (isDragging) {
@@ -178,7 +178,7 @@ public abstract class Element {
     }
 
     //Return true if the item has been selected, Return false if it has been deselected
-    public boolean clickButton(int x, int y, int button) {
+    public boolean clickButton(int x, int y, int button) {    	
         int relX = x - this.x;
         int relY = y - this.y;
         
@@ -215,7 +215,6 @@ public abstract class Element {
                     lastX = x;
                     lastY = y;
                     onSelected(relX, relY);
-                    System.out.println("CLICKED INSIDE");
                     return true;
                 } else return false;
             }

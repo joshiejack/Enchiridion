@@ -35,7 +35,9 @@ import joshie.enchiridion.wiki.gui.GuiTextEdit;
 import joshie.enchiridion.wiki.mode.SaveMode;
 import joshie.enchiridion.wiki.mode.WikiMode;
 import joshie.lib.helpers.StackHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -180,7 +182,7 @@ public class WikiHelper {
         wiki.add(new GuiSearch());
         wiki.add(new GuiMode());
         wiki.add(new GuiHistory());
-        
+
         library = new ArrayList();
         library.add(new GuiBackground());
         library.add(new GuiLighting());

@@ -3,7 +3,9 @@ package joshie.enchiridion.wiki.data;
 import java.util.ArrayList;
 
 import joshie.enchiridion.wiki.WikiHelper;
+import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.elements.Element;
+import joshie.enchiridion.wiki.elements.ElementImage;
 
 import com.google.gson.annotations.Expose;
 
@@ -21,6 +23,16 @@ public class DataPage extends Data {
     public DataPage(String string) {
         super(string);
     }
+    
+    //Runs through all the elements and calculates
+	public void cacheImages(WikiPage page) {
+		for(Element e: components) {
+			if(e instanceof ElementImage) {
+				//Now that we have worked out that the element is an image, load the image and cache it
+				((ElementImage) e).loadImage(page);
+			}
+		}
+	}
     
     public DataPage refreshY() {
         maxY = 0;
