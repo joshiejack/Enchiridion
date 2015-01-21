@@ -9,14 +9,14 @@ import joshie.enchiridion.wiki.elements.ElementImage;
 
 import com.google.gson.annotations.Expose;
 
-public class DataPage extends Data {
-    @Expose
+public class DataPage extends Data {	
+    @Expose //Full list of elements
     private ArrayList<Element> components = new ArrayList();
-    @Expose
+    @Expose //The maximum Scroll
     private int scrollMax = -1;
     private int maxY = 500;
     private int scroll;
-    @Expose
+    @Expose //Whether this page shows at the top of search
     private boolean isPriority;
     
     public DataPage(){}
@@ -68,12 +68,12 @@ public class DataPage extends Data {
     
     /* Add an element to the components list */
     public void add(Element element) {
-        components.add(element);
+    	components.add(element);
     }
     
     /* Remove an element from the components list */
     public void remove(Element element) {
-        components.remove(element);
+    	components.remove(element);
     }
     
     public int getKey(Element element) {

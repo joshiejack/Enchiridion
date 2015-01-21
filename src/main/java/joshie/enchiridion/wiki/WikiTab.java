@@ -3,6 +3,8 @@ package joshie.enchiridion.wiki;
 import java.util.Collection;
 import java.util.HashMap;
 
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.wiki.data.DataTab;
 import joshie.enchiridion.wiki.data.WikiData;
@@ -46,13 +48,20 @@ public class WikiTab extends WikiPart {
     public String getUnlocalized() {
         return mod.getUnlocalized() + "." + getKey();
     }
-
+    
     @Override
     public String getPath() {
-        WikiMod mod = getMod();
+    	WikiMod mod = getMod();
         WikiTab tab = this;
         String lang = ClientHelper.getLang();
-        return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + lang + ".json";
+        
+        String dir = getData().getSaveDirectory();
+        if(dir.equals("")) {
+        	return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey()  + "\\" + lang + ".json";
+        } else {
+        	String root = Enchiridion.root.getParentFile().getParentFile().getParentFile().toString();
+        	return root + "\\src\\main\\resources\\assets\\" + dir + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + lang + ".json";
+        }
     }
     
     @Override

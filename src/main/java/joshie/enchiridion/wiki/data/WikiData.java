@@ -77,8 +77,8 @@ public class WikiData {
 
     public String translateToLocal(String unlocalized) {
         String ret = getData(unlocalized + "." + ClientHelper.getLang()).getLocalisation();
-        if (ret == null || ret.equals(unlocalized + "." + ClientHelper.getLang())) {
-            return StatCollector.translateToLocal(unlocalized);
+        if (ret == null || ret.equals(unlocalized + "." + ClientHelper.getLang()) || ret.equals("")) {
+            return StatCollector.translateToLocal("wiki." + unlocalized.replace(" ", "").toLowerCase());
         } else return ret;
     }
 

@@ -163,7 +163,7 @@ public class WikiHelper {
     public static void switchGui(ArrayList<GuiExtension> list) {
         switchGui(gui.mode, list);
     }
-
+    
     public static void init() {
         wiki = new ArrayList();
         wiki.add(new GuiBackground());

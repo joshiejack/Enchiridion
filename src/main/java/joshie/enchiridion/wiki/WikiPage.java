@@ -13,6 +13,9 @@ import joshie.lib.helpers.ClientHelper;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
+
 public class WikiPage extends WikiPart {    
     public WikiPage(String key, String lang, DataPage contents) {
         super(key);
@@ -40,8 +43,14 @@ public class WikiPage extends WikiPart {
         WikiCategory cat = category;
         WikiPage page = this;
         String lang = ClientHelper.getLang();
-
-        return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + page.getKey() + "\\" + lang + ".json";
+                
+        String dir = getData().getSaveDirectory();
+        if(dir.equals("")) {        	
+        	return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + page.getKey() + "\\" + lang + ".json";
+        } else {
+        	String root = Enchiridion.root.getParentFile().getParentFile().getParentFile().toString();
+        	return root + "\\src\\main\\resources\\assets\\" + dir + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + page.getKey() + "\\" + lang + ".json";
+        }
     }
     
     @Override
@@ -65,17 +74,21 @@ public class WikiPage extends WikiPart {
     }
 
     public void add(Element component) {
-        getData().add(component);
-        this.markDirty();
+    	if(isEditMode()) {
+	        getData().add(component);
+	        this.markDirty();
+    	}
     }
 
     public void remove(Element component) {
-        getData().remove(component);
-        this.markDirty();
+    	if(isEditMode()) {
+	        getData().remove(component);
+	        this.markDirty();
+    	}
     }
 
     public boolean isEditMode() {
-        return isEditMode;
+        return isEditMode && getData().canEdit();
     }
 
     public void setEditMode(boolean isEditMode) {

@@ -7,6 +7,7 @@ import static joshie.lib.helpers.OpenGLHelper.end;
 import static joshie.lib.helpers.OpenGLHelper.scale;
 import static joshie.lib.helpers.OpenGLHelper.start;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.glScalef;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -112,6 +113,7 @@ public class ElementImage extends Element {
     	start();
         enable(GL_BLEND);
         ClientHelper.bindTexture(resource);
+        glScalef(scaleX, scaleY, 1.0F);
         WikiHelper.drawTexture(WikiHelper.getScaledX(x, scaleX), WikiHelper.getScaledY(y, scaleY), 0, 0, width * 2, height * 2);
         disable(GL_BLEND);
         end();

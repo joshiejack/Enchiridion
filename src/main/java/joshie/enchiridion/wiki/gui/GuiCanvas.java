@@ -22,21 +22,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import joshie.enchiridion.wiki.elements.Element;
 
-public class GuiCanvas extends GuiExtension {
-	public static boolean BUFFER_FIXED = false;
-	
-	public GuiCanvas() {
-		BUFFER_FIXED = false;
-	}
-	
+public class GuiCanvas extends GuiExtension {	
     @Override
     public void draw() {  
-    	if(!BUFFER_FIXED) {
-        	OpenGlHelper.func_153186_a(OpenGlHelper.field_153199_f, org.lwjgl.opengl.EXTPackedDepthStencil.GL_DEPTH24_STENCIL8_EXT, Minecraft.getMinecraft().getFramebuffer().framebufferTextureWidth, Minecraft.getMinecraft().getFramebuffer().framebufferHeight);
-            OpenGlHelper.func_153190_b(OpenGlHelper.field_153198_e, org.lwjgl.opengl.EXTFramebufferObject.GL_DEPTH_ATTACHMENT_EXT, OpenGlHelper.field_153199_f, Minecraft.getMinecraft().getFramebuffer().depthBuffer);
-            OpenGlHelper.func_153190_b(OpenGlHelper.field_153198_e, org.lwjgl.opengl.EXTFramebufferObject.GL_STENCIL_ATTACHMENT_EXT, OpenGlHelper.field_153199_f, Minecraft.getMinecraft().getFramebuffer().depthBuffer);
-            BUFFER_FIXED = true;
-    	}
+        OpenGlHelper.func_153186_a(OpenGlHelper.field_153199_f, org.lwjgl.opengl.EXTPackedDepthStencil.GL_DEPTH24_STENCIL8_EXT, Minecraft.getMinecraft().getFramebuffer().framebufferTextureWidth, Minecraft.getMinecraft().getFramebuffer().framebufferHeight);
+        OpenGlHelper.func_153190_b(OpenGlHelper.field_153198_e, org.lwjgl.opengl.EXTFramebufferObject.GL_DEPTH_ATTACHMENT_EXT, OpenGlHelper.field_153199_f, Minecraft.getMinecraft().getFramebuffer().depthBuffer);
+        OpenGlHelper.func_153190_b(OpenGlHelper.field_153198_e, org.lwjgl.opengl.EXTFramebufferObject.GL_STENCIL_ATTACHMENT_EXT, OpenGlHelper.field_153199_f, Minecraft.getMinecraft().getFramebuffer().depthBuffer);
     	
         glPushMatrix();
         glEnable(GL_BLEND);

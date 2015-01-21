@@ -4,10 +4,9 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import joshie.enchiridion.Enchiridion;
-import joshie.enchiridion.wiki.data.DataTab;
-import joshie.enchiridion.wiki.data.WikiData;
 import joshie.lib.helpers.ClientHelper;
-import net.minecraft.item.ItemStack;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
 
 public class WikiMod extends WikiPart {
     private HashMap<String, WikiTab> tabs = new HashMap();
@@ -33,8 +32,15 @@ public class WikiMod extends WikiPart {
     
     @Override
     public String getPath() {
-        WikiMod mod = this;
+    	WikiMod mod = this;
         String lang = ClientHelper.getLang();
-        return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + lang + ".json";
+        
+        String dir = getData().getSaveDirectory();
+        if(dir.equals("")) {
+        	return Enchiridion.root + "\\wiki\\" + mod.getKey()  + "\\" + lang + ".json";
+        } else {
+        	String root = Enchiridion.root.getParentFile().getParentFile().getParentFile().toString();
+        	return root + "\\src\\main\\resources\\assets\\" + dir + "\\wiki\\" + mod.getKey() + "\\" + lang + ".json";
+        }
     }
 }

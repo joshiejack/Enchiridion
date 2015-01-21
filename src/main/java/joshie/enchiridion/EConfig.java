@@ -7,6 +7,7 @@ import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Level;
 
 public class EConfig {
+	public static String DEFAULT_DIR = "";
     public static boolean EDIT_ENABLED = true;
     private static ArrayList<String> colors = new ArrayList();
     private static final String[] default_colors = new String[] {   "000000", "000080", "00008B", "0000CD",
@@ -31,6 +32,7 @@ public class EConfig {
             String[] color_list = config.get("Settings", "Edit Mode Colours", default_colors, 
                     "This is a list of the colours to show up in edit mode by default").getStringList();
             EDIT_ENABLED = config.get("Settings", "Enable Wiki Editing", true).getBoolean(true);
+            DEFAULT_DIR = config.get("Settings", "Default Save Folder", "").getString();
             for(String color: color_list) {
                 addColor(color);
             }

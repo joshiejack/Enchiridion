@@ -32,8 +32,7 @@ public class SaveMode extends WikiMode {
 
     @Override
     public void onSwitch() {
-        gui.page.setEditMode(false);
-        if (isDirty) {
+        if (isDirty && gui.page.isEditMode()) {
             try {
                 for (WikiMod mod : WikiRegistry.instance().getMods()) {
                     if (mod.isDirty()) {
@@ -65,5 +64,7 @@ public class SaveMode extends WikiMode {
                 e.printStackTrace();
             }
         }
+        
+        gui.page.setEditMode(false);
     }
 }
