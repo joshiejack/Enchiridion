@@ -80,7 +80,7 @@ public class ElementImage extends Element {
     public ElementImage setToDefault() {
     	this.width = 100;
         this.height = 100;
-    	this.path = "enchiridion:pinguin.png";
+    	this.path = "enchiridion:enchiridion_logo.png";
     	loadImage(WikiHelper.getPage());
         return this;
     }
