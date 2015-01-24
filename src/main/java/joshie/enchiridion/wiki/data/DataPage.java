@@ -6,6 +6,7 @@ import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.elements.Element;
 import joshie.enchiridion.wiki.elements.ElementImage;
+import joshie.enchiridion.wiki.elements.ElementText;
 
 import com.google.gson.annotations.Expose;
 
@@ -18,8 +19,11 @@ public class DataPage extends Data {
     private int scroll;
     @Expose //Whether this page shows at the top of search
     private boolean isPriority;
+    @Expose
+    private int backgroundColor = 0xEE000000;
     
     public DataPage(){}
+    //Creating a new page
     public DataPage(String string) {
         super(string);
     }
@@ -115,4 +119,8 @@ public class DataPage extends Data {
     public void switchPriority() {
         isPriority = !isPriority;
     }
+    
+	public int getBackground() {
+		return backgroundColor;
+	}
 }

@@ -14,8 +14,9 @@ public abstract class GuiExtension {
     	return isVisible;
     }
     
-    public void setVisibility(boolean isVisible) {
+    public GuiExtension setVisibility(boolean isVisible) {
     	this.isVisible = isVisible;
+    	return this;
     }
 
 	public void draw() {

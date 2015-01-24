@@ -10,6 +10,7 @@ import static org.lwjgl.opengl.GL11.GL_BLEND;
 
 import java.util.ArrayList;
 
+import joshie.enchiridion.api.IWikiMode;
 import joshie.enchiridion.library.GuiLibrary;
 import joshie.enchiridion.library.GuiShelves;
 import joshie.enchiridion.wiki.data.WikiData;
@@ -33,8 +34,11 @@ import joshie.enchiridion.wiki.gui.GuiSidebar;
 import joshie.enchiridion.wiki.gui.GuiTabs;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
 import joshie.enchiridion.wiki.mode.SaveMode;
-import joshie.enchiridion.wiki.mode.WikiMode;
-import joshie.enchiridion.wiki.mode.edit.GuiConfirmDeletion;
+import joshie.enchiridion.wiki.mode.edit.ConfirmAddition;
+import joshie.enchiridion.wiki.mode.edit.ConfirmDeletion;
+import joshie.enchiridion.wiki.mode.edit.ConfirmLocking;
+import joshie.enchiridion.wiki.mode.edit.PageEditAddition;
+import joshie.enchiridion.wiki.mode.edit.PageEditLink;
 import joshie.lib.helpers.StackHelper;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.renderer.RenderHelper;
@@ -42,6 +46,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -148,7 +154,7 @@ public class WikiHelper {
     }
     
     /** Switches from the wiki gui to the library gui and vice versa **/
-    public static void switchGui(WikiMode mode, ArrayList<GuiExtension> list) {
+    public static void switchGui(IWikiMode mode, ArrayList<GuiExtension> list) {
         if(!selected.equals(mode)) {
             //If the previous mode was Save, then save it
             if(gui.mode.equals(SaveMode.getInstance())) {
@@ -175,8 +181,8 @@ public class WikiHelper {
         wiki.add(new GuiCanvas());
         wiki.add(new GuiTabs());
         wiki.add(new GuiItemSelect());
-        wiki.add(new GuiColorEdit());
         wiki.add(new GuiLighting());
+        wiki.add(new GuiColorEdit());
         wiki.add(new GuiMenu());
         wiki.add(new GuiScrollbarMenu());
         wiki.add(new GuiScrollbarPage());
@@ -185,7 +191,11 @@ public class WikiHelper {
         wiki.add(new GuiSearch());
         wiki.add(new GuiMode());
         wiki.add(new GuiHistory());
-        wiki.add(new GuiConfirmDeletion());
+        wiki.add(new ConfirmDeletion());
+        wiki.add(new ConfirmLocking());
+        wiki.add(new ConfirmAddition());
+        wiki.add(new PageEditAddition());
+        wiki.add(new PageEditLink());
 
         library = new ArrayList();
         library.add(new GuiBackground());
@@ -198,6 +208,16 @@ public class WikiHelper {
         if(selected == null) {
             selected = wiki;
         }
+    }
+    
+    public static GuiExtension getInstance(Class extension) {
+        for(GuiExtension e: getGui()) {
+            if(e.getClass().equals(extension)) {
+                return e;
+            }
+        }
+        
+        return null;
     }
     
     public static void setVisibility(Class extension, boolean isVisible) {
@@ -245,7 +265,14 @@ public class WikiHelper {
     }
 
     public static void renderStack(ItemStack stack, int x, int y) {
-        StackHelper.renderStack(gui.mc, ElementItem.renderer, ElementItem.itemRenderer, stack, x, y);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glColor3f(1F, 1F, 1F); //Forge: Reset color in case Items change it.
+        GL11.glEnable(GL11.GL_BLEND); //Forge: Make sure blend is enabled else tabs show a white border.
+        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        ElementItem.itemRenderer.renderItemAndEffectIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, x, y);
+        ElementItem.itemRenderer.renderItemOverlayIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, x, y);
+        GL11.glDisable(GL11.GL_LIGHTING);        
     }
 
     public static int getScaledX(int x) {
@@ -276,7 +303,7 @@ public class WikiHelper {
     }
 
     public static void setPage(WikiPage page) {
-        gui.page = page;
+        gui.setPage(page);
     }
 
     public static void setMod(WikiMod mod) {

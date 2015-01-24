@@ -9,6 +9,7 @@ import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.wiki.WikiCategory;
 import joshie.enchiridion.wiki.WikiPage;
+import joshie.lib.helpers.OpenGLHelper;
 
 public class GuiMenu extends GuiExtension implements ITextEditable {
     private static Collection<WikiCategory> visibleCategories;

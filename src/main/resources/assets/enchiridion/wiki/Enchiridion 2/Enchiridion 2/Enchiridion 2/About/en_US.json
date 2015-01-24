@@ -8,9 +8,9 @@
         "tab": "Enchiridion 2",
         "cat": "Enchiridion 2",
         "page": "Library",
-        "x": 132,
-        "y": 284,
-        "width": 66,
+        "x": 125,
+        "y": 285,
+        "width": 72,
         "height": 14,
         "size": 2.0
       }
@@ -30,6 +30,7 @@
       "type": "ElementText",
       "properties": {
         "text": "Welcome to Enchiridion 2.",
+        "color": -16777216,
         "x": 314,
         "y": 163,
         "width": 150,
@@ -96,8 +97,9 @@
       "type": "ElementText",
       "properties": {
         "text": "Enchiridion 2 is [b]much[/b] more advanced than it\u0027s predecessor. With it comes documentation in the form of a pedia. As you can probably tell it was inspired by the Civilopedia from Civilization 5. It was Pokefenn\u0027s Idea ;) There is also a button which switches over to \u0027[u]library mode[/u]\u0027. This is prefilled with as many books as are known. Just click them to open them.  Also means you don\u0027t have to carry anything around with you.",
+        "color": -16777216,
         "x": 45,
-        "y": 220,
+        "y": 219,
         "width": 324,
         "height": 76,
         "size": 2.0
@@ -179,26 +181,12 @@
         "height": 164,
         "size": 2.0
       }
-    },
-    {
-      "type": "ElementLink",
-      "properties": {
-        "color": -1,
-        "mod": "Enchiridion 2",
-        "tab": "Enchiridion 2",
-        "cat": "Enchiridion 2",
-        "page": "TEST",
-        "x": 200,
-        "y": 709,
-        "width": 100,
-        "height": 20,
-        "size": 2.0
-      }
     }
   ],
   "scrollMax": 0,
   "isPriority": true,
+  "backgroundColor": -1,
   "name": "",
-  "canEdit": true,
+  "canEdit": false,
   "saveDir": "enchiridion"
 }

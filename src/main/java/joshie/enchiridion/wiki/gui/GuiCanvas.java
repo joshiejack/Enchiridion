@@ -20,9 +20,11 @@ import static org.lwjgl.opengl.GL11.glStencilMask;
 import static org.lwjgl.opengl.GL11.glStencilOp;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
+import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.Element;
 
 public class GuiCanvas extends GuiExtension {	
+	private static final int DEFAULT_COLOR = 0xEE000000;
     @Override
     public void draw() {  
         OpenGlHelper.func_153186_a(OpenGlHelper.field_153199_f, org.lwjgl.opengl.EXTPackedDepthStencil.GL_DEPTH24_STENCIL8_EXT, Minecraft.getMinecraft().getFramebuffer().framebufferTextureWidth, Minecraft.getMinecraft().getFramebuffer().framebufferHeight);
@@ -41,7 +43,7 @@ public class GuiCanvas extends GuiExtension {
         glStencilMask(0x00);
         glStencilFunc(GL_EQUAL, 0, 0xFF);
         glStencilFunc(GL_EQUAL, 1, 0xFF);
-        drawRect(0, 0, 2048, 5000 + 10, 0xEE000000);
+        drawRect(0, 0, 2048, 5000 + 10, (WikiHelper.isLibrary()? DEFAULT_COLOR: getPage().getData().getBackground()));
         drawRect(630, -45, 910, -10, 0xFF000000);
         getPage().display();
         glDisable(GL_STENCIL_TEST);

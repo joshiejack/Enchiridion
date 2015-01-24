@@ -81,6 +81,10 @@ public abstract class Element {
     public void whileSelected() {
         return;
     }
+    
+    public void onSelected(int x, int y, int button) {
+        onSelected(x, y);
+    }
 
     public void onSelected(int x, int y) {
         return;
@@ -190,13 +194,13 @@ public abstract class Element {
                     isSelected = isDragging = true;
                     lastX = x;
                     lastY = y;
-                    onSelected(relX, relY);
+                    onSelected(relX, relY, button);
                     return true;
                 } else if (isMouseOver(x, y)) {
                     isSelected = isMoving = true;
                     lastX = x;
                     lastY = y;
-                    onSelected(relX, relY);
+                    onSelected(relX, relY, button);
                     return true;
                 } else {
                     isSelected = false;
@@ -208,13 +212,13 @@ public abstract class Element {
                     isSelected = isDragging = true;
                     lastX = x;
                     lastY = y;
-                    onSelected(relX, relY);
+                    onSelected(relX, relY, button);
                     return true;
                 } else if (isMouseOver(x, y)) {
                     isSelected = isMoving = true;
                     lastX = x;
                     lastY = y;
-                    onSelected(relX, relY);
+                    onSelected(relX, relY, button);
                     return true;
                 } else return false;
             }

@@ -21,7 +21,6 @@ public class GuiTabs extends GuiExtension implements IItemSelectable, ITextEdita
         for (WikiTab tab : getMod().getTabs()) {
             int yBonus = isTabSelected(tab) ? -5 : 0;
             int x = (isTabSelected(tab) ? 88 : getIntFromMouse(20 + (50 * i), 60 + (50 * i), -49, -3, 0, 44));
-            OpenGLHelper.fixColors();
             drawScaledTexture(texture, 20 + (50 * i), -49 + yBonus, x, 0, 44, 47 - yBonus, 1F);
             drawScaledStack(tab.getItemStack(), 28 + (50 * i), -41 + yBonus, 1.85F);
             i++;

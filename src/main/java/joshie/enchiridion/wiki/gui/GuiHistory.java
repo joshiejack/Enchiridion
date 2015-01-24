@@ -17,7 +17,7 @@ public class GuiHistory extends GuiExtension {
     public static void backPage() {
         if (page_number > 0) {
             page_number -= 1;
-            GuiMain.page = history.get(page_number);
+            GuiMain.setPage(history.get(page_number));
         }
     }
     
@@ -29,14 +29,14 @@ public class GuiHistory extends GuiExtension {
     public static void forwardPage() {
         if (page_number < (history.size() - 1)) {
             page_number += 1;
-            GuiMain.page = history.get(page_number);
+            GuiMain.setPage(history.get(page_number));
         }
     }
 
     public static void newPage(WikiPage page) {
         page_number += 1;
         history.add(page);
-        GuiMain.page = page;
+        GuiMain.setPage(page);
     }
 
     @Override

@@ -7,8 +7,10 @@ import static org.lwjgl.opengl.GL11.glScalef;
 import java.util.ArrayList;
 import java.util.List;
 
-import joshie.enchiridion.EConfig;
 import joshie.enchiridion.EClientProxy;
+import joshie.enchiridion.EConfig;
+import joshie.enchiridion.api.IWikiMode;
+import joshie.enchiridion.api.IWikiMode.WikiMode;
 import joshie.enchiridion.gui.GuiScalable;
 import joshie.enchiridion.lib.EnchiridionInfo;
 import joshie.enchiridion.wiki.WikiHelper;
@@ -19,7 +21,6 @@ import joshie.enchiridion.wiki.WikiTab;
 import joshie.enchiridion.wiki.mode.ButtonBase;
 import joshie.enchiridion.wiki.mode.DisplayMode;
 import joshie.enchiridion.wiki.mode.SaveMode;
-import joshie.enchiridion.wiki.mode.WikiMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
@@ -40,36 +41,48 @@ public class GuiMain extends GuiScalable {
     public static WikiTab tab = null;
     /** The current page that we are viewing **/
     public static WikiPage page = null;
-    public static WikiMode mode = null;
+    public static IWikiMode mode = DisplayMode.getInstance();
 
     public void setPage(String mod, String tab, String cat, String page) {
         GuiHistory.newPage(WikiRegistry.instance().getPage(mod, tab, cat, page));
     }
 
-    public void setMode(WikiMode mode) {
-        this.mode = mode;
+    public static void setMode(IWikiMode mode) {
+        GuiMain.mode = mode;
         buttons = mode.addButtons(new ArrayList());
-        this.mode.onSwitch();
+        GuiMain.mode.onSwitch();
+    }
+    
+    public static void setPage(WikiPage page) {
+    	if(mode.getType() == WikiMode.DISPLAY) {
+    		if(page.getData().canEdit()) {
+    			if (EConfig.EDIT_ENABLED) {
+    	            setMode(SaveMode.getInstance());
+    	        } else setMode(DisplayMode.getInstance());
+    		} else setMode(DisplayMode.getInstance());
+    	} else if(!page.getData().canEdit()) { //If the new page cannot be edited, automatically save everything
+    		setMode(SaveMode.getInstance()); //Now that the page has been saved
+    		setPage(page); //Go through this again as a display mode page
+    	}
+    	
+    	GuiMain.page = page;
     }
 
     @Override
     public void initGui() {
         super.initGui();
         WikiHelper.init();
+        
+        setMode(DisplayMode.getInstance());
         if (page == null) {
             page = WikiRegistry.instance().getPage("Enchiridion 2", "Enchiridion 2", "Enchiridion 2", "About");
             tab = WikiRegistry.instance().getTab("Enchiridion 2", "Enchiridion 2");
             mod = WikiRegistry.instance().getMod("Enchiridion 2");
             setPage("Enchiridion 2", "Enchiridion 2", "Enchiridion 2", "About");
         }
-
-        if (mode == null) {
-            if (EConfig.EDIT_ENABLED) {
-                setMode(SaveMode.getInstance());
-            } else setMode(DisplayMode.getInstance());
-        }
         
         page.getData().refreshY();
+        setPage(page);
 
         Keyboard.enableRepeatEvents(true);
     }

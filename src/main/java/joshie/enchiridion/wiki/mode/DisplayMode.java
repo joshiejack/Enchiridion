@@ -1,8 +1,15 @@
 package joshie.enchiridion.wiki.mode;
 
+import static joshie.enchiridion.wiki.gui.GuiMain.button_id;
+
 import java.util.List;
 
-public class DisplayMode extends WikiMode {
+import joshie.enchiridion.EConfig;
+import joshie.enchiridion.api.IWikiMode;
+import joshie.enchiridion.wiki.mode.edit.ButtonAddPage;
+
+public class DisplayMode implements IWikiMode {
+	/** This is a generic mode, where you can't do anything except for view **/
     private static final DisplayMode instance = new DisplayMode();
     public static DisplayMode getInstance() {
         return instance;
@@ -10,6 +17,10 @@ public class DisplayMode extends WikiMode {
     
     @Override
     public List addButtons(List list) {
+        if(EConfig.EDIT_ENABLED) {
+            list.add(new ButtonAddPage(button_id++, 723, 14, 1, 1, 2F));
+        }
+        
         return list;
     }
 
@@ -17,4 +28,9 @@ public class DisplayMode extends WikiMode {
     public void onSwitch() {
         return;
     }
+
+	@Override
+	public WikiMode getType() {
+		return WikiMode.DISPLAY;
+	}
 }

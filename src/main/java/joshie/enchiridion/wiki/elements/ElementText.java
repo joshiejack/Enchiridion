@@ -1,20 +1,20 @@
 package joshie.enchiridion.wiki.elements;
 
+import static joshie.lib.helpers.OpenGLHelper.*;
+import static joshie.lib.helpers.OpenGLHelper.scaleAll;
+import static joshie.lib.helpers.OpenGLHelper.start;
+
 import java.util.List;
 
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.wiki.WikiHelper;
-import joshie.enchiridion.wiki.gui.GuiMenu;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
 import joshie.enchiridion.wiki.gui.IGuiDisablesMenu;
 import joshie.enchiridion.wiki.mode.ButtonBase;
 import joshie.enchiridion.wiki.mode.edit.ButtonWikiTextEdit;
 import joshie.enchiridion.wiki.mode.edit.ButtonWikiTextMode;
 import joshie.enchiridion.wiki.mode.edit.ButtonWikiTextSize;
-import joshie.lib.helpers.OpenGLHelper;
-
-import org.lwjgl.opengl.GL11;
 
 import com.google.gson.annotations.Expose;
 
@@ -24,6 +24,8 @@ public class ElementText extends Element implements ITextEditable, IGuiDisablesM
 
     @Expose
     private String text = "";
+    @Expose
+    private int color = 0xFFFFFFFF;
     private boolean init;
 
     @Override
@@ -40,15 +42,16 @@ public class ElementText extends Element implements ITextEditable, IGuiDisablesM
             init = ((text = text.replace("Â§", "\u00a7").replace("§", "\u00a7")) != null);
         }
 
-        GL11.glPushMatrix();
-        GL11.glScalef(size, size, size);
+        start();
+        scaleAll(size);
+        
         if (showBBCode && isEditMode) {
-            EClientProxy.font.drawUnformattedSplitString(GuiTextEdit.getText(this, text), (int) ((WikiHelper.theLeft + BASE_X + left) / size), ((int) ((WikiHelper.theTop + BASE_Y + top) / size)), (int) ((width * 2) / size) + 4, 0xFFFFFFFF);
+            EClientProxy.font.drawUnformattedSplitString(GuiTextEdit.getText(this, text), (int) ((WikiHelper.theLeft + BASE_X + left) / size), ((int) ((WikiHelper.theTop + BASE_Y + top) / size)), (int) ((width * 2) / size) + 4, color);
         } else {
-            EClientProxy.font.drawSplitString(GuiTextEdit.getText(this, text), (int) ((WikiHelper.theLeft + BASE_X + left) / size), ((int) ((WikiHelper.theTop + BASE_Y + top) / size)), (int) ((width * 2) / size) + 4, 0xFFFFFFFF);
+            EClientProxy.font.drawSplitString(GuiTextEdit.getText(this, text), (int) ((WikiHelper.theLeft + BASE_X + left) / size), ((int) ((WikiHelper.theTop + BASE_Y + top) / size)), (int) ((width * 2) / size) + 4, color);
         }
 
-        GL11.glPopMatrix();
+        end();
     }
 
     @Override

@@ -18,6 +18,10 @@ public class GuiTextEdit extends GuiExtension {
         GuiMenu.isEditing = false;
     }
     
+    public static boolean isSelected(ITextEditable editable) {
+        return editable == GuiTextEdit.editable;
+    }
+    
     public static void select(ITextEditable editable) {
         select(editable, editable.getText().length());
     }
@@ -85,6 +89,10 @@ public class GuiTextEdit extends GuiExtension {
             if (count < 0) cursorLeft(-count);
             else if (count >= 0) cursorRight(count);
         }
+    }
+    
+    public static String getText(ITextEditable editable) {
+        return getText(editable, editable.getText());
     }
 
     public static String getText(ITextEditable editable, String text, Object...objects) {

@@ -8,7 +8,9 @@ import joshie.enchiridion.wiki.data.DataPage;
 import joshie.enchiridion.wiki.data.WikiData;
 import joshie.enchiridion.wiki.elements.Element;
 import joshie.enchiridion.wiki.elements.ElementItem;
+import joshie.enchiridion.wiki.elements.ElementText;
 import joshie.enchiridion.wiki.gui.GuiLayers;
+import joshie.enchiridion.wiki.gui.GuiMenu;
 import joshie.lib.helpers.ClientHelper;
 
 import org.lwjgl.opengl.GL11;
@@ -102,7 +104,8 @@ public class WikiPage extends WikiPart {
 
         this.isEditMode = isEditMode;
         WikiHelper.clearEditGUIs();
-        GuiLayers.setActive(isEditMode);
+        GuiLayers.setActive(false);
+        GuiMenu.setEditing();
     }
 
     @Override

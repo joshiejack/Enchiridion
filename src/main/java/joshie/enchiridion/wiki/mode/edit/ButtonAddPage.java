@@ -1,5 +1,6 @@
 package joshie.enchiridion.wiki.mode.edit;
 
+import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.mode.ButtonBase;
 
 public class ButtonAddPage extends ButtonBase {
@@ -9,6 +10,6 @@ public class ButtonAddPage extends ButtonBase {
 
     @Override
     public void onClicked() {
-        
+        ((PageEditAddition)WikiHelper.getInstance(PageEditAddition.class).setVisibility(true)).setToDefault();
     }
 }

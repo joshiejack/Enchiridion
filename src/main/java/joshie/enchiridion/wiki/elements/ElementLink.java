@@ -2,46 +2,39 @@ package joshie.enchiridion.wiki.elements;
 
 import java.util.List;
 
-import joshie.enchiridion.EClientProxy;
-import joshie.enchiridion.api.ITextEditable;
-import joshie.enchiridion.wiki.gui.GuiTextEdit;
-
-import org.lwjgl.opengl.GL11;
+import joshie.enchiridion.wiki.WikiHelper;
+import joshie.enchiridion.wiki.mode.edit.PageEditLink;
 
 import com.google.gson.annotations.Expose;
 
-public class ElementLink extends Element implements ITextEditable {
+public class ElementLink extends Element {
     @Expose
-    private int color = 0xFFFFFFFF;
-    String path = "";
+    private String mod;
     @Expose
-    String mod;
+    private String tab;
     @Expose
-    String tab;
+    private String cat;
     @Expose
-    String cat;
-    @Expose
-    String page;
+    private String page;
 
     @Override
     public ElementLink setToDefault() {
         this.width = 100;
         this.height = 20;
-        this.path = "Enchiridion.Default.Basics.Menu";
-        this.mod = "Enchiridion";
-        this.tab = "Default";
-        this.cat = "Basics";
-        this.page = "Menu";
+        this.mod = "Enchiridion 2";
+        this.tab = "Enchiridion 2";
+        this.cat = "Enchiridion 2";
+        this.page = "About";
         return this;
     }
 
     @Override
     public void display(boolean isEditMode) {
         if (isEditMode) {
-            GL11.glPushMatrix();
-            GL11.glScalef(size, size, size);
-            EClientProxy.font.drawSplitString(GuiTextEdit.getText(this, path), getX(), getY(), width, color);
-            GL11.glPopMatrix();
+        	WikiHelper.drawRect(BASE_X + left - 2, BASE_Y + top, BASE_X + left, BASE_Y + bottom, 0xFFFFFF00);
+        	WikiHelper.drawRect(BASE_X + right, BASE_Y + top, BASE_X + right + 2, BASE_Y + bottom, 0xFFFFFF00);
+        	WikiHelper.drawRect(BASE_X + left, BASE_Y + top - 2, BASE_X + right, BASE_Y + top, 0xFFFFFF00);
+        	WikiHelper.drawRect(BASE_X + left, BASE_Y + bottom, BASE_X + right, BASE_Y + bottom + 2, 0xFFFFFF00);
         }
     }
 
@@ -65,38 +58,31 @@ public class ElementLink extends Element implements ITextEditable {
     }
 
     @Override
-    public void onSelected(int x, int y) {
-        GuiTextEdit.select(this);
+    public void onSelected(int x, int y, int button) {
+        ((PageEditLink)(WikiHelper.getInstance(PageEditLink.class))).setEditing(this);
     }
-
-    @Override
-    public void onDeselected() {
-        String[] arr = path.split("\\.");
-        if (arr.length == 4) {
-            mod = arr[0];
-            tab = arr[1];
-            cat = arr[2];
-            page = arr[3];
-        }
-        
-        markDirty();
+    
+    public String getMod() {
+        return mod;
     }
-
-    @Override
-    public void setText(String text) {
-        if (isSelected) {
-            this.path = text;
-            markDirty();
-        }
+    
+    public String getTab() {
+        return tab;
     }
-
-    @Override
-    public String getText() {
-        return this.path;
+    
+    public String getCat() {
+        return cat;
     }
-
-    @Override
-    public boolean canEdit(Object... objects) {
-        return isSelected;
+    
+    public String getPage() {
+        return page;
+    }
+    
+    public void set(String mod, String tab, String cat, String page) {
+        this.mod = mod;
+        this.tab = tab;
+        this.cat = cat;
+        this.page = page;
+        this.markDirty();
     }
 }

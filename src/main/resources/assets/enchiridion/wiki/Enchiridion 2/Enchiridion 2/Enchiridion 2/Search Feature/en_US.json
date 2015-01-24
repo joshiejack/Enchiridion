@@ -1,0 +1,67 @@
+{
+  "components": [
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "Searching",
+        "color": -1,
+        "x": 381,
+        "y": -4,
+        "width": 158,
+        "height": 24,
+        "size": 5.899999
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -1,
+        "x": 216,
+        "y": 44,
+        "width": 228,
+        "height": 4,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "Enchiridion 2 comes complete with a search feature for finding articles. It is also how you navigate to different mods. By default Enchiridion shows you information about Enchiridion. If you wish to switch to a different mods information. Type @ModName. This will display only the results from that mod, allowing to click on one article to take you to that group of tabs for that mod.\n\nIf you wish to just find information about a specific thing however, you can just type that. For example if you want to find an article on Sheep. Just type Sheep in to the box. Clicking on one of the options will take you to that page. ",
+        "color": -1,
+        "x": 42,
+        "y": 79,
+        "width": 326,
+        "height": 97,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:glass_bottle",
+        "x": 318,
+        "y": -15,
+        "width": 29,
+        "height": 29,
+        "size": 3.625
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:stone",
+        "x": 288,
+        "y": 362,
+        "width": 32,
+        "height": 32,
+        "size": 4.0
+      }
+    }
+  ],
+  "scrollMax": 0,
+  "isPriority": false,
+  "backgroundColor": -301989888,
+  "name": "Enchiridion 2.Enchiridion 2.Enchiridion 2.Search Feature.en_US",
+  "canEdit": true,
+  "saveDir": "\"enchiridion\""
+}

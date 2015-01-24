@@ -59,6 +59,7 @@
       "type": "ElementText",
       "properties": {
         "text": "Library",
+        "color": -1,
         "x": 453,
         "y": -8,
         "width": 110,
@@ -81,6 +82,7 @@
       "type": "ElementText",
       "properties": {
         "text": "The library is a new feature added with Enchiridion 2. You can access it by clicking the Library button in the top right hand corner.\n\nThe library page is automatically prefilled with known books. Meaning you never have to craft or carry them again. Documentation should be free anyways. However because it is prefilled, each book requires special support. If you know of any books that are not yet supported, please make sure to suggest them to joshiejack, via twitter or github :)",
+        "color": -1,
         "x": 40,
         "y": 61,
         "width": 300,
@@ -125,10 +127,10 @@
       "type": "ElementBox",
       "properties": {
         "color": -8355712,
-        "x": 134,
-        "y": 257,
-        "width": 242,
-        "height": 3,
+        "x": 106,
+        "y": 254,
+        "width": 263,
+        "height": 1,
         "size": 2.0
       }
     },
@@ -139,14 +141,15 @@
         "x": 102,
         "y": 250,
         "width": 264,
-        "height": 6,
+        "height": 2,
         "size": 2.0
       }
     }
   ],
   "scrollMax": 0,
   "isPriority": false,
+  "backgroundColor": -301989888,
   "name": "",
-  "canEdit": true,
+  "canEdit": false,
   "saveDir": "enchiridion"
 }

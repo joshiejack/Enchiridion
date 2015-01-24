@@ -5,14 +5,19 @@ import static joshie.enchiridion.wiki.gui.GuiMain.button_id;
 
 import java.util.List;
 
+import joshie.enchiridion.api.IWikiMode;
+import joshie.enchiridion.api.IWikiMode.WikiMode;
 import joshie.enchiridion.wiki.WikiCategory;
 import joshie.enchiridion.wiki.WikiMod;
 import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.WikiRegistry;
 import joshie.enchiridion.wiki.WikiTab;
-import joshie.enchiridion.wiki.mode.edit.EditMode;
+import joshie.enchiridion.wiki.mode.edit.ButtonAddPage;
+import joshie.enchiridion.wiki.mode.edit.ButtonDeletePage;
 
-public class SaveMode extends WikiMode {
+public class SaveMode implements IWikiMode {
+	/** This mode is set when you press the save button, or by default if you have editing enabled
+	 *  It is only ever the mode when the page can be edited. **/
     private static final SaveMode instance = new SaveMode();
     private static boolean isDirty;
 
@@ -27,6 +32,8 @@ public class SaveMode extends WikiMode {
     @Override
     public List addButtons(List list) {
         list.add(new ButtonSwitchMode(button_id++, 975, 14, 1, 1, "edit", 2F, EditMode.getInstance()));
+        list.add(new ButtonAddPage(button_id++, 723, 14, 1, 1, 2F));
+        list.add(new ButtonDeletePage(button_id++, 843, 14, 1, 1, 2F));
         return list;
     }
 
@@ -67,4 +74,9 @@ public class SaveMode extends WikiMode {
         
         gui.page.setEditMode(false);
     }
+    
+    @Override
+	public WikiMode getType() {
+		return WikiMode.DISPLAY;
+	}
 }

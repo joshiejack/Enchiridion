@@ -6,6 +6,7 @@ import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import static joshie.lib.helpers.OpenGLHelper.end;
+import static joshie.lib.helpers.OpenGLHelper.*;
 import static joshie.lib.helpers.OpenGLHelper.start;
 
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ public class GuiSearch extends GuiExtension implements ITextEditable {
 
     @Override
     public void draw() {
+        start();
+        resetZ();
+        
         int x = 0;
         if (getIntFromMouse(920, 1044, -45, -6, 0, 1) == 1) {
             x = 130;
@@ -32,7 +36,6 @@ public class GuiSearch extends GuiExtension implements ITextEditable {
         if (visible > 0) {
             visible--;
             start();
-            GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
             ArrayList<WikiPage> pages = WikiData.instance().getPages();
             drawRect(630, -10, 910, -3 + (pages.size() > 0 ? (pages.size() * 40) : 40), 0xFFC2C29C);
             drawRect(633, -7, 907, -6 + (pages.size() > 0 ? (pages.size() * 40) : 40), 0xFF1B2C43);
@@ -52,9 +55,11 @@ public class GuiSearch extends GuiExtension implements ITextEditable {
             end();
         }
         
+        fixColors();
         drawScaledTexture(texture, 630, -45, 0, 57, 254, 39, 1F);
         drawScaledTexture(texture, 756, -45, 100, 57, 154, 39, 1F);
         drawScaledText(2F, GuiTextEdit.getText(this, search), 641, -32, 0xFFFFFF);
+        end();
     }
 
     @Override

@@ -20,28 +20,28 @@ public abstract class GuiScrollbar extends GuiExtension {
         //Black Box
         drawRect(x, 43, x + 17, getHeight(), 0xFF000000);
 
-        if (isVisible()) {
-            //Draw Scrollbar if the menu is long as fuck.
-            drawRect(x, 48, x + 2, getHeight() - 155, 0xFFC2C29C);
-            drawRect(x + 12, 48, x + 14, getHeight() - 155, 0xFFC2C29C);
-            drawRect(x, getHeight() - 157, x + 14, getHeight() - 155, 0xFFC2C29C);
-            drawRect(x, 46, x + 14, 48, 0xFFC2C29C);
+        //Draw Scrollbar if the menu is long as fuck.
+        drawRect(x, 48, x + 2, getHeight() - 155, 0xFFC2C29C);
+        drawRect(x + 12, 48, x + 14, getHeight() - 155, 0xFFC2C29C);
+        drawRect(x, getHeight() - 157, x + 14, getHeight() - 155, 0xFFC2C29C);
+        drawRect(x, 46, x + 14, 48, 0xFFC2C29C);
 
-            OpenGLHelper.fixColors();
-            //Draw the Bottom Arrow
-            if (getIntFromMouse(x + 3, x + 11, getHeight() - 170, getHeight() - 157, 0, 1) == 1) {
-                drawScaledTexture(texture, x + 3, getHeight() - 170, 229, 201, 8, 13, 1F);
-            } else {
-                drawScaledTexture(texture, x + 3, getHeight() - 170, 216, 201, 8, 13, 1F);
-            }
+        OpenGLHelper.fixColors();
+        //Draw the Bottom Arrow
+        if (getIntFromMouse(x + 3, x + 11, getHeight() - 170, getHeight() - 157, 0, 1) == 1) {
+            drawScaledTexture(texture, x + 3, getHeight() - 170, 229, 201, 8, 13, 1F);
+        } else {
+            drawScaledTexture(texture, x + 3, getHeight() - 170, 216, 201, 8, 13, 1F);
+        }
 
-            //Draw the Top Arrow
-            if (getIntFromMouse(x + 3, x + 11, 48, 61, 0, 1) == 1) {
-                drawScaledTexture(texture, x + 3, 48, 229, 191, 8, 13, 1F);
-            } else {
-                drawScaledTexture(texture, x + 3, 48, 216, 191, 8, 13, 1F);
-            }
+        //Draw the Top Arrow
+        if (getIntFromMouse(x + 3, x + 11, 48, 61, 0, 1) == 1) {
+            drawScaledTexture(texture, x + 3, 48, 229, 191, 8, 13, 1F);
+        } else {
+            drawScaledTexture(texture, x + 3, 48, 216, 191, 8, 13, 1F);
+        }
 
+        if (displayScroll()) {
             //Draw the Scrollbar
             int scrollHeight = getScrollbarHeight();
             drawRect(x + 2, 63 + getScrollbarPosition(), x + 12, 63 + getScrollbarPosition() + scrollHeight, 0xFF365E7F);
@@ -77,7 +77,7 @@ public abstract class GuiScrollbar extends GuiExtension {
     public abstract int getLastY();
     public abstract void setMoving(boolean value);
     public abstract boolean isMoving();
-    public abstract boolean isVisible();
+    public abstract boolean displayScroll();
     public abstract int getScrollbarHeight();
     public abstract int getScrollbarPosition();
     public abstract void scroll(int amount);

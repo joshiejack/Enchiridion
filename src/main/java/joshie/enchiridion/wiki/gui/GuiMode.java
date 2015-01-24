@@ -22,6 +22,7 @@ public class GuiMode extends GuiExtension {
             x = 130;
         }
         
+        
         drawScaledTexture(texture, 920, -45, x, 104, 124, 39, 1F);
         if(!WikiHelper.isLibrary()) {
             drawScaledCentredText(2F, "[b]" + ETranslate.translate("library") + "[/b]", 978, -32, 0xFFFFFF);

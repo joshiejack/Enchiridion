@@ -16,7 +16,7 @@ public class GuiScrollbarPage extends GuiScrollbar {
     }
 
     @Override
-    public boolean isVisible() {
+    public boolean displayScroll() {
         return WikiHelper.getPage().getData().getScrollMaximum(WikiHelper.isEditMode()) > 0;
     }
 

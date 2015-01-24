@@ -4,14 +4,14 @@ import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.mode.ButtonBase;
 import net.minecraft.client.Minecraft;
 
-public class ButtonDeletePage extends ButtonBase {
-    public ButtonDeletePage(int id, int x, int y, int width, int height, float scale) {
-        super(id, x, y, width, height, "delete", 2F);
+public class ButtonLockPage extends ButtonBase {
+    public ButtonLockPage(int id, int x, int y, int width, int height, float scale) {
+        super(id, x, y, width, height, "lock", 2F);
     }
 
     @Override
     public void onClicked() {
-    	WikiHelper.setVisibility(ConfirmDeletion.class, true);
+        WikiHelper.setVisibility(ConfirmLocking.class, true);
     }
 
     @Override
