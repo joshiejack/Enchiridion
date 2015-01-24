@@ -22,7 +22,7 @@ public class PageText extends PageParser {
 		underline = (XMLHelper.getAttribAsBoolean(xml, "underline"))? Formatting.UNDERLINE: "";
 		wrap = XMLHelper.getAttribAsInteger(xml, "wrap", 216);
 		text = XMLHelper.getSelf(xml);
-		isAliased = XMLHelper.getAttribAsBoolean(xml, "alias");
+		isAliased = XMLHelper.getAttribAsBoolean(xml, "alias", font.getUnicodeFlag());
 	}
 	
 	@Override
@@ -41,7 +41,9 @@ public class PageText extends PageParser {
 
 	@Override
 	public void parse() {
+		boolean flag = font.getUnicodeFlag();
 		font.setUnicodeFlag(isAliased);
 		font.drawSplitString(color + bold + italics + underline + text, x, y, wrap, 4210752);
+		font.setUnicodeFlag(flag);
 	}
 }
