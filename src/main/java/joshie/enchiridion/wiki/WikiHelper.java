@@ -34,10 +34,9 @@ import joshie.enchiridion.wiki.gui.GuiTabs;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
 import joshie.enchiridion.wiki.mode.SaveMode;
 import joshie.enchiridion.wiki.mode.WikiMode;
+import joshie.enchiridion.wiki.mode.edit.GuiConfirmDeletion;
 import joshie.lib.helpers.StackHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -88,6 +87,10 @@ public class WikiHelper {
 
     public static void drawScaledText(float scale, String text, int x, int y, int color) {
         gui.drawScaledText(gui.mc, scale, text, x, y, color);
+    }
+    
+    public static void drawScaledSplitText(float scale, String text, int x, int y, int color, int length) {
+        gui.drawScaledSplitText(gui.mc, scale, text, x, y, color, length);
     }
 
     public static void drawTexture(int x, int y, int xStart, int yStart, int xEnd, int yEnd) {
@@ -182,6 +185,7 @@ public class WikiHelper {
         wiki.add(new GuiSearch());
         wiki.add(new GuiMode());
         wiki.add(new GuiHistory());
+        wiki.add(new GuiConfirmDeletion());
 
         library = new ArrayList();
         library.add(new GuiBackground());
@@ -194,6 +198,15 @@ public class WikiHelper {
         if(selected == null) {
             selected = wiki;
         }
+    }
+    
+    public static void setVisibility(Class extension, boolean isVisible) {
+    	for(GuiExtension e: getGui()) {
+    		if(e.getClass().equals(extension)) {
+    			e.setVisibility(isVisible);
+    			break;
+    		}
+    	}
     }
     
     public static boolean isLibrary() {

@@ -89,6 +89,13 @@ public class GuiMain extends GuiScalable {
         EClientProxy.font.drawString(text, getLeft(scale, x), getTop(scale, y), color);
         glPopMatrix();
     }
+    
+    public void drawScaledSplitText(Minecraft mc, float scale, String text, int x, int y, int color, int length) {
+        glPushMatrix();
+        glScalef(scale, scale, 1.0F);
+        EClientProxy.font.drawSplitString(text, getLeft(scale, x), getTop(scale, y), length, color);
+        glPopMatrix();
+    }
 
     private void drawCentredText(Minecraft mc, String text, int x, int y) {
         drawScaledCentredText(mc, 1.0F, text, x, y, 0xFFFFFF);
@@ -119,7 +126,9 @@ public class GuiMain extends GuiScalable {
 
         WikiHelper.updateGUI();
         for (GuiExtension element : WikiHelper.getGui()) {
-            element.draw();
+        	if(element.isVisible()) {
+        		element.draw();
+        	}
         }
 
         if (page.getSelected() != null) {
@@ -163,7 +172,9 @@ public class GuiMain extends GuiScalable {
     protected void mouseClicked(int x, int y, int button) {
         if (!clickedButton(x, y, button)) {
             for (GuiExtension element : WikiHelper.getGui()) {
-                element.clicked(button);
+            	if(element.isVisible()) {
+            		element.clicked(button);
+            	}
             }
         }
     }
@@ -172,7 +183,9 @@ public class GuiMain extends GuiScalable {
     protected void mouseMovedOrUp(int x, int y, int button) {
         if (!releasedButton(x, y, button)) {
             for (GuiExtension element : WikiHelper.getGui()) {
-                element.release(button);
+            	if(element.isVisible()) {
+            		element.release(button);
+            	}
             }
         }
     }
@@ -182,7 +195,9 @@ public class GuiMain extends GuiScalable {
         super.keyTyped(character, key);
         page.keyTyped(character, key);
         for (GuiExtension element : WikiHelper.getGui()) {
-            element.keyTyped(character, key);
+        	if(element.isVisible()) {
+        		element.keyTyped(character, key);
+        	}
         }
     }
 
@@ -192,11 +207,13 @@ public class GuiMain extends GuiScalable {
         WikiHelper.updateMouse();
         int wheel = Mouse.getDWheel();
         for (GuiExtension element : WikiHelper.getGui()) {
-            if(wheel != 0) {
-                element.scroll(wheel < 0);
-            }
+        	if(element.isVisible()) {
+	            if(wheel != 0) {
+	                element.scroll(wheel < 0);
+	            }
             
-            element.follow();
+	            element.follow();
+        	}
         }
     }
 

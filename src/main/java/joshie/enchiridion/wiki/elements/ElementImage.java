@@ -65,7 +65,7 @@ public class ElementImage extends Element {
 			resource = new ResourceLocation(split[0], "textures/wiki" + separator + split[1]);
 			try {
 				BufferedImage image = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(resource).getInputStream());
-				img_width = image.getWidth();
+				img_width = (int) (image.getWidth() / 2.5);
 				img_height = image.getHeight();
 			} catch (Exception e) {
 				ELogger.log(Level.ERROR, "Enchiridion 2 failed to read in the image at the following resource: ");
@@ -102,10 +102,9 @@ public class ElementImage extends Element {
 			tessellator.draw();
     	} else {    		
     		ClientHelper.getMinecraft().getTextureManager().bindTexture(resource);
-    		GL11.glPushMatrix();
-    		GL11.glScalef(1.0F, 1.0F, 1.0F);
-    		scaleTexture(BASE_X + left, BASE_Y + top, 1.0F, 1.0F);
-    		GL11.glPopMatrix();
+    		
+    		
+    		scaleTexture(BASE_X + left, BASE_Y + top, (float)width / 125F, (float)height / 125F);
     	}
     }
     
@@ -114,7 +113,7 @@ public class ElementImage extends Element {
         enable(GL_BLEND);
         ClientHelper.bindTexture(resource);
         glScalef(scaleX, scaleY, 1.0F);
-        WikiHelper.drawTexture(WikiHelper.getScaledX(x, scaleX), WikiHelper.getScaledY(y, scaleY), 0, 0, width * 2, height * 2);
+        WikiHelper.drawTexture(WikiHelper.getScaledX(x, scaleX), WikiHelper.getScaledY(y, scaleY), 0, 0, img_width, img_height);
         disable(GL_BLEND);
         end();
     }

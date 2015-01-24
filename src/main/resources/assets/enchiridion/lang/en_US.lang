@@ -28,9 +28,12 @@ enchiridion.text.larger.greatly=Text+++
 enchiridion.text.smaller.slightly=Text-
 enchiridion.text.smaller=Text--
 enchiridion.text.smaller.greatly=Text---
+enchiridion.confirm.title=Delete %s?
+enchiridion.confirm.description=Are you sure, that you wish to delete this article?
 
 #Enchiridion WIKI pages Localisation
 wiki.enchiridion2=Enchiridion 2
 wiki.enchiridion2.enchiridion2=Enchiridion 2
 wiki.enchiridion2.enchiridion2.enchiridion2=Enchiridion 2
 wiki.enchiridion2.enchiridion2.enchiridion2.about=About Enchiridion 2
+wiki.enchiridion2.enchiridion2.enchiridion2.library=The Library

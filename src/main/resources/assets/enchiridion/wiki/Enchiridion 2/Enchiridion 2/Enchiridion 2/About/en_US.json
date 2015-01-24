@@ -1,14 +1,40 @@
 {
   "components": [
     {
+      "type": "ElementLink",
+      "properties": {
+        "color": -1,
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Enchiridion 2",
+        "page": "Library",
+        "x": 132,
+        "y": 284,
+        "width": 66,
+        "height": 14,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -11861886,
+        "x": 198,
+        "y": 152,
+        "width": 217,
+        "height": 1,
+        "size": 2.0
+      }
+    },
+    {
       "type": "ElementText",
       "properties": {
         "text": "Welcome to Enchiridion 2.",
-        "x": 47,
-        "y": 5,
-        "width": 145,
-        "height": 17,
-        "size": 2.0
+        "x": 314,
+        "y": 163,
+        "width": 150,
+        "height": 3,
+        "size": 2.05
       }
     },
     {
@@ -16,15 +42,162 @@
       "properties": {
         "path": "enchiridion:enchiridion_logo.png",
         "x": 48,
-        "y": 42,
-        "width": 132,
+        "y": -39,
+        "width": 317,
         "height": 123,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -7722014,
+        "x": 162,
+        "y": 144,
+        "width": 242,
+        "height": 4,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -7114533,
+        "x": 192,
+        "y": 151,
+        "width": 232,
+        "height": 3,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -8689426,
+        "x": 36,
+        "y": 203,
+        "width": 340,
+        "height": 1,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -2572328,
+        "x": 66,
+        "y": 205,
+        "width": 303,
+        "height": 1,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "Enchiridion 2 is [b]much[/b] more advanced than it\u0027s predecessor. With it comes documentation in the form of a pedia. As you can probably tell it was inspired by the Civilopedia from Civilization 5. It was Pokefenn\u0027s Idea ;) There is also a button which switches over to \u0027[u]library mode[/u]\u0027. This is prefilled with as many books as are known. Just click them to open them.  Also means you don\u0027t have to carry anything around with you.",
+        "x": 45,
+        "y": 220,
+        "width": 324,
+        "height": 76,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:writable_book",
+        "x": 174,
+        "y": -4,
+        "width": 32,
+        "height": 32,
+        "size": 4.0
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:iron_sword",
+        "x": 675,
+        "y": 160,
+        "width": 16,
+        "height": 16,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:red_flower 2",
+        "x": 123,
+        "y": 170,
+        "width": 17,
+        "height": 17,
+        "size": 2.125
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:feather",
+        "x": 96,
+        "y": 177,
+        "width": 16,
+        "height": 16,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:dye 0",
+        "x": 138,
+        "y": 171,
+        "width": 20,
+        "height": 20,
+        "size": 2.5
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -12042869,
+        "x": 39,
+        "y": 372,
+        "width": 328,
+        "height": 154,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -11861886,
+        "x": 30,
+        "y": 361,
+        "width": 338,
+        "height": 164,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementLink",
+      "properties": {
+        "color": -1,
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Enchiridion 2",
+        "page": "TEST",
+        "x": 200,
+        "y": 709,
+        "width": 100,
+        "height": 20,
         "size": 2.0
       }
     }
   ],
   "scrollMax": 0,
-  "isPriority": false,
+  "isPriority": true,
   "name": "",
   "canEdit": true,
   "saveDir": "enchiridion"

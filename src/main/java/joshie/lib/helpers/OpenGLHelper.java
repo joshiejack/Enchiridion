@@ -32,4 +32,8 @@ public class OpenGLHelper {
     public static void fixColors() {
         glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
+    
+    public static void resetZ() {
+		glClear(GL_DEPTH_BUFFER_BIT);
+    }
 }

@@ -8,7 +8,17 @@ import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.WikiTab;
 
 public abstract class GuiExtension {
-    public void draw() {
+    private boolean isVisible = true;
+    
+    public boolean isVisible() {
+    	return isVisible;
+    }
+    
+    public void setVisibility(boolean isVisible) {
+    	this.isVisible = isVisible;
+    }
+
+	public void draw() {
         return;
     }
     
@@ -54,6 +64,10 @@ public abstract class GuiExtension {
     
     public void drawScaledCentredText(float scale, String text, int x, int y, int color) {
         WikiHelper.drawScaledCentredText(scale, text, x, y, color);
+    }
+    
+    public void drawScaledSplitText(float scale, String text, int x, int y, int color, int length) {
+    	WikiHelper.drawScaledSplitText(scale, text, x, y, color, length);
     }
     
     public void drawScaledText(float scale, String text, int x, int y, int color) {
