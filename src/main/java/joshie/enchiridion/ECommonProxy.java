@@ -11,7 +11,10 @@ public class ECommonProxy {
         EnchiridionHelper.bookRegistry = LibraryRegistry.INSTANCE;
     }
     
-    public void init() {}
+    public void init() {
+        LibraryRegistry.INSTANCE.initRegistry();
+    }
+    
     public void postInit() {
         setupClient();
     }

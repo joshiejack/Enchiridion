@@ -142,11 +142,6 @@ public class GuiMenu extends GuiExtension implements ITextEditable {
                     this.categoryPosition--;
                     this.categoryPosition = Math.max(categoryPosition, 0);
                 }
-            } else {
-                if (!isEditMode()) {
-                    this.categoryPosition--;
-                    this.categoryPosition = Math.max(categoryPosition, 0);
-                }
             }
         }
     }
