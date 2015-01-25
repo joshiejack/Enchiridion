@@ -39,7 +39,7 @@ public class SaveMode implements IWikiMode {
 
     @Override
     public void onSwitch() {
-        if (isDirty && gui.page.isEditMode()) {
+        if (isDirty && gui.page.shouldSave()) {
             try {
                 for (WikiMod mod : WikiRegistry.instance().getMods()) {
                     if (mod.isDirty()) {

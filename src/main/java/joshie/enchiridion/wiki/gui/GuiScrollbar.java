@@ -18,7 +18,7 @@ public abstract class GuiScrollbar extends GuiExtension {
     @Override
     public void draw() {
         //Black Box
-        drawRect(x, 43, x + 17, getHeight(), 0xFF000000);
+        drawRect(x, 43, x + 17, getHeight(), getPage().getData().getBackground());
 
         //Draw Scrollbar if the menu is long as fuck.
         drawRect(x, 48, x + 2, getHeight() - 155, 0xFFC2C29C);

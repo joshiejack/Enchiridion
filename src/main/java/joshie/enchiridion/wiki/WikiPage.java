@@ -7,16 +7,11 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.wiki.data.DataPage;
 import joshie.enchiridion.wiki.data.WikiData;
 import joshie.enchiridion.wiki.elements.Element;
-import joshie.enchiridion.wiki.elements.ElementItem;
-import joshie.enchiridion.wiki.elements.ElementText;
 import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.enchiridion.wiki.gui.GuiMenu;
 import joshie.lib.helpers.ClientHelper;
 
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ModContainer;
 
 public class WikiPage extends WikiPart {    
     public WikiPage(String key, String lang, DataPage contents) {
@@ -88,9 +83,13 @@ public class WikiPage extends WikiPart {
 	        this.markDirty();
     	}
     }
+    
+    public boolean shouldSave() {
+        return isEditMode;
+    }
 
     public boolean isEditMode() {
-        return isEditMode && getData().canEdit();
+        return shouldSave() && getData().canEdit();
     }
 
     public void setEditMode(boolean isEditMode) {

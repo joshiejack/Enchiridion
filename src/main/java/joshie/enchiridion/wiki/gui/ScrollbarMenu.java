@@ -1,14 +1,13 @@
 package joshie.enchiridion.wiki.gui;
 
-import joshie.enchiridion.wiki.WikiHelper;
 
 
-public class GuiScrollbarPage extends GuiScrollbar {
+public class ScrollbarMenu extends GuiScrollbar {
     public static boolean isMoving = false;
     public static int lastY;
     
-    public GuiScrollbarPage() {
-        super(1002);
+    public ScrollbarMenu() {
+        super(278);
     }
     
     public int getScrollHeight() {
@@ -17,23 +16,23 @@ public class GuiScrollbarPage extends GuiScrollbar {
 
     @Override
     public boolean displayScroll() {
-        return WikiHelper.getPage().getData().getScrollMaximum(WikiHelper.isEditMode()) > 0;
+        return false;
     }
 
     @Override
     public int getScrollbarHeight() {
-        int scrollbarMaximum = getHeight() - 235; //Maximum Height of the Scrollbar aka 100% USE UR BRAIN FOR SOME MATHS BOY
+        int scrollbarMaximum = getHeight() - 235;
         return scrollbarMaximum;
     }
 
     @Override
     public int getScrollbarPosition() {
-        return WikiHelper.getPage().getData().getScroll();
+        return 0;
     }
 
     @Override
     public void scroll(int amount) {
-        WikiHelper.getPage().getData().scroll(WikiHelper.isEditMode(), amount);
+        //;
     }
 
     @Override

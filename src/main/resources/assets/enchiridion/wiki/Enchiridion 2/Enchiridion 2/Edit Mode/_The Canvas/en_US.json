@@ -1,0 +1,141 @@
+{
+  "components": [
+    {
+      "type": "ElementLink",
+      "properties": {
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Edit Mode",
+        "page": "Image",
+        "x": 420,
+        "y": 471,
+        "width": 55,
+        "height": 13,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementLink",
+      "properties": {
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Edit Mode",
+        "page": "Text",
+        "x": 387,
+        "y": 438,
+        "width": 53,
+        "height": 11,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementLink",
+      "properties": {
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Edit Mode",
+        "page": "Item",
+        "x": 387,
+        "y": 505,
+        "width": 55,
+        "height": 14,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementLink",
+      "properties": {
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Edit Mode",
+        "page": "Box",
+        "x": 372,
+        "y": 580,
+        "width": 54,
+        "height": 12,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementLink",
+      "properties": {
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Edit Mode",
+        "page": "Link",
+        "x": 369,
+        "y": 544,
+        "width": 55,
+        "height": 12,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementLink",
+      "properties": {
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Edit Mode",
+        "page": "Recipe",
+        "x": 429,
+        "y": 615,
+        "width": 55,
+        "height": 14,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "The Canvas.",
+        "color": -1,
+        "x": 282,
+        "y": 4,
+        "width": 205,
+        "height": 26,
+        "size": 5.5
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "The Canvas is the space where you place different elements. AKA where you can read this text and other things! In edit mode you can manipulate the canvas in various ways. You can define it\u0027s background colour if you do not wish to use the default black colour.\n\nOnce you are are in edit mode, which you can access by clicking the little edit button (as long as it is enabled in the config). You can start adding different elements. \n\nOn the right hand side you can see various different buttons. \n\nMenu: Switches between Editing the Menu and showing Layers\n\nUnstar/Star: Marks the page as imporant (Always appears at the top of search).\n\nText: This will add a text element [u]More Info[/u]\n\nImage: This will add an image element [u]More Info[/u]\n\nItem: This will add an item element [u]More Info[/u]\n\nLink: This will add a link element [u]More Info[/u]\n\nBox: This will add a box element [u]More Info[/u]\n\nRecipe: This will add a recipe element [u]More Info[/u]\n\n\nYou can move things around the canvas by clicking in the middle of them and dragging them with the mouse. To resize them, drag the bottom right hand corner and drag up to the left for smaller, and down to the right for larger.",
+        "color": -1,
+        "x": 54,
+        "y": 117,
+        "width": 307,
+        "height": 338,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "[b]To scroll down the page use arrow keys or mouse wheel[/b]",
+        "color": -1,
+        "x": 30,
+        "y": 49,
+        "width": 322,
+        "height": 9,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -1,
+        "x": 9,
+        "y": 83,
+        "width": 361,
+        "height": 3,
+        "size": 2.0
+      }
+    }
+  ],
+  "scrollMax": 0,
+  "isPriority": true,
+  "backgroundColor": -301989888,
+  "name": "",
+  "canEdit": false,
+  "saveDir": "enchiridion"
+}

@@ -1,0 +1,22 @@
+{
+  "components": [
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "color": -1,
+        "x": 45,
+        "y": 7,
+        "width": 200,
+        "height": 100,
+        "size": 2.0
+      }
+    }
+  ],
+  "scrollMax": 0,
+  "isPriority": false,
+  "backgroundColor": -301989888,
+  "name": "Enchiridion 2.Enchiridion 2.Edit Mode.Item.en_US",
+  "canEdit": true,
+  "saveDir": "enchiridion"
+}
