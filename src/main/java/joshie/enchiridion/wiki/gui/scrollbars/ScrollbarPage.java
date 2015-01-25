@@ -17,7 +17,7 @@ public class ScrollbarPage extends ScrollbarAbstract {
 
     @Override
     public boolean displayScroll() {
-        return WikiHelper.getPage().getData().getScrollMaximum(WikiHelper.isEditMode()) > 0;
+        return false;
     }
 
     @Override
