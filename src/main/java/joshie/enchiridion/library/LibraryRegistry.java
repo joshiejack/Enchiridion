@@ -11,6 +11,8 @@ import joshie.enchiridion.helpers.StackHelper;
 import joshie.enchiridion.library.handlers.DefaultBookHandler;
 import joshie.enchiridion.library.handlers.NetworkSwitchHandler;
 import joshie.enchiridion.library.handlers.SwitchBookHandler;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -47,7 +49,12 @@ public class LibraryRegistry implements ILibraryHelper {
 
     @Override
     public void register(ItemStack stack, IBookHandler handler) {
-        String key = StackHelper.getStringFromStack(stack);
+      //Remove the nbt to set the correct handling for this book type
+        ItemStack removed_nbt = stack.copy();
+        removed_nbt.stackTagCompound = null;
+        
+        //Get the key from the removed_nbt
+        String key = StackHelper.getStringFromStack(removed_nbt);
         books.add(stack);
         handlers.put(key, handler);
     }
@@ -57,7 +64,10 @@ public class LibraryRegistry implements ILibraryHelper {
     }
 
     public static IBookHandler getHandler(ItemStack stack) {
-        String key = StackHelper.getStringFromStack(stack);
+        ItemStack removed_nbt = stack.copy();
+        removed_nbt.stackTagCompound = null;
+        //Remove the nbt to get the correct handling for this book type
+        String key = StackHelper.getStringFromStack(removed_nbt);
         IBookHandler handler = handlers.get(key);
         return handler == null ? default_handler : handler;
     }
@@ -107,5 +117,16 @@ public class LibraryRegistry implements ILibraryHelper {
         }
 
         books.set(index, stack);
+        save();
+    }
+
+    public ItemStack get(Item item) {
+        for (int i = 0; i < books.size(); i++) {
+            if (new ItemStack(item).isItemEqual(books.get(i))) {
+                return books.get(i);
+            }
+        }
+        
+        return new ItemStack(Items.book);
     }
 }

@@ -9,7 +9,6 @@ import static joshie.enchiridion.EInfo.VERSION;
 
 import java.io.File;
 
-import joshie.enchiridion.library.ModBooks;
 import joshie.enchiridion.wiki.WikiRegistry;
 import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.Mod;
@@ -46,7 +45,6 @@ public class Enchiridion {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.init();
-        ModBooks.init();
     }
 
     @EventHandler

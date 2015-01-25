@@ -70,7 +70,6 @@ public class NetworkSwitchHandler implements IBookHandler {
                 player.setCurrentItemOrArmor(0, message.stack);
                 message.stack.getItem().onItemRightClick(message.stack, player.worldObj, player);
                 player.setCurrentItemOrArmor(0, previous);
-                LibraryRegistry.INSTANCE.save();
             }
 
             return null;
