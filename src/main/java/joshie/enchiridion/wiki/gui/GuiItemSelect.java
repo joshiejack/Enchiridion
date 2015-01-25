@@ -9,10 +9,11 @@ import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import joshie.enchiridion.api.IGuiDisablesMenu;
 import joshie.enchiridion.api.IItemSelectable;
 import joshie.enchiridion.api.ITextEditable;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.WikiHelper;
-import joshie.lib.helpers.ClientHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

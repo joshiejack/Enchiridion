@@ -1,5 +1,6 @@
 package joshie.enchiridion.wiki.gui;
 
+import joshie.enchiridion.api.IGuiDisablesMenu;
 import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.client.gui.GuiScreen;

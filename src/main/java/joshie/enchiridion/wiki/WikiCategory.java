@@ -6,8 +6,8 @@ import java.util.HashMap;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.data.WikiData;
-import joshie.lib.helpers.ClientHelper;
 
 public class WikiCategory extends WikiPart {
     private HashMap<String, WikiPage> pages = new HashMap();

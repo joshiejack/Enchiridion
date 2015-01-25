@@ -6,8 +6,8 @@ import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 
 import java.util.ArrayList;
 
+import joshie.enchiridion.helpers.OpenGLHelper;
 import joshie.enchiridion.wiki.WikiPage;
-import joshie.lib.helpers.OpenGLHelper;
 
 public class GuiHistory extends GuiExtension {
     /** A store of all the pages you've visited in this session **/

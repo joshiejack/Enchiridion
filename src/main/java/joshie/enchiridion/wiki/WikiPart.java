@@ -6,9 +6,9 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.data.Data;
 import joshie.enchiridion.wiki.data.WikiData;
-import joshie.lib.helpers.ClientHelper;
 
 public class WikiPart {
     private final String key;

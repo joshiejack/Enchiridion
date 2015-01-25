@@ -5,6 +5,7 @@ import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.IColorSelectable;
+import joshie.enchiridion.api.IGuiDisablesMenu;
 import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.wiki.WikiHelper;
 

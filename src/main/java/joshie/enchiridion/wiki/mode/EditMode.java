@@ -12,11 +12,12 @@ import joshie.enchiridion.wiki.elements.ElementItem;
 import joshie.enchiridion.wiki.elements.ElementLink;
 import joshie.enchiridion.wiki.elements.ElementRecipe;
 import joshie.enchiridion.wiki.elements.ElementText;
-import joshie.enchiridion.wiki.mode.edit.ButtonLinkEdit;
-import joshie.enchiridion.wiki.mode.edit.ButtonLockPage;
-import joshie.enchiridion.wiki.mode.edit.ButtonWikiEdit;
-import joshie.enchiridion.wiki.mode.edit.ButtonWikiLayersVsMenu;
-import joshie.enchiridion.wiki.mode.edit.ButtonWikiPriority;
+import joshie.enchiridion.wiki.gui.buttons.ButtonLinkEdit;
+import joshie.enchiridion.wiki.gui.buttons.ButtonLockPage;
+import joshie.enchiridion.wiki.gui.buttons.ButtonSwitchMode;
+import joshie.enchiridion.wiki.gui.buttons.ButtonWikiEdit;
+import joshie.enchiridion.wiki.gui.buttons.ButtonWikiLayersVsMenu;
+import joshie.enchiridion.wiki.gui.buttons.ButtonWikiPriority;
 
 public class EditMode implements IWikiMode {
     private static final EditMode instance = new EditMode();

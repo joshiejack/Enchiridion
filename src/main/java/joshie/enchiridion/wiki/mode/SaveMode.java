@@ -12,8 +12,9 @@ import joshie.enchiridion.wiki.WikiMod;
 import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.WikiRegistry;
 import joshie.enchiridion.wiki.WikiTab;
-import joshie.enchiridion.wiki.mode.edit.ButtonAddPage;
-import joshie.enchiridion.wiki.mode.edit.ButtonDeletePage;
+import joshie.enchiridion.wiki.gui.buttons.ButtonAddPage;
+import joshie.enchiridion.wiki.gui.buttons.ButtonDeletePage;
+import joshie.enchiridion.wiki.gui.buttons.ButtonSwitchMode;
 
 public class SaveMode implements IWikiMode {
 	/** This mode is set when you press the save button, or by default if you have editing enabled

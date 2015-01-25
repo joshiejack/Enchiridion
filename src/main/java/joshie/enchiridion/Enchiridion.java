@@ -1,11 +1,11 @@
 package joshie.enchiridion;
 
 import static java.io.File.separator;
-import static joshie.enchiridion.lib.EnchiridionInfo.JAVAPATH;
-import static joshie.enchiridion.lib.EnchiridionInfo.MODID;
-import static joshie.enchiridion.lib.EnchiridionInfo.MODNAME;
-import static joshie.enchiridion.lib.EnchiridionInfo.MODPATH;
-import static joshie.enchiridion.lib.EnchiridionInfo.VERSION;
+import static joshie.enchiridion.EInfo.JAVAPATH;
+import static joshie.enchiridion.EInfo.MODID;
+import static joshie.enchiridion.EInfo.MODNAME;
+import static joshie.enchiridion.EInfo.MODPATH;
+import static joshie.enchiridion.EInfo.VERSION;
 
 import java.io.File;
 

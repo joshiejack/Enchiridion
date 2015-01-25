@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import joshie.enchiridion.helpers.OpenGLHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiMain;
-import joshie.lib.helpers.OpenGLHelper;
 
 import com.google.gson.annotations.Expose;
 

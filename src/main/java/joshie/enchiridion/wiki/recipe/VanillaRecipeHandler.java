@@ -1,7 +1,7 @@
 package joshie.enchiridion.wiki.recipe;
 
 import joshie.enchiridion.api.IRecipeHandler;
-import joshie.lib.helpers.StackHelper;
+import joshie.enchiridion.helpers.StackHelper;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 

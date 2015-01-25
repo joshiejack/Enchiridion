@@ -6,7 +6,7 @@ import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.EConfig;
-import joshie.enchiridion.lib.ETranslate;
+import joshie.enchiridion.ETranslate;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.mode.DisplayMode;
 import joshie.enchiridion.wiki.mode.SaveMode;

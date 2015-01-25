@@ -3,7 +3,7 @@ package joshie.enchiridion.wiki.elements;
 import java.util.List;
 
 import joshie.enchiridion.wiki.WikiHelper;
-import joshie.enchiridion.wiki.mode.edit.PageEditLink;
+import joshie.enchiridion.wiki.gui.popups.PageEditLink;
 
 import com.google.gson.annotations.Expose;
 

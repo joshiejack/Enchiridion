@@ -1,9 +1,9 @@
 package joshie.enchiridion;
 
-import static joshie.enchiridion.handlers.WikiHandler.wiki;
-import joshie.enchiridion.handlers.WikiHandler;
+import static joshie.enchiridion.wiki.WikiHandler.wiki;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.WikiFont;
-import joshie.lib.helpers.ClientHelper;
+import joshie.enchiridion.wiki.WikiHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.IReloadableResourceManager;

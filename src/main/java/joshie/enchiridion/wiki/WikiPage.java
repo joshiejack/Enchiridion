@@ -4,12 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.data.DataPage;
 import joshie.enchiridion.wiki.data.WikiData;
 import joshie.enchiridion.wiki.elements.Element;
 import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.enchiridion.wiki.gui.GuiMenu;
-import joshie.lib.helpers.ClientHelper;
 
 import org.lwjgl.opengl.GL11;
 

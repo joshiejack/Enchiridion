@@ -1,20 +1,18 @@
 package joshie.enchiridion.wiki.elements;
 
-import static joshie.lib.helpers.OpenGLHelper.*;
-import static joshie.lib.helpers.OpenGLHelper.scaleAll;
-import static joshie.lib.helpers.OpenGLHelper.start;
+import static joshie.enchiridion.helpers.OpenGLHelper.*;
 
 import java.util.List;
 
 import joshie.enchiridion.EClientProxy;
+import joshie.enchiridion.api.IGuiDisablesMenu;
 import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
-import joshie.enchiridion.wiki.gui.IGuiDisablesMenu;
-import joshie.enchiridion.wiki.mode.ButtonBase;
-import joshie.enchiridion.wiki.mode.edit.ButtonWikiTextEdit;
-import joshie.enchiridion.wiki.mode.edit.ButtonWikiTextMode;
-import joshie.enchiridion.wiki.mode.edit.ButtonWikiTextSize;
+import joshie.enchiridion.wiki.gui.buttons.ButtonBase;
+import joshie.enchiridion.wiki.gui.buttons.ButtonWikiTextEdit;
+import joshie.enchiridion.wiki.gui.buttons.ButtonWikiTextMode;
+import joshie.enchiridion.wiki.gui.buttons.ButtonWikiTextSize;
 
 import com.google.gson.annotations.Expose;
 

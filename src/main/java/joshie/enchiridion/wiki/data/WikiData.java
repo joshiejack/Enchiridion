@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import joshie.enchiridion.EConfig;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.WikiCategory;
 import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.gui.GuiHistory;
 import joshie.enchiridion.wiki.mode.DisplayMode;
 import joshie.enchiridion.wiki.mode.SaveMode;
-import joshie.lib.helpers.ClientHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;

@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import joshie.enchiridion.Enchiridion;
-import joshie.lib.helpers.ClientHelper;
+import joshie.enchiridion.helpers.ClientHelper;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
 

@@ -4,7 +4,7 @@ package joshie.enchiridion.wiki;
  
 import java.lang.reflect.Type;
 
-import joshie.enchiridion.lib.EnchiridionInfo;
+import joshie.enchiridion.EInfo;
 import joshie.enchiridion.wiki.elements.Element;
 
 import com.google.gson.JsonDeserializationContext;
@@ -33,7 +33,7 @@ public class WikiAbstractAdapter implements JsonSerializer<Element>, JsonDeseria
         JsonElement element = jsonObject.get("properties");
  
         try {
-            return context.deserialize(element, Class.forName(EnchiridionInfo.JAVAPATH + "wiki.elements." + type));
+            return context.deserialize(element, Class.forName(EInfo.JAVAPATH + "wiki.elements." + type));
         } catch (ClassNotFoundException cnfe) {
             throw new JsonParseException("Unknown element type: " + type, cnfe);
         }

@@ -9,16 +9,15 @@ import java.util.List;
 
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.EConfig;
+import joshie.enchiridion.EInfo;
 import joshie.enchiridion.api.IWikiMode;
 import joshie.enchiridion.api.IWikiMode.WikiMode;
-import joshie.enchiridion.gui.GuiScalable;
-import joshie.enchiridion.lib.EnchiridionInfo;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.WikiMod;
 import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.WikiRegistry;
 import joshie.enchiridion.wiki.WikiTab;
-import joshie.enchiridion.wiki.mode.ButtonBase;
+import joshie.enchiridion.wiki.gui.buttons.ButtonBase;
 import joshie.enchiridion.wiki.mode.DisplayMode;
 import joshie.enchiridion.wiki.mode.SaveMode;
 import net.minecraft.client.Minecraft;
@@ -29,7 +28,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 public class GuiMain extends GuiScalable {
-    public static final ResourceLocation texture = new ResourceLocation(EnchiridionInfo.MODPATH, "textures/gui/core.png");
+    public static final ResourceLocation texture = new ResourceLocation(EInfo.MODPATH, "textures/gui/core.png");
     public static int button_id;
 
     /** The current page of the wiki we are on **/

@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import joshie.enchiridion.api.IBookHandler;
+import joshie.enchiridion.helpers.StackHelper;
 import joshie.enchiridion.library.handlers.DefaultBookHandler;
 import joshie.enchiridion.library.handlers.SwitchBookHandler;
-import joshie.lib.helpers.StackHelper;
 import net.minecraft.item.ItemStack;
 
 public class LibraryRegistry {

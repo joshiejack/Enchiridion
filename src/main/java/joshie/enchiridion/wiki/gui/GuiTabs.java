@@ -7,8 +7,8 @@ import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.api.IItemSelectable;
 import joshie.enchiridion.api.ITextEditable;
+import joshie.enchiridion.helpers.OpenGLHelper;
 import joshie.enchiridion.wiki.WikiTab;
-import joshie.lib.helpers.OpenGLHelper;
 import net.minecraft.item.ItemStack;
 
 public class GuiTabs extends GuiExtension implements IItemSelectable, ITextEditable {

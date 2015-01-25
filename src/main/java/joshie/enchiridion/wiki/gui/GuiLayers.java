@@ -5,7 +5,7 @@ import static joshie.enchiridion.wiki.WikiHelper.mouseY;
 
 import java.util.ArrayList;
 
-import joshie.enchiridion.lib.ETranslate;
+import joshie.enchiridion.ETranslate;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.Element;
 

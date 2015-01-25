@@ -6,7 +6,7 @@ import java.util.List;
 
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.IWikiMode;
-import joshie.enchiridion.wiki.mode.edit.ButtonAddPage;
+import joshie.enchiridion.wiki.gui.buttons.ButtonAddPage;
 
 public class DisplayMode implements IWikiMode {
 	/** This is a generic mode, where you can't do anything except for view **/

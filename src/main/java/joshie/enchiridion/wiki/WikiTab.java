@@ -6,9 +6,9 @@ import java.util.HashMap;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.data.DataTab;
 import joshie.enchiridion.wiki.data.WikiData;
-import joshie.lib.helpers.ClientHelper;
 import net.minecraft.item.ItemStack;
 
 public class WikiTab extends WikiPart {

@@ -1,11 +1,11 @@
 package joshie.enchiridion.wiki.elements;
 
 import static java.io.File.separator;
-import static joshie.lib.helpers.OpenGLHelper.disable;
-import static joshie.lib.helpers.OpenGLHelper.enable;
-import static joshie.lib.helpers.OpenGLHelper.end;
-import static joshie.lib.helpers.OpenGLHelper.scale;
-import static joshie.lib.helpers.OpenGLHelper.start;
+import static joshie.enchiridion.helpers.OpenGLHelper.disable;
+import static joshie.enchiridion.helpers.OpenGLHelper.enable;
+import static joshie.enchiridion.helpers.OpenGLHelper.end;
+import static joshie.enchiridion.helpers.OpenGLHelper.scale;
+import static joshie.enchiridion.helpers.OpenGLHelper.start;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.glScalef;
 
@@ -17,10 +17,10 @@ import javax.imageio.ImageIO;
 
 import joshie.enchiridion.ELogger;
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.helpers.ClientHelper;
+import joshie.enchiridion.helpers.OpenGLHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.WikiPage;
-import joshie.lib.helpers.ClientHelper;
-import joshie.lib.helpers.OpenGLHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.DynamicTexture;

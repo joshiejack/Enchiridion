@@ -1,6 +1,6 @@
 package joshie.enchiridion.wiki.data;
 
-import joshie.lib.helpers.StackHelper;
+import joshie.enchiridion.helpers.StackHelper;
 import net.minecraft.item.ItemStack;
 
 import com.google.gson.annotations.Expose;

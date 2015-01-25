@@ -1,9 +1,9 @@
 package joshie.enchiridion.library;
 
+import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledStack;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
-import static joshie.lib.helpers.OpenGLHelper.fixColors;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_EQUAL;
@@ -20,9 +20,9 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glStencilFunc;
 import static org.lwjgl.opengl.GL11.glStencilMask;
 import static org.lwjgl.opengl.GL11.glStencilOp;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiExtension;
-import joshie.lib.helpers.ClientHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 
