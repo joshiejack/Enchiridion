@@ -5,7 +5,6 @@ import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.enchiridion.wiki.gui.GuiMenu;
 
 public class ButtonWikiLayersVsMenu extends ButtonWikiSwitch {
-    public static boolean hide_layers;
     public ButtonWikiLayersVsMenu(int id, int x, int y) {
         super(id, x, y, "layers", "menu");
     }

@@ -118,9 +118,6 @@ public abstract class Element {
         return wiki.getTop(size, (BASE_Y + y) + y2 - scroll);
     }
 
-    int offsetX = 0;
-    int offsetY = 0;
-
     int lastX = 0;
     int lastY = 0;
 

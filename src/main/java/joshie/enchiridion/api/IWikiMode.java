@@ -12,6 +12,6 @@ public interface IWikiMode {
     public WikiMode getType();
     
     public static enum WikiMode {
-    	DISPLAY, EDIT_GENERAL, EDIT_LINK;
+    	DISPLAY, EDIT;
     }
 }

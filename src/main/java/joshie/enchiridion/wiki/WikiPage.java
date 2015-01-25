@@ -61,7 +61,6 @@ public class WikiPage extends WikiPart {
         return category.getUnlocalized() + "." + getKey();
     }
 
-    public static final String s = File.separator;
     private Element selected;
     private int scroll;
     private boolean isEditMode;
