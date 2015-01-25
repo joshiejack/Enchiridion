@@ -1,6 +1,7 @@
 package joshie.enchiridion.library;
 
 import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
+import static joshie.enchiridion.helpers.OpenGLHelper.fixShitForThePedia;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledStack;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
@@ -23,14 +24,18 @@ import static org.lwjgl.opengl.GL11.glStencilOp;
 import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiExtension;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 
 public class GuiLibrary extends GuiExtension {
     private static final int MAX_PER_ROW = 15;
+    private static int SHELF = 0;
     
     @Override
     public void draw() {
+        fixShitForThePedia();
         glPushMatrix();
         glEnable(GL_BLEND);
         glClear(GL_DEPTH_BUFFER_BIT);
@@ -58,7 +63,8 @@ public class GuiLibrary extends GuiExtension {
     public void drawBooks() {
         int j = 0;
         int k = 0;
-        for (ItemStack stack : LibraryRegistry.getBooks()) {
+        for(int i = SHELF * 15; i < LibraryRegistry.getBooks().size(); i++) {
+            ItemStack stack = LibraryRegistry.getBooks().get(i);
             drawScaledStack(stack, 40 + (j * 74), 50 + (k * 74), 4F);
             j++;
 
@@ -72,7 +78,8 @@ public class GuiLibrary extends GuiExtension {
     public void drawTooltips() {
         int j = 0;
         int k = 0;
-        for (ItemStack stack : LibraryRegistry.getBooks()) {
+        for(int i = SHELF * 15; i < LibraryRegistry.getBooks().size(); i++) {
+            ItemStack stack = LibraryRegistry.getBooks().get(i);
             //Drawing the tooltips
             int xStart = 40 + (j * 74);
             int yStart = 50 + (k * 74);
@@ -107,7 +114,8 @@ public class GuiLibrary extends GuiExtension {
     public void clicked(int button) {
         int j = 0;
         int k = 0;
-        for (ItemStack stack : LibraryRegistry.getBooks()) {
+        for(int i = SHELF * 15; i < LibraryRegistry.getBooks().size(); i++) {
+            ItemStack stack = LibraryRegistry.getBooks().get(i);
             if (getIntFromMouse(40 + (j * 74), 40 + 74 + (j * 74), 50 + (k * 74), 50 + 74 + (k * 74), 0, 1) == 1) {
                 LibraryRegistry.getHandler(stack).handle(stack, ClientHelper.getWorld(), ClientHelper.getPlayer());
             }
@@ -134,7 +142,11 @@ public class GuiLibrary extends GuiExtension {
     @Override
     public void scroll(boolean scrolledDown) {
         if (mouseX >= 290 && mouseX <= 1024) {
-
+            if(scrolledDown) {
+                SHELF++;
+            } else {
+                SHELF = Math.max(0, SHELF--);
+            }
         }
     }
 }
