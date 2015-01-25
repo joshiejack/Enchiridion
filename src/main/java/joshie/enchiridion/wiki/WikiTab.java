@@ -3,8 +3,6 @@ package joshie.enchiridion.wiki;
 import java.util.Collection;
 import java.util.HashMap;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ModContainer;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.data.DataTab;

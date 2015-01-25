@@ -6,7 +6,6 @@ import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.elements.Element;
 import joshie.enchiridion.wiki.elements.ElementImage;
-import joshie.enchiridion.wiki.elements.ElementText;
 
 import com.google.gson.annotations.Expose;
 

@@ -1,6 +1,8 @@
 package joshie.enchiridion.wiki.elements;
 
-import static joshie.enchiridion.helpers.OpenGLHelper.*;
+import static joshie.enchiridion.helpers.OpenGLHelper.end;
+import static joshie.enchiridion.helpers.OpenGLHelper.scaleAll;
+import static joshie.enchiridion.helpers.OpenGLHelper.start;
 
 import java.util.List;
 

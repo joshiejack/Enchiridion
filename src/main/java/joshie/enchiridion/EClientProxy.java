@@ -5,7 +5,6 @@ import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.WikiFont;
 import joshie.enchiridion.wiki.WikiHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.ResourceLocation;

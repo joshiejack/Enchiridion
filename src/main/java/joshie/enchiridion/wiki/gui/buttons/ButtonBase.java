@@ -2,7 +2,6 @@ package joshie.enchiridion.wiki.gui.buttons;
 
 import static joshie.enchiridion.wiki.WikiHelper.gui;
 import joshie.enchiridion.wiki.WikiHelper;
-import joshie.enchiridion.wiki.gui.GuiCanvas;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;

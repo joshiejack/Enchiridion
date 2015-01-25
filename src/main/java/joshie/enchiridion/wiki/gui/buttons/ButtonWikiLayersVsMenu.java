@@ -1,10 +1,8 @@
 package joshie.enchiridion.wiki.gui.buttons;
 
-import static joshie.enchiridion.wiki.WikiHelper.gui;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.enchiridion.wiki.gui.GuiMenu;
-import joshie.enchiridion.wiki.gui.GuiTextEdit;
 
 public class ButtonWikiLayersVsMenu extends ButtonWikiSwitch {
     public static boolean hide_layers;

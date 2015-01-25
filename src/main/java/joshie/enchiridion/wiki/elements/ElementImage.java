@@ -4,7 +4,6 @@ import static java.io.File.separator;
 import static joshie.enchiridion.helpers.OpenGLHelper.disable;
 import static joshie.enchiridion.helpers.OpenGLHelper.enable;
 import static joshie.enchiridion.helpers.OpenGLHelper.end;
-import static joshie.enchiridion.helpers.OpenGLHelper.scale;
 import static joshie.enchiridion.helpers.OpenGLHelper.start;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.glScalef;

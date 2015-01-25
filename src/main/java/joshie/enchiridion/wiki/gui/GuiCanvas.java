@@ -18,10 +18,10 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glStencilFunc;
 import static org.lwjgl.opengl.GL11.glStencilMask;
 import static org.lwjgl.opengl.GL11.glStencilOp;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.OpenGlHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.Element;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.OpenGlHelper;
 
 public class GuiCanvas extends GuiExtension {	
 	private static final int DEFAULT_COLOR = 0xEE000000;

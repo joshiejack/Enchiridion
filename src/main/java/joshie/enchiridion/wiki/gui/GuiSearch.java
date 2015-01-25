@@ -1,6 +1,9 @@
 package joshie.enchiridion.wiki.gui;
 
-import static joshie.enchiridion.helpers.OpenGLHelper.*;
+import static joshie.enchiridion.helpers.OpenGLHelper.end;
+import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
+import static joshie.enchiridion.helpers.OpenGLHelper.resetZ;
+import static joshie.enchiridion.helpers.OpenGLHelper.start;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;

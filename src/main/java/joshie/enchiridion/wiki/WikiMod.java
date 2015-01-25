@@ -5,8 +5,6 @@ import java.util.HashMap;
 
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.ClientHelper;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ModContainer;
 
 public class WikiMod extends WikiPart {
     private HashMap<String, WikiTab> tabs = new HashMap();

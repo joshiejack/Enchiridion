@@ -4,14 +4,14 @@ import static joshie.enchiridion.ETranslate.translate;
 
 import java.io.File;
 
-import org.apache.logging.log4j.Level;
-
 import joshie.enchiridion.ELogger;
 import joshie.enchiridion.wiki.WikiCategory;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.WikiMod;
 import joshie.enchiridion.wiki.WikiRegistry;
 import joshie.enchiridion.wiki.WikiTab;
+
+import org.apache.logging.log4j.Level;
 
 public class ConfirmDeletion extends Confirm {
     public ConfirmDeletion() {

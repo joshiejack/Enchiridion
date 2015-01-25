@@ -2,10 +2,6 @@ package joshie.enchiridion.wiki.gui.popups;
 
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.ElementLink;
-import joshie.enchiridion.wiki.gui.GuiExtension;
-import joshie.enchiridion.wiki.gui.GuiMain;
-import joshie.enchiridion.wiki.mode.DisplayMode;
-import joshie.enchiridion.wiki.mode.SaveMode;
 
 public class PageEditLink extends PageEdit {
     public ElementLink editing;

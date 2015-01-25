@@ -2,8 +2,6 @@ package joshie.enchiridion.api;
 
 import java.util.List;
 
-import joshie.enchiridion.api.IWikiMode.WikiMode;
-
 public interface IWikiMode {
 	public List addButtons(List list);
 	

@@ -1,8 +1,13 @@
 package joshie.enchiridion.helpers;
 
-import static org.lwjgl.opengl.GL11.*;
-
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glScalef;
 
 public class OpenGLHelper {
     public static void start() {
