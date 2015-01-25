@@ -48,12 +48,12 @@ public class Enchiridion {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.init();
+        ModBooks.init();
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit();
-        ModBooks.init();
     }
 
     @EventHandler
