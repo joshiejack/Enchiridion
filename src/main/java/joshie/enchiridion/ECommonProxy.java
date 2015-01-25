@@ -3,7 +3,6 @@ package joshie.enchiridion;
 import static joshie.enchiridion.Enchiridion.instance;
 import joshie.enchiridion.api.EnchiridionHelper;
 import joshie.enchiridion.library.LibraryRegistry;
-import joshie.enchiridion.library.ModBooks;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class ECommonProxy {

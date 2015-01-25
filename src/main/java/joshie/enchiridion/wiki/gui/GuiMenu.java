@@ -3,9 +3,7 @@ package joshie.enchiridion.wiki.gui;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.wiki.WikiCategory;

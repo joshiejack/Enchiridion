@@ -1,64 +1,120 @@
 package joshie.enchiridion.library;
 
-import static cpw.mods.fml.common.Loader.isModLoaded;
 import static joshie.enchiridion.api.EnchiridionHelper.bookRegistry;
-import net.minecraft.item.Item;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+
+import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.helpers.StackHelper;
+import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.common.registry.GameRegistry;
+
+import org.apache.commons.io.IOUtils;
+
+import com.google.gson.annotations.Expose;
+
+import cpw.mods.fml.common.Loader;
 
 public class ModBooks {
+    @Expose
+    private ArrayList<BookData> books = new ArrayList();
+
+    public ModBooks addBook(BookData book) {
+        books.add(book);
+        return this;
+    }
+
+    public static class BookData {
+        @Expose
+        public String mod;
+        @Expose
+        public String stack;
+        @Expose
+        public String type;
+
+        public BookData() {}
+
+        public BookData(String mod, String item, int meta, String register) {
+            this.mod = mod;
+            this.stack = mod + ":" + item + " " + meta;
+            this.type = register;
+        }
+
+        public BookData(String mod, ItemStack stack, String register) {
+            this.mod = mod;
+            this.stack = StackHelper.getStringFromStack(stack);
+            this.type = register;
+        }
+    }
+
     public static void init() {
-        if (isModLoaded("Botania")) {
+        try {
+            ModBooks data = null;
+            File default_file = new File(Enchiridion.root, "library/default.json");
+            if (!default_file.exists()) {
+                data = getModBooks(new ModBooks());
 
-        }
+                File parent = default_file.getParentFile();
+                if (!parent.exists() && !parent.mkdirs()) {
+                    throw new IllegalStateException("Couldn't create dir: " + parent);
+                }
 
-        if (isModLoaded("HardcoreQuesting")) {
-            Item book = GameRegistry.findItem("HardcoreQuesting", "quest_book");
-            if (book != null) {
-                bookRegistry.registerNetworkSwitch(new ItemStack(book));
+                Writer writer = new OutputStreamWriter(new FileOutputStream(default_file), "UTF-8");
+                writer.write(WikiHelper.getGson().toJson(data));
+                writer.close();
+            } else {
+                String json = IOUtils.toString(ModBooks.class.getResourceAsStream("/assets/enchiridion/library/default.json"));
+                data = WikiHelper.getGson().fromJson(json, ModBooks.class);
             }
-        }
 
-        if (isModLoaded("factorization")) {
-            Item book = GameRegistry.findItem("factorization", "docbook");
-            if (book != null) {
-                bookRegistry.registerDefault(new ItemStack(book, 1, 0));
+            //Now that we have the book data let's go through and register them
+            for (BookData book : data.books) {
+                if (Loader.isModLoaded(book.mod)) {
+                    ItemStack item = StackHelper.getStackFromString(book.stack);
+                    if (item != null && item.getItem() != null) {
+                        if (book.type.equals("default")) {
+                            bookRegistry.registerDefault(item);
+                        } else if (book.type.equals("network")) {
+                            bookRegistry.registerNetworkSwitch(item);
+                        } else if (book.type.equals("switch")) {
+                            bookRegistry.registerSwitch(item);
+                        }
+                    }
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
-        if (isModLoaded("Mariculture")) {
-            Item book = GameRegistry.findItem("Mariculture", "guide");
-            if (book != null) {
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 0));
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 1));
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 2));
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 3));
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 4));
-            }
-        }
-
-        if (isModLoaded("TConstruct")) {
-            Item book = GameRegistry.findItem("TConstruct", "manualBook");
-            if (book != null) {
-                bookRegistry.registerDefault(new ItemStack(book, 1, 0));
-                bookRegistry.registerDefault(new ItemStack(book, 1, 1));
-                bookRegistry.registerDefault(new ItemStack(book, 1, 2));
-                bookRegistry.registerDefault(new ItemStack(book, 1, 3));
-            }
-        }
-
-        if (isModLoaded("witchery")) {
-            Item book = GameRegistry.findItem("witchery", "ingredient");
-            if (book != null) {
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 46));
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 47));
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 48));
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 49));
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 81));
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 106));
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 107));
-                bookRegistry.registerSwitch(new ItemStack(book, 1, 127));
-            }
-        }
+    /** Default books in the json file **/
+    public static ModBooks getModBooks(ModBooks data) {
+        data.addBook(new BookData("Botania", "lexicon", 0, "default"));
+        data.addBook(new BookData("HardcoreQuesting", "quest_book", 0, "network"));
+        data.addBook(new BookData("factorization", "docbook", 0, "default"));
+        data.addBook(new BookData("Mariculture", "guide", 0, "switch"));
+        data.addBook(new BookData("Mariculture", "guide", 1, "switch"));
+        data.addBook(new BookData("Mariculture", "guide", 2, "switch"));
+        data.addBook(new BookData("Mariculture", "guide", 3, "switch"));
+        data.addBook(new BookData("Mariculture", "guide", 4, "switch"));
+        data.addBook(new BookData("OpenBlocks", "infoBook", 0, "default"));
+        data.addBook(new BookData("TConstruct", "manualBook", 0, "default"));
+        data.addBook(new BookData("TConstruct", "manualBook", 1, "default"));
+        data.addBook(new BookData("TConstruct", "manualBook", 2, "default"));
+        data.addBook(new BookData("TConstruct", "manualBook", 3, "default"));
+        data.addBook(new BookData("Thaumcraft", "ItemThaumonomicon", 0, "default"));
+        data.addBook(new BookData("witchery", "ingredient", 46, "switch"));
+        data.addBook(new BookData("witchery", "ingredient", 47, "switch"));
+        data.addBook(new BookData("witchery", "ingredient", 48, "switch"));
+        data.addBook(new BookData("witchery", "ingredient", 49, "switch"));
+        data.addBook(new BookData("witchery", "ingredient", 81, "switch"));
+        data.addBook(new BookData("witchery", "ingredient", 106, "switch"));
+        data.addBook(new BookData("witchery", "ingredient", 107, "switch"));
+        data.addBook(new BookData("witchery", "ingredient", 127, "switch"));
+        return data;
     }
 }

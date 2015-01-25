@@ -25,8 +25,6 @@ import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.OpenGLHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiExtension;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 

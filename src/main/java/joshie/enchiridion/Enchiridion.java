@@ -9,7 +9,6 @@ import static joshie.enchiridion.EInfo.VERSION;
 
 import java.io.File;
 
-import joshie.enchiridion.library.LibraryRegistry;
 import joshie.enchiridion.library.ModBooks;
 import joshie.enchiridion.wiki.WikiRegistry;
 import net.minecraftforge.common.config.Configuration;
@@ -21,7 +20,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.FMLEventChannel;
 
 @Mod(modid = MODID, name = MODNAME, version = VERSION)

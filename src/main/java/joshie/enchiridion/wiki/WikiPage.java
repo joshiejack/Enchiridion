@@ -1,6 +1,5 @@
 package joshie.enchiridion.wiki;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import joshie.enchiridion.Enchiridion;
