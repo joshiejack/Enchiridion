@@ -22,6 +22,7 @@ import static org.lwjgl.opengl.GL11.glStencilFunc;
 import static org.lwjgl.opengl.GL11.glStencilMask;
 import static org.lwjgl.opengl.GL11.glStencilOp;
 import joshie.enchiridion.helpers.ClientHelper;
+import joshie.enchiridion.helpers.OpenGLHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiExtension;
 import net.minecraft.client.Minecraft;
@@ -30,7 +31,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 
 public class GuiLibrary extends GuiExtension {
-    private static final int MAX_PER_ROW = 15;
+    private static final int MAX_PER_ROW = 13;
     private static int SHELF = 0;
     
     @Override
@@ -63,9 +64,9 @@ public class GuiLibrary extends GuiExtension {
     public void drawBooks() {
         int j = 0;
         int k = 0;
-        for(int i = SHELF * 15; i < LibraryRegistry.getBooks().size(); i++) {
+        for(int i = SHELF * MAX_PER_ROW; i < LibraryRegistry.getBooks().size(); i++) {
             ItemStack stack = LibraryRegistry.getBooks().get(i);
-            drawScaledStack(stack, 40 + (j * 74), 50 + (k * 74), 4F);
+            drawScaledStack(stack, 40 + (j * 74), 50 + (k * 80), 4F);
             j++;
 
             if (j > MAX_PER_ROW) {
@@ -76,14 +77,16 @@ public class GuiLibrary extends GuiExtension {
     }
     
     public void drawTooltips() {
+        OpenGLHelper.start();
+        OpenGLHelper.resetZ();
         int j = 0;
         int k = 0;
-        for(int i = SHELF * 15; i < LibraryRegistry.getBooks().size(); i++) {
+        for(int i = SHELF * MAX_PER_ROW; i < LibraryRegistry.getBooks().size(); i++) {
             ItemStack stack = LibraryRegistry.getBooks().get(i);
             //Drawing the tooltips
             int xStart = 40 + (j * 74);
             int yStart = 50 + (k * 74);
-            if (getIntFromMouse(xStart - 5, xStart + 69, yStart, yStart + 73, 0, 1) == 1) {
+            if (getIntFromMouse(xStart - 5, xStart + 69, yStart, yStart + 79, 0, 1) == 1) {
                 yStart -= 5;
                 String title = stack.getDisplayName();
                 int length = WikiHelper.gui.mc.fontRenderer.getStringWidth(title);
@@ -108,15 +111,17 @@ public class GuiLibrary extends GuiExtension {
                 k++;
             }
         }
+        
+        OpenGLHelper.end();
     }
 
     @Override
     public void clicked(int button) {
         int j = 0;
         int k = 0;
-        for(int i = SHELF * 15; i < LibraryRegistry.getBooks().size(); i++) {
+        for(int i = SHELF * MAX_PER_ROW; i < LibraryRegistry.getBooks().size(); i++) {
             ItemStack stack = LibraryRegistry.getBooks().get(i);
-            if (getIntFromMouse(40 + (j * 74), 40 + 74 + (j * 74), 50 + (k * 74), 50 + 74 + (k * 74), 0, 1) == 1) {
+            if (getIntFromMouse(40 + (j * 74), 40 + 74 + (j * 74), 50 + (k * 80), 50 + 74 + (k * 80), 0, 1) == 1) {
                 LibraryRegistry.getHandler(stack).handle(stack, ClientHelper.getWorld(), ClientHelper.getPlayer());
             }
             

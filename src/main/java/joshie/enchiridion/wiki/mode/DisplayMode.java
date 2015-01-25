@@ -6,6 +6,7 @@ import java.util.List;
 
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.IWikiMode;
+import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.buttons.ButtonAddPage;
 
 public class DisplayMode implements IWikiMode {
@@ -17,7 +18,7 @@ public class DisplayMode implements IWikiMode {
     
     @Override
     public List addButtons(List list) {
-        if(EConfig.EDIT_ENABLED) {
+        if(EConfig.EDIT_ENABLED && !WikiHelper.isLibrary()) {
             list.add(new ButtonAddPage(button_id++, 723, 14, 1, 1, 2F));
         }
         
