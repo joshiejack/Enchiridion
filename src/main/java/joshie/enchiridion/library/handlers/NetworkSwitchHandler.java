@@ -23,6 +23,8 @@ public class NetworkSwitchHandler implements IBookHandler {
 
     @Override
     public void handle(ItemStack stack, World world, EntityPlayer player) {
+        player.closeScreen();
+        
         EPacketHandler.sendToServer(new NetworkSwitchPacket(stack, true));
     }
 
@@ -61,13 +63,14 @@ public class NetworkSwitchHandler implements IBookHandler {
                 player.setCurrentItemOrArmor(0, previous);
                 EPacketHandler.sendToClient(new NetworkSwitchPacket(ret, false), player);
             } else {
-                LibraryRegistry.overwrite(message.stack);
+                LibraryRegistry.INSTANCE.overwrite(message.stack);
                 EntityPlayer player = ClientHelper.getPlayer();
                 ItemStack previous = player.getCurrentEquippedItem();
                 if (previous != null) previous = previous.copy();
                 player.setCurrentItemOrArmor(0, message.stack);
                 message.stack.getItem().onItemRightClick(message.stack, player.worldObj, player);
                 player.setCurrentItemOrArmor(0, previous);
+                LibraryRegistry.INSTANCE.save();
             }
 
             return null;
