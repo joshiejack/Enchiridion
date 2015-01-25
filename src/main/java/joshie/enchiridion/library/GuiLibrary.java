@@ -31,7 +31,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 
 public class GuiLibrary extends GuiExtension {
-    private static final int MAX_PER_ROW = 13;
+    private static final int MAX_PER_ROW = 12;
     private static int SHELF = 0;
     
     @Override
@@ -66,7 +66,7 @@ public class GuiLibrary extends GuiExtension {
         int k = 0;
         for(int i = SHELF * MAX_PER_ROW; i < LibraryRegistry.getBooks().size(); i++) {
             ItemStack stack = LibraryRegistry.getBooks().get(i);
-            drawScaledStack(stack, 40 + (j * 74), 50 + (k * 80), 4F);
+            drawScaledStack(stack, 36 + (j * 74), 50 + (k * 80), 4F);
             j++;
 
             if (j > MAX_PER_ROW) {
@@ -84,7 +84,7 @@ public class GuiLibrary extends GuiExtension {
         for(int i = SHELF * MAX_PER_ROW; i < LibraryRegistry.getBooks().size(); i++) {
             ItemStack stack = LibraryRegistry.getBooks().get(i);
             //Drawing the tooltips
-            int xStart = 40 + (j * 74);
+            int xStart = 36 + (j * 74);
             int yStart = 50 + (k * 74);
             if (getIntFromMouse(xStart - 5, xStart + 69, yStart, yStart + 79, 0, 1) == 1) {
                 yStart -= 5;
@@ -121,7 +121,7 @@ public class GuiLibrary extends GuiExtension {
         int k = 0;
         for(int i = SHELF * MAX_PER_ROW; i < LibraryRegistry.getBooks().size(); i++) {
             ItemStack stack = LibraryRegistry.getBooks().get(i);
-            if (getIntFromMouse(40 + (j * 74), 40 + 74 + (j * 74), 50 + (k * 80), 50 + 74 + (k * 80), 0, 1) == 1) {
+            if (getIntFromMouse(36 + (j * 74), 36 + 74 + (j * 74), 50 + (k * 80), 50 + 74 + (k * 80), 0, 1) == 1) {
                 LibraryRegistry.getHandler(stack).handle(stack, ClientHelper.getWorld(), ClientHelper.getPlayer());
             }
             
@@ -150,7 +150,9 @@ public class GuiLibrary extends GuiExtension {
             if(scrolledDown) {
                 SHELF++;
             } else {
-                SHELF = Math.max(0, SHELF--);
+                SHELF--;
+                SHELF = Math.max(0, SHELF);
+                System.out.println(SHELF);
             }
         }
     }
