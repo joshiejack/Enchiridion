@@ -8,3 +8,4 @@ MinecraftForge*
 .classpath
 .project
 .gradle/*
+libs/

@@ -1,5 +1,6 @@
 package joshie.enchiridion.wiki.gui;
 
+import static joshie.enchiridion.helpers.OpenGLHelper.fixShitForThePedia;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
@@ -20,17 +21,12 @@ import static org.lwjgl.opengl.GL11.glStencilMask;
 import static org.lwjgl.opengl.GL11.glStencilOp;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.Element;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.OpenGlHelper;
 
 public class GuiCanvas extends GuiExtension {	
 	private static final int DEFAULT_COLOR = 0xEE000000;
     @Override
     public void draw() {  
-        OpenGlHelper.func_153186_a(OpenGlHelper.field_153199_f, org.lwjgl.opengl.EXTPackedDepthStencil.GL_DEPTH24_STENCIL8_EXT, Minecraft.getMinecraft().getFramebuffer().framebufferTextureWidth, Minecraft.getMinecraft().getFramebuffer().framebufferHeight);
-        OpenGlHelper.func_153190_b(OpenGlHelper.field_153198_e, org.lwjgl.opengl.EXTFramebufferObject.GL_DEPTH_ATTACHMENT_EXT, OpenGlHelper.field_153199_f, Minecraft.getMinecraft().getFramebuffer().depthBuffer);
-        OpenGlHelper.func_153190_b(OpenGlHelper.field_153198_e, org.lwjgl.opengl.EXTFramebufferObject.GL_STENCIL_ATTACHMENT_EXT, OpenGlHelper.field_153199_f, Minecraft.getMinecraft().getFramebuffer().depthBuffer);
-    	
+        fixShitForThePedia();
         glPushMatrix();
         glEnable(GL_BLEND);
         glClear(GL_DEPTH_BUFFER_BIT);
