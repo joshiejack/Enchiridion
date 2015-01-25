@@ -13,7 +13,7 @@ import joshie.enchiridion.helpers.StackHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.item.ItemStack;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.FileUtils;
 
 import com.google.gson.annotations.Expose;
 
@@ -67,7 +67,7 @@ public class ModBooks {
                 writer.write(WikiHelper.getGson().toJson(data));
                 writer.close();
             } else {
-                String json = IOUtils.toString(ModBooks.class.getResourceAsStream("/assets/enchiridion/library/default.json"));
+                String json = FileUtils.readFileToString(default_file);
                 data = WikiHelper.getGson().fromJson(json, ModBooks.class);
             }
 
