@@ -12,6 +12,7 @@ import joshie.enchiridion.wiki.elements.ElementItem;
 import joshie.enchiridion.wiki.elements.ElementLink;
 import joshie.enchiridion.wiki.elements.ElementRecipe;
 import joshie.enchiridion.wiki.elements.ElementText;
+import joshie.enchiridion.wiki.gui.buttons.ButtonImageInsert;
 import joshie.enchiridion.wiki.gui.buttons.ButtonLinkEdit;
 import joshie.enchiridion.wiki.gui.buttons.ButtonLockPage;
 import joshie.enchiridion.wiki.gui.buttons.ButtonSwitchMode;
@@ -34,6 +35,7 @@ public class EditMode implements IWikiMode {
         list.add(new ButtonWikiPriority(button_id++, 1040, yCoord += 50));
         list.add(new ButtonWikiEdit(button_id++, 1040, yCoord += 50, ElementText.class, list));
         list.add(new ButtonWikiEdit(button_id++, 1040, yCoord += 50, ElementImage.class, list));
+        list.add(new ButtonImageInsert(button_id++, 1040, yCoord += 50, ElementImage.class, list));
         list.add(new ButtonWikiEdit(button_id++, 1040, yCoord += 50, ElementItem.class, list));
         list.add(new ButtonLinkEdit(button_id++, 1040, yCoord += 50, ElementLink.class, list));
         list.add(new ButtonWikiEdit(button_id++, 1040, yCoord += 50, ElementBox.class, list));

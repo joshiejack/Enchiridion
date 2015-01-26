@@ -19,7 +19,7 @@ import com.google.gson.annotations.Expose;
 
 public class ElementItem extends Element implements IItemSelectable {
     public static final RenderBlocks renderer = new RenderBlocks();
-    public static final RenderItem itemRenderer = new WikiRender();
+    public static final RenderItem itemRenderer = new RenderItem();
     @Expose
     public String item;
     public ItemStack stack;

@@ -1,18 +1,5 @@
 {
-  "components": [
-    {
-      "type": "ElementText",
-      "properties": {
-        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        "color": -1,
-        "x": 57,
-        "y": 2,
-        "width": 200,
-        "height": 100,
-        "size": 2.0
-      }
-    }
-  ],
+  "components": [],
   "scrollMax": 0,
   "isPriority": false,
   "backgroundColor": -301989888,

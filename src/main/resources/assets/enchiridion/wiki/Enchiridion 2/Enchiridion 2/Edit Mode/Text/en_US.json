@@ -5,11 +5,45 @@
       "properties": {
         "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         "color": -1,
-        "x": 42,
-        "y": 11,
-        "width": 200,
-        "height": 100,
+        "x": 72,
+        "y": 27,
+        "width": 268,
+        "height": 29,
         "size": 2.0
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:gold_ingot",
+        "x": 80,
+        "y": 168,
+        "width": 52,
+        "height": 52,
+        "size": 6.5
+      }
+    },
+    {
+      "type": "ElementImage",
+      "properties": {
+        "path": "enchiridion:enchiridion_logo.png",
+        "x": 32,
+        "y": 627,
+        "width": 246,
+        "height": 82,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "Fuck yeah :D",
+        "color": -1,
+        "x": 42,
+        "y": 16,
+        "width": 158,
+        "height": 32,
+        "size": 3.5
       }
     }
   ],

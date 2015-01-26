@@ -39,6 +39,16 @@ public class ElementImage extends Element {
     public int img_width;
     public int img_height;
     
+    public ElementImage setPath(String fileName) {
+        WikiPage page = WikiHelper.getPage();
+        this.width = 100;
+        this.height = 100;
+        this.path = fileName; 
+        loadImage(WikiHelper.getPage());
+        this.markDirty();
+        return this;
+    }
+    
     //Loads the image in to memory
 	public void loadImage(WikiPage page) {
 		if(!path.contains(":")) {
@@ -47,7 +57,7 @@ public class ElementImage extends Element {
 				if(path.startsWith("root.")) {
 					ImageIO.read(new File(Enchiridion.root + separator + "wiki" + separator + path.replace("root.", "")));
 				} else {
-					img = ImageIO.read(new File(page.getPath() + separator + path));
+					img = ImageIO.read(new File(new File(page.getPath()).getParentFile(), path));
 				}
 				
 				texture = new DynamicTexture(img);
@@ -89,27 +99,32 @@ public class ElementImage extends Element {
     	OpenGLHelper.fixColors();
     	
     	if(isDynamic) {
+    	    start();
+            enable(GL_BLEND);
 	    	texture.updateDynamicTexture();
 			Tessellator tessellator = Tessellator.instance;
 			ClientHelper.getMinecraft().getTextureManager().bindTexture(resource);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			tessellator.startDrawingQuads();
-			tessellator.addVertexWithUV(x, y + height, 0, 0.0, 1.0);
-			tessellator.addVertexWithUV(x + width, y + height, 0, 1.0, 1.0);
-			tessellator.addVertexWithUV(x + width, y, 0, 1.0, 0.0);
-			tessellator.addVertexWithUV(x, y, 0, 0.0, 0.0);
+			tessellator.addVertexWithUV(WikiHelper.getScaledX(BASE_X + left), WikiHelper.getScaledY(BASE_Y + top + (height * 2)), 0, 0.0, 1.0);
+			tessellator.addVertexWithUV(WikiHelper.getScaledX(BASE_X + left + (width * 2)), WikiHelper.getScaledY(BASE_Y + top + (height * 2)), 0, 1.0, 1.0);
+			tessellator.addVertexWithUV(WikiHelper.getScaledX(BASE_X + left + (width * 2)), WikiHelper.getScaledY(BASE_Y + top), 0, 1.0, 0.0);
+			tessellator.addVertexWithUV(WikiHelper.getScaledX(BASE_X + left), WikiHelper.getScaledY(BASE_Y + top), 0, 0.0, 0.0);
 			tessellator.draw();
-    	} else {    		
+			disable(GL_BLEND);
+	        end();
+    	} else if(resource != null) {    		
     		ClientHelper.getMinecraft().getTextureManager().bindTexture(resource);
-    		
-    		
     		scaleTexture(BASE_X + left, BASE_Y + top, (float)width / 125F, (float)height / 125F);
+    	} else if (resource == null) {
+    	    loadImage(WikiHelper.getPage());
     	}
     }
     
     private void scaleTexture(int x, int y, float scaleX, float scaleY) {
     	start();
         enable(GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         ClientHelper.bindTexture(resource);
         glScalef(scaleX, scaleY, 1.0F);
         WikiHelper.drawTexture(WikiHelper.getScaledX(x, scaleX), WikiHelper.getScaledY(y, scaleY), 0, 0, img_width, img_height);
