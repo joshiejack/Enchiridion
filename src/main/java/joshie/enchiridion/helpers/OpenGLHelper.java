@@ -48,6 +48,10 @@ public class OpenGLHelper {
     	float red = (color >> 16 & 255) / 255.0F;
         float green = (color >> 8 & 255) / 255.0F;
         float blue = (color & 255) / 255.0F;
+        color(red, green, blue);
+    }
+    
+    public static void color(float red, float green, float blue) {
         glColor4f(red, green, blue, 1.0F);
     }
     

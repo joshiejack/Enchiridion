@@ -1,5 +1,8 @@
 package joshie.enchiridion.designer.gui;
 
+import static joshie.enchiridion.helpers.OpenGLHelper.color;
+import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,7 +12,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
 
 public class GuiDesigner extends GuiScreen {
     protected int guiTick = 0;
@@ -25,12 +27,11 @@ public class GuiDesigner extends GuiScreen {
     protected float red, green, blue;
     protected int leftX = 212;
     protected int rightX = 218;
-
     protected int ySize = 217;
-    public static int currentPage;
+
     public ArrayList<DesignerCanvas> book; //List of all pages in the book
     public DesignerCanvas canvas; //The current canvas we are displaying
-    public HashMap<Integer, Integer> page_number = new HashMap(); //The current page number for this book_id
+    public static HashMap<Integer, Integer> page_number = new HashMap(); //The current page number for this book_id
     public int bookID;
 
     //The books id being initialised with this, use this to grab the books data
@@ -56,26 +57,20 @@ public class GuiDesigner extends GuiScreen {
         }
     }
 
-    public void onGuiClosed() {
-        //
-    }
-
-    //Decorate each element
-    public void draw(GuiDesigner gui, int x, int y, boolean left) {
-        //Draw No Contents on the page
-    }
-
-    private void drawPage(int x, int y, boolean left) {
-        draw(this, x, y + 9, left);
+    //Draws the Stuff
+    public void draw(int x, int y) {
+        if(canvas != null) {
+            canvas.draw(this, x, y);
+        }
     }
 
     public void drawLeftPage(int x, int y) {
         //Cover
         if (cover_left != null) {
-            GL11.glColor4f(red, green, blue, 1.0F);
+            color(red, green, blue);
             mc.getTextureManager().bindTexture(cover_left);
             drawTexturedModalRect(x - 9, y, 35, 0, leftX + 9, ySize);
-            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0F);
+            fixColors();
 
             //Page
             mc.getTextureManager().bindTexture(page_left);
@@ -84,16 +79,18 @@ public class GuiDesigner extends GuiScreen {
 
         //Arrows
         drawTexturedModalRect(x + 21, y + 200, 0, 246, 18, 10);
-        if (mouseXRight >= -192 && mouseXRight <= -174 && mouseY >= 100 && mouseY <= 110) drawTexturedModalRect(x + 21, y + 200, 23, 246, 18, 10);
+        if (mouseXRight >= -192 && mouseXRight <= -174 && mouseY >= 100 && mouseY <= 110) {
+            drawTexturedModalRect(x + 21, y + 200, 23, 246, 18, 10);
+        }
     }
 
     public void drawRightPage(int x, int y) {
         // Cover
         if (cover_right != null) {
-            GL11.glColor4f(red, green, blue, 1.0F);
+            color(red, green, blue);
             mc.getTextureManager().bindTexture(cover_right);
             drawTexturedModalRect(x, y, 0, 0, rightX + 9, ySize);
-            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0F);
+            fixColors();
 
             //Page
             mc.getTextureManager().bindTexture(page_right);
@@ -102,17 +99,19 @@ public class GuiDesigner extends GuiScreen {
 
         //Arrows
         drawTexturedModalRect(x + 175, y + 200, 0, 246, 18, 10);
-        if (mouseXRight >= 175 && mouseXRight <= 192 && mouseY >= 100 && mouseY <= 110) drawTexturedModalRect(x + 175, y + 200, 23, 246, 18, 10);
+        if (mouseXRight >= 175 && mouseXRight <= 192 && mouseY >= 100 && mouseY <= 110) {
+            drawTexturedModalRect(x + 175, y + 200, 23, 246, 18, 10);
+        }
 
         //Draw Page
-        drawPage(x + 6, y + 15, false);
+        draw(x + 6, y + 24);
 
         //Numbers
         mc.fontRenderer.drawString("" + (page_number.get(bookID) + 1), x + 124, y + 202, 0);
     }
 
     public void drawScreen(int i, int j, float f) {
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        fixColors();
         int x = width / 2;
         int y = 8;
 
