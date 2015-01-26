@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.ClientHelper;
+import joshie.enchiridion.helpers.OpenGLHelper;
 import joshie.enchiridion.wiki.data.DataPage;
 import joshie.enchiridion.wiki.data.WikiData;
 import joshie.enchiridion.wiki.elements.Element;
@@ -11,6 +12,8 @@ import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.enchiridion.wiki.gui.GuiMenu;
 
 import org.lwjgl.opengl.GL11;
+
+import static joshie.enchiridion.helpers.OpenGLHelper.*;
 
 public class WikiPage extends WikiPart {    
     public WikiPage(String key, String lang, DataPage contents) {
@@ -114,11 +117,11 @@ public class WikiPage extends WikiPart {
         //Render a null stack, to fix stuff
         WikiHelper.renderStack(null, 0, 0);
         ArrayList<Element> elements = getData().getComponents();
-        for (int i = 0; i < elements.size(); i++) {
-            GL11.glPushMatrix();
-            GL11.glTranslatef(0F, 0F, ((elements.size() - i) * 120));
+        for (int i = (elements.size() - 1); i >= 0; i--) {
+            start();
+            resetZ();
             (elements.get(i)).setWiki(WikiHelper.gui).display((int) getData().getScroll(), isEditMode);
-            GL11.glPopMatrix();
+            end();
         }
     }
 

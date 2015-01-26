@@ -16,7 +16,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
  
-public class WikiAbstractAdapter implements JsonSerializer<Element>, JsonDeserializer<Element> {
+public class ElementAbstractAdapter implements JsonSerializer<Element>, JsonDeserializer<Element> {
     @Override
     public JsonElement serialize(Element src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject result = new JsonObject();

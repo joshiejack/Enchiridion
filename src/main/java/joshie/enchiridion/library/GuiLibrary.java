@@ -150,7 +150,6 @@ public class GuiLibrary extends GuiExtension {
             } else {
                 SHELF--;
                 SHELF = Math.max(0, SHELF);
-                System.out.println(SHELF);
             }
         }
     }

@@ -11,6 +11,8 @@ import static org.lwjgl.opengl.GL11.GL_BLEND;
 import java.util.ArrayList;
 
 import joshie.enchiridion.api.IWikiMode;
+import joshie.enchiridion.designer.FeatureAbstractAdapter;
+import joshie.enchiridion.designer.features.Feature;
 import joshie.enchiridion.library.GuiLibrary;
 import joshie.enchiridion.library.GuiShelves;
 import joshie.enchiridion.wiki.data.WikiData;
@@ -67,7 +69,8 @@ public class WikiHelper {
     public static Gson getGson() {
         if (gson == null) {
             GsonBuilder builder = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation();
-            builder.registerTypeAdapter(Element.class, new WikiAbstractAdapter());
+            builder.registerTypeAdapter(Element.class, new ElementAbstractAdapter());
+            builder.registerTypeAdapter(Feature.class, new FeatureAbstractAdapter());
             gson = builder.create();
         }
 
@@ -264,6 +267,7 @@ public class WikiHelper {
     }
 
     public static void renderStack(ItemStack stack, int x, int y) {
+        GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glColor3f(1F, 1F, 1F); //Forge: Reset color in case Items change it.
         GL11.glEnable(GL11.GL_BLEND); //Forge: Make sure blend is enabled else tabs show a white border.
@@ -271,7 +275,8 @@ public class WikiHelper {
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         ElementItem.itemRenderer.renderItemAndEffectIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, x, y);
         ElementItem.itemRenderer.renderItemOverlayIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, x, y);
-        GL11.glDisable(GL11.GL_LIGHTING);        
+        GL11.glDisable(GL11.GL_LIGHTING);     
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
     }
 
     public static int getScaledX(int x) {
