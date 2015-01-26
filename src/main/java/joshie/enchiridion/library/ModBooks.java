@@ -21,14 +21,14 @@ import cpw.mods.fml.common.Loader;
 
 public class ModBooks {
     @Expose
-    private ArrayList<BookData> books = new ArrayList();
+    private ArrayList<ModBookData> books = new ArrayList();
 
-    public ModBooks addBook(BookData book) {
+    public ModBooks addBook(ModBookData book) {
         books.add(book);
         return this;
     }
 
-    public static class BookData {
+    public static class ModBookData {
         @Expose
         public String mod;
         @Expose
@@ -36,15 +36,14 @@ public class ModBooks {
         @Expose
         public String type;
 
-        public BookData() {}
-
-        public BookData(String mod, String item, int meta, String register) {
+        public ModBookData() {}
+        public ModBookData(String mod, String item, int meta, String register) {
             this.mod = mod;
             this.stack = mod + ":" + item + " " + meta;
             this.type = register;
         }
 
-        public BookData(String mod, ItemStack stack, String register) {
+        public ModBookData(String mod, ItemStack stack, String register) {
             this.mod = mod;
             this.stack = StackHelper.getStringFromStack(stack);
             this.type = register;
@@ -72,7 +71,7 @@ public class ModBooks {
             }
 
             //Now that we have the book data let's go through and register them
-            for (BookData book : data.books) {
+            for (ModBookData book : data.books) {
                 if (Loader.isModLoaded(book.mod)) {
                     ItemStack item = StackHelper.getStackFromString(book.stack);
                     if (item != null && item.getItem() != null) {
@@ -93,28 +92,28 @@ public class ModBooks {
 
     /** Default books in the json file **/
     public static ModBooks getModBooks(ModBooks data) {
-        data.addBook(new BookData("Botania", "lexicon", 0, "switch"));
-        data.addBook(new BookData("HardcoreQuesting", "quest_book", 0, "network"));
-        data.addBook(new BookData("factorization", "docbook", 0, "default"));
-        data.addBook(new BookData("Mariculture", "guide", 0, "switch"));
-        data.addBook(new BookData("Mariculture", "guide", 1, "switch"));
-        data.addBook(new BookData("Mariculture", "guide", 2, "switch"));
-        data.addBook(new BookData("Mariculture", "guide", 3, "switch"));
-        data.addBook(new BookData("Mariculture", "guide", 4, "switch"));
-        data.addBook(new BookData("OpenBlocks", "infoBook", 0, "default"));
-        data.addBook(new BookData("TConstruct", "manualBook", 0, "default"));
-        data.addBook(new BookData("TConstruct", "manualBook", 1, "default"));
-        data.addBook(new BookData("TConstruct", "manualBook", 2, "default"));
-        data.addBook(new BookData("TConstruct", "manualBook", 3, "default"));
-        data.addBook(new BookData("Thaumcraft", "ItemThaumonomicon", 0, "default"));
-        data.addBook(new BookData("witchery", "ingredient", 46, "switch"));
-        data.addBook(new BookData("witchery", "ingredient", 47, "switch"));
-        data.addBook(new BookData("witchery", "ingredient", 48, "switch"));
-        data.addBook(new BookData("witchery", "ingredient", 49, "switch"));
-        data.addBook(new BookData("witchery", "ingredient", 81, "switch"));
-        data.addBook(new BookData("witchery", "ingredient", 106, "switch"));
-        data.addBook(new BookData("witchery", "ingredient", 107, "switch"));
-        data.addBook(new BookData("witchery", "ingredient", 127, "switch"));
+        data.addBook(new ModBookData("Botania", "lexicon", 0, "switch"));
+        data.addBook(new ModBookData("HardcoreQuesting", "quest_book", 0, "network"));
+        data.addBook(new ModBookData("factorization", "docbook", 0, "default"));
+        data.addBook(new ModBookData("Mariculture", "guide", 0, "switch"));
+        data.addBook(new ModBookData("Mariculture", "guide", 1, "switch"));
+        data.addBook(new ModBookData("Mariculture", "guide", 2, "switch"));
+        data.addBook(new ModBookData("Mariculture", "guide", 3, "switch"));
+        data.addBook(new ModBookData("Mariculture", "guide", 4, "switch"));
+        data.addBook(new ModBookData("OpenBlocks", "infoBook", 0, "default"));
+        data.addBook(new ModBookData("TConstruct", "manualBook", 0, "default"));
+        data.addBook(new ModBookData("TConstruct", "manualBook", 1, "default"));
+        data.addBook(new ModBookData("TConstruct", "manualBook", 2, "default"));
+        data.addBook(new ModBookData("TConstruct", "manualBook", 3, "default"));
+        data.addBook(new ModBookData("Thaumcraft", "ItemThaumonomicon", 0, "default"));
+        data.addBook(new ModBookData("witchery", "ingredient", 46, "switch"));
+        data.addBook(new ModBookData("witchery", "ingredient", 47, "switch"));
+        data.addBook(new ModBookData("witchery", "ingredient", 48, "switch"));
+        data.addBook(new ModBookData("witchery", "ingredient", 49, "switch"));
+        data.addBook(new ModBookData("witchery", "ingredient", 81, "switch"));
+        data.addBook(new ModBookData("witchery", "ingredient", 106, "switch"));
+        data.addBook(new ModBookData("witchery", "ingredient", 107, "switch"));
+        data.addBook(new ModBookData("witchery", "ingredient", 127, "switch"));
         return data;
     }
 }
