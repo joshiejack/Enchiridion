@@ -7,6 +7,7 @@ import java.util.List;
 
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.designer.BookRegistry.BookData;
+import joshie.enchiridion.helpers.ClientHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -18,7 +19,13 @@ public class ItemBook extends Item {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         BookData data = getData(stack);
-        return data == null ? super.getItemStackDisplayName(stack) : data.displayName;
+        return data == null ? super.getItemStackDisplayName(stack) : getDisplayName(data);
+    }
+    
+    public String getDisplayName(BookData data) {
+        if(data.displayNames.containsKey(ClientHelper.getLang())) {
+            return data.displayNames.get(ClientHelper.getLang());
+        } else return data.displayNames.get("en_US");
     }
 
     @Override
@@ -31,9 +38,9 @@ public class ItemBook extends Item {
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-        Integer id = getID(stack);
+        String id = getID(stack);
         if (id != null) {
-            player.openGui(Enchiridion.instance, id, player.worldObj, 1, 0, 0);
+            player.openGui(Enchiridion.instance, 1, player.worldObj, 1, 0, 0);
         }
 
         return stack;
@@ -59,10 +66,10 @@ public class ItemBook extends Item {
     
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List list) {
-        for(Integer identifier: BookRegistry.getIDs()) {
+        for(String identifier: BookRegistry.getIDs()) {
             ItemStack stack = new ItemStack(item);
             stack.setTagCompound(new NBTTagCompound());
-            stack.stackTagCompound.setInteger("identifier", identifier);
+            stack.stackTagCompound.setString("identifier", identifier);
             list.add(stack);
         }
     }

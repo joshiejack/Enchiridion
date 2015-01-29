@@ -20,11 +20,14 @@ public class EGuiHandler implements IGuiHandler {
         if(ID == WIKI_ID) {
             return WikiHelper.gui;
         } else {
-            BookData data = BookRegistry.getData(ID);
-            if(data != null) {
-                return new GuiDesigner(ID, data);
+            if(player.getCurrentEquippedItem() != null) {
+                BookData data = BookRegistry.getData(player.getCurrentEquippedItem());
+                if(data != null) {
+                    return new GuiDesigner(data);
+                }
             }
         }
+        
         switch (ID) {
             case WIKI_ID:
                 return WikiHelper.gui;

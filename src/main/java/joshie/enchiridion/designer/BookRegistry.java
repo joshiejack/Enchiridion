@@ -7,46 +7,56 @@ import java.util.Set;
 
 import net.minecraft.item.ItemStack;
 
+import com.google.gson.annotations.Expose;
+
 public class BookRegistry {
     public static class BookData {
+        @Expose
         public ArrayList<DesignerCanvas> book;
-        public String displayName;
+        @Expose
+        public HashMap<String, String> displayNames = new HashMap();
+        @Expose
+        public String uniqueName;
+        @Expose
         public List information;
+        @Expose
         public int color;
+        @Expose
         public boolean bookBackground = true;
         
-        public BookData(String display, List info, int color) {
-            this.displayName = display;
+        
+        public BookData(String unique, String en_US, List info, int color) {
+            this.uniqueName = unique;
+            this.displayNames.put("en_US", en_US);
             this.information = info;
             this.color = color;
             this.book = new ArrayList();
         }
     }
 
-    private static final HashMap<Integer, BookData> books = new HashMap();
+    private static final HashMap<String, BookData> books = new HashMap();
     private static int lastID = 1;
-    public static Integer getID(ItemStack stack) {
+    public static String getID(ItemStack stack) {
         if (stack == null || !stack.hasTagCompound()) return null;
-        Integer identifier = stack.stackTagCompound.getInteger("identifier");
+        String identifier = stack.stackTagCompound.getString("identifier");
         return identifier;
     }
 
     public static BookData getData(ItemStack stack) {
-        Integer identifier = getID(stack);
+        String identifier = getID(stack);
         if (identifier == null) return null;
         return getData(identifier);
     }
 
-    public static BookData getData(int ID) {
-        return books.get(ID);
+    public static BookData getData(String unique) {
+        return books.get(unique);
     }
 
     public static void register(BookData data) {
-        books.put(lastID, data);
-        lastID++;
+        books.put(data.uniqueName, data);
     }
     
-    public static Set<Integer> getIDs() {
+    public static Set<String> getIDs() {
         return books.keySet();
     }
 }

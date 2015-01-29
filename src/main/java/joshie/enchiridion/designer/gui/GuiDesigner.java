@@ -31,22 +31,22 @@ public class GuiDesigner extends GuiScreen {
 
     public ArrayList<DesignerCanvas> book; //List of all pages in the book
     public DesignerCanvas canvas; //The current canvas we are displaying
-    public static HashMap<Integer, Integer> page_number = new HashMap(); //The current page number for this book_id
-    public int bookID;
+    public static HashMap<String, Integer> page_number = new HashMap(); //The current page number for this book_id
+    public String bookID;
 
     //The books id being initialised with this, use this to grab the books data
-    public GuiDesigner(int id, BookData data) {
+    public GuiDesigner(BookData data) {
         red = (data.color >> 16 & 255) / 255.0F;
         green = (data.color >> 8 & 255) / 255.0F;
         blue = (data.color & 255) / 255.0F;
-        bookID = id;
+        bookID = data.uniqueName;
         book = data.book;
-        if (page_number.get(id) == null) {
-            page_number.put(id, 0);
+        if (page_number.get(bookID) == null) {
+            page_number.put(bookID, 0);
         }
 
         if (data.book.size() > 0) {
-            canvas = book.get(page_number.get(id));
+            canvas = book.get(page_number.get(bookID));
         }
 
         if (data.bookBackground) {

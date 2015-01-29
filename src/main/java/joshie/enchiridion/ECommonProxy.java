@@ -27,7 +27,7 @@ public class ECommonProxy {
             GameRegistry.registerItem(book, "book");
             
             //Register a dummy book
-            BookRegistry.register(new BookData("Introduction Book", null, 0xFFFFFF));
+            BookRegistry.register(new BookData("enchiridion.introbook", "Introduction Book", null, 0xFFFFFF));
         }
     }
     
