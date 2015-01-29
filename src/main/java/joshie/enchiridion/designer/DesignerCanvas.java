@@ -22,4 +22,16 @@ public class DesignerCanvas {
             feature.click(x, y, isEditMode);
         }
     }
+    
+    public void release(int x, int y) {
+        for(Feature feature: features) {
+            feature.release(x, y);
+        }
+    }
+    
+    public void follow(int x, int y) {
+        for(Feature feature: features) {
+            feature.follow(x, y);
+        }
+    }
 }

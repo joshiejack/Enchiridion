@@ -194,6 +194,13 @@ public class GuiDesigner extends GuiScreen {
             canvas = bookData.book.get(new_page);
         }
     }
+    
+    @Override
+    public void mouseMovedOrUp(int x, int y, int button) {
+        if(canvas != null) {
+            canvas.release(mouseX, mouseY);
+        }
+    }
 
     @Override
     public void handleMouseInput() {
@@ -201,6 +208,9 @@ public class GuiDesigner extends GuiScreen {
         int y = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
         mouseX = x - (this.width / 2);
         mouseY = y - (ySize / 2);
+        if(canvas != null) {
+            canvas.follow(mouseX, mouseY);
+        }
 
         super.handleMouseInput();
     }

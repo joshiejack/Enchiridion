@@ -50,8 +50,16 @@ public abstract class Feature {
         //If it is editmode let's select or deselect this item whenever we click on it
         if(isEditMode) {
             if(x >= xPos && x <= xPos + width && y <= yPos && y >= yPos - height) {
-                isSelected = !isSelected;
+                
             }
         }
+    }
+    
+    public void release(int x, int y) {
+
+    }
+    
+    public void follow(int x, int y) {
+
     }
 }
