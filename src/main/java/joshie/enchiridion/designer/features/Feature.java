@@ -2,6 +2,7 @@ package joshie.enchiridion.designer.features;
 
 import static joshie.enchiridion.designer.DesignerHelper.drawRect;
 import static joshie.enchiridion.designer.DesignerHelper.getGui;
+import joshie.enchiridion.helpers.ClientHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.RenderItem;
 
@@ -20,7 +21,7 @@ public abstract class Feature {
     @Expose
     protected double height;
 
-    private boolean isSelected;
+    public boolean isSelected;
     private boolean isHeld;
     private boolean isDragging;
     private int prevX;
@@ -62,7 +63,7 @@ public abstract class Feature {
         getGui().canvas.selected = null;
     }
 
-    private void setSelected() {
+    public void setSelected() {
         getGui().canvas.selected = this;
     }
 
@@ -136,8 +137,8 @@ public abstract class Feature {
             prevX = x;
             prevY = y;
         } else if (isDragging) {
-            int changeX = ((x - prevX) / 2);
-            int changeY = ((y - prevY) / 2);
+            int changeX = (x - prevX);
+            int changeY = (y - prevY);
             updateWidth(changeX);
             updateHeight(changeY);
             prevX = x;
@@ -146,4 +147,9 @@ public abstract class Feature {
     }
 
     public abstract void loadEditor();
+
+    //Do nothing by default
+    public void keyTyped(char character, int key) {
+        // TODO Auto-generated method stub
+    }
 }

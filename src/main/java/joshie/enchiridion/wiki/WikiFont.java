@@ -140,7 +140,6 @@ public class WikiFont extends FontRenderer {
                     float red = (0xCCCCCC >> 16 & 255) / 255.0F;
                     float green = (0xCCCCCC >> 8 & 255) / 255.0F;
                     float blue = (0xCCCCCC & 255) / 255.0F;
-                    GL11.glColor4f(red, green, blue, 1.0F);
                     tessellator = Tessellator.instance;
                     GL11.glDisable(GL11.GL_TEXTURE_2D);
                     tessellator.startDrawingQuads();
@@ -151,7 +150,6 @@ public class WikiFont extends FontRenderer {
                     tessellator.draw();
                     GL11.glEnable(GL11.GL_TEXTURE_2D);
                     this.cursor = false;
-                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                 }
 
                 this.posX += (float) ((int) f);

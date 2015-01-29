@@ -143,6 +143,15 @@ public class GuiDesigner extends GuiScreen {
             }
         }
     }
+    
+    @Override
+    protected void keyTyped(char character, int key) {
+        if(canEdit && canvas != null) {
+            canvas.keyTyped(character, key);
+        }
+        
+        super.keyTyped(character, key);
+    }
 
     public void drawLeftPage(int x, int y) {
         //Cover
@@ -222,7 +231,6 @@ public class GuiDesigner extends GuiScreen {
         int new_page = page_number.get(bookData.uniqueName);
         if (bookData.showArrows || canEdit) {
             //Go Back Arrow
-            System.out.println(mouseX);
             if (mouseX >= -21 && mouseX <= 38 && mouseY >= 200 && mouseY <= 210) {
                 clicked = true;
                 new_page--;

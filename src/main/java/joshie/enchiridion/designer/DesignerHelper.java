@@ -15,6 +15,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.designer.BookRegistry.BookData;
 import joshie.enchiridion.designer.features.FeatureImage;
@@ -51,7 +52,7 @@ public class DesignerHelper {
     }
 
     public static void drawSplitString(String text, int left, int top, int wrap, int color) {
-        gui.mc.fontRenderer.drawSplitString(text, x + left, y + top, wrap, color);
+        EClientProxy.font.drawSplitString(text, x + left, y + top, wrap, color);
     }
 
     public static void drawStack(ItemStack stack, int left, int top, float size) {
