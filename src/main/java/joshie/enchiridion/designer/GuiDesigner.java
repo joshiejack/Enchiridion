@@ -174,14 +174,14 @@ public class GuiDesigner extends GuiScreen {
             }
         }
 
-        if (clicked) {
+        if (clicked) {            
             if (canEdit) {
                 new_page = Math.min(new_page, (EConfig.MAX_PAGES_PER_BOOK - 1)); //If in edit mode the max pages is the full max
             } else new_page = Math.min(new_page, (bookData.book.size() - 1));
             
             if(canEdit && new_page >= (EConfig.MAX_PAGES_PER_BOOK - 1)) new_page = 0;
-            else if (new_page >= bookData.book.size()) new_page = 0;
-            
+            else if (!canEdit && new_page >= bookData.book.size()) new_page = 0;
+                        
             if(new_page < 0) {
                 new_page = bookData.book.size() - 1; //Go to the end of the book if we go too far left
             } else new_page = Math.max(new_page, 0); //Never let it go below 0

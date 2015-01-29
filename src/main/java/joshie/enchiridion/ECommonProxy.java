@@ -42,16 +42,17 @@ public class ECommonProxy {
             //Create a copy of the book
             //Save the tab data
             if(EConfig.GEN_EXAMPLE_BOOK) {
-                //Register a dummy book
-                BookData data = new BookData("enchiridion.introbook", "Introduction Book", null, 0xFFFFFF);
-                DesignerCanvas page = new DesignerCanvas();
-                page.features.add(new FeatureText());
-                data.book.add(page);
-                BookRegistry.register(data);
-                
                 try {
                     File example = new File(Enchiridion.root + separator + "books", "enchiridion_introbook.json");
                     if(!example.exists()) {
+                        //Register a dummy book
+                        BookData data = new BookData("enchiridion.introbook", "Introduction Book", null, 0xFFFFFF);
+                        DesignerCanvas page = new DesignerCanvas();
+                        page.features.add(new FeatureText());
+                        data.book.add(page);
+                        BookRegistry.register(data);
+                        //Write the json to file
+                        
                         Writer writer = new OutputStreamWriter(new FileOutputStream(example), "UTF-8");
                         writer.write(WikiHelper.getGson().toJson(BookRegistry.getData("enchiridion.introbook")));
                         writer.close();
