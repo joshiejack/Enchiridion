@@ -33,4 +33,10 @@ public class FeatureItem extends Feature {
         
         DesignerHelper.drawStack(stack, left, top, size);
     }
+
+    @Override
+    public void loadEditor() {
+        // DRAW SELECTION OF ITEM
+        
+    }
 }

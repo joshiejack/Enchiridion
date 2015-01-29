@@ -9,6 +9,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import joshie.enchiridion.ELogger;
+import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.designer.DesignerHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.WikiPage;
@@ -36,11 +37,11 @@ public class FeatureImage extends Feature {
         path = "enchiridion:enchiridion_logo.png";
     }
 
-    public FeatureImage setPath(String fileName, String path) {
+    public FeatureImage setPath(String path) {
         WikiPage page = WikiHelper.getPage();
         this.width = 100;
         this.height = 100;
-        this.path = fileName;
+        this.path = path;
         loadImage(path);
         return this;
     }
@@ -49,7 +50,7 @@ public class FeatureImage extends Feature {
     public void loadImage(String path) {
         if (!path.contains(":")) {
             try {
-                BufferedImage img = ImageIO.read(new File(path));
+                BufferedImage img = ImageIO.read(new File(Enchiridion.root, "books/images/" + path));
                 texture = new DynamicTexture(img);
                 resource = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(path, texture);
                 isDynamic = true;
@@ -61,7 +62,7 @@ public class FeatureImage extends Feature {
             }
         } else {
             String[] split = path.split(":");
-            resource = new ResourceLocation(split[0], "textures/wiki" + separator + split[1]);
+            resource = new ResourceLocation(split[0], "textures/books/" + split[1]);
             try {
                 BufferedImage image = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(resource).getInputStream());
                 img_width = (int) (image.getWidth() / 2.5);
@@ -81,9 +82,15 @@ public class FeatureImage extends Feature {
         if (isDynamic) {
             DesignerHelper.drawImage(texture, resource, left, top, right, bottom);
         } else if (resource != null) {
-            DesignerHelper.drawResource(resource, left, top, img_width, img_height);
+            DesignerHelper.drawResource(resource, left, top, img_width, img_height, (float)width / 250F, (float)height / 250F);
         } else if (resource == null) {
             loadImage(path);
         }
+    }
+
+    @Override
+    public void loadEditor() {
+        // DRAW Image Selection
+        
     }
 }

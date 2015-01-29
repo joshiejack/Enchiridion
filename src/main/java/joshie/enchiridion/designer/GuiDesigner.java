@@ -72,7 +72,11 @@ public class GuiDesigner extends GuiScreen {
     private static final int TEXT = 0;
     private static final int BOX = 1;
     private static final int ITEM = 2;
-    private static final int IMAGE = 3;
+    private static final int INSERT = 3;
+    private static final int IMAGE = 4;
+    private static final int EXTRA = 5;
+    
+    private static boolean SHOW_EDIT = false;
 
     @Override
     public void initGui() {
@@ -83,10 +87,12 @@ public class GuiDesigner extends GuiScreen {
             int x = (width - 430) / 2;
             int y = (height - ySize) / 2;
             
-            buttonList.add(new ButtonText(TEXT, x + 20, y - 18, ETranslate.translate("text")));
-            buttonList.add(new ButtonText(BOX, x + 80, y - 18, ETranslate.translate("box")));
-            buttonList.add(new ButtonText(ITEM, x + 140, y - 18, ETranslate.translate("item")));
-            buttonList.add(new ButtonText(IMAGE, x + 200, y - 18, ETranslate.translate("image")));
+            buttonList.add(new ButtonEditBook(TEXT, x + 20, y - 18, ETranslate.translate("text")));
+            buttonList.add(new ButtonEditBook(BOX, x + 80, y - 18, ETranslate.translate("box")));
+            buttonList.add(new ButtonEditBook(ITEM, x + 140, y - 18, ETranslate.translate("item")));
+            buttonList.add(new ButtonEditBook(INSERT, x + 200, y - 18, ETranslate.translate("insert")));
+            buttonList.add(new ButtonEditBook(IMAGE, x + 260, y - 18, ETranslate.translate("image")));
+            buttonList.add(new ButtonEditBook(EXTRA, x + 320, y - 18, ETranslate.translate("edit")));
         }
     }
 
@@ -103,8 +109,19 @@ public class GuiDesigner extends GuiScreen {
                 case ITEM:
                     canvas.features.add(new FeatureItem());
                     break;
+                case INSERT:
+                    FeatureImage image = DesignerHelper.loadImage(bookData.uniqueName.replace(":", "_").replace(".", "_"));
+                    if(image != null) {
+                        canvas.features.add(image);
+                    }
+                    break;
                 case IMAGE:
                     canvas.features.add(new FeatureImage());
+                case EXTRA:
+                    if(canvas.selected != null) {
+                        canvas.selected.loadEditor();
+                    }
+                    
                     break;
             }
         }
@@ -143,7 +160,7 @@ public class GuiDesigner extends GuiScreen {
         if (bookData.showArrows || canEdit) {
             //Arrows
             drawTexturedModalRect(x + 21, y + 200, 0, 246, 18, 10);
-            if (mouseX >= -192 && mouseX <= -174 && mouseY >= 100 && mouseY <= 110) {
+            if (mouseX >= -21 && mouseX <= 38 && mouseY >= 200 && mouseY <= 210) {
                 drawTexturedModalRect(x + 21, y + 200, 23, 246, 18, 10);
             }
         }
@@ -165,7 +182,7 @@ public class GuiDesigner extends GuiScreen {
         //Arrows
         if (bookData.showArrows || canEdit) {
             drawTexturedModalRect(x + 175, y + 200, 0, 246, 18, 10);
-            if (mouseX >= 175 && mouseX <= 192 && mouseY >= 100 && mouseY <= 110) {
+            if (mouseX >= 387 && mouseX <= 404 && mouseY >= 200 && mouseY <= 210) {
                 drawTexturedModalRect(x + 175, y + 200, 23, 246, 18, 10);
             }
         }
@@ -205,13 +222,14 @@ public class GuiDesigner extends GuiScreen {
         int new_page = page_number.get(bookData.uniqueName);
         if (bookData.showArrows || canEdit) {
             //Go Back Arrow
-            if (mouseX >= -192 && mouseX <= -174 && mouseY >= 100 && mouseY <= 110) {
+            System.out.println(mouseX);
+            if (mouseX >= -21 && mouseX <= 38 && mouseY >= 200 && mouseY <= 210) {
                 clicked = true;
                 new_page--;
             }
 
             //Go Forward Arrow
-            if (mouseX >= 175 && mouseX <= 192 && mouseY >= 100 && mouseY <= 110) {
+            if (mouseX >= 387 && mouseX <= 404 && mouseY >= 200 && mouseY <= 210) {
                 clicked = true;
                 new_page++;
             }

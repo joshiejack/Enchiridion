@@ -5,6 +5,19 @@ import static joshie.enchiridion.helpers.OpenGLHelper.enable;
 import static joshie.enchiridion.helpers.OpenGLHelper.end;
 import static joshie.enchiridion.helpers.OpenGLHelper.start;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.glScalef;
+
+import java.awt.Component;
+import java.awt.HeadlessException;
+import java.io.File;
+
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.designer.BookRegistry.BookData;
+import joshie.enchiridion.designer.features.FeatureImage;
 import joshie.enchiridion.designer.features.FeatureItem;
 import joshie.enchiridion.helpers.ClientHelper;
 import net.minecraft.client.Minecraft;
@@ -14,6 +27,7 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+import org.apache.commons.io.FileUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -27,7 +41,7 @@ public class DesignerHelper {
         DesignerHelper.x = x;
         DesignerHelper.y = y;
     }
-    
+
     public static GuiDesigner getGui() {
         return gui;
     }
@@ -74,8 +88,59 @@ public class DesignerHelper {
         end();
     }
 
-    public static void drawResource(ResourceLocation resource, int left, int top, int width, int height) {
+    public static void drawResource(ResourceLocation resource, int left, int top, int width, int height, float scaleX, float scaleY) {
+        start();
+        enable(GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        ClientHelper.bindTexture(resource);
+        glScalef(scaleX, scaleY, 1.0F);
         ClientHelper.getMinecraft().getTextureManager().bindTexture(resource);
-        gui.drawTexturedModalRect(x + left, y + top, 0, 0, width, height);
+        gui.drawTexturedModalRect((int) ((x + left) / scaleX), (int) ((y + top) / scaleY), 0, 0, width, height);
+        disable(GL_BLEND);
+        end();
+    }
+
+    private static File last_directory;
+
+    public static FeatureImage loadImage(String dir) {
+        //Only allow pngs to be selected, force the window on top.
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "png", "jpg", "jpeg", "gif");
+        JFileChooser fileChooser = new JFileChooser() {
+            @Override
+            protected JDialog createDialog(Component parent) throws HeadlessException {
+                JDialog dialog = super.createDialog(parent);
+                dialog.setAlwaysOnTop(true);
+                return dialog;
+            }
+        };
+
+        if (last_directory == null) {
+            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        } else {
+            fileChooser.setCurrentDirectory(last_directory);
+        }
+
+        fileChooser.setFileFilter(filter);
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selected = fileChooser.getSelectedFile();
+            File books_dir = new File(Enchiridion.root, "books");
+            if (!books_dir.exists()) books_dir.mkdir();
+            File img_dir = new File(books_dir, "images");
+            if (!img_dir.exists()) img_dir.mkdir();
+            File book_dir = new File(img_dir, dir);
+            if (!book_dir.exists()) book_dir.mkdir();
+            File new_location = new File(book_dir, selected.getName());
+            try {
+                FileUtils.copyFile(selected, new_location);
+                return new FeatureImage().setPath(dir + "/" + new_location.getName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            last_directory = selected.getParentFile();
+        }
+
+        return null;
     }
 }

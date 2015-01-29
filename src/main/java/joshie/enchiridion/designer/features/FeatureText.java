@@ -16,4 +16,10 @@ public class FeatureText extends Feature {
     public void drawFeature() {
         DesignerHelper.drawSplitString(text, left, top, wrap, color);
     }
+
+    @Override
+    public void loadEditor() {
+        // DRAW TEXT+++, TEXT---, BBCODE MODE
+        
+    }
 }

@@ -144,4 +144,6 @@ public abstract class Feature {
             prevY = y;
         }
     }
+
+    public abstract void loadEditor();
 }
