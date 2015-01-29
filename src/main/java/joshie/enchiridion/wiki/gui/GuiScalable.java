@@ -25,11 +25,11 @@ public class GuiScalable extends GuiScreen {
     }
 
     public int getLeft(float scale, int x) {
-        return (int) (((((mc.displayWidth / 2D) - 512) + x) / scale) * 1F);
+        return (int) ((((mc.displayWidth / 2D) - 512) + x) / scale);
     }
 
     public int getTop(float scale, int y) {
-        return (int) (((theTop + y) / scale) * 1F);
+        return (int) ((theTop + y) / scale);
     }
 
     /** Only perform ONE click action... don't repeat button presses **/
