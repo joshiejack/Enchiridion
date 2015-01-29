@@ -17,4 +17,10 @@ public class DesignerCanvas {
             feature.draw(gui, x, y);
         }
     }
+
+    public void clicked(int x, int y, boolean isEditMode) {
+        for(Feature feature: features) {
+            feature.click(x, y, isEditMode);
+        }
+    }
 }

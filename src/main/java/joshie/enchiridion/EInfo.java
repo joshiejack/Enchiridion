@@ -8,4 +8,6 @@ public class EInfo {
     public static final String VERSION = "@VERSION@";
 	
 	public static final int WIKI_ID = 0;
+	public static final int BOOKS_VIEW_ID = 1;
+	public static final int BOOKS_EDIT_ID = 2;
 }

@@ -1,5 +1,6 @@
 package joshie.enchiridion;
 
+import static joshie.enchiridion.EInfo.BOOKS_EDIT_ID;
 import static joshie.enchiridion.EInfo.WIKI_ID;
 import joshie.enchiridion.designer.BookRegistry;
 import joshie.enchiridion.designer.BookRegistry.BookData;
@@ -23,7 +24,7 @@ public class EGuiHandler implements IGuiHandler {
             if(player.getCurrentEquippedItem() != null) {
                 BookData data = BookRegistry.getData(player.getCurrentEquippedItem());
                 if(data != null) {
-                    return new GuiDesigner(data);
+                    return new GuiDesigner(data, ID == BOOKS_EDIT_ID);
                 }
             }
         }

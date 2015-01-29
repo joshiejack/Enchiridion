@@ -1,16 +1,23 @@
 package joshie.enchiridion.designer.gui;
 
+import static java.io.File.separator;
 import static joshie.enchiridion.helpers.OpenGLHelper.color;
 import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.HashMap;
 
+import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.designer.BookRegistry.BookData;
 import joshie.enchiridion.designer.DesignerCanvas;
+import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 public class GuiDesigner extends GuiScreen {
@@ -27,25 +34,25 @@ public class GuiDesigner extends GuiScreen {
     protected int leftX = 212;
     protected int rightX = 218;
     protected int ySize = 217;
+    public boolean canEdit;
 
-    public ArrayList<DesignerCanvas> book; //List of all pages in the book
+    public BookData bookData; //List of all pages in the book
     public DesignerCanvas canvas; //The current canvas we are displaying
     public static HashMap<String, Integer> page_number = new HashMap(); //The current page number for this book_id
-    public String bookID;
 
     //The books id being initialised with this, use this to grab the books data
-    public GuiDesigner(BookData data) {
+    public GuiDesigner(BookData data, boolean isEditMode) {
         red = (data.color >> 16 & 255) / 255.0F;
         green = (data.color >> 8 & 255) / 255.0F;
         blue = (data.color & 255) / 255.0F;
-        bookID = data.uniqueName;
-        book = data.book;
-        if (page_number.get(bookID) == null) {
-            page_number.put(bookID, 0);
+        bookData = data;
+        canEdit = isEditMode;
+        if (page_number.get(bookData.uniqueName) == null) {
+            page_number.put(bookData.uniqueName, 0);
         }
 
         if (data.book.size() > 0) {
-            canvas = book.get(page_number.get(bookID));
+            canvas = bookData.book.get(page_number.get(bookData.uniqueName));
         }
 
         if (data.bookBackground) {
@@ -55,11 +62,26 @@ public class GuiDesigner extends GuiScreen {
             page_right = new ResourceLocation("enchiridion", "textures/books/guide_page_right.png");
         }
     }
-
-    //Draws the Stuff
-    public void draw(int x, int y) {
-        if(canvas != null) {
-            canvas.draw(this, x, y);
+    
+    @Override
+    public void initGui() {
+        super.initGui();
+        
+        Keyboard.enableRepeatEvents(true);
+    }
+    
+    @Override
+    public void onGuiClosed() {
+        Keyboard.enableRepeatEvents(false);
+        
+        //If we were in edit mode, save the book
+        if(canEdit) {
+            try {
+                File example = new File(Enchiridion.root + separator + "books", bookData.uniqueName.replace(":", "_").replace(".", "_") + ".json");
+                Writer writer = new OutputStreamWriter(new FileOutputStream(example), "UTF-8");
+                writer.write(WikiHelper.getGson().toJson(bookData));
+                writer.close();
+            } catch (Exception e) { e.printStackTrace(); }
         }
     }
 
@@ -103,10 +125,12 @@ public class GuiDesigner extends GuiScreen {
         }
 
         //Draw Page
-        draw(x + 6, y + 24);
+        if(canvas != null) {
+            canvas.draw(this, x, y);
+        }
 
         //Numbers
-        mc.fontRenderer.drawString("" + (page_number.get(bookID) + 1), x + 124, y + 202, 0);
+        mc.fontRenderer.drawString("" + (page_number.get(bookData.uniqueName) + 1), x + 124, y + 202, 0);
     }
 
     public void drawScreen(int i, int j, float f) {
@@ -122,6 +146,11 @@ public class GuiDesigner extends GuiScreen {
     @Override
     protected void mouseClicked(int par1, int par2, int par3) {
         super.mouseClicked(par1, par2, par3);
+        
+        if(canvas != null) {
+            canvas.clicked(mouseXRight, mouseY, canEdit);
+        }
+        
         boolean clicked = false;
         if (mouseXRight >= -192 && mouseXRight <= -174 && mouseY >= 100 && mouseY <= 110) {
             clicked = true;
