@@ -1,5 +1,9 @@
 package joshie.enchiridion.designer;
 
+import static joshie.enchiridion.helpers.OpenGLHelper.end;
+import static joshie.enchiridion.helpers.OpenGLHelper.resetZ;
+import static joshie.enchiridion.helpers.OpenGLHelper.start;
+
 import java.util.ArrayList;
 
 import joshie.enchiridion.designer.features.Feature;
@@ -13,7 +17,10 @@ public class DesignerCanvas {
     //Draws all the features on the canvas
     public void draw(GuiDesigner gui, int x, int y) {
         for(Feature feature: features) {
+            start();
+            resetZ();
             feature.draw(gui, x, y);
+            end();
         }
     }
 

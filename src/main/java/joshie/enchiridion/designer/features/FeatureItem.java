@@ -13,6 +13,12 @@ public class FeatureItem extends Feature {
     @Expose
     public String item;
     public ItemStack stack;
+    
+    public FeatureItem() {
+        width = 64;
+        height = 64;
+        item = "minecraft:stone";
+    }
 
     @Override
     public void drawFeature() {

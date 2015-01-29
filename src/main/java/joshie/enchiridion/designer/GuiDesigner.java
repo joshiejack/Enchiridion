@@ -11,9 +11,15 @@ import java.io.Writer;
 import java.util.HashMap;
 
 import joshie.enchiridion.EConfig;
+import joshie.enchiridion.ETranslate;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.designer.BookRegistry.BookData;
+import joshie.enchiridion.designer.features.FeatureBox;
+import joshie.enchiridion.designer.features.FeatureImage;
+import joshie.enchiridion.designer.features.FeatureItem;
+import joshie.enchiridion.designer.features.FeatureText;
 import joshie.enchiridion.wiki.WikiHelper;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
@@ -62,11 +68,42 @@ public class GuiDesigner extends GuiScreen {
         }
     }
 
+    private static final int TEXT = 0;
+    private static final int BOX = 1;
+    private static final int ITEM = 2;
+    private static final int IMAGE = 3;
+
     @Override
     public void initGui() {
         super.initGui();
 
         Keyboard.enableRepeatEvents(true);
+        if (canEdit) {
+            buttonList.add(new ButtonText(TEXT, 20, 225, ETranslate.translate("text")));
+            buttonList.add(new ButtonText(BOX, 80, 225, ETranslate.translate("box")));
+            buttonList.add(new ButtonText(ITEM, 140, 225, ETranslate.translate("item")));
+            buttonList.add(new ButtonText(IMAGE, 200, 225, ETranslate.translate("image")));
+        }
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) {
+        if (button.enabled) {
+            switch (button.id) {
+                case TEXT:
+                    canvas.features.add(new FeatureText());
+                    break;
+                case BOX:
+                    canvas.features.add(new FeatureBox());
+                    break;
+                case ITEM:
+                    canvas.features.add(new FeatureItem());
+                    break;
+                case IMAGE:
+                    canvas.features.add(new FeatureImage());
+                    break;
+            }
+        }
     }
 
     @Override
@@ -174,30 +211,30 @@ public class GuiDesigner extends GuiScreen {
             }
         }
 
-        if (clicked) {            
+        if (clicked) {
             if (canEdit) {
                 new_page = Math.min(new_page, (EConfig.MAX_PAGES_PER_BOOK - 1)); //If in edit mode the max pages is the full max
             } else new_page = Math.min(new_page, (bookData.book.size() - 1));
-            
-            if(canEdit && new_page >= (EConfig.MAX_PAGES_PER_BOOK - 1)) new_page = 0;
+
+            if (canEdit && new_page >= (EConfig.MAX_PAGES_PER_BOOK - 1)) new_page = 0;
             else if (!canEdit && new_page >= bookData.book.size()) new_page = 0;
-                        
-            if(new_page < 0) {
+
+            if (new_page < 0) {
                 new_page = bookData.book.size() - 1; //Go to the end of the book if we go too far left
             } else new_page = Math.max(new_page, 0); //Never let it go below 0
-            
+
             page_number.put(bookData.uniqueName, new_page);
-            if(new_page >= bookData.book.size()) {
+            if (new_page >= bookData.book.size()) {
                 bookData.book.add(new DesignerCanvas()); //Add a new page if there
             }
-            
+
             canvas = bookData.book.get(new_page);
         }
     }
-    
+
     @Override
     public void mouseMovedOrUp(int x, int y, int button) {
-        if(canvas != null) {
+        if (canvas != null) {
             canvas.release(mouseX, mouseY);
         }
     }
@@ -208,7 +245,7 @@ public class GuiDesigner extends GuiScreen {
         int y = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
         mouseX = x - (this.width / 2);
         mouseY = y - (ySize / 2);
-        if(canvas != null) {
+        if (canvas != null) {
             canvas.follow(mouseX, mouseY);
         }
 
