@@ -12,6 +12,7 @@ public class EConfig {
 	public static String DEFAULT_DIR = "";
     public static boolean EDIT_ENABLED;
     public static boolean CAN_EDIT_BOOKS;
+    public static int MAX_PAGES_PER_BOOK;
     private static ArrayList<String> colors = new ArrayList();
     private static final String[] default_colors = new String[] {   "000000", "000080", "00008B", "0000CD",
         "0000FF", "006400", "080000", "008080", "008B8B", "00BFFF", "00CED1", "00FA9A", "00FF00", "00FF7F",
@@ -39,6 +40,7 @@ public class EConfig {
             GEN_EXAMPLE_BOOK = config.get("Settings", "Generate Example Book", true).getBoolean(true);
             CAN_EDIT_BOOKS = config.get("Settings", "Enable Editing of Books", true).getBoolean(true);
             DEFAULT_DIR = config.get("Settings", "Default Save Folder", "").getString();
+            MAX_PAGES_PER_BOOK = config.get("Settings", "Maximum Pages per Book", 150).getInt();
             for(String color: color_list) {
                 addColor(color);
             }

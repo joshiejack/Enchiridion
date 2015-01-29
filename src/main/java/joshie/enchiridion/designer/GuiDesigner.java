@@ -10,6 +10,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.HashMap;
 
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.designer.BookRegistry.BookData;
 import joshie.enchiridion.wiki.WikiHelper;
@@ -60,26 +61,28 @@ public class GuiDesigner extends GuiScreen {
             page_right = new ResourceLocation("enchiridion", "textures/books/guide_page_right.png");
         }
     }
-    
+
     @Override
     public void initGui() {
         super.initGui();
-        
+
         Keyboard.enableRepeatEvents(true);
     }
-    
+
     @Override
     public void onGuiClosed() {
         Keyboard.enableRepeatEvents(false);
-        
+
         //If we were in edit mode, save the book
-        if(canEdit) {
+        if (canEdit) {
             try {
                 File example = new File(Enchiridion.root + separator + "books", bookData.uniqueName.replace(":", "_").replace(".", "_") + ".json");
                 Writer writer = new OutputStreamWriter(new FileOutputStream(example), "UTF-8");
                 writer.write(WikiHelper.getGson().toJson(bookData));
                 writer.close();
-            } catch (Exception e) { e.printStackTrace(); }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -96,7 +99,7 @@ public class GuiDesigner extends GuiScreen {
             drawTexturedModalRect(x, y, 44, 0, leftX, ySize);
         }
 
-        if(bookData.showArrows || canEdit) {
+        if (bookData.showArrows || canEdit) {
             //Arrows
             drawTexturedModalRect(x + 21, y + 200, 0, 246, 18, 10);
             if (mouseX >= -192 && mouseX <= -174 && mouseY >= 100 && mouseY <= 110) {
@@ -119,7 +122,7 @@ public class GuiDesigner extends GuiScreen {
         }
 
         //Arrows
-        if(bookData.showArrows || canEdit) {
+        if (bookData.showArrows || canEdit) {
             drawTexturedModalRect(x + 175, y + 200, 0, 246, 18, 10);
             if (mouseX >= 175 && mouseX <= 192 && mouseY >= 100 && mouseY <= 110) {
                 drawTexturedModalRect(x + 175, y + 200, 23, 246, 18, 10);
@@ -127,12 +130,12 @@ public class GuiDesigner extends GuiScreen {
         }
 
         //Draw Page
-        if(canvas != null) {
+        if (canvas != null) {
             canvas.draw(this, x, y);
         }
 
         //Numbers
-        if(bookData.showNumber || canEdit) {
+        if (bookData.showNumber || canEdit) {
             mc.fontRenderer.drawString("" + (page_number.get(bookData.uniqueName) + 1), x + 124, y + 202, 0);
         }
     }
@@ -150,24 +153,45 @@ public class GuiDesigner extends GuiScreen {
     @Override
     protected void mouseClicked(int par1, int par2, int par3) {
         super.mouseClicked(par1, par2, par3);
-        
-        if(canvas != null) {
+
+        if (canvas != null) {
             canvas.clicked(mouseX, mouseY, canEdit);
         }
-        
+
         boolean clicked = false;
-        if(bookData.showArrows || canEdit) {
+        int new_page = page_number.get(bookData.uniqueName);
+        if (bookData.showArrows || canEdit) {
+            //Go Back Arrow
             if (mouseX >= -192 && mouseX <= -174 && mouseY >= 100 && mouseY <= 110) {
                 clicked = true;
+                new_page--;
             }
-    
+
+            //Go Forward Arrow
             if (mouseX >= 175 && mouseX <= 192 && mouseY >= 100 && mouseY <= 110) {
                 clicked = true;
+                new_page++;
             }
         }
 
         if (clicked) {
-            //TODO: Validate the Page Number
+            if (canEdit) {
+                new_page = Math.min(new_page, (EConfig.MAX_PAGES_PER_BOOK - 1)); //If in edit mode the max pages is the full max
+            } else new_page = Math.min(new_page, (bookData.book.size() - 1));
+            
+            if(canEdit && new_page >= (EConfig.MAX_PAGES_PER_BOOK - 1)) new_page = 0;
+            else if (new_page >= bookData.book.size()) new_page = 0;
+            
+            if(new_page < 0) {
+                new_page = bookData.book.size() - 1; //Go to the end of the book if we go too far left
+            } else new_page = Math.max(new_page, 0); //Never let it go below 0
+            
+            page_number.put(bookData.uniqueName, new_page);
+            if(new_page >= bookData.book.size()) {
+                bookData.book.add(new DesignerCanvas()); //Add a new page if there
+            }
+            
+            canvas = bookData.book.get(new_page);
         }
     }
 
