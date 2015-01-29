@@ -8,6 +8,6 @@ public class FeatureBox extends Feature {
 
     @Override
     public void drawFeature() {
-        gui.drawRect(x, y, x + width, y + height, 0xFFFFFFFF);
+        gui.drawRect(left, top, right, bottom, 0xFFFFFFFF);
     }
 }

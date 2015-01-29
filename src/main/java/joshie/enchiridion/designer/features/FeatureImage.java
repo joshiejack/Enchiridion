@@ -93,16 +93,16 @@ public class FeatureImage extends Feature {
             ClientHelper.getMinecraft().getTextureManager().bindTexture(resource);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             tessellator.startDrawingQuads();
-            tessellator.addVertexWithUV(x, y + height, 0, 0.0, 1.0);
-            tessellator.addVertexWithUV(x + width, y + height, 0, 1.0, 1.0);
-            tessellator.addVertexWithUV(x + width, y, 0, 1.0, 0.0);
-            tessellator.addVertexWithUV(x, y, 0, 0.0, 0.0);
+            tessellator.addVertexWithUV(left, bottom, 0, 0.0, 1.0);
+            tessellator.addVertexWithUV(right, bottom, 0, 1.0, 1.0);
+            tessellator.addVertexWithUV(right, top, 0, 1.0, 0.0);
+            tessellator.addVertexWithUV(left, top, 0, 0.0, 0.0);
             tessellator.draw();
             disable(GL_BLEND);
             end();
         } else if (resource != null) {
             ClientHelper.getMinecraft().getTextureManager().bindTexture(resource);
-            gui.drawTexturedModalRect(x, y, 0, 0, img_width, img_height);
+            gui.drawTexturedModalRect(left, top, 0, 0, img_width, img_height);
         } else if (resource == null) {
             loadImage(path);
         }

@@ -12,6 +12,6 @@ public class FeatureText extends Feature {
     
     @Override
     public void drawFeature() {
-        gui.mc.fontRenderer.drawSplitString(text, x, y, wrap, color);
+        gui.mc.fontRenderer.drawSplitString(text, left, top, wrap, color);
     }
 }

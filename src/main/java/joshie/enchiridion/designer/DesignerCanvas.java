@@ -13,6 +13,7 @@ import com.google.gson.annotations.Expose;
 public class DesignerCanvas {
     @Expose
     public ArrayList<Feature> features = new ArrayList();
+    public Feature selected;
 
     //Draws all the features on the canvas
     public void draw(GuiDesigner gui, int x, int y) {
