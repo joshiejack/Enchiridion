@@ -102,16 +102,8 @@ public abstract class Element {
         return;
     }
 
-    protected int getX() {
-        return getX(0);
-    }
-
     protected int getX(int x2) {
         return wiki.getLeft(size, (BASE_X + x) + x2);
-    }
-
-    protected int getY() {
-        return getY(0);
     }
 
     protected int getY(int y2) {

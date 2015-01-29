@@ -2,9 +2,14 @@ package joshie.enchiridion.library;
 
 import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
 import static joshie.enchiridion.helpers.OpenGLHelper.fixShitForThePedia;
+import static joshie.enchiridion.wiki.WikiHelper.drawRect;
+import static joshie.enchiridion.wiki.WikiHelper.drawScaledCentredText;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledStack;
+import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
+import static joshie.enchiridion.wiki.WikiHelper.getHeight;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
+import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_EQUAL;

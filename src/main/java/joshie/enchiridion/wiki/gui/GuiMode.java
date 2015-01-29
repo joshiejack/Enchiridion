@@ -1,5 +1,5 @@
 package joshie.enchiridion.wiki.gui;
-
+import static joshie.enchiridion.wiki.WikiHelper.drawScaledCentredText;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
@@ -12,9 +12,6 @@ import joshie.enchiridion.wiki.mode.DisplayMode;
 import joshie.enchiridion.wiki.mode.SaveMode;
 
 public class GuiMode extends GuiExtension {
-    public static String search = "";
-    public static int visible;
-
     @Override
     public void draw() {
         int x = 0;
@@ -39,7 +36,6 @@ public class GuiMode extends GuiExtension {
             if (mouseY > pageY + -35 + 39 && mouseY < -35 + pageY + 81) {
                 page_bg_1 = 0xFF366374;
                 page_bg_2 = 0xFF47849A;
-                this.visible = 50;
             }
         }
 

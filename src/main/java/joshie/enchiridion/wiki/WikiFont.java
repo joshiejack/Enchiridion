@@ -18,54 +18,7 @@ public class WikiFont extends FontRenderer {
         super(settings, resource, tm, unicodeflag);
     }
 
-    public int isBBCode(String string, int i) {
-        char one = string.charAt(i);
-        if (one == '[' && i + 1 < string.length() && i + 2 < string.length()) {
-            char two = string.charAt(i + 1);
-            char three = string.charAt(i + 2);
-            if (two == 'c' && three == '=') {
-                int l;
-                String number = "";
-                for (l = i + 3; l < string.length() && ((string.charAt(l) >= 48 && string.charAt(l) <= 57) || (string.charAt(l) >= 65 && string.charAt(l) <= 70)); l++) {
-                    number += string.charAt(l);
-                }
-
-                if (!number.equals("")) {
-                    if (l + 1 < string.length()) {
-                        if (string.charAt(l) == ']') {
-                            renderColor = Integer.parseInt(number, 16);
-                            isColored = true;
-                            return number.length() + 3;
-                        }
-                    }
-                }
-            } else if (three == ']') {
-                if (two == 'b') this.boldStyle = true;
-                else if (two == 'i') this.italicStyle = true;
-                else if (two == 's') this.strikethroughStyle = true;
-                else if (two == 'u') this.underlineStyle = true;
-                else if (two == 'r') this.randomStyle = true;
-                else return 0;
-                return 2;
-            } else if (i + 3 < string.length()) {
-                char four = string.charAt(i + 3);
-                if (two == '/' && four == ']') {
-                    if (three == 'b') this.boldStyle = false;
-                    else if (three == 'i') this.italicStyle = false;
-                    else if (three == 's') this.strikethroughStyle = false;
-                    else if (three == 'u') this.underlineStyle = false;
-                    else if (three == 'r') this.randomStyle = false;
-                    else if (three == 'c') this.isColored = false;
-                    else return 0;
-                    return 3;
-                }
-            }
-        }
-
-        return 0;
-    }
-
-    public int isFormatCode(String string, int i) {
+    private int isFormatCode(String string, int i) {
         char character = string.charAt(i);
         if (CharReplace.BOLD_S.is(character)) {
             this.boldStyle = true;

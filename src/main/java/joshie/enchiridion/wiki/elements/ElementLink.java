@@ -44,7 +44,7 @@ public class ElementLink extends Element {
         if (!isEditMode && button == 0) {
             if (isMouseOver(x, y)) {
                 if (mod != null && tab != null && cat != null && page != null) {
-                    wiki.setPage(mod, tab, cat, page);
+                    wiki.loadPage(mod, tab, cat, page);
                 }
             }
         }

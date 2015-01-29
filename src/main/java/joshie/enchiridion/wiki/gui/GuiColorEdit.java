@@ -1,7 +1,9 @@
 package joshie.enchiridion.wiki.gui;
-
+import static joshie.enchiridion.wiki.WikiHelper.drawRect;
+import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
+import static joshie.enchiridion.wiki.WikiHelper.isEditMode;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.IColorSelectable;

@@ -25,6 +25,6 @@ public class ConfirmAddition extends Confirm {
     
     @Override
     public void confirm() {
-        WikiHelper.setPage(mod, tab, cat, page);
+        WikiHelper.loadPage(mod, tab, cat, page);
     }
 }

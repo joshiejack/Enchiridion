@@ -64,7 +64,44 @@ public class WikiHelper {
     public static int theScrolled;
     public static int mouseX;
     public static int mouseY;
-    public static int height;
+    private static int height;
+
+    public static void init() {
+        wiki = new ArrayList();
+        wiki.add(new GuiBackground());
+        wiki.add(new GuiSidebar());
+        wiki.add(new GuiLighting());
+        wiki.add(new GuiCanvas());
+        wiki.add(new GuiTabs());
+        wiki.add(new GuiItemSelect());
+        wiki.add(new GuiLighting());
+        wiki.add(new GuiColorEdit());
+        wiki.add(new GuiMenu());
+        wiki.add(new ScrollbarMenu());
+        wiki.add(new ScrollbarPage());
+        wiki.add(new GuiLayers());
+        wiki.add(new GuiTextEdit());
+        wiki.add(new GuiSearch());
+        wiki.add(new GuiMode());
+        wiki.add(new GuiHistory());
+        wiki.add(new ConfirmDeletion());
+        wiki.add(new ConfirmLocking());
+        wiki.add(new ConfirmAddition());
+        wiki.add(new PageEditAddition());
+        wiki.add(new PageEditLink());
+
+        library = new ArrayList();
+        library.add(new GuiBackground());
+        library.add(new GuiLighting());
+        library.add(new GuiLibrary());
+        library.add(new GuiShelves());
+        library.add(new GuiLighting());
+        library.add(new GuiMode());
+
+        if (selected == null) {
+            selected = wiki;
+        }
+    }
 
     public static Gson getGson() {
         if (gson == null) {
@@ -75,6 +112,10 @@ public class WikiHelper {
         }
 
         return gson;
+    }
+
+    public static int getHeight() {
+        return height;
     }
 
     public static void drawRect(int x, int y, int x2, int y2, int color) {
@@ -96,7 +137,7 @@ public class WikiHelper {
     public static void drawScaledText(float scale, String text, int x, int y, int color) {
         gui.drawScaledText(gui.mc, scale, text, x, y, color);
     }
-    
+
     public static void drawScaledSplitText(float scale, String text, int x, int y, int color, int length) {
         gui.drawScaledSplitText(gui.mc, scale, text, x, y, color, length);
     }
@@ -143,94 +184,53 @@ public class WikiHelper {
         return gui.page.isEditMode();
     }
 
-    public static void setPage(String mod, String tab, String cat, String page) {
-        gui.setPage(mod, tab, cat, page);
+    public static void loadPage(String mod, String tab, String cat, String page) {
+        gui.loadPage(mod, tab, cat, page);
     }
 
     public static ArrayList<GuiExtension> wiki = new ArrayList();
     public static ArrayList<GuiExtension> library = new ArrayList();
     private static ArrayList<GuiExtension> selected;
-    
+
     public static ArrayList<GuiExtension> getGui() {
         return selected;
     }
-    
+
     /** Switches from the wiki gui to the library gui and vice versa **/
     public static void switchGui(IWikiMode mode, ArrayList<GuiExtension> list) {
-        if(!selected.equals(mode)) {
+        if (!selected.equals(mode)) {
             //If the previous mode was Save, then save it
-            if(gui.mode.equals(SaveMode.getInstance())) {
+            if (gui.mode.equals(SaveMode.getInstance())) {
                 SaveMode.getInstance().markDirty();
             }
-            
+
             //Otherwise switch the gui over to the new mode
             gui.setMode(mode);
-            
+
             //Set the selected to this list
             selected = list;
         }
     }
-    
-    public static void switchGui(ArrayList<GuiExtension> list) {
-        switchGui(gui.mode, list);
-    }
-    
-    public static void init() {
-        wiki = new ArrayList();
-        wiki.add(new GuiBackground());
-        wiki.add(new GuiSidebar());
-        wiki.add(new GuiLighting());
-        wiki.add(new GuiCanvas());
-        wiki.add(new GuiTabs());
-        wiki.add(new GuiItemSelect());
-        wiki.add(new GuiLighting());
-        wiki.add(new GuiColorEdit());
-        wiki.add(new GuiMenu());
-        wiki.add(new ScrollbarMenu());
-        wiki.add(new ScrollbarPage());
-        wiki.add(new GuiLayers());
-        wiki.add(new GuiTextEdit());
-        wiki.add(new GuiSearch());
-        wiki.add(new GuiMode());
-        wiki.add(new GuiHistory());
-        wiki.add(new ConfirmDeletion());
-        wiki.add(new ConfirmLocking());
-        wiki.add(new ConfirmAddition());
-        wiki.add(new PageEditAddition());
-        wiki.add(new PageEditLink());
 
-        library = new ArrayList();
-        library.add(new GuiBackground());
-        library.add(new GuiLighting());
-        library.add(new GuiLibrary());
-        library.add(new GuiShelves());
-        library.add(new GuiLighting());
-        library.add(new GuiMode());
-        
-        if(selected == null) {
-            selected = wiki;
-        }
-    }
-    
     public static GuiExtension getInstance(Class extension) {
-        for(GuiExtension e: getGui()) {
-            if(e.getClass().equals(extension)) {
+        for (GuiExtension e : getGui()) {
+            if (e.getClass().equals(extension)) {
                 return e;
             }
         }
-        
+
         return null;
     }
-    
+
     public static void setVisibility(Class extension, boolean isVisible) {
-    	for(GuiExtension e: getGui()) {
-    		if(e.getClass().equals(extension)) {
-    			e.setVisibility(isVisible);
-    			break;
-    		}
-    	}
+        for (GuiExtension e : getGui()) {
+            if (e.getClass().equals(extension)) {
+                e.setVisibility(isVisible);
+                break;
+            }
+        }
     }
-    
+
     public static boolean isLibrary() {
         return getGui().equals(library);
     }
@@ -275,7 +275,7 @@ public class WikiHelper {
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         ElementItem.itemRenderer.renderItemAndEffectIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, x, y);
         ElementItem.itemRenderer.renderItemOverlayIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, x, y);
-        GL11.glDisable(GL11.GL_LIGHTING);     
+        GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
     }
 
@@ -312,6 +312,10 @@ public class WikiHelper {
 
     public static void setMod(WikiMod mod) {
         gui.mod = mod;
+    }
+
+    public static WikiTab getTab() {
+        return gui.tab;
     }
 
     public static void delete() {

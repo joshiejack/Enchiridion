@@ -50,6 +50,6 @@ public class EditMode implements IWikiMode {
     
     @Override
 	public WikiMode getType() {
-		return WikiMode.DISPLAY;
+		return WikiMode.EDIT;
 	}
 }

@@ -20,18 +20,6 @@ public class GuiScalable extends GuiScreen {
         resolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
     }
 
-    /** Returns a height value, based on a 0.0D-1.0D scale,
-     *  with 0 being at the top, and 1 being bottom **/
-    protected int height(double position) {
-        return (int) (position * resolution.getScaledHeight_double());
-    }
-
-    /** Returns a width value, based on a 0.0D-1.0D scale,
-     *  with 0 being the far left, and 1 being the far right **/
-    protected int width(double position) {
-        return (int) (position * resolution.getScaledWidth_double());
-    }
-    
     public int getLeft() {
         return getLeft(1.0F, 0);
     }

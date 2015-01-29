@@ -1,12 +1,15 @@
 package joshie.enchiridion.wiki.gui.popups;
-
 import static joshie.enchiridion.ETranslate.translate;
 import static joshie.enchiridion.helpers.OpenGLHelper.end;
 import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
 import static joshie.enchiridion.helpers.OpenGLHelper.resetZ;
 import static joshie.enchiridion.helpers.OpenGLHelper.start;
+import static joshie.enchiridion.wiki.WikiHelper.drawRect;
+import static joshie.enchiridion.wiki.WikiHelper.drawScaledCentredText;
+import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
+import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.ETranslate;
 import joshie.enchiridion.api.ITextEditable;

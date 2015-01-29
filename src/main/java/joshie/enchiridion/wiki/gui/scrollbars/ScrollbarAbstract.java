@@ -1,7 +1,9 @@
 package joshie.enchiridion.wiki.gui.scrollbars;
-
+import static joshie.enchiridion.wiki.WikiHelper.drawRect;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
+import static joshie.enchiridion.wiki.WikiHelper.getHeight;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
+import static joshie.enchiridion.wiki.WikiHelper.getPage;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.helpers.OpenGLHelper;

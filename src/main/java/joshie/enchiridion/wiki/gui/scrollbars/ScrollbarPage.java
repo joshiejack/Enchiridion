@@ -1,7 +1,7 @@
 package joshie.enchiridion.wiki.gui.scrollbars;
 
+import static joshie.enchiridion.wiki.WikiHelper.getHeight;
 import joshie.enchiridion.wiki.WikiHelper;
-
 
 public class ScrollbarPage extends ScrollbarAbstract {
     public static boolean isMoving = false;

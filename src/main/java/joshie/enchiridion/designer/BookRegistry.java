@@ -3,9 +3,6 @@ package joshie.enchiridion.designer;
 import static java.io.File.separator;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

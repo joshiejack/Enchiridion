@@ -1,11 +1,10 @@
 package joshie.enchiridion.wiki.gui;
-
+import static joshie.enchiridion.wiki.WikiHelper.drawRect;
+import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
+import static joshie.enchiridion.wiki.WikiHelper.horizontalGradient;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
-import joshie.enchiridion.wiki.WikiHelper;
-import joshie.enchiridion.wiki.WikiMod;
-import joshie.enchiridion.wiki.WikiPage;
-import joshie.enchiridion.wiki.WikiTab;
+import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 
 public abstract class GuiExtension {
     private boolean isVisible = true;
@@ -37,78 +36,6 @@ public abstract class GuiExtension {
     
     public void scroll(boolean scrollingDown) {
         return;
-    }
-    
-    public WikiTab getTab() {
-        return WikiHelper.gui.tab;
-    }
-    
-    public int getHeight() {
-        return WikiHelper.height;
-    }
-    
-    public void drawTexture(int x, int y, int xStart, int yStart, int xEnd, int yEnd) {
-        WikiHelper.drawTexture(x, y, xStart, yStart, xEnd, yEnd);
-    }
-    
-    public void drawRect(int x, int y, int x2, int y2, int color) {
-        WikiHelper.drawRect(x, y, x2, y2, color);
-    }
-    
-    public void horizontalGradient(int x, int y, int x2, int y2, int from, int to) {
-        WikiHelper.horizontalGradient(x, y, x2, y2, from, to);
-    }
-    
-    public void verticalGradient(int x, int y, int x2, int y2, int from, int to) {
-        WikiHelper.verticalGradient(x, y, x2, y2, from, to);
-    }
-    
-    public void drawScaledCentredText(float scale, String text, int x, int y, int color) {
-        WikiHelper.drawScaledCentredText(scale, text, x, y, color);
-    }
-    
-    public void drawScaledSplitText(float scale, String text, int x, int y, int color, int length) {
-    	WikiHelper.drawScaledSplitText(scale, text, x, y, color, length);
-    }
-    
-    public void drawScaledText(float scale, String text, int x, int y, int color) {
-        WikiHelper.drawScaledText(scale, text, x, y, color);
-    }
-    
-    public WikiPage getPage() {
-        return WikiHelper.getPage();
-    }
-    
-    public void fixLighting() {
-        WikiHelper.fixLighting();
-    }
-    
-    public boolean isEditMode() {
-        return WikiHelper.isEditMode();
-    }
-    
-    public void setPage(String mod, String tab, String cat, String page) {
-        WikiHelper.setPage(mod, tab, cat, page);
-    }
-    
-    public void setMod(WikiMod mod) {
-        WikiHelper.setMod(mod);
-    }
-    
-    public WikiMod getMod() {
-        return WikiHelper.getMod();
-    }
-    
-    public void setTab(WikiTab tab) {
-        WikiHelper.setTab(tab);
-    }
-    
-    public void setPage(WikiPage page) {
-        WikiHelper.setPage(page);
-    }
-    
-    public boolean isTabSelected(WikiTab tab) {
-        return WikiHelper.isTabSelected(tab);
     }
     
     protected int[] getCategoryBGColors(int pageY) {

@@ -1,7 +1,12 @@
 package joshie.enchiridion.wiki.gui;
-
+import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
+import static joshie.enchiridion.wiki.WikiHelper.getTab;
+import static joshie.enchiridion.wiki.WikiHelper.horizontalGradient;
+import static joshie.enchiridion.wiki.WikiHelper.isEditMode;
+import static joshie.enchiridion.wiki.WikiHelper.loadPage;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
+import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 
 import java.util.Collection;
 
@@ -98,7 +103,7 @@ public class GuiMenu extends GuiExtension implements ITextEditable {
                                 if (element_id < categoryPosition) continue;
                                 if (mouseY >= pageY + 80 + 38 && mouseY <= 80 + pageY + 80) {
                                     if (!isEditMode()) {
-                                        setPage(category.getTab().getMod().getKey(), category.getTab().getKey(), category.getKey(), page.getKey());
+                                        loadPage(category.getTab().getMod().getKey(), category.getTab().getKey(), category.getKey(), page.getKey());
                                     } else {
                                         edit_category = null;
                                         edit_page = page;

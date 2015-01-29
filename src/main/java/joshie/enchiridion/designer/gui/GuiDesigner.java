@@ -14,7 +14,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 
 public class GuiDesigner extends GuiScreen {
-    protected int guiTick = 0;
     protected int mouseXLeft = 0;
     protected int mouseXRight = 0;
     public int mouseY = 0;

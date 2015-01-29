@@ -1,13 +1,17 @@
 package joshie.enchiridion.wiki.gui;
-
 import static joshie.enchiridion.helpers.OpenGLHelper.end;
 import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
 import static joshie.enchiridion.helpers.OpenGLHelper.resetZ;
 import static joshie.enchiridion.helpers.OpenGLHelper.start;
+import static joshie.enchiridion.wiki.WikiHelper.drawRect;
+import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
+import static joshie.enchiridion.wiki.WikiHelper.setMod;
+import static joshie.enchiridion.wiki.WikiHelper.setPage;
+import static joshie.enchiridion.wiki.WikiHelper.setTab;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 
 import java.util.ArrayList;

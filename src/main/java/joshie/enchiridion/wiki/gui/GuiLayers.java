@@ -1,7 +1,10 @@
 package joshie.enchiridion.wiki.gui;
-
+import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
+import static joshie.enchiridion.wiki.WikiHelper.getPage;
+import static joshie.enchiridion.wiki.WikiHelper.horizontalGradient;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
+import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 
 import java.util.ArrayList;
 
@@ -33,7 +36,7 @@ public class GuiLayers extends GuiExtension {
                 int pageY = -40;
 
                 ArrayList<Element> elements = getPage().getData().getComponents();
-                for (int i = layerPosition; i < Math.min(elements.size(), layerPosition + ((WikiHelper.height - 220) / 40)); i++) {
+                for (int i = layerPosition; i < Math.min(elements.size(), layerPosition + ((WikiHelper.getHeight() - 220) / 40)); i++) {
                     int[] colors = getContentBGColors(pageY);
                     drawContentBox(elements.get(i).getTitle(), pageY, colors[0], colors[1]);
                     pageY += 40;
@@ -51,7 +54,7 @@ public class GuiLayers extends GuiExtension {
                 if (getPage().getSelected() == null) {
                     int pageY = -40;
                     ArrayList<Element> elements = getPage().getData().getComponents();
-                    for (int i = layerPosition; i < Math.min(elements.size(), layerPosition + ((WikiHelper.height - 220) / 40)); i++) {
+                    for (int i = layerPosition; i < Math.min(elements.size(), layerPosition + ((WikiHelper.getHeight() - 220) / 40)); i++) {
                         if (mouseY >= pageY + 80 + 38 && mouseY <= 80 + pageY + 80) {
                             getPage().getData().moveUp(elements.get(i));
                             break;

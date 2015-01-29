@@ -42,7 +42,7 @@ public class GuiMain extends GuiScalable {
     public static WikiPage page = null;
     public static IWikiMode mode = DisplayMode.getInstance();
 
-    public void setPage(String mod, String tab, String cat, String page) {
+    public void loadPage(String mod, String tab, String cat, String page) {
         GuiHistory.newPage(WikiRegistry.instance().getPage(mod, tab, cat, page));
     }
 
@@ -77,7 +77,7 @@ public class GuiMain extends GuiScalable {
             page = WikiRegistry.instance().getPage("Enchiridion 2", "Enchiridion 2", "Enchiridion 2", "About");
             tab = WikiRegistry.instance().getTab("Enchiridion 2", "Enchiridion 2");
             mod = WikiRegistry.instance().getMod("Enchiridion 2");
-            setPage("Enchiridion 2", "Enchiridion 2", "Enchiridion 2", "About");
+            loadPage("Enchiridion 2", "Enchiridion 2", "Enchiridion 2", "About");
         }
         
         page.getData().refreshY();
@@ -89,10 +89,6 @@ public class GuiMain extends GuiScalable {
     @Override
     public void onGuiClosed() {
         Keyboard.enableRepeatEvents(false);
-    }
-
-    protected void drawText(Minecraft mc, String text, int x, int y) {
-        drawScaledText(mc, 1.0F, text, x, y, 0xFFFFFF);
     }
 
     public void drawScaledText(Minecraft mc, float scale, String text, int x, int y, int color) {
@@ -118,10 +114,6 @@ public class GuiMain extends GuiScalable {
         glScalef(scale, scale, 1.0F);
         EClientProxy.font.drawString(text, getLeft(scale, x) - EClientProxy.font.getStringWidth(text) / 2, getTop(scale, y), color);
         glPopMatrix();
-    }
-
-    protected void drawScaledText(Minecraft mc, float scale, String text, int x, int y) {
-        drawScaledText(mc, scale, text, x, y, 0xFFFFFF);
     }
 
     @Override

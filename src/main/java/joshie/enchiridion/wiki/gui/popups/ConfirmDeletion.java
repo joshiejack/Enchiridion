@@ -1,6 +1,6 @@
 package joshie.enchiridion.wiki.gui.popups;
-
 import static joshie.enchiridion.ETranslate.translate;
+import static joshie.enchiridion.wiki.WikiHelper.getPage;
 
 import java.io.File;
 

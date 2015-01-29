@@ -1,8 +1,13 @@
 package joshie.enchiridion.wiki.gui;
-
+import static joshie.enchiridion.wiki.WikiHelper.drawScaledCentredText;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledStack;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
+import static joshie.enchiridion.wiki.WikiHelper.getMod;
+import static joshie.enchiridion.wiki.WikiHelper.getTab;
+import static joshie.enchiridion.wiki.WikiHelper.isEditMode;
+import static joshie.enchiridion.wiki.WikiHelper.isTabSelected;
+import static joshie.enchiridion.wiki.WikiHelper.setTab;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.api.IItemSelectable;

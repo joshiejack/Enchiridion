@@ -1,8 +1,8 @@
 package joshie.enchiridion.library;
-
 import static joshie.enchiridion.library.GuiShelves.ShelfType.BLANK;
 import static joshie.enchiridion.library.GuiShelves.ShelfType.LINES;
 import static joshie.enchiridion.library.GuiShelves.ShelfType.WOOD;
+import static joshie.enchiridion.wiki.WikiHelper.drawRect;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.wiki.gui.GuiExtension;

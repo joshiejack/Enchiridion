@@ -1,5 +1,8 @@
 package joshie.enchiridion.wiki.gui;
-
+import static joshie.enchiridion.wiki.WikiHelper.drawRect;
+import static joshie.enchiridion.wiki.WikiHelper.getHeight;
+import static joshie.enchiridion.wiki.WikiHelper.horizontalGradient;
+import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 import static org.lwjgl.opengl.GL11.GL_LIGHTING;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;

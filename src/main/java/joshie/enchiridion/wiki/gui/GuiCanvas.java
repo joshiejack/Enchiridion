@@ -1,6 +1,8 @@
 package joshie.enchiridion.wiki.gui;
-
 import static joshie.enchiridion.helpers.OpenGLHelper.fixShitForThePedia;
+import static joshie.enchiridion.wiki.WikiHelper.drawRect;
+import static joshie.enchiridion.wiki.WikiHelper.getHeight;
+import static joshie.enchiridion.wiki.WikiHelper.getPage;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
 import static org.lwjgl.opengl.GL11.GL_BLEND;

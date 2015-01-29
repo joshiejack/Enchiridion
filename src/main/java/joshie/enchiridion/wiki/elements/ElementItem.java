@@ -5,7 +5,6 @@ import java.util.List;
 import joshie.enchiridion.api.IItemSelectable;
 import joshie.enchiridion.helpers.StackHelper;
 import joshie.enchiridion.wiki.WikiHelper;
-import joshie.enchiridion.wiki.WikiRender;
 import joshie.enchiridion.wiki.gui.GuiItemSelect;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.RenderItem;

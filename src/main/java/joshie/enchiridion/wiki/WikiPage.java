@@ -1,19 +1,18 @@
 package joshie.enchiridion.wiki;
 
+import static joshie.enchiridion.helpers.OpenGLHelper.end;
+import static joshie.enchiridion.helpers.OpenGLHelper.resetZ;
+import static joshie.enchiridion.helpers.OpenGLHelper.start;
+
 import java.util.ArrayList;
 
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.ClientHelper;
-import joshie.enchiridion.helpers.OpenGLHelper;
 import joshie.enchiridion.wiki.data.DataPage;
 import joshie.enchiridion.wiki.data.WikiData;
 import joshie.enchiridion.wiki.elements.Element;
 import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.enchiridion.wiki.gui.GuiMenu;
-
-import org.lwjgl.opengl.GL11;
-
-import static joshie.enchiridion.helpers.OpenGLHelper.*;
 
 public class WikiPage extends WikiPart {    
     public WikiPage(String key, String lang, DataPage contents) {
@@ -151,10 +150,6 @@ public class WikiPage extends WikiPart {
                 scroll(-500);
                 break; //Page Down
         }
-    }
-
-    public void updateY() {
-
     }
 
     //Called whenever a button is clicked
