@@ -1,12 +1,7 @@
 package joshie.enchiridion.designer.features;
 
 import static java.io.File.separator;
-import static joshie.enchiridion.helpers.OpenGLHelper.disable;
-import static joshie.enchiridion.helpers.OpenGLHelper.enable;
-import static joshie.enchiridion.helpers.OpenGLHelper.end;
 import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
-import static joshie.enchiridion.helpers.OpenGLHelper.start;
-import static org.lwjgl.opengl.GL11.GL_BLEND;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,16 +9,14 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import joshie.enchiridion.ELogger;
-import joshie.enchiridion.helpers.ClientHelper;
+import joshie.enchiridion.designer.DesignerHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.WikiPage;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 
 import org.apache.logging.log4j.Level;
-import org.lwjgl.opengl.GL11;
 
 import com.google.gson.annotations.Expose;
 
@@ -36,7 +29,7 @@ public class FeatureImage extends Feature {
     public String path;
     public int img_width;
     public int img_height;
-    
+
     public FeatureImage() {
         width = 100;
         height = 100;
@@ -86,23 +79,9 @@ public class FeatureImage extends Feature {
     public void drawFeature() {
         fixColors();
         if (isDynamic) {
-            start();
-            enable(GL_BLEND);
-            texture.updateDynamicTexture();
-            Tessellator tessellator = Tessellator.instance;
-            ClientHelper.getMinecraft().getTextureManager().bindTexture(resource);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            tessellator.startDrawingQuads();
-            tessellator.addVertexWithUV(left, bottom, 0, 0.0, 1.0);
-            tessellator.addVertexWithUV(right, bottom, 0, 1.0, 1.0);
-            tessellator.addVertexWithUV(right, top, 0, 1.0, 0.0);
-            tessellator.addVertexWithUV(left, top, 0, 0.0, 0.0);
-            tessellator.draw();
-            disable(GL_BLEND);
-            end();
+            DesignerHelper.drawImage(texture, resource, left, top, right, bottom);
         } else if (resource != null) {
-            ClientHelper.getMinecraft().getTextureManager().bindTexture(resource);
-            gui.drawTexturedModalRect(left, top, 0, 0, img_width, img_height);
+            DesignerHelper.drawResource(resource, left, top, img_width, img_height);
         } else if (resource == null) {
             loadImage(path);
         }

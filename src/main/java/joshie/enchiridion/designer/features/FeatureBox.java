@@ -1,5 +1,7 @@
 package joshie.enchiridion.designer.features;
 
+import joshie.enchiridion.designer.DesignerHelper;
+
 import com.google.gson.annotations.Expose;
 
 public class FeatureBox extends Feature {
@@ -8,6 +10,6 @@ public class FeatureBox extends Feature {
 
     @Override
     public void drawFeature() {
-        gui.drawRect(left, top, right, bottom, 0xFFFFFFFF);
+        DesignerHelper.drawRect(left, top, right, bottom, 0xFFFFFFFF);
     }
 }

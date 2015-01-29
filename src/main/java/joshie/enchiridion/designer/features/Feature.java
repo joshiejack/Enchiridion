@@ -1,6 +1,7 @@
 package joshie.enchiridion.designer.features;
 
-import joshie.enchiridion.designer.GuiDesigner;
+import static joshie.enchiridion.designer.DesignerHelper.drawRect;
+import static joshie.enchiridion.designer.DesignerHelper.getGui;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.RenderItem;
 
@@ -19,7 +20,6 @@ public abstract class Feature {
     @Expose
     protected double height;
 
-    protected GuiDesigner gui;
     private boolean isSelected;
     private boolean isHeld;
     private boolean isDragging;
@@ -36,46 +36,45 @@ public abstract class Feature {
     }
 
     public void recalculate(int x, int y) {
-        left = x + xPos;
-        right = (int) (x + xPos + (width * 2));
-        top = y + yPos;
-        bottom = (int) (y + yPos + (height * 2));
+        left = xPos;
+        right = (int) (xPos + width);
+        top = yPos;
+        bottom = (int) (yPos + height);
     }
 
-    public void draw(GuiDesigner gui, int x, int y) {
-        this.gui = gui;
+    public void draw(int x, int y) {
         recalculate(x, y);
         drawFeature();
         //If We are in edit mode draw the boxes around the feature
-        if (gui.canEdit && isSelected) {
-            gui.drawRect(left - 4, top - 4, left, top, 0xFF2693FF);
-            gui.drawRect(right, top - 4, right + 4, top, 0xFF2693FF);
-            gui.drawRect(left - 4, bottom, left, bottom + 4, 0xFF2693FF);
-            gui.drawRect(right, bottom, right + 4, bottom + 4, 0XFFFFFF00);
+        if (getGui().canEdit && isSelected) {
+            drawRect(left - 4, top - 4, left, top, 0xFF2693FF);
+            drawRect(right, top - 4, right + 4, top, 0xFF2693FF);
+            drawRect(left - 4, bottom, left, bottom + 4, 0xFF2693FF);
+            drawRect(right, bottom, right + 4, bottom + 4, 0XFFFFFF00);
         }
     }
 
     private boolean noOtherSelected() {
-        return gui.canvas.selected == null;
+        return getGui().canvas.selected == null;
     }
 
     private void clearSelected() {
-        gui.canvas.selected = null;
+        getGui().canvas.selected = null;
     }
 
     private void setSelected() {
-        gui.canvas.selected = this;
+        getGui().canvas.selected = this;
     }
 
     public abstract void drawFeature();
 
     public boolean isOverFeature(int x, int y) {
-        return x >= xPos && x <= xPos + (width * 2) && y >= (yPos - (height * 2)) && y <= yPos;
+        return x >= left && x <= right && y >= top && y <= bottom;
     }
 
     public boolean isOverCorner(int x, int y) {
-        if ((x >= xPos - 4 && x <= xPos) || (x >= xPos + (width * 2) && x <= xPos + (width * 2) + 4)) {
-            if ((y >= yPos - (height * 2) - 4 && y <= yPos - (height * 2)) || (y >= yPos && y <= yPos + 4)) {
+        if ((x >= left - 4 && x <= left) || (x >= right && x <= right + 4)) {
+            if ((y >= top - 4 && y <= top) || (y >= bottom && y <= bottom + 4)) {
                 return true;
             }
         }
@@ -92,11 +91,13 @@ public abstract class Feature {
                 isSelected = true;
                 prevX = x;
                 prevY = y;
+                setSelected();
             } else if (isOverCorner(x, y) && noOtherSelected()) {
                 isSelected = true;
                 isDragging = true;
                 prevX = x;
                 prevY = y;
+                setSelected();
             } else {
                 if (isSelected) {
                     clearSelected();
@@ -110,11 +111,13 @@ public abstract class Feature {
     public void release(int x, int y) {
         if (isHeld) {
             isHeld = false;
+            clearSelected();
         } else if (isDragging) {
             isDragging = false;
+            clearSelected();
         }
     }
-    
+
     public void updateWidth(int change) {
         width += change;
         if (width <= 16) {

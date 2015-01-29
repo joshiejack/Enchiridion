@@ -1,5 +1,7 @@
 package joshie.enchiridion.designer.features;
 
+import joshie.enchiridion.designer.DesignerHelper;
+
 import com.google.gson.annotations.Expose;
 
 public class FeatureText extends Feature {
@@ -12,6 +14,6 @@ public class FeatureText extends Feature {
     
     @Override
     public void drawFeature() {
-        gui.mc.fontRenderer.drawSplitString(text, left, top, wrap, color);
+        DesignerHelper.drawSplitString(text, left, top, wrap, color);
     }
 }

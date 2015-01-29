@@ -16,11 +16,11 @@ public class DesignerCanvas {
     public Feature selected;
 
     //Draws all the features on the canvas
-    public void draw(GuiDesigner gui, int x, int y) {
+    public void draw(int x, int y) {
         for(Feature feature: features) {
             start();
             resetZ();
-            feature.draw(gui, x, y);
+            feature.draw(x, y);
             end();
         }
     }

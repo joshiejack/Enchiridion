@@ -38,6 +38,7 @@ public class GuiDesigner extends GuiScreen {
     protected float red, green, blue;
     protected int leftX = 212;
     protected int rightX = 218;
+    protected int xSize = 430;
     protected int ySize = 217;
     public boolean canEdit;
 
@@ -79,10 +80,13 @@ public class GuiDesigner extends GuiScreen {
 
         Keyboard.enableRepeatEvents(true);
         if (canEdit) {
-            buttonList.add(new ButtonText(TEXT, 20, 225, ETranslate.translate("text")));
-            buttonList.add(new ButtonText(BOX, 80, 225, ETranslate.translate("box")));
-            buttonList.add(new ButtonText(ITEM, 140, 225, ETranslate.translate("item")));
-            buttonList.add(new ButtonText(IMAGE, 200, 225, ETranslate.translate("image")));
+            int x = (width - 430) / 2;
+            int y = (height - ySize) / 2;
+            
+            buttonList.add(new ButtonText(TEXT, x + 20, y - 18, ETranslate.translate("text")));
+            buttonList.add(new ButtonText(BOX, x + 80, y - 18, ETranslate.translate("box")));
+            buttonList.add(new ButtonText(ITEM, x + 140, y - 18, ETranslate.translate("item")));
+            buttonList.add(new ButtonText(IMAGE, x + 200, y - 18, ETranslate.translate("image")));
         }
     }
 
@@ -166,11 +170,6 @@ public class GuiDesigner extends GuiScreen {
             }
         }
 
-        //Draw Page
-        if (canvas != null) {
-            canvas.draw(this, x, y);
-        }
-
         //Numbers
         if (bookData.showNumber || canEdit) {
             mc.fontRenderer.drawString("" + (page_number.get(bookData.uniqueName) + 1), x + 124, y + 202, 0);
@@ -179,11 +178,18 @@ public class GuiDesigner extends GuiScreen {
 
     public void drawScreen(int i, int j, float f) {
         fixColors();
-        int x = width / 2;
-        int y = 8;
+        int x = (width - 430) / 2;
+        int y = (height - ySize) / 2;
+        DesignerHelper.setGui(this, x, y);
 
-        drawLeftPage(x - 212, y);
-        drawRightPage(x, y);
+        drawLeftPage(x, y);
+        drawRightPage(x + 212, y);
+        
+        //Draw Page
+        if (canvas != null) {
+            canvas.draw(x, y);
+        }
+        
         super.drawScreen(i, j, f);
     }
 
@@ -241,10 +247,12 @@ public class GuiDesigner extends GuiScreen {
 
     @Override
     public void handleMouseInput() {
-        int x = Mouse.getEventX() * this.width / this.mc.displayWidth;
-        int y = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
-        mouseX = x - (this.width / 2);
-        mouseY = y - (ySize / 2);
+        int x = Mouse.getEventX() * width / mc.displayWidth;
+        int y = height - Mouse.getEventY() * height / mc.displayHeight - 1;
+
+        mouseX = x - (width - xSize) / 2;
+        mouseY = y - (height - ySize) / 2;
+
         if (canvas != null) {
             canvas.follow(mouseX, mouseY);
         }
