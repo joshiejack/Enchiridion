@@ -50,7 +50,7 @@ public class ECommonProxy {
                 BookRegistry.register(data);
                 
                 try {
-                    File example = new File(Enchiridion.root + separator + "books", "test_book.json");
+                    File example = new File(Enchiridion.root + separator + "books", "enchiridion_introbook.json");
                     if(!example.exists()) {
                         Writer writer = new OutputStreamWriter(new FileOutputStream(example), "UTF-8");
                         writer.write(WikiHelper.getGson().toJson(BookRegistry.getData("enchiridion.introbook")));

@@ -1,6 +1,6 @@
 package joshie.enchiridion.designer.features;
 
-import joshie.enchiridion.designer.gui.GuiDesigner;
+import joshie.enchiridion.designer.GuiDesigner;
 import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.RenderItem;

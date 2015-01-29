@@ -4,7 +4,7 @@ import static joshie.enchiridion.EInfo.BOOKS_EDIT_ID;
 import static joshie.enchiridion.EInfo.WIKI_ID;
 import joshie.enchiridion.designer.BookRegistry;
 import joshie.enchiridion.designer.BookRegistry.BookData;
-import joshie.enchiridion.designer.gui.GuiDesigner;
+import joshie.enchiridion.designer.GuiDesigner;
 import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;

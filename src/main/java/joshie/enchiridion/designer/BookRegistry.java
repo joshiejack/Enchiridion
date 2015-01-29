@@ -32,7 +32,11 @@ public class BookRegistry {
         @Expose
         public int color;
         @Expose
-        public boolean bookBackground = true;
+        public boolean showBackground = true;
+        @Expose
+        public boolean showArrows = true;
+        @Expose
+        public boolean showNumber = true;
 
         public BookData(String unique, String en_US, List info, int color) {
             this.uniqueName = unique;

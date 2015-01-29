@@ -1,4 +1,4 @@
-package joshie.enchiridion.designer.gui;
+package joshie.enchiridion.designer;
 
 import static java.io.File.separator;
 import static joshie.enchiridion.helpers.OpenGLHelper.color;
@@ -12,7 +12,6 @@ import java.util.HashMap;
 
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.designer.BookRegistry.BookData;
-import joshie.enchiridion.designer.DesignerCanvas;
 import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -21,8 +20,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 public class GuiDesigner extends GuiScreen {
-    protected int mouseXLeft = 0;
-    protected int mouseXRight = 0;
+    public int mouseX = 0;
     public int mouseY = 0;
 
     private ResourceLocation cover_left;
@@ -55,7 +53,7 @@ public class GuiDesigner extends GuiScreen {
             canvas = bookData.book.get(page_number.get(bookData.uniqueName));
         }
 
-        if (data.bookBackground) {
+        if (data.showBackground) {
             cover_left = new ResourceLocation("enchiridion", "textures/books/guide_cover_left.png");
             cover_right = new ResourceLocation("enchiridion", "textures/books/guide_cover_right.png");
             page_left = new ResourceLocation("enchiridion", "textures/books/guide_page_left.png");
@@ -98,10 +96,12 @@ public class GuiDesigner extends GuiScreen {
             drawTexturedModalRect(x, y, 44, 0, leftX, ySize);
         }
 
-        //Arrows
-        drawTexturedModalRect(x + 21, y + 200, 0, 246, 18, 10);
-        if (mouseXRight >= -192 && mouseXRight <= -174 && mouseY >= 100 && mouseY <= 110) {
-            drawTexturedModalRect(x + 21, y + 200, 23, 246, 18, 10);
+        if(bookData.showArrows || canEdit) {
+            //Arrows
+            drawTexturedModalRect(x + 21, y + 200, 0, 246, 18, 10);
+            if (mouseX >= -192 && mouseX <= -174 && mouseY >= 100 && mouseY <= 110) {
+                drawTexturedModalRect(x + 21, y + 200, 23, 246, 18, 10);
+            }
         }
     }
 
@@ -119,9 +119,11 @@ public class GuiDesigner extends GuiScreen {
         }
 
         //Arrows
-        drawTexturedModalRect(x + 175, y + 200, 0, 246, 18, 10);
-        if (mouseXRight >= 175 && mouseXRight <= 192 && mouseY >= 100 && mouseY <= 110) {
-            drawTexturedModalRect(x + 175, y + 200, 23, 246, 18, 10);
+        if(bookData.showArrows || canEdit) {
+            drawTexturedModalRect(x + 175, y + 200, 0, 246, 18, 10);
+            if (mouseX >= 175 && mouseX <= 192 && mouseY >= 100 && mouseY <= 110) {
+                drawTexturedModalRect(x + 175, y + 200, 23, 246, 18, 10);
+            }
         }
 
         //Draw Page
@@ -130,7 +132,9 @@ public class GuiDesigner extends GuiScreen {
         }
 
         //Numbers
-        mc.fontRenderer.drawString("" + (page_number.get(bookData.uniqueName) + 1), x + 124, y + 202, 0);
+        if(bookData.showNumber || canEdit) {
+            mc.fontRenderer.drawString("" + (page_number.get(bookData.uniqueName) + 1), x + 124, y + 202, 0);
+        }
     }
 
     public void drawScreen(int i, int j, float f) {
@@ -148,18 +152,18 @@ public class GuiDesigner extends GuiScreen {
         super.mouseClicked(par1, par2, par3);
         
         if(canvas != null) {
-            canvas.clicked(mouseXRight, mouseY, canEdit);
+            canvas.clicked(mouseX, mouseY, canEdit);
         }
         
         boolean clicked = false;
-        if (mouseXRight >= -192 && mouseXRight <= -174 && mouseY >= 100 && mouseY <= 110) {
-            clicked = true;
-            //TODO: Decrease The Page Number
-        }
-
-        if (mouseXRight >= 175 && mouseXRight <= 192 && mouseY >= 100 && mouseY <= 110) {
-            clicked = true;
-            //TODO: Increase the Page Number
+        if(bookData.showArrows || canEdit) {
+            if (mouseX >= -192 && mouseX <= -174 && mouseY >= 100 && mouseY <= 110) {
+                clicked = true;
+            }
+    
+            if (mouseX >= 175 && mouseX <= 192 && mouseY >= 100 && mouseY <= 110) {
+                clicked = true;
+            }
         }
 
         if (clicked) {
@@ -171,7 +175,7 @@ public class GuiDesigner extends GuiScreen {
     public void handleMouseInput() {
         int x = Mouse.getEventX() * this.width / this.mc.displayWidth;
         int y = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
-        mouseXRight = x - (this.width / 2);
+        mouseX = x - (this.width / 2);
         mouseY = y - (ySize / 2);
 
         super.handleMouseInput();

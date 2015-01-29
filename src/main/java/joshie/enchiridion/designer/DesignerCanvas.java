@@ -3,7 +3,6 @@ package joshie.enchiridion.designer;
 import java.util.ArrayList;
 
 import joshie.enchiridion.designer.features.Feature;
-import joshie.enchiridion.designer.gui.GuiDesigner;
 
 import com.google.gson.annotations.Expose;
 

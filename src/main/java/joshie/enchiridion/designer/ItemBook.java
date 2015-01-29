@@ -19,6 +19,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 public class ItemBook extends Item {
+    public static final int NORMAL_BOOK = 0;
+    
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         BookData data = getData(stack);
