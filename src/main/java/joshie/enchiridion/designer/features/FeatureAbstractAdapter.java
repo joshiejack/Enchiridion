@@ -1,11 +1,10 @@
 /** FROM: http://ovaraksin.blogspot.co.uk/2011/05/json-with-gson-and-abstract-classes.html **/
 
-package joshie.enchiridion.designer;
+package joshie.enchiridion.designer.features;
  
 import java.lang.reflect.Type;
 
 import joshie.enchiridion.EInfo;
-import joshie.enchiridion.designer.features.Feature;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

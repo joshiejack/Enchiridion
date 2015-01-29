@@ -11,12 +11,13 @@ import static org.lwjgl.opengl.GL11.GL_BLEND;
 import java.util.ArrayList;
 
 import joshie.enchiridion.api.IWikiMode;
-import joshie.enchiridion.designer.FeatureAbstractAdapter;
 import joshie.enchiridion.designer.features.Feature;
+import joshie.enchiridion.designer.features.FeatureAbstractAdapter;
 import joshie.enchiridion.library.GuiLibrary;
 import joshie.enchiridion.library.GuiShelves;
 import joshie.enchiridion.wiki.data.WikiData;
 import joshie.enchiridion.wiki.elements.Element;
+import joshie.enchiridion.wiki.elements.ElementAbstractAdapter;
 import joshie.enchiridion.wiki.elements.ElementItem;
 import joshie.enchiridion.wiki.gui.GuiBackground;
 import joshie.enchiridion.wiki.gui.GuiCanvas;
