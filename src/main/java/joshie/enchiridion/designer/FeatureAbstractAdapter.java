@@ -5,7 +5,7 @@ package joshie.enchiridion.designer;
 import java.lang.reflect.Type;
 
 import joshie.enchiridion.EInfo;
-import joshie.enchiridion.wiki.elements.Element;
+import joshie.enchiridion.designer.features.Feature;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -16,9 +16,9 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
  
-public class FeatureAbstractAdapter implements JsonSerializer<Element>, JsonDeserializer<Element> {
+public class FeatureAbstractAdapter implements JsonSerializer<Feature>, JsonDeserializer<Feature> {
     @Override
-    public JsonElement serialize(Element src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(Feature src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject result = new JsonObject();
         result.add("type", new JsonPrimitive(src.getClass().getSimpleName()));
         result.add("properties", context.serialize(src, src.getClass()));
@@ -27,7 +27,7 @@ public class FeatureAbstractAdapter implements JsonSerializer<Element>, JsonDese
     }
  
     @Override
-    public Element deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Feature deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         String type = jsonObject.get("type").getAsString();
         JsonElement element = jsonObject.get("properties");

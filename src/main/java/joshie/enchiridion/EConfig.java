@@ -7,9 +7,10 @@ import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Level;
 
 public class EConfig {
-    public static boolean ENABLE_BOOKS = true;
+    public static boolean GEN_EXAMPLE_BOOK;
+    public static boolean ENABLE_BOOKS;
 	public static String DEFAULT_DIR = "";
-    public static boolean EDIT_ENABLED = true;
+    public static boolean EDIT_ENABLED;
     private static ArrayList<String> colors = new ArrayList();
     private static final String[] default_colors = new String[] {   "000000", "000080", "00008B", "0000CD",
         "0000FF", "006400", "080000", "008080", "008B8B", "00BFFF", "00CED1", "00FA9A", "00FF00", "00FF7F",
@@ -34,6 +35,7 @@ public class EConfig {
                     "This is a list of the colours to show up in edit mode by default").getStringList();
             ENABLE_BOOKS = config.get("Settings", "Enable Book Item", true).getBoolean();
             EDIT_ENABLED = config.get("Settings", "Enable Wiki Editing", true).getBoolean(true);
+            GEN_EXAMPLE_BOOK = config.get("Settings", "Generate Example Book", true).getBoolean(true);
             DEFAULT_DIR = config.get("Settings", "Default Save Folder", "").getString();
             for(String color: color_list) {
                 addColor(color);
