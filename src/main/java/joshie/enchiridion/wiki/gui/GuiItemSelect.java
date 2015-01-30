@@ -8,45 +8,22 @@ import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import joshie.enchiridion.api.IGuiDisablesMenu;
 import joshie.enchiridion.api.IItemSelectable;
 import joshie.enchiridion.api.ITextEditable;
-import joshie.enchiridion.helpers.ClientHelper;
+import joshie.enchiridion.helpers.ItemHelper;
 import joshie.enchiridion.wiki.WikiHelper;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class GuiItemSelect extends GuiExtension implements ITextEditable, IGuiDisablesMenu {
     public static IItemSelectable selectable = null;
-    private static ArrayList<ItemStack> items;
     private static ArrayList<ItemStack> sorted;
     private static String search = "";
     private static int position;
 
     public GuiItemSelect() {
-        /** On creation, create our lovely items list */
-        items = new ArrayList();
-        for (ItemStack stack : ClientHelper.getPlayer().inventory.mainInventory) {
-            if (stack != null) {
-                items.add(stack);
-            }
-        }
-
-        Iterator iterator = Item.itemRegistry.iterator();
-        while (iterator.hasNext()) {
-            Item item = (Item) iterator.next();
-
-            if (item == null) {
-                continue;
-            }
-
-            for (CreativeTabs tab : item.getCreativeTabs()) {
-                item.getSubItems(item, tab, items);
-            }
-        }
+        ItemHelper.addInventory();
     }
     
     public static void select(IItemSelectable selectable) {
@@ -63,11 +40,11 @@ public class GuiItemSelect extends GuiExtension implements ITextEditable, IGuiDi
 
     public void updateSearch() {
         if (search == null || search.equals("")) {
-            sorted = new ArrayList(items);
+            sorted = new ArrayList(ItemHelper.items);
         } else {
             position = 0;
             sorted = new ArrayList();
-            for (ItemStack stack : items) {
+            for (ItemStack stack : ItemHelper.items) {
                 if (stack != null && stack.getItem() != null) {
                     if (stack.getDisplayName().toLowerCase().contains(search.toLowerCase())) {
                         sorted.add(stack);

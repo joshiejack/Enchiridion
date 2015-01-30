@@ -107,11 +107,12 @@ public abstract class Feature {
                 prevY = y;
                 setSelected();
             } else {
-                if (isSelected) {
+                if (isSelected && x >= 0) {
                     clearSelected();
-                }
+                    
 
-                isSelected = false;
+                    isSelected = false;
+                }
             }
         }
     }
@@ -158,5 +159,11 @@ public abstract class Feature {
     //Do nothing by default
     public void keyTyped(char character, int key) {
         // TODO Auto-generated method stub
+    }
+
+    
+    public void scroll(boolean scrolledDown) {
+        // TODO Auto-generated method stub
+        
     }
 }

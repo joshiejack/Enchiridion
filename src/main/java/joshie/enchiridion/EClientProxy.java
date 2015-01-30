@@ -2,6 +2,7 @@ package joshie.enchiridion;
 
 import static joshie.enchiridion.wiki.WikiHandler.wiki;
 import joshie.enchiridion.helpers.ClientHelper;
+import joshie.enchiridion.helpers.ItemHelper;
 import joshie.enchiridion.wiki.WikiFont;
 import joshie.enchiridion.wiki.WikiHandler;
 import net.minecraft.client.Minecraft;
@@ -30,5 +31,7 @@ public class EClientProxy extends ECommonProxy {
         }
         
         ((IReloadableResourceManager)mc.getResourceManager()).registerReloadListener(font);
+        
+        ItemHelper.init();
     }
 }

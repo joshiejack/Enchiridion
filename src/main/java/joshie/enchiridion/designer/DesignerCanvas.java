@@ -63,4 +63,10 @@ public class DesignerCanvas {
             selected = null;
         }
     }
+
+    public void scroll(boolean scrolledDown) {
+        for(Feature feature: features) {
+            feature.scroll(scrolledDown);
+        }
+    }
 }
