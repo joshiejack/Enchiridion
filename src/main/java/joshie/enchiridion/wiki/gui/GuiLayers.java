@@ -1,4 +1,5 @@
 package joshie.enchiridion.wiki.gui;
+
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
 import static joshie.enchiridion.wiki.WikiHelper.getPage;
 import static joshie.enchiridion.wiki.WikiHelper.horizontalGradient;
@@ -9,6 +10,7 @@ import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 import java.util.ArrayList;
 
 import joshie.enchiridion.ETranslate;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.Element;
 
@@ -19,11 +21,11 @@ public class GuiLayers extends GuiExtension {
     public static void clear() {
         GuiLayers.SHOW_LAYERS = false;
     }
-    
+
     public static void setActive(boolean isEditMode) {
         GuiLayers.SHOW_LAYERS = isEditMode;
     }
-    
+
     @Override
     public void draw() {
         if (SHOW_LAYERS) {
@@ -55,7 +57,9 @@ public class GuiLayers extends GuiExtension {
                     ArrayList<Element> elements = getPage().getData().getComponents();
                     for (int i = layerPosition; i < Math.min(elements.size(), layerPosition + ((WikiHelper.getHeight() - 220) / 40)); i++) {
                         if (mouseY >= pageY + 80 + 38 && mouseY <= 80 + pageY + 80) {
-                            getPage().getData().moveUp(elements.get(i));
+                            if (ClientHelper.isShiftPressed()) {
+                                getPage().getData().moveDown(elements.get(i));
+                            } else getPage().getData().moveUp(elements.get(i));
                             break;
                         }
 

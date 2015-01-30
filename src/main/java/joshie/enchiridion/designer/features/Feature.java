@@ -34,14 +34,14 @@ public abstract class Feature {
         this.width = 50;
         this.height = 50;
     }
-    
+
     public Feature(Feature feature) {
         this.xPos = feature.xPos;
         this.yPos = feature.yPos;
         this.width = feature.width;
         this.height = feature.height;
     }
-    
+
     public String getName() {
         return this.getClass().getSimpleName();
     }
@@ -112,7 +112,6 @@ public abstract class Feature {
             } else {
                 if (isSelected && x >= 0) {
                     clearSelected();
-                    
 
                     isSelected = false;
                 }
@@ -159,12 +158,10 @@ public abstract class Feature {
 
     //Do nothing by default
     public void keyTyped(char character, int key) {
-        // TODO Auto-generated method stub
+        return;
     }
 
-    
     public void scroll(boolean scrolledDown) {
-        // TODO Auto-generated method stub
-        
+        return;
     }
 }

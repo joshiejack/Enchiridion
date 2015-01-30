@@ -39,6 +39,7 @@ import joshie.enchiridion.wiki.gui.popups.ConfirmDeletion;
 import joshie.enchiridion.wiki.gui.popups.ConfirmLocking;
 import joshie.enchiridion.wiki.gui.popups.PageEditAddition;
 import joshie.enchiridion.wiki.gui.popups.PageEditLink;
+import joshie.enchiridion.wiki.gui.popups.ResourceEdit;
 import joshie.enchiridion.wiki.gui.scrollbars.ScrollbarMenu;
 import joshie.enchiridion.wiki.gui.scrollbars.ScrollbarPage;
 import joshie.enchiridion.wiki.mode.SaveMode;
@@ -90,6 +91,7 @@ public class WikiHelper {
         wiki.add(new ConfirmAddition());
         wiki.add(new PageEditAddition());
         wiki.add(new PageEditLink());
+        wiki.add(new ResourceEdit());
 
         library = new ArrayList();
         library.add(new GuiBackground());

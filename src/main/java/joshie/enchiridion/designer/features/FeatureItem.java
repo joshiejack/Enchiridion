@@ -69,7 +69,6 @@ public class FeatureItem extends FeatureWithText {
 
         //Draw The Search stuff
         if (isSelected) {
-            //TODO: Display the Search Box with Text
             DesignerHelper.drawRect(-102, -55, -100, -37, 0xFFFFFFFF);
             DesignerHelper.drawRect(0, -55, 2, -37, 0xFFFFFFFF);
             DesignerHelper.drawRect(-102, -57, 2, -55, 0xFFFFFFFF);

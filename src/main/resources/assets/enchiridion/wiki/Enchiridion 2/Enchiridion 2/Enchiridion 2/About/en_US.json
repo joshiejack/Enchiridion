@@ -41,7 +41,7 @@
     {
       "type": "ElementImage",
       "properties": {
-        "path": "enchiridion:enchiridion_logo.png",
+        "path": "enchiridion:textures/wiki/enchiridion_logo.png:2.5",
         "x": 48,
         "y": -39,
         "width": 317,

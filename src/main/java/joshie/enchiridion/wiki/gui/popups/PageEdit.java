@@ -23,7 +23,7 @@ public abstract class PageEdit extends GuiExtension {
     public ITextEditable cat = new AbstractTextEdit("Enchiridion 2");
     public ITextEditable page = new AbstractTextEdit("");
     
-    private static class AbstractTextEdit implements ITextEditable {
+    public static class AbstractTextEdit implements ITextEditable {
         private String text = "";
         
         public AbstractTextEdit(String theDefault) {

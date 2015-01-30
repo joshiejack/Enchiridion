@@ -39,6 +39,7 @@ enchiridion.confirm.lock.description=Are you sure, that you wish to lock this ar
 enchiridion.pageedit.addition.title=Add Article
 enchiridion.pageedit.addition.description=Do you wish to add the article: %s, %s, %s, %s?
 enchiridion.pageedit.link.title=Edit Link
+enchiridion.pageedit.link.image=Edit Resource
 enchiridion.mod=Mod
 enchiridion.tab=Tab
 enchiridion.category=Category
