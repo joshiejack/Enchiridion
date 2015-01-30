@@ -1,6 +1,7 @@
 package joshie.enchiridion;
 
 import static joshie.enchiridion.wiki.WikiHandler.wiki;
+import joshie.enchiridion.designer.BookIconPatcher;
 import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.ItemHelper;
 import joshie.enchiridion.wiki.WikiFont;
@@ -19,7 +20,12 @@ public class EClientProxy extends ECommonProxy {
     public static WikiFont font;
 
     @Override
-    public void setupClient() {
+    public void preClient() {
+        MinecraftForge.EVENT_BUS.register(new BookIconPatcher());
+    }
+
+    @Override
+    public void postClient() {
         MinecraftForge.EVENT_BUS.register(new WikiHandler());
         FMLCommonHandler.instance().bus().register(new WikiHandler());
         wiki = new KeyBinding("enchiridion.key.wiki", Keyboard.KEY_F8, "key.categories.misc");
@@ -29,9 +35,9 @@ public class EClientProxy extends ECommonProxy {
             font.setUnicodeFlag(mc.func_152349_b());
             font.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
         }
-        
-        ((IReloadableResourceManager)mc.getResourceManager()).registerReloadListener(font);
-        
+
+        ((IReloadableResourceManager) mc.getResourceManager()).registerReloadListener(font);
+
         ItemHelper.init();
     }
 }

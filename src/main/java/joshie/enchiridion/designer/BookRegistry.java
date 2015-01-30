@@ -37,6 +37,18 @@ public class BookRegistry {
         public boolean showArrows = true;
         @Expose
         public boolean showNumber = true;
+        @Expose
+        public String iconPass1 = "";
+        @Expose
+        public String iconPass2 = "";
+        @Expose
+        public boolean iconColorisePass1;
+        @Expose
+        public boolean iconColorisePass2;
+        @Expose
+        public int iconColorPass1;
+        @Expose
+        public int iconColorPass2;
 
         public BookData(String unique, String en_US, List info, int color) {
             this.uniqueName = unique;

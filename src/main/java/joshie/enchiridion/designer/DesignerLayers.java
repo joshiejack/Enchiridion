@@ -70,9 +70,7 @@ public class DesignerLayers {
         setPosition(element, Math.max(0, getKey(element) - 1));
     }
     
-    public void moveDown(Feature element) {
-        System.out.println("DOWN");
-        
+    public void moveDown(Feature element) {        
         setPosition(element, Math.min(DesignerHelper.getGui().canvas.features.size() - 1, getKey(element) + 1));
     }
     

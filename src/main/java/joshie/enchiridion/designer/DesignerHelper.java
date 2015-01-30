@@ -3,6 +3,7 @@ package joshie.enchiridion.designer;
 import static joshie.enchiridion.helpers.OpenGLHelper.disable;
 import static joshie.enchiridion.helpers.OpenGLHelper.enable;
 import static joshie.enchiridion.helpers.OpenGLHelper.end;
+import static joshie.enchiridion.helpers.OpenGLHelper.scaleAll;
 import static joshie.enchiridion.helpers.OpenGLHelper.start;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.glScalef;
@@ -17,7 +18,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.Enchiridion;
-import joshie.enchiridion.designer.BookRegistry.BookData;
 import joshie.enchiridion.designer.features.FeatureImage;
 import joshie.enchiridion.designer.features.FeatureItem;
 import joshie.enchiridion.helpers.ClientHelper;
@@ -53,6 +53,13 @@ public class DesignerHelper {
 
     public static void drawSplitString(String text, int left, int top, int wrap, int color) {
         EClientProxy.font.drawSplitString(text, x + left, y + top, wrap, color);
+    }
+
+    public static void drawSplitScaledString(String text, int left, int top, int wrap, int color, float scale) {
+        start();
+        scaleAll(scale);
+        EClientProxy.font.drawSplitString(text, (int) ((x + left) / scale), (int) ((y + top) / scale), wrap, color);
+        end();
     }
 
     public static void drawStack(ItemStack stack, int left, int top, float size) {
