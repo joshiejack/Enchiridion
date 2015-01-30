@@ -93,7 +93,7 @@ public class ElementImage extends Element {
     public ElementImage setToDefault() {
         this.width = 100;
         this.height = 100;
-        this.path = "enchiridion:textures/wiki/enchiridion_logo.png";
+        this.path = "enchiridion:textures/wiki/enchiridion_logo.png:2.5";
         loadImage(WikiHelper.getPage());
         return this;
     }
