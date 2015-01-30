@@ -23,6 +23,12 @@ public class DesignerCanvas {
     private boolean white;
 
     public Feature selected;
+    public DesignerLayers layers;
+    
+    public DesignerLayers getLayers() {
+        if(layers == null) layers = new DesignerLayers();
+        return layers;
+    }
 
     //Draws all the features on the canvas
     public void draw(int x, int y) {
@@ -47,11 +53,19 @@ public class DesignerCanvas {
             DesignerHelper.drawRect(-100, -37, 0, -39, 0xFFFFFFFF);
             DesignerHelper.drawSplitString(getText(), -95, -50, 250, 0xFFFFFFFF);
         }
+        
+        if (DesignerHelper.getGui().canEdit) {
+            getLayers().draw(DesignerHelper.getGui().mouseX, DesignerHelper.getGui().mouseY);
+        }
     }
 
-    public void clicked(int x, int y, boolean isEditMode) {
+    public void clicked(int x, int y) {
         for (Feature feature : features) {
-            feature.click(x, y, isEditMode);
+            feature.click(x, y);
+        }
+        
+        if (DesignerHelper.getGui().canEdit) {
+            getLayers().clicked(x, y);
         }
     }
 
@@ -77,7 +91,7 @@ public class DesignerCanvas {
                     remove = feature;
                 }
             }
-            
+
             if (feature.isSelected) {
                 noneSelected = false;
             }
@@ -112,6 +126,10 @@ public class DesignerCanvas {
     public void scroll(boolean scrolledDown) {
         for (Feature feature : features) {
             feature.scroll(scrolledDown);
+        }
+        
+        if (DesignerHelper.getGui().canEdit) {
+            getLayers().scroll(scrolledDown);
         }
     }
 

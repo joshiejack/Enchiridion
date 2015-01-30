@@ -1,13 +1,10 @@
 package joshie.enchiridion.designer.features;
 
-import joshie.enchiridion.designer.DesignerHelper;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ChatAllowedCharacters;
 
-import com.google.gson.annotations.Expose;
-
 public abstract class FeatureWithText extends Feature {
-    private int position;
+    protected int position;
     private int tick;
     private boolean white;
     
@@ -20,7 +17,7 @@ public abstract class FeatureWithText extends Feature {
     public abstract String getTextField();
     public abstract void setTextField(String str);
     
-    public String getText() {
+    public String getText(String field) {
         if (isSelected) {
             tick++;
             if (tick % 60 == 0) {
@@ -32,11 +29,15 @@ public abstract class FeatureWithText extends Feature {
             }
 
             if (white) {
-                return new StringBuilder(getTextField()).insert(Math.min(position, getTextField().length()), "[*cursor*]").toString();
+                return new StringBuilder(field).insert(Math.min(position, field.length()), "[*cursor*]").toString();
             } else {
-                return new StringBuilder(getTextField()).insert(Math.min(position, getTextField().length()), "[*/cursor*]").toString();
+                return new StringBuilder(field).insert(Math.min(position, field.length()), "[*/cursor*]").toString();
             }
         } else return getTextField();
+    }
+    
+    public String getText() {
+        return getText(getTextField());
     }
 
     private void cursorLeft(int count) {
@@ -92,11 +93,5 @@ public abstract class FeatureWithText extends Feature {
                 add(Character.toString(character));
             }
         }
-    }
-
-    @Override
-    public void loadEditor() {
-        // DRAW TEXT+++, TEXT---, BBCODE MODE
-
     }
 }

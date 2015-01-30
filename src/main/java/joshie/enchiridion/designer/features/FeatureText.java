@@ -1,35 +1,56 @@
 package joshie.enchiridion.designer.features;
 
 import joshie.enchiridion.designer.DesignerHelper;
-import joshie.enchiridion.helpers.OpenGLHelper;
 
 import com.google.gson.annotations.Expose;
 
-public class FeatureText extends FeatureWithText {
+public class FeatureText extends FeatureColorable {
     @Expose
     private String text = "Lorem ipsum";
     @Expose
-    private int color = 4210752;
-    @Expose
     private int wrap = 500;
+
+    private boolean editingText;
 
     @Override
     public void drawFeature() {
-        DesignerHelper.drawSplitString(getText(), left, top, wrap, color);
+        super.drawFeature();
+
+        DesignerHelper.drawSplitString(getText(), left, top, wrap, colorI);
+    }
+    
+    @Override
+    public String getColorText() {
+        return !editingText? getText(color) : color;
+    }
+    
+    @Override
+    public String getText() {
+        return editingText? getText(text): text;
     }
 
     @Override
     public String getTextField() {
-        return this.text;
+        return editingText ? text : super.getTextField();
     }
 
     @Override
     public void setTextField(String str) {
-        this.text = str;
+        if (editingText) {
+            this.text = str;
+        } else super.setTextField(str);
     }
 
     @Override
-    public void loadEditor() {
-        // TODO: DRAW TEXT+++, TEXT---, BBCODE MODE
+    public void click(int mouseX, int mouseY) {
+        if (DesignerHelper.getGui().canEdit) {
+            if (mouseX <= -10) {
+                editingText = false;
+            } else editingText = true;
+            
+            position = getTextField().length();
+        }
+
+        super.click(mouseX, mouseY);
     }
 }

@@ -225,7 +225,7 @@ public class GuiDesigner extends GuiScreen {
         super.mouseClicked(par1, par2, par3);
 
         if (canvas != null) {
-            canvas.clicked(mouseX, mouseY, canEdit);
+            canvas.clicked(mouseX, mouseY);
         }
 
         boolean clicked = false;

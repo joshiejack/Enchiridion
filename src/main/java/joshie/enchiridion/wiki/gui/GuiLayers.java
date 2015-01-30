@@ -14,7 +14,6 @@ import joshie.enchiridion.wiki.elements.Element;
 
 public class GuiLayers extends GuiExtension {
     private static boolean SHOW_LAYERS = false;
-    private static ArrayList<Element> visibleElementLayers;
     private static int layerPosition = 0;
 
     public static void clear() {

@@ -2,7 +2,6 @@ package joshie.enchiridion.designer.features;
 
 import static joshie.enchiridion.designer.DesignerHelper.drawRect;
 import static joshie.enchiridion.designer.DesignerHelper.getGui;
-import joshie.enchiridion.helpers.ClientHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.RenderItem;
 
@@ -42,6 +41,10 @@ public abstract class Feature {
         this.width = feature.width;
         this.height = feature.height;
     }
+    
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 
     public void recalculate(int x, int y) {
         left = xPos;
@@ -74,7 +77,7 @@ public abstract class Feature {
         getGui().canvas.selected = this;
     }
 
-    public abstract void drawFeature();
+    public void drawFeature() {}
 
     public boolean isOverFeature(int x, int y) {
         return x >= left && x <= right && y >= top && y <= bottom;
@@ -90,9 +93,9 @@ public abstract class Feature {
         return false;
     }
 
-    public void click(int x, int y, boolean isEditMode) {
+    public void click(int x, int y) {
         //If it is editmode let's select or deselect this item whenever we click on it
-        if (isEditMode) {
+        if (getGui().canEdit) {
             //If you click inside the box, then we will set the held to true
             if (isOverFeature(x, y) && noOtherSelected()) {
                 isHeld = true;
@@ -153,8 +156,6 @@ public abstract class Feature {
             prevY = y;
         }
     }
-
-    public abstract void loadEditor();
 
     //Do nothing by default
     public void keyTyped(char character, int key) {

@@ -73,10 +73,4 @@ public class FeatureImage extends Feature {
             loadImage(path);
         }
     }
-
-    @Override
-    public void loadEditor() {
-        // DRAW Image Selection
-
-    }
 }

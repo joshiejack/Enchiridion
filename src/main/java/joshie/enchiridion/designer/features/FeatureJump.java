@@ -53,8 +53,8 @@ public class FeatureJump extends FeatureWithText {
     }
 
     @Override
-    public void click(int x, int y, boolean isEditMode) {
-        if ((isEditMode && ClientHelper.isShiftPressed()) || !isEditMode) {
+    public void click(int x, int y) {
+        if ((DesignerHelper.getGui().canEdit && ClientHelper.isShiftPressed()) || !DesignerHelper.getGui().canEdit) {
             if (isOverFeature(x, y)) {
                 isSelected = false;
                 clearSelected();
@@ -73,13 +73,6 @@ public class FeatureJump extends FeatureWithText {
             return;
         }
 
-        super.click(x, y, isEditMode);
-
-    }
-
-    @Override
-    public void loadEditor() {
-        // TODO Auto-generated method stub
-
+        super.click(x, y);
     }
 }

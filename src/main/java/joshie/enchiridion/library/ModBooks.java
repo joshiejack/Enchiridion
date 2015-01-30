@@ -92,6 +92,7 @@ public class ModBooks {
 
     /** Default books in the json file **/
     public static ModBooks getModBooks(ModBooks data) {
+        data.addBook(new ModBookData("AWWayofTime", "itemBloodMagicBook", 0, "default"));
         data.addBook(new ModBookData("Botania", "lexicon", 0, "switch"));
         data.addBook(new ModBookData("HardcoreQuesting", "quest_book", 0, "network"));
         data.addBook(new ModBookData("factorization", "docbook", 0, "default"));

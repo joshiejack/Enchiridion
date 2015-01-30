@@ -102,8 +102,8 @@ public class FeatureItem extends FeatureWithText {
     }
 
     @Override
-    public void click(int x, int y, boolean isEditMode) {
-        if (isEditMode && isSelected) {
+    public void click(int x, int y) {
+        if (DesignerHelper.getGui().canEdit && isSelected) {
             int j = 0, k = 0;
             for (int i = position; i < position + 80; i++) {
                 if (i >= 0 && i < sorted.size()) {
@@ -123,7 +123,7 @@ public class FeatureItem extends FeatureWithText {
             }
         }
 
-        super.click(x, y, isEditMode);
+        super.click(x, y);
     }
     
     @Override
@@ -156,7 +156,4 @@ public class FeatureItem extends FeatureWithText {
             }
         }
     }
-
-    @Override
-    public void loadEditor() {}
 }

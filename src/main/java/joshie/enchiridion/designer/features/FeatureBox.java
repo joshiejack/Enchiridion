@@ -2,20 +2,11 @@ package joshie.enchiridion.designer.features;
 
 import joshie.enchiridion.designer.DesignerHelper;
 
-import com.google.gson.annotations.Expose;
-
-public class FeatureBox extends Feature {
-    @Expose
-    private int color = 0xFFFFFFFF;
-
+public class FeatureBox extends FeatureColorable {
     @Override
     public void drawFeature() {
-        DesignerHelper.drawRect(left, top, right, bottom, 0xFFFFFFFF);
-    }
-
-    @Override
-    public void loadEditor() {
-        // TODO Draw Colour Selection for Boxes
+        super.drawFeature();
         
+        DesignerHelper.drawRect(left, top, right, bottom, colorI);
     }
 }
