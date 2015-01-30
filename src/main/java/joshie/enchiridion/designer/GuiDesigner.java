@@ -18,9 +18,9 @@ import joshie.enchiridion.designer.features.FeatureBox;
 import joshie.enchiridion.designer.features.FeatureImage;
 import joshie.enchiridion.designer.features.FeatureItem;
 import joshie.enchiridion.designer.features.FeatureJump;
+import joshie.enchiridion.designer.features.FeatureResource;
 import joshie.enchiridion.designer.features.FeatureText;
 import joshie.enchiridion.wiki.WikiHelper;
-import joshie.enchiridion.wiki.gui.GuiExtension;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -119,7 +119,7 @@ public class GuiDesigner extends GuiScreen {
                     }
                     break;
                 case IMAGE:
-                    canvas.features.add(new FeatureImage());
+                    canvas.features.add(new FeatureResource());
                     break;
                 case JUMP:
                     canvas.features.add(new FeatureJump());

@@ -71,7 +71,7 @@ public class ElementImage extends Element {
 			}
 		} else {
 			String[] split = path.split(":");
-			resource = new ResourceLocation(split[0], "textures/wiki" + separator + split[1]);
+			resource = new ResourceLocation(split[0], split[1]);
 			try {
 				BufferedImage image = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(resource).getInputStream());
 				img_width = (int) (image.getWidth() / 2.5);
@@ -89,7 +89,7 @@ public class ElementImage extends Element {
     public ElementImage setToDefault() {
     	this.width = 100;
         this.height = 100;
-    	this.path = "enchiridion:enchiridion_logo.png";
+    	this.path = "enchiridion:textures/wiki/enchiridion_logo.png";
     	loadImage(WikiHelper.getPage());
         return this;
     }
