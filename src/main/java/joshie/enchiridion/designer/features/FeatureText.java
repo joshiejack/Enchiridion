@@ -19,9 +19,9 @@ public class FeatureText extends FeatureColorable {
     public void drawFeature() {
         super.drawFeature();
 
-        if (wrap >= 1) {
+        if (wrap >= 50) {
             DesignerHelper.drawSplitScaledString(getText(), left, top, wrap, colorI, size);
-        } else DesignerHelper.drawSplitScaledString(getText(), left, top, Math.max(1, (int) ((width * 2) / size)) - 40, colorI, size);
+        } else DesignerHelper.drawSplitScaledString(getText(), left, top, Math.max(50, (int) ((width * 2) / size)) - 40, colorI, size);
     }
 
     @Override
