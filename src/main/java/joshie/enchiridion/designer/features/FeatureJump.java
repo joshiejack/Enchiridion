@@ -26,7 +26,7 @@ public class FeatureJump extends FeatureWithText {
     }
 
     @Override
-    public void drawFeature() {        
+    public void drawFeature() {
         if (getGui().canEdit) {
             drawRect(left - 4, top - 4, right, top, 0xFF000000);
             drawRect(right, top - 4, right + 4, bottom, 0xFF000000);
@@ -45,22 +45,24 @@ public class FeatureJump extends FeatureWithText {
     @Override
     public void click(int x, int y, boolean isEditMode) {
         if ((isEditMode && ClientHelper.isShiftPressed()) || !isEditMode) {
-            isSelected = false;
-            clearSelected();
-            
-            if (jumpTo != null) {
-                try {
-                    int jump = Integer.parseInt(jumpTo) - 1;
-                    DesignerHelper.getGui().setPage(jump);
-                } catch (Exception e) {
-                    DesignerHelper.getGui().setPage(jumpTo);
-                    clearSelected();
+            if (isOverFeature(x, y)) {
+                isSelected = false;
+                clearSelected();
+
+                if (jumpTo != null) {
+                    try {
+                        int jump = Integer.parseInt(jumpTo) - 1;
+                        DesignerHelper.getGui().setPage(jump);
+                    } catch (Exception e) {
+                        DesignerHelper.getGui().setPage(jumpTo);
+                        clearSelected();
+                    }
                 }
             }
-            
+
             return;
         }
-        
+
         super.click(x, y, isEditMode);
 
     }
