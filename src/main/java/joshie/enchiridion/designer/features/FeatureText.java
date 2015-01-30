@@ -21,7 +21,7 @@ public class FeatureText extends FeatureColorable {
 
         if (wrap >= 1) {
             DesignerHelper.drawSplitScaledString(getText(), left, top, wrap, colorI, size);
-        } else DesignerHelper.drawSplitScaledString(getText(), left, top, (int) ((width * 2) / size) + 4, colorI, size);
+        } else DesignerHelper.drawSplitScaledString(getText(), left, top, Math.max(1, (int) ((width * 2) / size)) - 40, colorI, size);
     }
 
     @Override
