@@ -95,8 +95,7 @@ public class GuiDesigner extends GuiScreen {
             buttonList.add(new ButtonEditBook(ITEM, x + 140, y - 18, ETranslate.translate("item")));
             buttonList.add(new ButtonEditBook(INSERT, x + 200, y - 18, ETranslate.translate("insert")));
             buttonList.add(new ButtonEditBook(IMAGE, x + 260, y - 18, ETranslate.translate("image")));
-            buttonList.add(new ButtonEditBook(EXTRA, x + 320, y - 18, ETranslate.translate("edit")));
-            buttonList.add(new ButtonEditBook(JUMP, x + 380, y - 18, ETranslate.translate("jump")));
+            buttonList.add(new ButtonEditBook(JUMP, x + 320, y - 18, ETranslate.translate("jump")));
         }
     }
 
@@ -121,11 +120,6 @@ public class GuiDesigner extends GuiScreen {
                     break;
                 case IMAGE:
                     canvas.features.add(new FeatureImage());
-                case EXTRA:
-                    if (canvas.selected != null) {
-                        canvas.selected.loadEditor();
-                    }
-                    break;
                 case JUMP:
                     canvas.features.add(new FeatureJump());
                     break;
@@ -257,7 +251,7 @@ public class GuiDesigner extends GuiScreen {
     public void setPage(String text) {
         for (int i = 0; i < bookData.book.size(); i++) {
             DesignerCanvas canvas = bookData.book.get(i);
-            if (canvas.pageName != null && canvas.pageName.equals(text)) {
+            if (canvas.pageName != null && !canvas.pageName.equals("") && canvas.pageName.equals(text)) {
                 setPage(i);
             }
         }

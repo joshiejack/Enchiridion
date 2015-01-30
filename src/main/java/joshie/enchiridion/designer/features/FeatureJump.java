@@ -40,6 +40,17 @@ public class FeatureJump extends FeatureWithText {
                 image.drawFeature();
             }
         }
+        
+      //Draw The Search stuff
+        if (isSelected) {
+            //TODO: Display the Data for the jump
+            DesignerHelper.drawRect(-102, -55, -100, -37, 0xFFFFFFFF);
+            DesignerHelper.drawRect(0, -55, 2, -37, 0xFFFFFFFF);
+            DesignerHelper.drawRect(-102, -57, 2, -55, 0xFFFFFFFF);
+            DesignerHelper.drawRect(-100, -55, 0, -37, 0xFF000000);
+            DesignerHelper.drawRect(-100, -37, 0, -39, 0xFFFFFFFF);
+            DesignerHelper.drawSplitString(getText(), -95, -50, 250, 0xFFFFFFFF);
+        }
     }
 
     @Override
