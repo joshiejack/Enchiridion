@@ -36,6 +36,10 @@ public class FeatureImage extends Feature {
         height = 100;
         path = "enchiridion:enchiridion_logo.png";
     }
+    
+    public FeatureImage(Feature feature) {
+        super(feature);
+    }
 
     public FeatureImage setPath(String path) {
         WikiPage page = WikiHelper.getPage();

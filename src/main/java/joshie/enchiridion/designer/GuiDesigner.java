@@ -17,6 +17,7 @@ import joshie.enchiridion.designer.BookRegistry.BookData;
 import joshie.enchiridion.designer.features.FeatureBox;
 import joshie.enchiridion.designer.features.FeatureImage;
 import joshie.enchiridion.designer.features.FeatureItem;
+import joshie.enchiridion.designer.features.FeatureJump;
 import joshie.enchiridion.designer.features.FeatureText;
 import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.client.gui.GuiButton;
@@ -75,7 +76,8 @@ public class GuiDesigner extends GuiScreen {
     private static final int INSERT = 3;
     private static final int IMAGE = 4;
     private static final int EXTRA = 5;
-    
+    private static final int JUMP = 6;
+
     private static boolean SHOW_EDIT = false;
 
     @Override
@@ -86,13 +88,14 @@ public class GuiDesigner extends GuiScreen {
         if (canEdit) {
             int x = (width - 430) / 2;
             int y = (height - ySize) / 2;
-            
+
             buttonList.add(new ButtonEditBook(TEXT, x + 20, y - 18, ETranslate.translate("text")));
             buttonList.add(new ButtonEditBook(BOX, x + 80, y - 18, ETranslate.translate("box")));
             buttonList.add(new ButtonEditBook(ITEM, x + 140, y - 18, ETranslate.translate("item")));
             buttonList.add(new ButtonEditBook(INSERT, x + 200, y - 18, ETranslate.translate("insert")));
             buttonList.add(new ButtonEditBook(IMAGE, x + 260, y - 18, ETranslate.translate("image")));
             buttonList.add(new ButtonEditBook(EXTRA, x + 320, y - 18, ETranslate.translate("edit")));
+            buttonList.add(new ButtonEditBook(JUMP, x + 380, y - 18, ETranslate.translate("jump")));
         }
     }
 
@@ -111,17 +114,19 @@ public class GuiDesigner extends GuiScreen {
                     break;
                 case INSERT:
                     FeatureImage image = DesignerHelper.loadImage(bookData.uniqueName.replace(":", "_").replace(".", "_"));
-                    if(image != null) {
+                    if (image != null) {
                         canvas.features.add(image);
                     }
                     break;
                 case IMAGE:
                     canvas.features.add(new FeatureImage());
                 case EXTRA:
-                    if(canvas.selected != null) {
+                    if (canvas.selected != null) {
                         canvas.selected.loadEditor();
                     }
-                    
+                    break;
+                case JUMP:
+                    canvas.features.add(new FeatureJump());
                     break;
             }
         }
@@ -143,13 +148,13 @@ public class GuiDesigner extends GuiScreen {
             }
         }
     }
-    
+
     @Override
     protected void keyTyped(char character, int key) {
-        if(canEdit && canvas != null) {
+        if (canEdit && canvas != null) {
             canvas.keyTyped(character, key);
         }
-        
+
         super.keyTyped(character, key);
     }
 
@@ -210,12 +215,12 @@ public class GuiDesigner extends GuiScreen {
 
         drawLeftPage(x, y);
         drawRightPage(x + 212, y);
-        
+
         //Draw Page
         if (canvas != null) {
             canvas.draw(x, y);
         }
-        
+
         super.drawScreen(i, j, f);
     }
 
@@ -244,24 +249,37 @@ public class GuiDesigner extends GuiScreen {
         }
 
         if (clicked) {
-            if (canEdit) {
-                new_page = Math.min(new_page, (EConfig.MAX_PAGES_PER_BOOK - 1)); //If in edit mode the max pages is the full max
-            } else new_page = Math.min(new_page, (bookData.book.size() - 1));
-
-            if (canEdit && new_page >= (EConfig.MAX_PAGES_PER_BOOK - 1)) new_page = 0;
-            else if (!canEdit && new_page >= bookData.book.size()) new_page = 0;
-
-            if (new_page < 0) {
-                new_page = bookData.book.size() - 1; //Go to the end of the book if we go too far left
-            } else new_page = Math.max(new_page, 0); //Never let it go below 0
-
-            page_number.put(bookData.uniqueName, new_page);
-            if (new_page >= bookData.book.size()) {
-                bookData.book.add(new DesignerCanvas()); //Add a new page if there
-            }
-
-            canvas = bookData.book.get(new_page);
+            setPage(new_page);
         }
+    }
+
+    public void setPage(String text) {
+        for (int i = 0; i < bookData.book.size(); i++) {
+            DesignerCanvas canvas = bookData.book.get(i);
+            if (canvas.pageName != null && canvas.pageName.equals(text)) {
+                setPage(i);
+            }
+        }
+    }
+
+    public void setPage(int new_page) {
+        if (canEdit) {
+            new_page = Math.min(new_page, (EConfig.MAX_PAGES_PER_BOOK - 1)); //If in edit mode the max pages is the full max
+        } else new_page = Math.min(new_page, (bookData.book.size() - 1));
+
+        if (canEdit && new_page >= (EConfig.MAX_PAGES_PER_BOOK - 1)) new_page = 0;
+        else if (!canEdit && new_page >= bookData.book.size()) new_page = 0;
+
+        if (new_page < 0) {
+            new_page = bookData.book.size() - 1; //Go to the end of the book if we go too far left
+        } else new_page = Math.max(new_page, 0); //Never let it go below 0
+
+        page_number.put(bookData.uniqueName, new_page);
+        if (new_page >= bookData.book.size()) {
+            bookData.book.add(new DesignerCanvas()); //Add a new page if there
+        }
+
+        canvas = bookData.book.get(new_page);
     }
 
     @Override

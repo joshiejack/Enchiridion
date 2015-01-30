@@ -35,6 +35,13 @@ public abstract class Feature {
         this.width = 50;
         this.height = 50;
     }
+    
+    public Feature(Feature feature) {
+        this.xPos = feature.xPos;
+        this.yPos = feature.yPos;
+        this.width = feature.width;
+        this.height = feature.height;
+    }
 
     public void recalculate(int x, int y) {
         left = xPos;
@@ -59,7 +66,7 @@ public abstract class Feature {
         return getGui().canvas.selected == null;
     }
 
-    private void clearSelected() {
+    public void clearSelected() {
         getGui().canvas.selected = null;
     }
 

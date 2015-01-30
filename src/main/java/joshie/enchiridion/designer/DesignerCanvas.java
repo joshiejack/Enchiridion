@@ -14,6 +14,9 @@ import com.google.gson.annotations.Expose;
 public class DesignerCanvas {
     @Expose
     public ArrayList<Feature> features = new ArrayList();
+    @Expose
+    public String pageName;
+    
     public Feature selected;
 
     //Draws all the features on the canvas
