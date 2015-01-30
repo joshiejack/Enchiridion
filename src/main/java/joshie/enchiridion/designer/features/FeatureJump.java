@@ -44,20 +44,25 @@ public class FeatureJump extends FeatureWithText {
 
     @Override
     public void click(int x, int y, boolean isEditMode) {
-        super.click(x, y, isEditMode);
-
         if ((isEditMode && ClientHelper.isShiftPressed()) || !isEditMode) {
+            isSelected = false;
+            clearSelected();
+            
             if (jumpTo != null) {
                 try {
-                    int jump = Integer.parseInt(jumpTo);
+                    int jump = Integer.parseInt(jumpTo) - 1;
                     DesignerHelper.getGui().setPage(jump);
-                    clearSelected();
                 } catch (Exception e) {
                     DesignerHelper.getGui().setPage(jumpTo);
                     clearSelected();
                 }
             }
+            
+            return;
         }
+        
+        super.click(x, y, isEditMode);
+
     }
 
     @Override

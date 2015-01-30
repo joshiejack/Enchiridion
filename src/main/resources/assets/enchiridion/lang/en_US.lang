@@ -45,6 +45,7 @@ enchiridion.category=Category
 enchiridion.page=Article
 enchiridion.edit.shift=Sneak to Open in Edit Mode
 enchiridion.edit.save=Autosaves when you close the GUI
+enchiridion.jump=Jump
 
 #Enchiridion WIKI pages Localisation
 wiki.enchiridion2=Enchiridion 2
