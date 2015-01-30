@@ -1,6 +1,7 @@
 package joshie.enchiridion.designer.features;
 
 import joshie.enchiridion.designer.DesignerHelper;
+import joshie.enchiridion.helpers.OpenGLHelper;
 
 import com.google.gson.annotations.Expose;
 

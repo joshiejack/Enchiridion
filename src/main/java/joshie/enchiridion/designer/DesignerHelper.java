@@ -56,6 +56,7 @@ public class DesignerHelper {
     }
 
     public static void drawStack(ItemStack stack, int left, int top, float size) {
+        GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glPushMatrix();
         GL11.glScalef(size, size, size);
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -70,6 +71,7 @@ public class DesignerHelper {
         RenderHelper.disableStandardItemLighting();
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
     }
 
     public static void drawImage(DynamicTexture texture, ResourceLocation resource, int left, int top, int right, int bottom) {
