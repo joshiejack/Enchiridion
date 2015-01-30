@@ -21,7 +21,7 @@ public class FeatureText extends FeatureColorable {
 
         if (wrap >= 50) {
             DesignerHelper.drawSplitScaledString(getText(), left, top, wrap, colorI, size);
-        } else DesignerHelper.drawSplitScaledString(getText(), left, top, Math.max(50, (int) ((width * 2) / size)) - 40, colorI, size);
+        } else DesignerHelper.drawSplitScaledString(getText(), left, top, Math.max(50, (int) ((width) / size) + 4), colorI, size);
     }
 
     @Override
@@ -64,10 +64,10 @@ public class FeatureText extends FeatureColorable {
         if (isSelected) {
             if (ClientHelper.isShiftPressed()) {
                 if (key == 78) {
-                    size = Math.min(15F, Math.max(1F, size + 0.1F));
+                    size = Math.min(15F, Math.max(0.5F, size + 0.1F));
                     return;
                 } else if (key == 74) {
-                    size = Math.min(15F, Math.max(1F, size - 0.1F));
+                    size = Math.min(15F, Math.max(0.5F, size - 0.1F));
                     return;
                 }
             }
