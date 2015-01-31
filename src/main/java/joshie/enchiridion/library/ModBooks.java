@@ -32,6 +32,7 @@ public class ModBooks {
 
     /** Default books in the json file **/
     public static ModBooks getModBooks(ModBooks data) {
+        data.addBook(new ModBookData("AgriCraft", "journal", 0, "default"));
         data.addBook(new ModBookData("AWWayofTime", "itemBloodMagicBook", 0, "default"));
         data.addBook(new ModBookData("Botania", "lexicon", 0, "switch"));
         data.addBook(new ModBookData("HardcoreQuesting", "quest_book", 0, "network"));
@@ -42,6 +43,7 @@ public class ModBooks {
         data.addBook(new ModBookData("Mariculture", "guide", 3, "switch"));
         data.addBook(new ModBookData("Mariculture", "guide", 4, "switch"));
         data.addBook(new ModBookData("OpenBlocks", "infoBook", 0, "default"));
+        data.addBook(new ModBookData("Steamcraft", "book", 0, "default"));
         data.addBook(new ModBookData("TConstruct", "manualBook", 0, "default"));
         data.addBook(new ModBookData("TConstruct", "manualBook", 1, "default"));
         data.addBook(new ModBookData("TConstruct", "manualBook", 2, "default"));

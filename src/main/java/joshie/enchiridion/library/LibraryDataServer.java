@@ -62,10 +62,12 @@ public class LibraryDataServer extends WorldSavedData {
         for (ModBookData book : books.books) { //Loop through the list of modadded books
             //If the mod is loaded add it's book to the default list
             if (Loader.isModLoaded(book.mod)) {
-                ItemStack stack = StackHelper.getStackFromString(book.stack);
-                if (stack != null && stack.getItem() != null) {
-                    storage.add(stack, book.type);
-                }
+                try {
+                    ItemStack stack = StackHelper.getStackFromString(book.stack);
+                    if (stack != null && stack.getItem() != null) {
+                        storage.add(stack, book.type);
+                    }
+                } catch (Exception e) {}
             }
         }
 
