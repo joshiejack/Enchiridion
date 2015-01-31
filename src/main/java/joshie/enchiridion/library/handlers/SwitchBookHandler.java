@@ -7,6 +7,11 @@ import net.minecraft.world.World;
 
 public class SwitchBookHandler implements IBookHandler {
     @Override
+    public String getName() {
+        return "switch";
+    }
+    
+    @Override
     public void handle(ItemStack stack, World world, EntityPlayer player) {
         ItemStack previous = player.getCurrentEquippedItem();
         if(previous != null) previous = previous.copy();

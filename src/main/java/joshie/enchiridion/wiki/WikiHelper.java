@@ -11,13 +11,9 @@ import static org.lwjgl.opengl.GL11.GL_BLEND;
 import java.util.ArrayList;
 
 import joshie.enchiridion.api.IWikiMode;
-import joshie.enchiridion.designer.features.Feature;
-import joshie.enchiridion.designer.features.FeatureAbstractAdapter;
 import joshie.enchiridion.library.GuiLibrary;
 import joshie.enchiridion.library.GuiShelves;
 import joshie.enchiridion.wiki.data.WikiData;
-import joshie.enchiridion.wiki.elements.Element;
-import joshie.enchiridion.wiki.elements.ElementAbstractAdapter;
 import joshie.enchiridion.wiki.elements.ElementItem;
 import joshie.enchiridion.wiki.gui.GuiBackground;
 import joshie.enchiridion.wiki.gui.GuiCanvas;
@@ -52,18 +48,13 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 public class WikiHelper {
     public static GuiMain gui = new GuiMain();
-    public static Gson gson = null;
     private static boolean EDIT_MODE;
 
     public static boolean lighting;
     public static int theLeft;
     public static int theTop;
-    public static int theScrolled;
     public static int mouseX;
     public static int mouseY;
     private static int height;
@@ -104,17 +95,6 @@ public class WikiHelper {
         if (selected == null) {
             selected = wiki;
         }
-    }
-
-    public static Gson getGson() {
-        if (gson == null) {
-            GsonBuilder builder = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation();
-            builder.registerTypeAdapter(Element.class, new ElementAbstractAdapter());
-            builder.registerTypeAdapter(Feature.class, new FeatureAbstractAdapter());
-            gson = builder.create();
-        }
-
-        return gson;
     }
 
     public static int getHeight() {
@@ -179,7 +159,6 @@ public class WikiHelper {
     public static void updateGUI() {
         theLeft = (int) (gui.mc.displayWidth / 2D) - 512;
         theTop = 150;
-        theScrolled = theTop + getPage().getData().getScroll();
         height = gui.mc.displayHeight;
     }
 
@@ -270,6 +249,7 @@ public class WikiHelper {
     }
 
     public static void renderStack(ItemStack stack, int x, int y) {
+        if(stack == null) return;
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glColor3f(1F, 1F, 1F); //Forge: Reset color in case Items change it.

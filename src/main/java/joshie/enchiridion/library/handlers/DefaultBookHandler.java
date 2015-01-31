@@ -7,6 +7,11 @@ import net.minecraft.world.World;
 
 public class DefaultBookHandler implements IBookHandler {
     @Override
+    public String getName() {
+        return "default";
+    }
+    
+    @Override
     public void handle(ItemStack stack, World world, EntityPlayer player) {
         stack.getItem().onItemRightClick(stack, world, player);
     }

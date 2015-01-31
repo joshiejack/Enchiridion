@@ -48,7 +48,7 @@ enchiridion.edit.shift=Sneak to Open in Edit Mode
 enchiridion.edit.save=Autosaves when you close the GUI
 enchiridion.edit.create=Right click me to create a new Book
 enchiridion.jump=Jump
-enchiridon.book.new=New Book
+enchiridion.book.new=Create New Book
 
 #Enchiridion WIKI pages Localisation
 wiki.enchiridion2=Enchiridion 2

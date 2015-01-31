@@ -1,33 +1,26 @@
 package joshie.enchiridion.library.handlers;
 
 import joshie.enchiridion.helpers.ClientHelper;
-import joshie.enchiridion.library.LibraryRegistry;
+import joshie.enchiridion.library.LibraryDataClient;
+import joshie.enchiridion.library.mods.BotaniaCommon;
+import joshie.enchiridion.network.EPacketHandler;
+import joshie.enchiridion.network.PacketAlfheim;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import vazkii.botania.client.gui.lexicon.GuiLexicon;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BotaniaBookHandler {
-    public static ItemStack alfheim;
-    public static ItemStack lexicon;
-
-    public static boolean IS_ALFHEIM = false;
-
+    private static boolean IS_ALFHEIM = false;
     public BotaniaBookHandler() {
-        lexicon = new ItemStack(GameRegistry.findItem("Botania", "lexicon"), 1, 0);
-        alfheim = lexicon.copy();
-        alfheim.setTagCompound(new NBTTagCompound());
-        alfheim.stackTagCompound.setBoolean("knowledge.minecraft", true);
-        alfheim.stackTagCompound.setBoolean("knowledge.alfheim", true);
         updateIsAlfheim();
     }
 
     public static void updateIsAlfheim() {
         //Check for whether we should continue
         ItemStack lexicon = new ItemStack(GameRegistry.findItem("Botania", "lexicon"), 1, 0);
-        for (ItemStack book : LibraryRegistry.INSTANCE.getBooks()) {
+        for (ItemStack book : LibraryDataClient.storage.getBooks()) {
             if (book.isItemEqual(lexicon)) {
                 if (lexicon.hasTagCompound()) {
                     IS_ALFHEIM = (lexicon.stackTagCompound.hasKey("knowledge.alfheim"));
@@ -49,7 +42,8 @@ public class BotaniaBookHandler {
                     if (held != null && held.hasTagCompound()) {
                         if (held.stackTagCompound.hasKey("knowledge.alfheim")) {
                             //If they are opening an alfheim book, update the book in the library to an alfheim copy
-                            LibraryRegistry.INSTANCE.overwrite(alfheim.copy());
+                            LibraryDataClient.storage.overwrite(BotaniaCommon.alfheim.copy());
+                            EPacketHandler.sendToServer(new PacketAlfheim());
                             IS_ALFHEIM = true;
                         }
                     }
@@ -64,7 +58,7 @@ public class BotaniaBookHandler {
         public void initGui() {
             ItemStack previous = ClientHelper.getPlayer().getCurrentEquippedItem();
             if (previous != null) previous = previous.copy();
-            ItemStack lexicon = BotaniaBookHandler.IS_ALFHEIM ? BotaniaBookHandler.alfheim.copy() : BotaniaBookHandler.lexicon.copy();
+            ItemStack lexicon = BotaniaBookHandler.IS_ALFHEIM ? BotaniaCommon.alfheim.copy() : BotaniaCommon.alfheim.copy();
             ClientHelper.getPlayer().setCurrentItemOrArmor(0, lexicon);
             super.initGui();
             ClientHelper.getPlayer().setCurrentItemOrArmor(0, previous);

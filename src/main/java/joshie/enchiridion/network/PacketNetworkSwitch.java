@@ -2,7 +2,8 @@ package joshie.enchiridion.network;
 
 import io.netty.buffer.ByteBuf;
 import joshie.enchiridion.helpers.ClientHelper;
-import joshie.enchiridion.library.LibraryRegistry;
+import joshie.enchiridion.library.LibraryDataClient;
+import joshie.enchiridion.library.LibraryLoadEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -45,8 +46,9 @@ public class PacketNetworkSwitch implements IMessage, IMessageHandler<PacketNetw
             ItemStack ret = message.stack.getItem().onItemRightClick(message.stack, player.worldObj, player);
             player.setCurrentItemOrArmor(0, previous);
             EPacketHandler.sendToClient(new PacketNetworkSwitch(ret, false), player);
+            LibraryLoadEvent.data.overwrite(player, ret);
         } else {
-            LibraryRegistry.INSTANCE.overwrite(message.stack);
+            LibraryDataClient.storage.overwrite(message.stack);
             EntityPlayer player = ClientHelper.getPlayer();
             ItemStack previous = player.getCurrentEquippedItem();
             if (previous != null) previous = previous.copy();

@@ -2,13 +2,11 @@ package joshie.enchiridion.designer.features;
 
 import static joshie.enchiridion.designer.DesignerHelper.drawRect;
 import static joshie.enchiridion.designer.DesignerHelper.getGui;
-import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.RenderItem;
 
 import com.google.gson.annotations.Expose;
 
 public abstract class Feature {
-    public static final RenderBlocks renderer = new RenderBlocks();
     public static final RenderItem itemRenderer = new RenderItem();
 
     @Expose

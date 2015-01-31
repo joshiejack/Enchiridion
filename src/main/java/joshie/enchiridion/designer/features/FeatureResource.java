@@ -9,8 +9,6 @@ import javax.imageio.ImageIO;
 
 import joshie.enchiridion.ELogger;
 import joshie.enchiridion.designer.DesignerHelper;
-import joshie.enchiridion.wiki.WikiHelper;
-import joshie.enchiridion.wiki.WikiPage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
@@ -30,15 +28,6 @@ public class FeatureResource extends FeatureWithText {
         width = 100;
         height = 100;
         path = "enchiridion:textures/wiki/enchiridion_logo.png";
-    }
-
-    public FeatureResource setPath(String path) {
-        WikiPage page = WikiHelper.getPage();
-        this.width = 100;
-        this.height = 100;
-        this.path = path;
-        loadImage(path);
-        return this;
     }
 
     //Loads the image in to memory

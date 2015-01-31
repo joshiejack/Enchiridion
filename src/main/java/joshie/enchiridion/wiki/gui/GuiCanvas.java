@@ -24,6 +24,8 @@ import static org.lwjgl.opengl.GL11.glStencilOp;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.Element;
 
+import org.lwjgl.opengl.GL11;
+
 public class GuiCanvas extends GuiExtension {	
 	private static final int DEFAULT_COLOR = 0xEE000000;
     @Override
@@ -41,11 +43,13 @@ public class GuiCanvas extends GuiExtension {
         glStencilMask(0x00);
         glStencilFunc(GL_EQUAL, 0, 0xFF);
         glStencilFunc(GL_EQUAL, 1, 0xFF);
+        GL11.glDisable(GL11.GL_LIGHTING);
         drawRect(0, 0, 2048, 5000 + 10, (WikiHelper.isLibrary()? DEFAULT_COLOR: getPage().getData().getBackground()));
         drawRect(630, -45, 910, -10, 0xFF000000);
         getPage().display();
         glDisable(GL_STENCIL_TEST);
         glDisable(GL_BLEND);
+        GL11.glEnable(GL11.GL_LIGHTING);
         glPopMatrix();
     }
 

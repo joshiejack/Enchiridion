@@ -7,6 +7,7 @@ import java.io.Writer;
 
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.ClientHelper;
+import joshie.enchiridion.helpers.GsonClientHelper;
 import joshie.enchiridion.wiki.data.Data;
 import joshie.enchiridion.wiki.data.WikiData;
 
@@ -65,7 +66,7 @@ public class WikiPart {
             }
                 
             Writer writer = new OutputStreamWriter(new FileOutputStream(getPath()), "UTF-8");
-            writer.write(WikiHelper.getGson().toJson(getData()));
+            writer.write(GsonClientHelper.getGson().toJson(getData()));
             writer.close();
         } catch (Exception e) { e.printStackTrace(); }
     }

@@ -27,8 +27,6 @@ public class FeatureImage extends Feature {
 
     @Expose
     public String path;
-    public int img_width;
-    public int img_height;
 
     public FeatureImage() {
         width = 100;
@@ -55,8 +53,6 @@ public class FeatureImage extends Feature {
                 BufferedImage img = ImageIO.read(new File(Enchiridion.root, "books/images/" + path));
                 texture = new DynamicTexture(img);
                 resource = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(path, texture);
-                img_width = img.getWidth();
-                img_height = img.getHeight();
             } catch (Exception e) {
                 ELogger.log(Level.ERROR, "Enchiridion 2 failed to read in the image at the following path: ");
                 ELogger.log(Level.ERROR, path + separator + path);

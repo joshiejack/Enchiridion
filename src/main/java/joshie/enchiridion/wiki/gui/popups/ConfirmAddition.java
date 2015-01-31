@@ -4,10 +4,10 @@ import static joshie.enchiridion.ETranslate.translate;
 import joshie.enchiridion.wiki.WikiHelper;
 
 public class ConfirmAddition extends Confirm {
-    public static String mod;
-    public static String tab;
-    public static String cat;
-    public static String page;
+    static String mod;
+    static String tab;
+    static String cat;
+    static String page;
     
     public ConfirmAddition() {
         super("addition");

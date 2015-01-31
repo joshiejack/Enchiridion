@@ -1,67 +1,40 @@
 package joshie.enchiridion;
 
-import static java.io.File.separator;
-import static joshie.enchiridion.Enchiridion.instance;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.lang.reflect.Field;
 
-import joshie.enchiridion.api.EnchiridionHelper;
-import joshie.enchiridion.designer.BookRegistry;
-import joshie.enchiridion.designer.BookRegistry.BookData;
-import joshie.enchiridion.designer.DesignerCanvas;
 import joshie.enchiridion.designer.ItemBook;
-import joshie.enchiridion.designer.features.FeatureText;
-import joshie.enchiridion.library.LibraryRegistry;
-import joshie.enchiridion.library.ModBooks;
-import joshie.enchiridion.library.handlers.BotaniaBookHandler;
-import joshie.enchiridion.wiki.WikiHelper;
+import joshie.enchiridion.library.LibraryLoadEvent;
+import joshie.enchiridion.library.mods.BotaniaCommon;
+import joshie.enchiridion.network.EPacketHandler;
+import joshie.enchiridion.network.PacketNetworkSwitch;
+import joshie.enchiridion.network.PacketRequestLibrarySync;
+import joshie.enchiridion.network.PacketSendLibrarySync;
+import joshie.enchiridion.network.PacketSyncNewBook;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 public class ECommonProxy {
     public static Item book;
 
     public void preInit() {
-        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new EGuiHandler());
-        EnchiridionHelper.bookRegistry = LibraryRegistry.INSTANCE;
+        /** Register network packets for handling the network switch book handler **/
+        EPacketHandler.registerPacket(PacketNetworkSwitch.class, Side.SERVER);
+        EPacketHandler.registerPacket(PacketNetworkSwitch.class, Side.CLIENT);
+        /** Register packets for sending and receiving nbttaglist **/
+        EPacketHandler.registerPacket(PacketSendLibrarySync.class, Side.CLIENT);
+        EPacketHandler.registerPacket(PacketRequestLibrarySync.class, Side.SERVER);
 
+        /** If we have books enabled **/
         if (EConfig.ENABLE_BOOKS) {
+            EPacketHandler.registerPacket(PacketSyncNewBook.class, Side.SERVER);
+
+            /** Create the book item and register it **/
             book = new ItemBook().setCreativeTab(CreativeTabs.tabMisc).setHasSubtypes(true).setUnlocalizedName("book");
             GameRegistry.registerItem(book, "book");
-
-            //Load in all the books
-            BookRegistry.init();
-
-            //Create a copy of the book
-            //Save the tab data
-            if (EConfig.GEN_EXAMPLE_BOOK) {
-                try {
-                    File example = new File(Enchiridion.root + separator + "books", "enchiridion_introbook.json");
-                    if (!example.exists()) {
-                        //Register a dummy book
-                        BookData data = new BookData("enchiridion.introbook", "Introduction Book", null, 0xFFFFFF);
-                        DesignerCanvas page = new DesignerCanvas();
-                        page.features.add(new FeatureText());
-                        data.book.add(page);
-                        BookRegistry.register(data);
-                        //Write the json to file
-
-                        Writer writer = new OutputStreamWriter(new FileOutputStream(example), "UTF-8");
-                        writer.write(WikiHelper.getGson().toJson(BookRegistry.getData("enchiridion.introbook")));
-                        writer.close();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
 
             /** Add books to the enchiridion1 creative tab, otherwise just leave in misc **/
             if (Loader.isModLoaded("Enchiridion")) {
@@ -73,24 +46,19 @@ public class ECommonProxy {
             }
         }
 
+        /** Register the world load handler **/
+        MinecraftForge.EVENT_BUS.register(new LibraryLoadEvent());
+
+        /** PreInit Everything Client Side **/
         preClient();
     }
 
-    public void init() {
-        LibraryRegistry.INSTANCE.initRegistry();
-        ModBooks.init();
-
+    public void modSupport() {
         if (Loader.isModLoaded("Botania")) {
-            MinecraftForge.EVENT_BUS.register(new BotaniaBookHandler());
+            BotaniaCommon.INSTANCE.init();
         }
     }
 
-    public void postInit() {
-        LibraryRegistry.INSTANCE.load();
-        postClient();
-    }
-
     public void postClient() {}
-
     public void preClient() {}
 }

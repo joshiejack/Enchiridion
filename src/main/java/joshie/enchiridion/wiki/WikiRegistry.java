@@ -11,6 +11,7 @@ import java.util.zip.ZipFile;
 
 import joshie.enchiridion.ELogger;
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.helpers.GsonClientHelper;
 import joshie.enchiridion.wiki.data.Data;
 import joshie.enchiridion.wiki.data.DataPage;
 import joshie.enchiridion.wiki.data.DataTab;
@@ -162,14 +163,14 @@ public class WikiRegistry {
             
             key = key + "." + lang;
             
-            Data langData = WikiHelper.getGson().fromJson(data, path.length == 3? DataTab.class: Data.class);
+            Data langData = GsonClientHelper.getGson().fromJson(data, path.length == 3? DataTab.class: Data.class);
             if(langData == null) langData = new Data(key);
             WikiData.instance().addData(key, langData);
 		}
     }
 
     private void register(String mod, String tab, String cat, String key, String lang, String json) {          
-        DataPage contents = WikiHelper.getGson().fromJson(json, DataPage.class);
+        DataPage contents = GsonClientHelper.getGson().fromJson(json, DataPage.class);
         if(contents == null) contents = new DataPage();
         //Load all the images in this page
         WikiPage page = getPage(mod, tab, cat, key);

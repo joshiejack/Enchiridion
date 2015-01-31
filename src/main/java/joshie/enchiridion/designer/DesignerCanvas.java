@@ -17,16 +17,16 @@ public class DesignerCanvas {
     @Expose
     public ArrayList<Feature> features = new ArrayList();
     @Expose
-    public String pageName = "";
+    String pageName = "";
     private int position;
     private int tick;
     private boolean white;
 
     public Feature selected;
-    public DesignerLayers layers;
-    
+    private DesignerLayers layers;
+
     public DesignerLayers getLayers() {
-        if(layers == null) layers = new DesignerLayers();
+        if (layers == null) layers = new DesignerLayers();
         return layers;
     }
 
@@ -53,7 +53,7 @@ public class DesignerCanvas {
             DesignerHelper.drawRect(-100, -37, 0, -39, 0xFFFFFFFF);
             DesignerHelper.drawSplitString(getText(), -95, -50, 250, 0xFFFFFFFF);
         }
-        
+
         if (DesignerHelper.getGui().canEdit) {
             getLayers().draw(DesignerHelper.getGui().mouseX, DesignerHelper.getGui().mouseY);
         }
@@ -63,7 +63,7 @@ public class DesignerCanvas {
         for (Feature feature : features) {
             feature.click(x, y);
         }
-        
+
         if (DesignerHelper.getGui().canEdit) {
             getLayers().clicked(x, y);
         }
@@ -127,7 +127,7 @@ public class DesignerCanvas {
         for (Feature feature : features) {
             feature.scroll(scrolledDown);
         }
-        
+
         if (DesignerHelper.getGui().canEdit) {
             getLayers().scroll(scrolledDown);
         }

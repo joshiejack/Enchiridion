@@ -9,9 +9,9 @@ import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.designer.BookRegistry.BookData;
 import joshie.enchiridion.helpers.ClientHelper;
+import joshie.enchiridion.helpers.GsonClientHelper;
 import joshie.enchiridion.network.EPacketHandler;
 import joshie.enchiridion.network.PacketSyncNewBook;
-import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -130,7 +130,7 @@ public class GuiDesignNew extends GuiScreen {
                 BookData data = new BookData(sanitized);
                 File example = new File(Enchiridion.root, "books/" + sanitized + ".json");
                 Writer writer = new OutputStreamWriter(new FileOutputStream(example), "UTF-8");
-                writer.write(WikiHelper.getGson().toJson(data));
+                writer.write(GsonClientHelper.getGson().toJson(data));
                 writer.close();
 
                 stack.setTagCompound(new NBTTagCompound());

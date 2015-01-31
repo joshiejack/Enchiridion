@@ -9,19 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import joshie.enchiridion.ELogger;
 import joshie.enchiridion.Enchiridion;
-import joshie.enchiridion.network.EPacketHandler;
-import joshie.enchiridion.network.PacketSyncNewBook;
-import joshie.enchiridion.wiki.WikiHelper;
+import joshie.enchiridion.helpers.GsonClientHelper;
 import net.minecraft.item.ItemStack;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.Level;
 
 import com.google.gson.annotations.Expose;
-
-import cpw.mods.fml.relauncher.Side;
 
 public class BookRegistry {
     public static class BookData {
@@ -71,7 +65,6 @@ public class BookRegistry {
     }
 
     public static void init() {
-        EPacketHandler.registerPacket(PacketSyncNewBook.class, Side.SERVER);
         File directory = new File(Enchiridion.root + separator + "books");
         if (!directory.exists() && !directory.mkdirs()) {
             throw new IllegalStateException("Couldn't create dir: " + directory);
@@ -81,11 +74,9 @@ public class BookRegistry {
         for (File file : files) {
             //Read all the json books from this directory
             try {
-                BookRegistry.register(WikiHelper.getGson().fromJson(FileUtils.readFileToString(file), BookData.class));
+                BookRegistry.register(GsonClientHelper.getGson().fromJson(FileUtils.readFileToString(file), BookData.class));
             } catch (Exception e) {
                 BookRegistry.register(new BookData(file.getName().replace(".json", "")));
-            } finally {
-                ELogger.log(Level.ERROR, "Failed to load book @ : " + file.toString());
             }
         }
     }

@@ -36,7 +36,7 @@ import net.minecraft.item.ItemStack;
 public class GuiLibrary extends GuiExtension {
     private static final int MAX_PER_ROW = 12;
     private static int SHELF = 0;
-    
+
     @Override
     public void draw() {
         fixShitForThePedia();
@@ -67,8 +67,8 @@ public class GuiLibrary extends GuiExtension {
     public void drawBooks() {
         int j = 0;
         int k = 0;
-        for(int i = SHELF * MAX_PER_ROW; i < LibraryRegistry.getBooks().size(); i++) {
-            ItemStack stack = LibraryRegistry.getBooks().get(i);
+        for (int i = SHELF * MAX_PER_ROW; i < LibraryDataClient.storage.getBooks().size(); i++) {
+            ItemStack stack = LibraryDataClient.storage.getBooks().get(i);
             drawScaledStack(stack, 36 + (j * 74), 50 + (k * 80), 4F);
             j++;
 
@@ -78,14 +78,14 @@ public class GuiLibrary extends GuiExtension {
             }
         }
     }
-    
+
     public void drawTooltips() {
         OpenGLHelper.start();
         OpenGLHelper.resetZ();
         int j = 0;
         int k = 0;
-        for(int i = SHELF * MAX_PER_ROW; i < LibraryRegistry.getBooks().size(); i++) {
-            ItemStack stack = LibraryRegistry.getBooks().get(i);
+        for (int i = SHELF * MAX_PER_ROW; i < LibraryDataClient.storage.getBooks().size(); i++) {
+            ItemStack stack = LibraryDataClient.storage.getBooks().get(i);
             //Drawing the tooltips
             int xStart = 36 + (j * 74);
             int yStart = 50 + (k * 74);
@@ -114,7 +114,7 @@ public class GuiLibrary extends GuiExtension {
                 k++;
             }
         }
-        
+
         OpenGLHelper.end();
     }
 
@@ -122,12 +122,12 @@ public class GuiLibrary extends GuiExtension {
     public void clicked(int button) {
         int j = 0;
         int k = 0;
-        for(int i = SHELF * MAX_PER_ROW; i < LibraryRegistry.getBooks().size(); i++) {
-            ItemStack stack = LibraryRegistry.getBooks().get(i);
+        for (int i = SHELF * MAX_PER_ROW; i < LibraryDataClient.storage.getBooks().size(); i++) {
+            ItemStack stack = LibraryDataClient.storage.getBooks().get(i);
             if (getIntFromMouse(36 + (j * 74), 36 + 74 + (j * 74), 50 + (k * 80), 50 + 74 + (k * 80), 0, 1) == 1) {
-                LibraryRegistry.getHandler(stack).handle(stack, ClientHelper.getWorld(), ClientHelper.getPlayer());
+                BookHandlerRegistry.getHandler(stack).handle(stack, ClientHelper.getWorld(), ClientHelper.getPlayer());
             }
-            
+
             j++;
 
             if (j > MAX_PER_ROW) {
@@ -150,7 +150,7 @@ public class GuiLibrary extends GuiExtension {
     @Override
     public void scroll(boolean scrolledDown) {
         if (mouseX >= 290 && mouseX <= 1024) {
-            if(scrolledDown) {
+            if (scrolledDown) {
                 SHELF++;
             } else {
                 SHELF--;

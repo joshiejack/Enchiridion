@@ -157,7 +157,7 @@ public class WikiFont extends FontRenderer {
         }
     }
 
-    public static enum CharReplace {
+    private static enum CharReplace {
         BOLD_S("[b]", 1), BOLD_F("[/b]", 2), 
         ITALIC_S("[i]", 3), ITALIC_F("[/i]", 4), 
         STRIKE_S("[s]", 5), STRIKE_F("[/s]", 6), 

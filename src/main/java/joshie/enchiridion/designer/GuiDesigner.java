@@ -20,7 +20,7 @@ import joshie.enchiridion.designer.features.FeatureItem;
 import joshie.enchiridion.designer.features.FeatureJump;
 import joshie.enchiridion.designer.features.FeatureResource;
 import joshie.enchiridion.designer.features.FeatureText;
-import joshie.enchiridion.wiki.WikiHelper;
+import joshie.enchiridion.helpers.GsonClientHelper;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -137,7 +137,7 @@ public class GuiDesigner extends GuiScreen {
             try {
                 File example = new File(Enchiridion.root + separator + "books", bookData.uniqueName.replace(":", "_").replace(".", "_") + ".json");
                 Writer writer = new OutputStreamWriter(new FileOutputStream(example), "UTF-8");
-                writer.write(WikiHelper.getGson().toJson(bookData));
+                writer.write(GsonClientHelper.getGson().toJson(bookData));
                 writer.close();
             } catch (Exception e) {
                 e.printStackTrace();

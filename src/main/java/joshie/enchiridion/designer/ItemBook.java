@@ -25,7 +25,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemBook extends Item {
     private IIcon cover;
     private IIcon pages;
-    public static final int NORMAL_BOOK = 0;
 
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
