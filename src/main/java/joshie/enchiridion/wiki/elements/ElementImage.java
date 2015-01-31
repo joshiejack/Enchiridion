@@ -10,7 +10,6 @@ import static org.lwjgl.opengl.GL11.glScalef;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 

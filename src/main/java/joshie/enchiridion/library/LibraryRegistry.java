@@ -76,7 +76,6 @@ public class LibraryRegistry implements ILibraryHelper {
     public void load() {
         try {
             new File(Enchiridion.root, "/library").mkdir();
-
             NBTTagCompound tag = CompressedStreamTools.read(new File(Enchiridion.root, "/library/data.dat"));
             if (tag != null) {
                 NBTTagList list = tag.getTagList("BooksList", 10);

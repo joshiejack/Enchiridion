@@ -1,4 +1,4 @@
-package joshie.enchiridion;
+package joshie.enchiridion.network;
 
 import static joshie.enchiridion.EInfo.MODID;
 import net.minecraft.entity.player.EntityPlayerMP;

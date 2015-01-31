@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.lang.reflect.Field;
 
 import joshie.enchiridion.api.EnchiridionHelper;
 import joshie.enchiridion.designer.BookRegistry;
@@ -60,6 +61,15 @@ public class ECommonProxy {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+
+            /** Add books to the enchiridion1 creative tab, otherwise just leave in misc **/
+            if (Loader.isModLoaded("Enchiridion")) {
+                try {
+                    Class clazz = Class.forName("enchiridion.CreativeTab");
+                    Field f = clazz.getDeclaredField("books");
+                    book.setCreativeTab((CreativeTabs) f.get(null));
+                } catch (Exception e) {}
             }
         }
 

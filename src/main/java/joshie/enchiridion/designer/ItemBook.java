@@ -30,7 +30,7 @@ public class ItemBook extends Item {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         BookData data = getData(stack);
-        return data == null ? super.getItemStackDisplayName(stack) : getDisplayName(data);
+        return data == null ? ETranslate.translate("book.new") : getDisplayName(data);
     }
 
     public String getDisplayName(BookData data) {
@@ -41,12 +41,16 @@ public class ItemBook extends Item {
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean var) {
+        BookData data = getData(stack);
         if (EConfig.CAN_EDIT_BOOKS) {
-            list.add(ETranslate.translate("edit.shift"));
-            list.add(ETranslate.translate("edit.save"));
+            if (data != null) {
+                list.add(ETranslate.translate("edit.shift"));
+                list.add(ETranslate.translate("edit.save"));
+            } else {
+                list.add(ETranslate.translate("edit.create"));
+            }
         }
 
-        BookData data = getData(stack);
         if (data != null && data.information != null) {
             list.addAll(data.information);
         }
@@ -54,15 +58,20 @@ public class ItemBook extends Item {
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-        String id = getID(stack);
-        if (id != null) {
-            if (EConfig.CAN_EDIT_BOOKS) {
-                if (player.isSneaking()) {
-                    player.openGui(Enchiridion.instance, EInfo.BOOKS_EDIT_ID, player.worldObj, 1, 0, 0);
-                } else {
-                    player.openGui(Enchiridion.instance, EInfo.BOOKS_VIEW_ID, player.worldObj, 1, 0, 0);
-                }
-            } else player.openGui(Enchiridion.instance, EInfo.BOOKS_VIEW_ID, player.worldObj, 1, 0, 0);
+        BookData data = getData(stack);
+        if (data != null) {
+            String id = getID(stack);
+            if (id != null) {
+                if (EConfig.CAN_EDIT_BOOKS) {
+                    if (player.isSneaking()) {
+                        player.openGui(Enchiridion.instance, EInfo.BOOKS_EDIT_ID, player.worldObj, 0, 0, 0);
+                    } else {
+                        player.openGui(Enchiridion.instance, EInfo.BOOKS_VIEW_ID, player.worldObj, 0, 0, 0);
+                    }
+                } else player.openGui(Enchiridion.instance, EInfo.BOOKS_VIEW_ID, player.worldObj, 0, 0, 0);
+            }
+        } else {
+            player.openGui(Enchiridion.instance, EInfo.BOOKS_CREATE_ID, player.worldObj, 0, 0, 0);
         }
 
         return stack;
@@ -84,7 +93,7 @@ public class ItemBook extends Item {
         }
 
         //If we fail to complete the IconPassing then we use the defualt
-        if (pass == 0) {
+        if (pass == 0 && data != null) {
             return data.color;
         } else return 16777215;
     }
@@ -101,6 +110,8 @@ public class ItemBook extends Item {
 
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List list) {
+        list.add(new ItemStack(item));
+        
         for (String identifier : BookRegistry.getIDs()) {
             ItemStack stack = new ItemStack(item);
             stack.setTagCompound(new NBTTagCompound());

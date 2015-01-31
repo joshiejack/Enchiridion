@@ -11,6 +11,8 @@ import java.util.Set;
 
 import joshie.enchiridion.ELogger;
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.network.EPacketHandler;
+import joshie.enchiridion.network.PacketSyncNewBook;
 import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.item.ItemStack;
 
@@ -18,6 +20,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 
 import com.google.gson.annotations.Expose;
+
+import cpw.mods.fml.relauncher.Side;
 
 public class BookRegistry {
     public static class BookData {
@@ -50,6 +54,8 @@ public class BookRegistry {
         @Expose
         public int iconColorPass2;
 
+        public BookData() {}
+
         public BookData(String unique, String en_US, List info, int color) {
             this.uniqueName = unique;
             this.displayNames = new HashMap();
@@ -58,20 +64,27 @@ public class BookRegistry {
             this.color = color;
             this.book = new ArrayList();
         }
+
+        public BookData(String unique) {
+            this(unique, unique, null, 0xFFFFFF);
+        }
     }
 
     public static void init() {
+        EPacketHandler.registerPacket(PacketSyncNewBook.class, Side.SERVER);
         File directory = new File(Enchiridion.root + separator + "books");
-        if(!directory.exists() && !directory.mkdirs()) {
+        if (!directory.exists() && !directory.mkdirs()) {
             throw new IllegalStateException("Couldn't create dir: " + directory);
         }
-        
+
         Collection<File> files = FileUtils.listFiles(directory, new String[] { "json" }, true);
         for (File file : files) {
             //Read all the json books from this directory
             try {
                 BookRegistry.register(WikiHelper.getGson().fromJson(FileUtils.readFileToString(file), BookData.class));
             } catch (Exception e) {
+                BookRegistry.register(new BookData(file.getName().replace(".json", "")));
+            } finally {
                 ELogger.log(Level.ERROR, "Failed to load book @ : " + file.toString());
             }
         }
