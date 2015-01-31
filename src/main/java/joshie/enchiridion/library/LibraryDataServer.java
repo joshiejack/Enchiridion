@@ -75,12 +75,15 @@ public class LibraryDataServer extends WorldSavedData {
     public LibraryStorage getStorageFor(EntityPlayerMP player) {
         //If the player has never ever request their data before send them a new storage
         if (!data.containsKey(player.getPersistentID())) {
-            return createNew();
+            return createNew(player);
         } else return data.get(player.getPersistentID());
     }
 
-    public LibraryStorage createNew() {
-        return new LibraryStorage();
+    public LibraryStorage createNew(EntityPlayerMP player) {
+        LibraryStorage copy = new LibraryStorage(DEFAULT);
+        this.data.put(player.getPersistentID(), copy);
+        this.markDirty();
+        return new LibraryStorage(DEFAULT);
     }
 
     @Override

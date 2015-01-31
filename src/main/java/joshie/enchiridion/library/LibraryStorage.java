@@ -19,6 +19,12 @@ public class LibraryStorage {
 
     private ArrayList<Integer> toRemove = new ArrayList();
 
+    public LibraryStorage() {}
+    public LibraryStorage(LibraryStorage copy) {
+        this.handlers = copy.handlers;
+        this.books = copy.books;
+    }
+
     public String getHandler(String key) {
         return handlers.get(key);
     }
