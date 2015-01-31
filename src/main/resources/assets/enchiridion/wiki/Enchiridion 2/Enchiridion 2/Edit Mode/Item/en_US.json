@@ -3,7 +3,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Item elements are basically your itemstacks from minecraft. By default only things that are in the creative menu will show up when you are editing these elements. Enchiridion will add whatever you are holding to the list of items whenever it is opened. You can search for items using the search bar at the top left, when you have an item selected. Clicking on the item will set the displayed item to the one you clicked on.",
+        "text": "translate:wiki.enchiridion.items",
         "color": -1,
         "x": 45,
         "y": 7,
@@ -15,7 +15,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Examples",
+        "text": "translate:wiki.enchiridion.examples",
         "color": -1,
         "x": 56,
         "y": 151,

@@ -3,7 +3,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Text elements are incredibly simple. Simply click on one, make sure it is selected and then you can edit it as you like. There are a few formatting things to know. For example if you want to bold anything simply type [ b ] to start off the bold and [ / b ] to end it. ( Without the spaces. You can also do [ u ] for underline, [ s ] for strikethrough and [ i ] for italics.\n\nExamples:\n[b]Bold[/b]\n[u]Underlined[/u]\n[s]Strikethrough[/s]\n[i]Italics[/i]\n\nYou can of course do them anyway you like. Take note that in edit mode you will see the code and not the formatted text. So you will need to switch to display mode. You can disable this in the config if you trust yourself. You can select a colour for the text on the left hand side. You can also increase or reduce the size of text. To do this, you need to press shift + \u0027+\u0027 or shift + \u0027-\u0027 on the numberpad to increase or decrease the font size.\n\nOther than that, that is all you need to know about text!",
+        "text": "translate:wiki.enchiridion.text",
         "color": -1,
         "x": 44,
         "y": 5,
@@ -15,7 +15,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "[b]Examples[/b]",
+        "text": "translate:wiki.enchiridion.examples.bold",
         "color": -8388608,
         "x": 46,
         "y": 440,

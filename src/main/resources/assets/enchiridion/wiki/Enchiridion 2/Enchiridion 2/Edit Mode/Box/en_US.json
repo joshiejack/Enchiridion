@@ -3,7 +3,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "The box element is a very simple element. When in edit mode simply click the box button to create a new box. When selected you can choose a colour for this box. You can select one of the preloaded colours on the left or input your own in hexcode. These hexcodes should be 8 characters long. You should click the preset colours to understand how they work. These are your normal codes for hex colours.",
+        "text": "translate:wiki.enchiridion.box",
         "color": -1,
         "x": 36,
         "y": 2,
@@ -15,7 +15,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Examples",
+        "text": "translate:wiki.enchiridion.examples",
         "color": -1,
         "x": 48,
         "y": 155,

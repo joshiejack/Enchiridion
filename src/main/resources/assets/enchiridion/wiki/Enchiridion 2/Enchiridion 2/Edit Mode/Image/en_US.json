@@ -3,7 +3,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "The image element is fairly simple to operate. Just click on the image button to insert a new one. Then navigate to the file. It will copy the file to the folder of the article you are editing and then display it on this page. You can resize the image as you can with everything else.",
+        "text": "translate:wiki.enchiridion.image",
         "color": -1,
         "x": 30,
         "y": 0,
@@ -15,7 +15,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Examples",
+        "text": "translate:wiki.enchiridion.examples",
         "color": -1,
         "x": 44,
         "y": 119,

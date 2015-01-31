@@ -68,6 +68,7 @@ public class GuiMain extends GuiScalable {
         }
 
         GuiMain.page = page;
+        GuiMain.page.getData().refreshY();
 
         //Clear the resource editing and page editing
         ((PageEditResource) (WikiHelper.getInstance(PageEditResource.class))).setEditing(null);
@@ -87,7 +88,6 @@ public class GuiMain extends GuiScalable {
             loadPage("Enchiridion 2", "Enchiridion 2", "Enchiridion 2", "About");
         }
 
-        page.getData().refreshY();
         setPage(page);
 
         Keyboard.enableRepeatEvents(true);

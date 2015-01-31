@@ -139,7 +139,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "The recipe element is more of a helper element than anything special. It takes vanilla crafting recipes and preplaces them on the canvas for you when you select an item.",
+        "text": "translate:wiki.enchiridion.recipe",
         "color": -1,
         "x": 40,
         "y": 0,
@@ -151,7 +151,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Examples",
+        "text": "translate:wiki.enchiridion.examples",
         "color": -1,
         "x": 128,
         "y": 84,

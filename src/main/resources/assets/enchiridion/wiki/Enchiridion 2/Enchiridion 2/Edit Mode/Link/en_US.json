@@ -3,7 +3,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "The link element is invisible in display mode. However when you are in edit mode it is represented by a bordered box. When you have a link box selected, you can click the link button again to edit it. It will ask you to fill out mod, tab, category and article. You need to know the path to the article you wish to link to. The best way to work this out is to check the wiki folder and the directory path. The top level should be the mod, then tab, then category, then article. Clicking on a link in display mode will take you to that page. You can place links around anything, helping people navigate from article to article easier.\n\nBelow are some examples of links in action. Click each thing to be taken to the article on that element.",
+        "text": "translate:wiki.enchiridion.link",
         "color": -1,
         "x": 32,
         "y": -8,

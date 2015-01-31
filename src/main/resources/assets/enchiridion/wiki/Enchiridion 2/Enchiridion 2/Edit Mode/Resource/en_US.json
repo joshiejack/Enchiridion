@@ -3,7 +3,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "The resource element is similiar to the image element however it is based on internal assets. Therefore you will need to know the image exists already and you will need to know the path. The format for this input is the following\n\nMODPATH:RESOURCEPATH:WIDTH:HEIGHT\n\nThe width and height can be omitted. They are simply there as sometimes the resources aspect is all screwed up. Take the default resource, it has a 2.5 after it. If you remove that, then the enchiridion logo shows up 2.5 times more than it should! If you wish to just edit vertically make the width 1.",
+        "text": "translate:wiki.enchiridion.resource",
         "color": -1,
         "x": 48,
         "y": -1,
@@ -15,7 +15,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Examples",
+        "text": "translate:wiki.enchiridion.examples",
         "color": -1,
         "x": 60,
         "y": 233,
