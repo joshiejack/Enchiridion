@@ -18,7 +18,6 @@ import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.GsonClientHelper;
 import joshie.enchiridion.helpers.ItemHelper;
 import joshie.enchiridion.library.BookHandlerRegistry;
-import joshie.enchiridion.library.LibraryOnConnect;
 import joshie.enchiridion.library.mods.BotaniaClient;
 import joshie.enchiridion.wiki.WikiFont;
 import joshie.enchiridion.wiki.WikiHandler;
@@ -80,9 +79,6 @@ public class EClientProxy extends ECommonProxy {
         
         /** Init the LibraryRegistry**/
         BookHandlerRegistry.initRegistry();
-        
-        /** Register the handler for connecting to a world **/
-        FMLCommonHandler.instance().bus().register(new LibraryOnConnect());
     }
     
     @Override

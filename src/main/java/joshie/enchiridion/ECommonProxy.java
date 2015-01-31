@@ -4,15 +4,16 @@ import java.lang.reflect.Field;
 
 import joshie.enchiridion.designer.ItemBook;
 import joshie.enchiridion.library.LibraryLoadEvent;
+import joshie.enchiridion.library.LibraryOnConnect;
 import joshie.enchiridion.library.mods.BotaniaCommon;
 import joshie.enchiridion.network.EPacketHandler;
 import joshie.enchiridion.network.PacketNetworkSwitch;
-import joshie.enchiridion.network.PacketRequestLibrarySync;
 import joshie.enchiridion.network.PacketSendLibrarySync;
 import joshie.enchiridion.network.PacketSyncNewBook;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -26,7 +27,6 @@ public class ECommonProxy {
         EPacketHandler.registerPacket(PacketNetworkSwitch.class, Side.CLIENT);
         /** Register packets for sending and receiving nbttaglist **/
         EPacketHandler.registerPacket(PacketSendLibrarySync.class, Side.CLIENT);
-        EPacketHandler.registerPacket(PacketRequestLibrarySync.class, Side.SERVER);
 
         /** If we have books enabled **/
         if (EConfig.ENABLE_BOOKS) {
@@ -48,6 +48,9 @@ public class ECommonProxy {
 
         /** Register the world load handler **/
         MinecraftForge.EVENT_BUS.register(new LibraryLoadEvent());
+        
+        /** Register the handler for connecting to a world **/
+        FMLCommonHandler.instance().bus().register(new LibraryOnConnect());
 
         /** PreInit Everything Client Side **/
         preClient();

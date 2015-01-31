@@ -16,8 +16,9 @@ public class PacketSendLibrarySync implements IMessage, IMessageHandler<PacketSe
     String libraryJson;
 
     public PacketSendLibrarySync() {}
-
-    public PacketSendLibrarySync(String libraryJson) {}
+    public PacketSendLibrarySync(String libraryJson) {
+        this.libraryJson = libraryJson;
+    }
 
     @Override
     public void toBytes(ByteBuf to) {
@@ -32,7 +33,6 @@ public class PacketSendLibrarySync implements IMessage, IMessageHandler<PacketSe
     @Override
     public IMessage onMessage(PacketSendLibrarySync message, MessageContext ctx) {
         LibraryDataClient.storage = GsonClientHelper.getGson().fromJson(message.libraryJson, LibraryStorage.class);
-
         if (Loader.isModLoaded("Botania")) {
             BotaniaBookHandler.updateIsAlfheim();
         }
