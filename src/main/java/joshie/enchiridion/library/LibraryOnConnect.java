@@ -14,7 +14,7 @@ public class LibraryOnConnect {
         if (event.player instanceof EntityPlayerMP) {
             EntityPlayerMP player = (EntityPlayerMP) event.player;
             LibraryStorage storage = LibraryLoadEvent.data.getStorageFor(player);
-            EPacketHandler.sendToClient(new PacketSendLibrarySync(GsonServerHelper.getGson().toJson(storage)), player);
+            EPacketHandler.sendToClient(new PacketSendLibrarySync(GsonServerHelper.getGson().toJson(storage), storage.getBooks()), player);
         }
     }
 }

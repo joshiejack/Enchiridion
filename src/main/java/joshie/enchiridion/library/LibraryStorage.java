@@ -14,12 +14,12 @@ import com.google.gson.annotations.Expose;
 public class LibraryStorage {
     @Expose
     private HashMap<String, String> handlers = new HashMap(); //List of the books and which handler they correlate to
-    @Expose
     private ArrayList<ItemStack> books = new ArrayList(); ///List of all the books on display in the library
 
     private ArrayList<Integer> toRemove = new ArrayList();
 
     public LibraryStorage() {}
+
     public LibraryStorage(LibraryStorage copy) {
         this.handlers = copy.handlers;
         this.books = copy.books;
@@ -31,6 +31,10 @@ public class LibraryStorage {
 
     public ArrayList<ItemStack> getBooks() {
         return books;
+    }
+
+    public void setBooks(ArrayList<ItemStack> stacks) {
+        this.books = stacks;
     }
 
     //Overwrite the data stored for this
