@@ -30,7 +30,7 @@ minecraft {
     version = "${minecraft_version}-${forge_version}"
     runDir = "eclipse"
     
-    replace "@VERSION@", project.version
+    replace "@VERSION@", project.mod_version
     replaceIn "EnchiridionInfo.java"
 }
 
@@ -39,14 +39,14 @@ dependencies {
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.property "version", project.mod_version
     inputs.property "mcversion", project.minecraft.version
 
     from(sourceSets.main.resources.srcDirs) {
         include '**/*.info'
         include '**/*.properties'
 
-        expand 'version': project.version, 'mcversion': project.minecraft.version
+        expand 'version': project.mod_version, 'mcversion': project.minecraft.version
     }
 
     from(sourceSets.main.resources.srcDirs) {
