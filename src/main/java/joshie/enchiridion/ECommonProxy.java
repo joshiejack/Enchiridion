@@ -53,7 +53,7 @@ public class ECommonProxy {
         preClient();
     }
 
-    public void modSupport() {
+    public void initClient() {
         if (Loader.isModLoaded("Botania")) {
             BotaniaCommon.INSTANCE.init();
         }

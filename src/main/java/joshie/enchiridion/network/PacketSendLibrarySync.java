@@ -4,6 +4,8 @@ import io.netty.buffer.ByteBuf;
 import joshie.enchiridion.helpers.GsonClientHelper;
 import joshie.enchiridion.library.LibraryDataClient;
 import joshie.enchiridion.library.LibraryStorage;
+import joshie.enchiridion.library.handlers.BotaniaBookHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -30,6 +32,11 @@ public class PacketSendLibrarySync implements IMessage, IMessageHandler<PacketSe
     @Override
     public IMessage onMessage(PacketSendLibrarySync message, MessageContext ctx) {
         LibraryDataClient.storage = GsonClientHelper.getGson().fromJson(message.libraryJson, LibraryStorage.class);
+
+        if (Loader.isModLoaded("Botania")) {
+            BotaniaBookHandler.updateIsAlfheim();
+        }
+
         return null;
     }
 }

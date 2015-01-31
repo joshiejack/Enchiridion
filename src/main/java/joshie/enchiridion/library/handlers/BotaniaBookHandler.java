@@ -13,9 +13,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BotaniaBookHandler {
     private static boolean IS_ALFHEIM = false;
-    public BotaniaBookHandler() {
-        updateIsAlfheim();
-    }
 
     public static void updateIsAlfheim() {
         //Check for whether we should continue

@@ -36,7 +36,7 @@ public class Enchiridion {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        proxy.modSupport();
+        proxy.initClient();
     }
 
     @EventHandler

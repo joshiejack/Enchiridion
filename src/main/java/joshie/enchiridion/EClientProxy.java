@@ -86,7 +86,7 @@ public class EClientProxy extends ECommonProxy {
     }
     
     @Override
-    public void modSupport() {
+    public void initClient() {
         if (Loader.isModLoaded("Botania")) {
             BotaniaClient.INSTANCE.init();
         }
