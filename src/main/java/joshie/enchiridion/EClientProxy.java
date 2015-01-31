@@ -30,6 +30,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import org.lwjgl.input.Keyboard;
 
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -92,7 +93,8 @@ public class EClientProxy extends ECommonProxy {
     public void postClient() {
         MinecraftForge.EVENT_BUS.register(new WikiHandler());
         FMLCommonHandler.instance().bus().register(new WikiHandler());
-        wiki = new KeyBinding("enchiridion.key.wiki", Keyboard.KEY_F8, "key.categories.misc");
+        wiki = new KeyBinding("enchiridion.key.wiki", Keyboard.KEY_H, "key.categories.misc");
+        ClientRegistry.registerKeyBinding(wiki);
         Minecraft mc = ClientHelper.getMinecraft();
         font = new WikiFont(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine, false);
         if (mc.getLanguageManager() != null) {
