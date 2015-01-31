@@ -71,8 +71,16 @@ public class GuiMain extends GuiScalable {
         GuiMain.page.getData().refreshY();
 
         //Clear the resource editing and page editing
-        ((PageEditResource) (WikiHelper.getInstance(PageEditResource.class))).setEditing(null);
-        ((PageEditLink) (WikiHelper.getInstance(PageEditLink.class))).setEditing(null);
+
+        GuiExtension resource = WikiHelper.getInstance(PageEditResource.class);
+        if (resource != null) {
+            ((PageEditResource) resource).setEditing(null);
+        }
+
+        GuiExtension link = WikiHelper.getInstance(PageEditLink.class);
+        if (link != null) {
+            ((PageEditLink) link).setEditing(null);
+        }
     }
 
     @Override

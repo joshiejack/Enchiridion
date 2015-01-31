@@ -1,7 +1,7 @@
 [
 {
-  "modid": "Enchiridion",
-  "name": "Enchiridion",
+  "modid": "Enchiridion2",
+  "name": "Enchiridion 2",
   "description": "Custom books in minecraft!",
   "version": "${version}",
   "mcversion": "${mcversion}",
