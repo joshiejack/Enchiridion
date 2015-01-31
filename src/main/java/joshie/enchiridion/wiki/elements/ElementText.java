@@ -4,6 +4,7 @@ import static joshie.enchiridion.helpers.OpenGLHelper.end;
 import static joshie.enchiridion.helpers.OpenGLHelper.scaleAll;
 import static joshie.enchiridion.helpers.OpenGLHelper.start;
 import joshie.enchiridion.EClientProxy;
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.IColorSelectable;
 import joshie.enchiridion.api.IGuiDisablesMenu;
 import joshie.enchiridion.api.ITextEditable;
@@ -20,9 +21,6 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import com.google.gson.annotations.Expose;
 
 public class ElementText extends Element implements ITextEditable, IGuiDisablesMenu, IColorSelectable {
-    //Whether text elements should display bbcode or display the formatted text
-    public static boolean showBBCode = true;
-
     @Expose
     private String text = "";
     @Expose
@@ -47,7 +45,7 @@ public class ElementText extends Element implements ITextEditable, IGuiDisablesM
         scaleAll(size);
 
         String display = this.text.startsWith("translate:") ? StringEscapeUtils.unescapeJava(StatCollector.translateToLocal(text.replaceFirst("translate:", ""))) : GuiTextEdit.getText(this, text);
-        if (showBBCode && isEditMode) {
+        if (EConfig.SHOW_BB_CODE_IN_EDIT_MODE && isEditMode) {
             EClientProxy.font.drawUnformattedSplitString(display, (int) ((WikiHelper.theLeft + BASE_X + left) / size), ((int) ((WikiHelper.theTop + BASE_Y + top) / size)), (int) ((width * 2) / size) + 4, color);
         } else {
             EClientProxy.font.drawSplitString(display, (int) ((WikiHelper.theLeft + BASE_X + left) / size), ((int) ((WikiHelper.theTop + BASE_Y + top) / size)), (int) ((width * 2) / size) + 4, color);
@@ -66,8 +64,8 @@ public class ElementText extends Element implements ITextEditable, IGuiDisablesM
             }
         }
 
-        GuiTextEdit.select(this, getText().length());
         GuiColorEdit.select(this);
+        GuiTextEdit.select(this, getText().length());
     }
 
     @Override

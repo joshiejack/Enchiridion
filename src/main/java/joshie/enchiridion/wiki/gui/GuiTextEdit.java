@@ -2,6 +2,7 @@ package joshie.enchiridion.wiki.gui;
 
 import joshie.enchiridion.api.IGuiDisablesMenu;
 import joshie.enchiridion.api.ITextEditable;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ChatAllowedCharacters;
@@ -38,7 +39,15 @@ public class GuiTextEdit extends GuiExtension {
     }
 
     @Override
-    public void keyTyped(char character, int key) {        
+    public void keyTyped(char character, int key) {       
+        if (ClientHelper.isShiftPressed()) {
+            if (key == 78) {
+                return;
+            } else if (key == 74) {
+                return;
+            }
+        }
+        
         if (editable != null) {
             if (key == 203) {
                 cursorLeft(1);

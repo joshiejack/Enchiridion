@@ -143,6 +143,6 @@
   "isPriority": false,
   "backgroundColor": -301989888,
   "name": "Enchiridion 2.Enchiridion 2.Edit Mode.Link.en_US",
-  "canEdit": true,
+  "canEdit": false,
   "saveDir": "enchiridion"
 }

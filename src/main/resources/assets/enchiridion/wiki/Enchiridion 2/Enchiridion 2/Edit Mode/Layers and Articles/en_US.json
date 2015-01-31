@@ -1,0 +1,22 @@
+{
+  "components": [
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "When in edit mode you have a list of layers. If you click on the layer it will move it up. If you shift click on it. It will move it down. This can be done to layer items however you wish.\n\nAdding new articles is easy. Just make sure you have edit enabled in the config and then create click the add button. This will bring a popup where you can define the mod/tab/category and page name.\n\nWhen in edit mode, if you switch from layers to menu, you\u0027ll be able to click on the article names to edit them.",
+        "color": -1,
+        "x": 50,
+        "y": -4,
+        "width": 312,
+        "height": 99,
+        "size": 2.0
+      }
+    }
+  ],
+  "scrollMax": 0,
+  "isPriority": false,
+  "backgroundColor": -301989888,
+  "name": "Enchiridion 2.Enchiridion 2.Edit Mode.Layers and Articles.en_US",
+  "canEdit": false,
+  "saveDir": "enchiridion"
+}

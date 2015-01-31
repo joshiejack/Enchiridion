@@ -9,15 +9,20 @@ import static joshie.enchiridion.wiki.WikiHelper.isEditMode;
 import static joshie.enchiridion.wiki.WikiHelper.isTabSelected;
 import static joshie.enchiridion.wiki.WikiHelper.setTab;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
+
+import org.lwjgl.opengl.GL11;
+
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.api.IItemSelectable;
 import joshie.enchiridion.api.ITextEditable;
+import joshie.enchiridion.helpers.OpenGLHelper;
 import joshie.enchiridion.wiki.WikiTab;
 import net.minecraft.item.ItemStack;
 
 public class GuiTabs extends GuiExtension implements IItemSelectable, ITextEditable {
     @Override
     public void draw() {
+        OpenGLHelper.disable(GL11.GL_LIGHTING);
         /* Tab Title */
         drawScaledCentredText(2.5F, GuiTextEdit.getText(this, getTab().getTitle()), 510, 14, 0xFFFFFF);
         
@@ -29,6 +34,8 @@ public class GuiTabs extends GuiExtension implements IItemSelectable, ITextEdita
             drawScaledStack(tab.getItemStack(), 28 + (50 * i), -41 + yBonus, 1.85F);
             i++;
         }
+        
+        OpenGLHelper.enable(GL11.GL_LIGHTING);
     }
 
     @Override

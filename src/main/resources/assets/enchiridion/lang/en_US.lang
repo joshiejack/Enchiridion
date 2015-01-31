@@ -67,8 +67,8 @@ wiki.enchiridion2.enchiridion2.editmode.item=Item Element
 wiki.enchiridion2.enchiridion2.editmode.link=Link Element
 wiki.enchiridion2.enchiridion2.editmode.recipe=Recipe Element
 wiki.enchiridion2.enchiridion2.editmode.text=Text Element
-wiki.enchiridion2.enchiridion2.editmode.articles=Add/Delete Articles
 wiki.enchiridion2.enchiridion2.editmode.resource=Resource Element
+wiki.enchiridion2.enchiridion2.editmode.layersandarticles=Edit Layers & Add Pages
 
 wiki.enchiridion.welcome=Welcome to Enchiridion 2.
 wiki.enchiridion.about=Enchiridion 2 is [b]much[/b] more advanced than it\u0027s predecessor. With it comes documentation in the form of a pedia. As you can probably tell it was inspired by the Civilopedia from Civilization 5. It was Pokefenn\u0027s Idea ;) There is also a button which switches over to \u0027[u]library mode[/u]\u0027. This is prefilled with as many books as are known. Just click them to open them.  Also means you don\u0027t have to carry anything around with you.

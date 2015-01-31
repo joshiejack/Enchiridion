@@ -6,10 +6,58 @@
         "text": "Text elements are incredibly simple. Simply click on one, make sure it is selected and then you can edit it as you like. There are a few formatting things to know. For example if you want to bold anything simply type [ b ] to start off the bold and [ / b ] to end it. ( Without the spaces. You can also do [ u ] for underline, [ s ] for strikethrough and [ i ] for italics.\n\nExamples:\n[b]Bold[/b]\n[u]Underlined[/u]\n[s]Strikethrough[/s]\n[i]Italics[/i]\n\nYou can of course do them anyway you like. Take note that in edit mode you will see the code and not the formatted text. So you will need to switch to display mode. You can disable this in the config if you trust yourself. You can select a colour for the text on the left hand side. You can also increase or reduce the size of text. To do this, you need to press shift + \u0027+\u0027 or shift + \u0027-\u0027 on the numberpad to increase or decrease the font size.\n\nOther than that, that is all you need to know about text!",
         "color": -1,
         "x": 44,
-        "y": 6,
+        "y": 5,
         "width": 324,
-        "height": 180,
+        "height": 203,
         "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "[b]Examples[/b]",
+        "color": -8388608,
+        "x": 46,
+        "y": 440,
+        "width": 160,
+        "height": 30,
+        "size": 3.8999982
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "RANDOM TEXT OH YEAH BABY THIS IS DOCUMENTING????????????? [i]WWHATTTTTTTT is wrong [u]with you /???[/u]    [b] dum.b[/b]      :O[/i]\n\nHIIIIIIIIIIIIIIIIIIIIIIIII!!!!!!!!!!!!!!!!!!!!!",
+        "color": -2987746,
+        "x": 184,
+        "y": 493,
+        "width": 257,
+        "height": 33,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "color": -1,
+        "x": 74,
+        "y": 509,
+        "width": 20,
+        "height": 53,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "[i]BIG LETTER[/i]",
+        "color": -1,
+        "x": 234,
+        "y": 619,
+        "width": 200,
+        "height": 100,
+        "size": 9.6
       }
     }
   ],
@@ -17,6 +65,6 @@
   "isPriority": false,
   "backgroundColor": -301989888,
   "name": "Enchiridion 2.Enchiridion 2.Edit Mode.Text.en_US",
-  "canEdit": true,
+  "canEdit": false,
   "saveDir": "enchiridion"
 }
