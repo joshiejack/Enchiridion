@@ -3,7 +3,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Searching",
+        "text": "translate:enchiridion.searching",
         "color": -1,
         "x": 381,
         "y": -4,
@@ -26,7 +26,7 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Enchiridion 2 comes complete with a search feature for finding articles. It is also how you navigate to different mods. By default Enchiridion shows you information about Enchiridion. If you wish to switch to a different mods information. Type @ModName. This will display only the results from that mod, allowing to click on one article to take you to that group of tabs for that mod.\n\nIf you wish to just find information about a specific thing however, you can just type that. For example if you want to find an article on Sheep. Just type Sheep in to the box. Clicking on one of the options will take you to that page. ",
+        "text": "translate:wiki.enchiridion.searching",
         "color": -1,
         "x": 42,
         "y": 79,

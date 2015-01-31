@@ -3,10 +3,10 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nText",
         "color": -1,
-        "x": 57,
-        "y": 31,
+        "x": 193,
+        "y": 182,
         "width": 200,
         "height": 100,
         "size": 2.0

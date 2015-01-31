@@ -2,6 +2,9 @@ package joshie.enchiridion.designer.features;
 
 import joshie.enchiridion.designer.DesignerHelper;
 import joshie.enchiridion.helpers.ClientHelper;
+import net.minecraft.util.StatCollector;
+
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.google.gson.annotations.Expose;
 
@@ -19,9 +22,10 @@ public class FeatureText extends FeatureColorable {
     public void drawFeature() {
         super.drawFeature();
 
+        String display = this.text.startsWith("translate:") ? StringEscapeUtils.unescapeJava(StatCollector.translateToLocal(text.replaceFirst("translate:", ""))) : getText();
         if (wrap >= 50) {
-            DesignerHelper.drawSplitScaledString(getText(), left, top, wrap, colorI, size);
-        } else DesignerHelper.drawSplitScaledString(getText(), left, top, Math.max(50, (int) ((width) / size) + 4), colorI, size);
+            DesignerHelper.drawSplitScaledString(display, left, top, wrap, colorI, size);
+        } else DesignerHelper.drawSplitScaledString(display, left, top, Math.max(50, (int) ((width) / size) + 4), colorI, size);
     }
 
     @Override
