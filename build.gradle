@@ -31,7 +31,7 @@ minecraft {
     runDir = "eclipse"
     
     replace "@VERSION@", project.mod_version
-    replaceIn "EnchiridionInfo.java"
+    replaceIn "EInfo.java"
 }
 
 dependencies {
