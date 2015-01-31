@@ -27,7 +27,7 @@ public class FeatureResource extends FeatureWithText {
     public FeatureResource() {
         width = 100;
         height = 100;
-        path = "enchiridion:textures/wiki/enchiridion_logo.png";
+        path = "enchiridion:textures/wiki/enchiridion_logo.png:2.5";
     }
 
     //Loads the image in to memory
