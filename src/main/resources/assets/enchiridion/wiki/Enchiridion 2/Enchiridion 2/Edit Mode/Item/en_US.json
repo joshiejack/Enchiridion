@@ -3,13 +3,201 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "text": "Item elements are basically your itemstacks from minecraft. By default only things that are in the creative menu will show up when you are editing these elements. Enchiridion will add whatever you are holding to the list of items whenever it is opened. You can search for items using the search bar at the top left, when you have an item selected. Clicking on the item will set the displayed item to the one you clicked on.",
         "color": -1,
         "x": 45,
         "y": 7,
-        "width": 200,
-        "height": 100,
+        "width": 326,
+        "height": 98,
         "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "Examples",
+        "color": -1,
+        "x": 56,
+        "y": 151,
+        "width": 134,
+        "height": 20,
+        "size": 5.0
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:red_flower 0",
+        "x": 504,
+        "y": 375,
+        "width": 55,
+        "height": 55,
+        "size": 6.875
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:grass",
+        "x": 476,
+        "y": 444,
+        "width": 86,
+        "height": 86,
+        "size": 10.75
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:planks 1",
+        "x": 118,
+        "y": 401,
+        "width": 32,
+        "height": 32,
+        "size": 4.0
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:planks 2",
+        "x": 104,
+        "y": 432,
+        "width": 48,
+        "height": 48,
+        "size": 6.0
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:planks 3",
+        "x": 90,
+        "y": 472,
+        "width": 66,
+        "height": 66,
+        "size": 8.25
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:planks 4",
+        "x": 78,
+        "y": 530,
+        "width": 85,
+        "height": 85,
+        "size": 10.625
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:planks 5",
+        "x": 54,
+        "y": 605,
+        "width": 121,
+        "height": 121,
+        "size": 15.125
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:sponge",
+        "x": 180,
+        "y": 584,
+        "width": 51,
+        "height": 51,
+        "size": 6.375
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:lever",
+        "x": 110,
+        "y": 327,
+        "width": 41,
+        "height": 41,
+        "size": 5.125
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:stone_sword",
+        "x": 232,
+        "y": 168,
+        "width": 130,
+        "height": 130,
+        "size": 16.25
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:diamond_sword",
+        "x": 402,
+        "y": 258,
+        "width": 48,
+        "height": 48,
+        "size": 6.0
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:potion 8194",
+        "x": 512,
+        "y": 154,
+        "width": 117,
+        "height": 117,
+        "size": 14.625
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:web",
+        "x": 58,
+        "y": 222,
+        "width": 76,
+        "height": 76,
+        "size": 9.5
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:torch",
+        "x": 264,
+        "y": 352,
+        "width": 65,
+        "height": 65,
+        "size": 8.125
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:stone_slab 4",
+        "x": 248,
+        "y": 458,
+        "width": 53,
+        "height": 53,
+        "size": 6.625
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:wool 10",
+        "x": 352,
+        "y": 597,
+        "width": 74,
+        "height": 74,
+        "size": 9.25
       }
     }
   ],
@@ -17,6 +205,6 @@
   "isPriority": false,
   "backgroundColor": -301989888,
   "name": "Enchiridion 2.Enchiridion 2.Edit Mode.Item.en_US",
-  "canEdit": true,
+  "canEdit": false,
   "saveDir": "enchiridion"
 }

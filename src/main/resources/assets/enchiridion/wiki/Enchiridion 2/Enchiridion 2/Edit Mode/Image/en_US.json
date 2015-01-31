@@ -3,12 +3,68 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "text": "The image element is fairly simple to operate. Just click on the image button to insert a new one. Then navigate to the file. It will copy the file to the folder of the article you are editing and then display it on this page. You can resize the image as you can with everything else.",
         "color": -1,
-        "x": 78,
-        "y": 22,
-        "width": 200,
-        "height": 100,
+        "x": 30,
+        "y": 0,
+        "width": 336,
+        "height": 82,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "Examples",
+        "color": -1,
+        "x": 44,
+        "y": 119,
+        "width": 115,
+        "height": 22,
+        "size": 5.0
+      }
+    },
+    {
+      "type": "ElementImage",
+      "properties": {
+        "path": "Abstract-Landscape.png",
+        "x": 42,
+        "y": 176,
+        "width": 184,
+        "height": 126,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementImage",
+      "properties": {
+        "path": "flat-lemmling-Cartoon-penguin.png",
+        "x": 428,
+        "y": 91,
+        "width": 134,
+        "height": 131,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementImage",
+      "properties": {
+        "path": "fox-transparent.png",
+        "x": 152,
+        "y": 475,
+        "width": 110,
+        "height": 124,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementImage",
+      "properties": {
+        "path": "jubilee-teapot-red.png",
+        "x": 420,
+        "y": 391,
+        "width": 133,
+        "height": 109,
         "size": 2.0
       }
     }
@@ -17,6 +73,6 @@
   "isPriority": false,
   "backgroundColor": -301989888,
   "name": "Enchiridion 2.Enchiridion 2.Edit Mode.Image.en_US",
-  "canEdit": true,
+  "canEdit": false,
   "saveDir": "enchiridion"
 }

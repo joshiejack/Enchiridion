@@ -3,12 +3,123 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nText",
+        "text": "The box element is a very simple element. When in edit mode simply click the box button to create a new box. When selected you can choose a colour for this box. You can select one of the preloaded colours on the left or input your own in hexcode. These hexcodes should be 8 characters long. You should click the preset colours to understand how they work. These are your normal codes for hex colours.",
         "color": -1,
-        "x": 193,
-        "y": 182,
-        "width": 200,
+        "x": 36,
+        "y": 2,
+        "width": 328,
+        "height": 73,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "Examples",
+        "color": -1,
+        "x": 48,
+        "y": 155,
+        "width": 110,
+        "height": 24,
+        "size": 4.2
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -1,
+        "x": 40,
+        "y": 215,
+        "width": 100,
         "height": 100,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -5952982,
+        "x": 356,
+        "y": 157,
+        "width": 156,
+        "height": 29,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -8586240,
+        "x": 382,
+        "y": 353,
+        "width": 9,
+        "height": 100,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -6632142,
+        "x": 312,
+        "y": 270,
+        "width": 100,
+        "height": 100,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -65281,
+        "x": 50,
+        "y": 498,
+        "width": 134,
+        "height": 17,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -60269,
+        "x": 116,
+        "y": 459,
+        "width": 64,
+        "height": 119,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -65281,
+        "x": 78,
+        "y": 447,
+        "width": 100,
+        "height": 100,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -4565538,
+        "x": 572,
+        "y": 259,
+        "width": 12,
+        "height": 168,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -16777011,
+        "x": 366,
+        "y": 525,
+        "width": 158,
+        "height": 95,
         "size": 2.0
       }
     }
@@ -17,6 +128,6 @@
   "isPriority": false,
   "backgroundColor": -301989888,
   "name": "Enchiridion 2.Enchiridion 2.Edit Mode.Box.en_US",
-  "canEdit": true,
+  "canEdit": false,
   "saveDir": "enchiridion"
 }

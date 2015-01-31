@@ -3,12 +3,138 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "text": "The link element is invisible in display mode. However when you are in edit mode it is represented by a bordered box. When you have a link box selected, you can click the link button again to edit it. It will ask you to fill out mod, tab, category and article. You need to know the path to the article you wish to link to. The best way to work this out is to check the wiki folder and the directory path. The top level should be the mod, then tab, then category, then article. Clicking on a link in display mode will take you to that page. You can place links around anything, helping people navigate from article to article easier.\n\nBelow are some examples of links in action. Click each thing to be taken to the article on that element.",
         "color": -1,
-        "x": 60,
-        "y": 2,
-        "width": 200,
+        "x": 32,
+        "y": -8,
+        "width": 332,
+        "height": 107,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementImage",
+      "properties": {
+        "path": "enchiridion:textures/wiki/enchiridion_logo.png:2.5",
+        "x": 30,
+        "y": 550,
+        "width": 187,
+        "height": 93,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "CLICK ME!",
+        "color": -1,
+        "x": 422,
+        "y": 259,
+        "width": 193,
+        "height": 31,
+        "size": 6.0
+      }
+    },
+    {
+      "type": "ElementImage",
+      "properties": {
+        "path": "molumen-multicolor-power-buttons-4.png",
+        "x": 86,
+        "y": 255,
+        "width": 96,
         "height": 100,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementItem",
+      "properties": {
+        "item": "minecraft:stone",
+        "x": 356,
+        "y": 372,
+        "width": 73,
+        "height": 73,
+        "size": 9.125
+      }
+    },
+    {
+      "type": "ElementBox",
+      "properties": {
+        "color": -1,
+        "x": 542,
+        "y": 428,
+        "width": 60,
+        "height": 134,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementLink",
+      "properties": {
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Edit Mode",
+        "page": "Image",
+        "x": 76,
+        "y": 247,
+        "width": 103,
+        "height": 112,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementLink",
+      "properties": {
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Edit Mode",
+        "page": "Item",
+        "x": 348,
+        "y": 361,
+        "width": 74,
+        "height": 83,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementLink",
+      "properties": {
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Edit Mode",
+        "page": "Text",
+        "x": 416,
+        "y": 248,
+        "width": 138,
+        "height": 28,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementLink",
+      "properties": {
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Edit Mode",
+        "page": "Box",
+        "x": 540,
+        "y": 414,
+        "width": 61,
+        "height": 148,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementLink",
+      "properties": {
+        "mod": "Enchiridion 2",
+        "tab": "Enchiridion 2",
+        "cat": "Edit Mode",
+        "page": "Resource",
+        "x": 42,
+        "y": 559,
+        "width": 185,
+        "height": 86,
         "size": 2.0
       }
     }

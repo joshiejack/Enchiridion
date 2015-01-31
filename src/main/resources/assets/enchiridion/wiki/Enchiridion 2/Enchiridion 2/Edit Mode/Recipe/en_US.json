@@ -1,9 +1,170 @@
 {
-  "components": [],
+  "components": [
+    {
+      "type": "ElementRecipe",
+      "properties": {
+        "stackSize": 1,
+        "items": [
+          "minecraft:iron_block",
+          "minecraft:iron_block",
+          "minecraft:iron_block",
+          "",
+          "minecraft:iron_ingot",
+          "",
+          "minecraft:iron_ingot",
+          "minecraft:iron_ingot",
+          "minecraft:iron_ingot"
+        ],
+        "ores": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "item": "minecraft:anvil 0",
+        "x": 62,
+        "y": 398,
+        "width": 197,
+        "height": 197,
+        "size": 6.15625
+      }
+    },
+    {
+      "type": "ElementRecipe",
+      "properties": {
+        "stackSize": 1,
+        "items": [
+          "minecraft:slime_ball",
+          "minecraft:piston",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "ores": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "item": "minecraft:sticky_piston",
+        "x": 388,
+        "y": 308,
+        "width": 108,
+        "height": 108,
+        "size": 3.375
+      }
+    },
+    {
+      "type": "ElementRecipe",
+      "properties": {
+        "stackSize": 1,
+        "items": [
+          "minecraft:planks 32767",
+          "minecraft:planks 32767",
+          "minecraft:planks 32767",
+          "minecraft:book",
+          "minecraft:book",
+          "minecraft:book",
+          "minecraft:planks 32767",
+          "minecraft:planks 32767",
+          "minecraft:planks 32767"
+        ],
+        "ores": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "item": "minecraft:bookshelf",
+        "x": 64,
+        "y": 176,
+        "width": 104,
+        "height": 104,
+        "size": 3.25
+      }
+    },
+    {
+      "type": "ElementRecipe",
+      "properties": {
+        "stackSize": 1,
+        "items": [
+          "",
+          "minecraft:book",
+          "",
+          "minecraft:diamond",
+          "minecraft:obsidian",
+          "minecraft:diamond",
+          "minecraft:obsidian",
+          "minecraft:obsidian",
+          "minecraft:obsidian"
+        ],
+        "ores": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "item": "minecraft:enchanting_table",
+        "x": 490,
+        "y": 174,
+        "width": 67,
+        "height": 67,
+        "size": 2.09375
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "The recipe element is more of a helper element than anything special. It takes vanilla crafting recipes and preplaces them on the canvas for you when you select an item.",
+        "color": -1,
+        "x": 40,
+        "y": 0,
+        "width": 331,
+        "height": 81,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "Examples",
+        "color": -1,
+        "x": 128,
+        "y": 84,
+        "width": 168,
+        "height": 22,
+        "size": 7.5
+      }
+    }
+  ],
   "scrollMax": 0,
   "isPriority": false,
   "backgroundColor": -301989888,
   "name": "Enchiridion 2.Enchiridion 2.Edit Mode.Recipe.en_US",
-  "canEdit": true,
+  "canEdit": false,
   "saveDir": "enchiridion"
 }
