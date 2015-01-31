@@ -1,5 +1,9 @@
 package joshie.enchiridion.wiki.elements;
 
+import static joshie.enchiridion.helpers.OpenGLHelper.end;
+import static joshie.enchiridion.helpers.OpenGLHelper.scaleAll;
+import static joshie.enchiridion.helpers.OpenGLHelper.start;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,8 +16,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-
-import org.lwjgl.opengl.GL11;
 
 import com.google.gson.annotations.Expose;
 
@@ -82,8 +84,8 @@ public class ElementRecipe extends ElementItem {
 
     @Override
     public void display(boolean isEditMode) {
-        GL11.glPushMatrix();
-        GL11.glScalef(size, size, size);
+        start();
+        scaleAll(size);
         if (stack == null) {
             stack = StackHelper.getStackFromString(item);
         }
@@ -130,6 +132,6 @@ public class ElementRecipe extends ElementItem {
             }
         }
 
-        GL11.glPopMatrix();
+        end();
     }
 }

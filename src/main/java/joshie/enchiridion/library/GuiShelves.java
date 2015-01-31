@@ -1,4 +1,5 @@
 package joshie.enchiridion.library;
+
 import static joshie.enchiridion.library.GuiShelves.ShelfType.BLANK;
 import static joshie.enchiridion.library.GuiShelves.ShelfType.LINES;
 import static joshie.enchiridion.library.GuiShelves.ShelfType.WOOD;

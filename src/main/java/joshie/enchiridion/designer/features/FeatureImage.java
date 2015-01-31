@@ -1,6 +1,5 @@
 package joshie.enchiridion.designer.features;
 
-import static java.io.File.separator;
 import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
 
 import java.awt.image.BufferedImage;

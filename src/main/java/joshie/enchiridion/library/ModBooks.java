@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import com.google.gson.annotations.Expose;
 
 public class ModBooks {
-    @Expose ArrayList<ModBookData> books = new ArrayList();
+    @Expose
+    ArrayList<ModBookData> books = new ArrayList();
 
     public ModBooks addBook(ModBookData book) {
         books.add(book);
@@ -21,6 +22,7 @@ public class ModBooks {
         public String type;
 
         public ModBookData() {}
+
         public ModBookData(String mod, String item, int meta, String register) {
             this.mod = mod;
             this.stack = mod + ":" + item + " " + meta;

@@ -1,8 +1,9 @@
 package joshie.enchiridion.wiki.gui;
 
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glScalef;
+import static joshie.enchiridion.helpers.OpenGLHelper.end;
+import static joshie.enchiridion.helpers.OpenGLHelper.scale;
+import static joshie.enchiridion.helpers.OpenGLHelper.scaleZ;
+import static joshie.enchiridion.helpers.OpenGLHelper.start;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,31 +54,31 @@ public class GuiMain extends GuiScalable {
         buttons = mode.addButtons(new ArrayList());
         GuiMain.mode.onSwitch();
     }
-    
+
     public static void setPage(WikiPage page) {
-    	if(mode.getType() == WikiMode.DISPLAY) {
-    		if(page.getData().canEdit()) {
-    			if (EConfig.EDIT_ENABLED) {
-    	            setMode(SaveMode.getInstance());
-    	        } else setMode(DisplayMode.getInstance());
-    		} else setMode(DisplayMode.getInstance());
-    	} else if(!page.getData().canEdit()) { //If the new page cannot be edited, automatically save everything
-    		setMode(SaveMode.getInstance()); //Now that the page has been saved
-    		setPage(page); //Go through this again as a display mode page
-    	}
-    	
-    	GuiMain.page = page;
-    	
-    	//Clear the resource editing and page editing
-    	((PageEditResource) (WikiHelper.getInstance(PageEditResource.class))).setEditing(null);
-    	((PageEditLink) (WikiHelper.getInstance(PageEditLink.class))).setEditing(null);
+        if (mode.getType() == WikiMode.DISPLAY) {
+            if (page.getData().canEdit()) {
+                if (EConfig.EDIT_ENABLED) {
+                    setMode(SaveMode.getInstance());
+                } else setMode(DisplayMode.getInstance());
+            } else setMode(DisplayMode.getInstance());
+        } else if (!page.getData().canEdit()) { //If the new page cannot be edited, automatically save everything
+            setMode(SaveMode.getInstance()); //Now that the page has been saved
+            setPage(page); //Go through this again as a display mode page
+        }
+
+        GuiMain.page = page;
+
+        //Clear the resource editing and page editing
+        ((PageEditResource) (WikiHelper.getInstance(PageEditResource.class))).setEditing(null);
+        ((PageEditLink) (WikiHelper.getInstance(PageEditLink.class))).setEditing(null);
     }
 
     @Override
     public void initGui() {
         super.initGui();
         WikiHelper.init();
-        
+
         setMode(DisplayMode.getInstance());
         if (page == null) {
             page = WikiRegistry.instance().getPage("Enchiridion 2", "Enchiridion 2", "Enchiridion 2", "About");
@@ -85,7 +86,7 @@ public class GuiMain extends GuiScalable {
             mod = WikiRegistry.instance().getMod("Enchiridion 2");
             loadPage("Enchiridion 2", "Enchiridion 2", "Enchiridion 2", "About");
         }
-        
+
         page.getData().refreshY();
         setPage(page);
 
@@ -98,17 +99,17 @@ public class GuiMain extends GuiScalable {
     }
 
     public void drawScaledText(Minecraft mc, float scale, String text, int x, int y, int color) {
-        glPushMatrix();
-        glScalef(scale, scale, 1.0F);
+        start();
+        scale(scale);
         EClientProxy.font.drawString(text, getLeft(scale, x), getTop(scale, y), color);
-        glPopMatrix();
+        end();
     }
-    
+
     public void drawScaledSplitText(Minecraft mc, float scale, String text, int x, int y, int color, int length) {
-        glPushMatrix();
-        glScalef(scale, scale, 1.0F);
+        start();
+        scale(scale);
         EClientProxy.font.drawSplitString(text, getLeft(scale, x), getTop(scale, y), length, color);
-        glPopMatrix();
+        end();
     }
 
     private void drawCentredText(Minecraft mc, String text, int x, int y) {
@@ -116,29 +117,29 @@ public class GuiMain extends GuiScalable {
     }
 
     public void drawScaledCentredText(Minecraft mc, float scale, String text, int x, int y, int color) {
-        glPushMatrix();
-        glScalef(scale, scale, 1.0F);
+        start();
+        scale(scale);
         EClientProxy.font.drawString(text, getLeft(scale, x) - EClientProxy.font.getStringWidth(text) / 2, getTop(scale, y), color);
-        glPopMatrix();
+        end();
     }
 
     @Override
     public void drawScreen(int x, int y, float tick) {
-        glPushMatrix();
+        start();
         float scaled = 1.0F / resolution.getScaleFactor();
-        if(resolution.getScaleFactor() < 3) {
-            glScalef(scaled, scaled, 0.15F);
+        if (resolution.getScaleFactor() < 3) {
+            scaleZ(scaled, 0.15F);
         } else {
-            glScalef(scaled, scaled, 0.1325F);
+            scaleZ(scaled, 0.1325F);
         }
-        
+
         theLeft = getLeft();
 
         WikiHelper.updateGUI();
         for (GuiExtension element : WikiHelper.getGui()) {
-        	if(element.isVisible()) {
-        		element.draw();
-        	}
+            if (element.isVisible()) {
+                element.draw();
+            }
         }
 
         if (page.getSelected() != null) {
@@ -149,7 +150,7 @@ public class GuiMain extends GuiScalable {
             ((GuiButton) buttons.get(k)).drawButton(this.mc, x, y);
         }
 
-        glPopMatrix();
+        end();
     }
 
     @Override
@@ -182,9 +183,9 @@ public class GuiMain extends GuiScalable {
     protected void mouseClicked(int x, int y, int button) {
         if (!clickedButton(x, y, button)) {
             for (GuiExtension element : WikiHelper.getGui()) {
-            	if(element.isVisible()) {
-            		element.clicked(button);
-            	}
+                if (element.isVisible()) {
+                    element.clicked(button);
+                }
             }
         }
     }
@@ -193,9 +194,9 @@ public class GuiMain extends GuiScalable {
     protected void mouseMovedOrUp(int x, int y, int button) {
         if (!releasedButton(x, y, button)) {
             for (GuiExtension element : WikiHelper.getGui()) {
-            	if(element.isVisible()) {
-            		element.release(button);
-            	}
+                if (element.isVisible()) {
+                    element.release(button);
+                }
             }
         }
     }
@@ -205,9 +206,9 @@ public class GuiMain extends GuiScalable {
         super.keyTyped(character, key);
         page.keyTyped(character, key);
         for (GuiExtension element : WikiHelper.getGui()) {
-        	if(element.isVisible()) {
-        		element.keyTyped(character, key);
-        	}
+            if (element.isVisible()) {
+                element.keyTyped(character, key);
+            }
         }
     }
 
@@ -217,13 +218,13 @@ public class GuiMain extends GuiScalable {
         WikiHelper.updateMouse();
         int wheel = Mouse.getDWheel();
         for (GuiExtension element : WikiHelper.getGui()) {
-        	if(element.isVisible()) {
-	            if(wheel != 0) {
-	                element.scroll(wheel < 0);
-	            }
-            
-	            element.follow();
-        	}
+            if (element.isVisible()) {
+                if (wheel != 0) {
+                    element.scroll(wheel < 0);
+                }
+
+                element.follow();
+            }
         }
     }
 

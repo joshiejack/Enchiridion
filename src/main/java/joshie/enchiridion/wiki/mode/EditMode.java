@@ -23,6 +23,7 @@ import joshie.enchiridion.wiki.gui.buttons.ButtonWikiPriority;
 
 public class EditMode implements IWikiMode {
     private static final EditMode instance = new EditMode();
+
     public static EditMode getInstance() {
         return instance;
     }
@@ -43,14 +44,14 @@ public class EditMode implements IWikiMode {
         list.add(new ButtonWikiEdit(button_id++, 1040, yCoord += 50, ElementRecipe.class, list));
         return list;
     }
-    
+
     @Override
     public void onSwitch() {
         gui.page.setEditMode(true);
     }
-    
+
     @Override
-	public WikiMode getType() {
-		return WikiMode.EDIT;
-	}
+    public WikiMode getType() {
+        return WikiMode.EDIT;
+    }
 }

@@ -1,4 +1,5 @@
 package joshie.enchiridion.wiki.gui;
+
 import static joshie.enchiridion.wiki.WikiHelper.drawRect;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
 import static joshie.enchiridion.wiki.WikiHelper.horizontalGradient;
@@ -8,24 +9,24 @@ import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 
 public abstract class GuiExtension {
     private boolean isVisible = true;
-    
+
     public boolean isVisible() {
-    	return isVisible;
-    }
-    
-    public GuiExtension setVisibility(boolean isVisible) {
-    	this.isVisible = isVisible;
-    	return this;
+        return isVisible;
     }
 
-	public void draw() {
+    public GuiExtension setVisibility(boolean isVisible) {
+        this.isVisible = isVisible;
+        return this;
+    }
+
+    public void draw() {
         return;
     }
-    
+
     public void clicked(int button) {
         return;
     }
-    
+
     public void release(int button) {
         return;
     }
@@ -33,11 +34,11 @@ public abstract class GuiExtension {
     public void follow() {
         return;
     }
-    
+
     public void scroll(boolean scrollingDown) {
         return;
     }
-    
+
     protected int[] getCategoryBGColors(int pageY) {
         int bg_color_1 = 0xFF1A2738;
         int bg_color_2 = 0xFF255174;
@@ -77,7 +78,7 @@ public abstract class GuiExtension {
     protected void drawContentBox(String title, int pageY, int page_bg_1, int page_bg_2) {
         drawContentBox(title, pageY, page_bg_1, page_bg_2, 5, 80);
     }
-    
+
     protected void drawSearchBox(String title, int pageY, int page_bg_1, int page_bg_2, int x, int y) {
         horizontalGradient(x, pageY + y + 38, x + 265, y + pageY + 40, 0xFF354755, 0XFF192B39);
         verticalGradient(x, pageY + y + 40, x + 265, y + pageY + 42, 0xFF172A39, 0xFF091D28);
@@ -86,7 +87,7 @@ public abstract class GuiExtension {
         verticalGradient(x, pageY + y + 78, x + 265, y + pageY + 80, 0xFF172A39, 0xFF091D28);
         drawScaledText(2F, title, x + 8, 53 + y + pageY, 0xFFC2C29C);
     }
-    
+
     protected void drawContentBox(String title, int pageY, int page_bg_1, int page_bg_2, int x, int y) {
         horizontalGradient(x, pageY + y + 38, x + 265, y + pageY + 40, 0x44354755, 0X44192B39);
         verticalGradient(x, pageY + y + 40, x + 265, y + pageY + 42, 0x44172A39, 0x44091D28);
@@ -95,7 +96,7 @@ public abstract class GuiExtension {
         verticalGradient(x, pageY + y + 78, x + 265, y + pageY + 80, 0x44172A39, 0x44091D28);
         drawScaledText(2F, title, x + 8, 53 + y + pageY, 0xFFC2C29C);
     }
-    
+
     public void keyTyped(char character, int key) {
         return;
     }

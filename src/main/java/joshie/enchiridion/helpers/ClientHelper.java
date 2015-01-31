@@ -27,11 +27,11 @@ public class ClientHelper {
     public static World getWorld() {
         return getMinecraft().theWorld;
     }
-    
+
     public static boolean isShiftPressed() {
         return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
-    
+
     //Binds a texture
     public static void bindTexture(ResourceLocation texture) {
         getMinecraft().getTextureManager().bindTexture(texture);

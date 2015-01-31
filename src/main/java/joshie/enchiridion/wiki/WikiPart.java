@@ -30,7 +30,7 @@ public class WikiPart {
     public String getTitle() {
         return WikiData.instance().translateToLocal(getUnlocalized());
     }
-    
+
     public Data getData() {
         return WikiData.instance().getData(getUnlocalized() + "." + ClientHelper.getLang());
     }
@@ -50,7 +50,7 @@ public class WikiPart {
             return true;
         } else return false;
     }
-    
+
     public String getPath() {
         WikiPart part = this;
         String lang = ClientHelper.getLang();
@@ -64,10 +64,12 @@ public class WikiPart {
             if (!parent.exists() && !parent.mkdirs()) {
                 throw new IllegalStateException("Couldn't create dir: " + parent);
             }
-                
+
             Writer writer = new OutputStreamWriter(new FileOutputStream(getPath()), "UTF-8");
             writer.write(GsonClientHelper.getGson().toJson(getData()));
             writer.close();
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

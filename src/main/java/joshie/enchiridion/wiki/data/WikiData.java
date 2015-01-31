@@ -34,7 +34,7 @@ public class WikiData {
     public void addPage(WikiPage page) {
         pages.add(page);
     }
-    
+
     public void removePage(WikiPage page) {
         pages.remove(page);
         translate.remove(page.getUnlocalized() + "." + ClientHelper.getLang());
@@ -60,7 +60,7 @@ public class WikiData {
                 String search = str.toLowerCase();
                 if (search.startsWith("@")) {
                     if (page.getCategory().getTab().getMod().getTitle().toLowerCase().contains(search.substring(1))) {
-                        if(page.getData().isPrioritised()) {
+                        if (page.getData().isPrioritised()) {
                             sorted.add(0, page);
                         } else sorted.add(page);
                     }
@@ -104,11 +104,11 @@ public class WikiData {
         }
     }
 
-    public DataTab getTab(String string) {        
-    	Data data = translate.get(string);
-    	if(data instanceof DataTab) {
-    		return (DataTab) data;
-    	} else {
+    public DataTab getTab(String string) {
+        Data data = translate.get(string);
+        if (data instanceof DataTab) {
+            return (DataTab) data;
+        } else {
             data = new DataTab(string, new ItemStack(Blocks.stone));
             translate.put(string, data);
             return (DataTab) data;

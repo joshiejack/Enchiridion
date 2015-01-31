@@ -12,7 +12,7 @@ public class ButtonLinkEdit extends ButtonWikiEdit {
 
     @Override
     public void onClicked() {
-        if(((PageEditLink)(WikiHelper.getInstance(PageEditLink.class))).isEditingLink()) {
+        if (((PageEditLink) (WikiHelper.getInstance(PageEditLink.class))).isEditingLink()) {
             WikiHelper.setVisibility(PageEditLink.class, true);
         } else super.onClicked();
     }

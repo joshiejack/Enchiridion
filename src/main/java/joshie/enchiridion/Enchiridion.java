@@ -26,7 +26,7 @@ public class Enchiridion {
     @Instance(MODID)
     public static Enchiridion instance;
     public static File root;
-    
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         root = new File(event.getModConfigurationDirectory() + separator + MODPATH);

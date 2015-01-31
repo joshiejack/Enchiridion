@@ -124,7 +124,7 @@ public class FeatureItem extends FeatureWithText {
 
         super.click(x, y);
     }
-    
+
     @Override
     public void scroll(boolean scrolledDown) {
         if (isSelected) {
@@ -140,7 +140,7 @@ public class FeatureItem extends FeatureWithText {
 
     public void updateSearch() {
         ItemHelper.addInventory();
-        
+
         if (search == null || search.equals("")) {
             sorted = new ArrayList(ItemHelper.items);
         } else {

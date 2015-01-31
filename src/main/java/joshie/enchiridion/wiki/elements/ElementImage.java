@@ -4,9 +4,10 @@ import static java.io.File.separator;
 import static joshie.enchiridion.helpers.OpenGLHelper.disable;
 import static joshie.enchiridion.helpers.OpenGLHelper.enable;
 import static joshie.enchiridion.helpers.OpenGLHelper.end;
+import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
+import static joshie.enchiridion.helpers.OpenGLHelper.scale;
 import static joshie.enchiridion.helpers.OpenGLHelper.start;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.glScalef;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -82,7 +83,7 @@ public class ElementImage extends Element {
             } catch (Exception e) {
                 ELogger.log(Level.ERROR, "Enchiridion 2 failed to read in the image at the following path: ");
                 ELogger.log(Level.ERROR, path);
-                
+
                 e.printStackTrace();
             }
         } else {
@@ -122,7 +123,7 @@ public class ElementImage extends Element {
             texture.updateDynamicTexture();
             Tessellator tessellator = Tessellator.instance;
             ClientHelper.getMinecraft().getTextureManager().bindTexture(resource);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            fixColors();
             tessellator.startDrawingQuads();
             tessellator.addVertexWithUV(WikiHelper.getScaledX(BASE_X + left), WikiHelper.getScaledY(BASE_Y + top + (height * 2)), 0, 0.0, 1.0);
             tessellator.addVertexWithUV(WikiHelper.getScaledX(BASE_X + left + (width * 2)), WikiHelper.getScaledY(BASE_Y + top + (height * 2)), 0, 1.0, 1.0);
@@ -144,7 +145,7 @@ public class ElementImage extends Element {
         enable(GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         ClientHelper.bindTexture(resource);
-        glScalef(scaleX, scaleY, 1.0F);
+        scale(scaleX, scaleY);
         WikiHelper.drawTexture(WikiHelper.getScaledX(x, scaleX), WikiHelper.getScaledY(y, scaleY), 0, 0, img_width, img_height);
         disable(GL_BLEND);
         end();

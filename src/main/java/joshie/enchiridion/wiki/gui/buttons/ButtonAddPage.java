@@ -10,6 +10,6 @@ public class ButtonAddPage extends ButtonBase {
 
     @Override
     public void onClicked() {
-        ((PageEditAddition)WikiHelper.getInstance(PageEditAddition.class).setVisibility(true)).setToDefault();
+        ((PageEditAddition) WikiHelper.getInstance(PageEditAddition.class).setVisibility(true)).setToDefault();
     }
 }

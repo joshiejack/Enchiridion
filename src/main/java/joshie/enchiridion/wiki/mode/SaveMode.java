@@ -16,8 +16,8 @@ import joshie.enchiridion.wiki.gui.buttons.ButtonDeletePage;
 import joshie.enchiridion.wiki.gui.buttons.ButtonSwitchMode;
 
 public class SaveMode implements IWikiMode {
-	/** This mode is set when you press the save button, or by default if you have editing enabled
-	 *  It is only ever the mode when the page can be edited. **/
+    /** This mode is set when you press the save button, or by default if you have editing enabled
+     *  It is only ever the mode when the page can be edited. **/
     private static final SaveMode instance = new SaveMode();
     private static boolean isDirty;
 
@@ -47,13 +47,13 @@ public class SaveMode implements IWikiMode {
                             if (tab.isDirty()) {
                                 for (WikiCategory cat : tab.getCategories()) {
                                     if (cat.isDirty()) {
-                                        for(WikiPage page: cat.getPages()) {
-                                            if(page.isDirty()) {
+                                        for (WikiPage page : cat.getPages()) {
+                                            if (page.isDirty()) {
                                                 page.getData().refreshY();
                                                 page.save();
                                             }
                                         }
-                                        
+
                                         cat.save();
                                     }
                                 }
@@ -65,18 +65,18 @@ public class SaveMode implements IWikiMode {
                         mod.save();
                     }
                 }
-                
+
                 isDirty = false;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        
+
         gui.page.setEditMode(false);
     }
-    
+
     @Override
-	public WikiMode getType() {
-		return WikiMode.DISPLAY;
-	}
+    public WikiMode getType() {
+        return WikiMode.DISPLAY;
+    }
 }

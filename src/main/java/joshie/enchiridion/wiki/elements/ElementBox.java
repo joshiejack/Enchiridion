@@ -11,7 +11,7 @@ import com.google.gson.annotations.Expose;
 public class ElementBox extends Element implements IColorSelectable {
     @Expose
     private int color = 0xFFFFFFFF;
-    
+
     @Override
     public ElementBox setToDefault() {
         this.width = 100;
@@ -23,7 +23,7 @@ public class ElementBox extends Element implements IColorSelectable {
     public void display(boolean isEditMode) {
         WikiHelper.drawRect(BASE_X + left, BASE_Y + top, BASE_X + right, BASE_Y + bottom, color);
     }
-    
+
     @Override
     public void updateWidth(int change) {
         width += change;
@@ -31,7 +31,7 @@ public class ElementBox extends Element implements IColorSelectable {
             width = 1;
         }
     }
-    
+
     @Override
     public void updateHeight(int change) {
         height += change;
@@ -39,17 +39,17 @@ public class ElementBox extends Element implements IColorSelectable {
             height = 1;
         }
     }
-    
+
     @Override
     public void addEditButtons(List list) {
-        
+
     }
-    
+
     @Override
     public void onSelected(int x, int y) {
         GuiColorEdit.select(this);
     }
-    
+
     @Override
     public void onDeselected() {
         markDirty();

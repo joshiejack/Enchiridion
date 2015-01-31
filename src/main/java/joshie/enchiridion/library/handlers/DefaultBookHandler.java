@@ -10,7 +10,7 @@ public class DefaultBookHandler implements IBookHandler {
     public String getName() {
         return "default";
     }
-    
+
     @Override
     public void handle(ItemStack stack, World world, EntityPlayer player) {
         stack.getItem().onItemRightClick(stack, world, player);

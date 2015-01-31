@@ -263,16 +263,16 @@ public class WikiHelper {
 
     public static void renderStack(ItemStack stack, int x, int y) {
         if (stack == null) return;
-        GL11.glDisable(GL11.GL_ALPHA_TEST);
-        GL11.glDisable(GL11.GL_LIGHTING);
+        disable(GL11.GL_ALPHA_TEST);
+        disable(GL11.GL_LIGHTING);
         GL11.glColor3f(1F, 1F, 1F); //Forge: Reset color in case Items change it.
-        GL11.glEnable(GL11.GL_BLEND); //Forge: Make sure blend is enabled else tabs show a white border.
-        GL11.glEnable(GL11.GL_LIGHTING);
-        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        enable(GL11.GL_BLEND); //Forge: Make sure blend is enabled else tabs show a white border.
+        enable(GL11.GL_LIGHTING);
+        enable(GL12.GL_RESCALE_NORMAL);
         ElementItem.itemRenderer.renderItemAndEffectIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, x, y);
         ElementItem.itemRenderer.renderItemOverlayIntoGUI(gui.mc.fontRenderer, gui.mc.getTextureManager(), stack, x, y);
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glEnable(GL11.GL_ALPHA_TEST);
+        disable(GL11.GL_LIGHTING);
+        enable(GL11.GL_ALPHA_TEST);
     }
 
     public static int getScaledX(int x) {

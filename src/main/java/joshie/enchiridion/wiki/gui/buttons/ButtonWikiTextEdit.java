@@ -13,10 +13,10 @@ public abstract class ButtonWikiTextEdit extends ButtonWikiEdit {
     @Override
     public void onClicked() {
         Element component = gui.page.getSelected();
-        if(component != null) {
+        if (component != null) {
             affect(component);
         }
     }
-    
+
     public abstract void affect(Element component);
 }

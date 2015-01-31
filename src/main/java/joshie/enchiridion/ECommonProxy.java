@@ -48,7 +48,7 @@ public class ECommonProxy {
 
         /** Register the world load handler **/
         MinecraftForge.EVENT_BUS.register(new LibraryLoadEvent());
-        
+
         /** Register the handler for connecting to a world **/
         FMLCommonHandler.instance().bus().register(new LibraryOnConnect());
 
@@ -63,5 +63,6 @@ public class ECommonProxy {
     }
 
     public void postClient() {}
+
     public void preClient() {}
 }

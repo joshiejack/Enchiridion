@@ -12,7 +12,7 @@ public class ButtonResourceEdit extends ButtonWikiEdit {
 
     @Override
     public void onClicked() {
-        if(((PageEditResource)(WikiHelper.getInstance(PageEditResource.class))).isEditingResource()) {
+        if (((PageEditResource) (WikiHelper.getInstance(PageEditResource.class))).isEditingResource()) {
             WikiHelper.setVisibility(PageEditResource.class, true);
         } else super.onClicked();
     }

@@ -9,15 +9,16 @@ public class DataTab extends Data {
     @Expose
     private String item;
     private ItemStack stack;
-    
-    public DataTab(){}
+
+    public DataTab() {}
+
     public DataTab(String string, ItemStack stack) {
         super(string);
-        
+
         this.item = StackHelper.getStringFromStack(stack);
         this.stack = stack;
     }
-    
+
     public ItemStack getStack() {
         if (stack != null) {
             return stack;

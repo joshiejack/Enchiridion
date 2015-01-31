@@ -14,7 +14,7 @@ import joshie.enchiridion.wiki.elements.Element;
 import joshie.enchiridion.wiki.gui.GuiLayers;
 import joshie.enchiridion.wiki.gui.GuiMenu;
 
-public class WikiPage extends WikiPart {    
+public class WikiPage extends WikiPart {
     public WikiPage(String key, String lang, DataPage contents) {
         super(key);
         WikiData.instance().addData(key, contents);
@@ -25,6 +25,7 @@ public class WikiPage extends WikiPart {
     }
 
     private WikiCategory category;
+
     public WikiPage setCategory(WikiCategory category) {
         this.category = category;
         return this;
@@ -41,16 +42,16 @@ public class WikiPage extends WikiPart {
         WikiCategory cat = category;
         WikiPage page = this;
         String lang = ClientHelper.getLang();
-                
+
         String dir = getData().getSaveDirectory();
-        if(dir.equals("")) {        	
-        	return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + page.getKey() + "\\" + lang + ".json";
+        if (dir.equals("")) {
+            return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + page.getKey() + "\\" + lang + ".json";
         } else {
-        	String root = Enchiridion.root.getParentFile().getParentFile().getParentFile().toString();
-        	return root + "\\src\\main\\resources\\assets\\" + dir + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + page.getKey() + "\\" + lang + ".json";
+            String root = Enchiridion.root.getParentFile().getParentFile().getParentFile().toString();
+            return root + "\\src\\main\\resources\\assets\\" + dir + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + page.getKey() + "\\" + lang + ".json";
         }
     }
-    
+
     @Override
     public void markDirty() {
         super.markDirty();
@@ -71,19 +72,19 @@ public class WikiPage extends WikiPart {
     }
 
     public void add(Element component) {
-    	if(isEditMode()) {
-	        getData().add(component);
-	        this.markDirty();
-    	}
+        if (isEditMode()) {
+            getData().add(component);
+            this.markDirty();
+        }
     }
 
     public void remove(Element component) {
-    	if(isEditMode()) {
-	        getData().remove(component);
-	        this.markDirty();
-    	}
+        if (isEditMode()) {
+            getData().remove(component);
+            this.markDirty();
+        }
     }
-    
+
     public boolean shouldSave() {
         return isEditMode;
     }
@@ -112,7 +113,7 @@ public class WikiPage extends WikiPart {
         return WikiData.instance().getPage(getUnlocalized() + "." + ClientHelper.getLang());
     }
 
-    public void display() {       
+    public void display() {
         //Render a null stack, to fix stuff
         WikiHelper.renderStack(null, 0, 0);
         ArrayList<Element> elements = getData().getComponents();

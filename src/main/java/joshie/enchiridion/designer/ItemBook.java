@@ -110,7 +110,7 @@ public class ItemBook extends Item {
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List list) {
         list.add(new ItemStack(item));
-        
+
         for (String identifier : BookRegistry.getIDs()) {
             ItemStack stack = new ItemStack(item);
             stack.setTagCompound(new NBTTagCompound());

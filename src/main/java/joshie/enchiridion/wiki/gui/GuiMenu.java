@@ -1,4 +1,5 @@
 package joshie.enchiridion.wiki.gui;
+
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
 import static joshie.enchiridion.wiki.WikiHelper.getTab;
 import static joshie.enchiridion.wiki.WikiHelper.horizontalGradient;

@@ -38,7 +38,7 @@ public abstract class Element {
         scaledX = (int) ((WikiHelper.theLeft + BASE_X + left) / size);
         scaledY = ((int) ((WikiHelper.theTop + BASE_Y + top) / size));
     }
-    
+
     public String getTitle() {
         return this.getClass().getSimpleName();
     }
@@ -62,10 +62,10 @@ public abstract class Element {
             WikiHelper.drawRect((int) (BASE_X + left - (size * 4)), BASE_Y + bottom, BASE_X + left, (int) (BASE_Y + bottom + (size * 4)), 0xFF2693FF);
             WikiHelper.drawRect(BASE_X + right, BASE_Y + bottom, (int) (BASE_X + right + (size * 4)), (int) (BASE_Y + bottom + (size * 4)), 0XFFFFFF00);
         }
-        
+
         display(isEditMode);
     }
-    
+
     public void markDirty() {
         WikiHelper.getPage().markDirty();
     }
@@ -78,7 +78,7 @@ public abstract class Element {
     public void whileSelected() {
         return;
     }
-    
+
     public void onSelected(int x, int y, int button) {
         onSelected(x, y);
     }
@@ -144,7 +144,7 @@ public abstract class Element {
     public void follow(int x, int y) {
         if (isMoving) {
             this.x += (x - lastX);
-            this.y += (y - lastY);            
+            this.y += (y - lastY);
             this.lastX = x;
             this.lastY = y;
         } else if (isDragging) {
@@ -168,10 +168,10 @@ public abstract class Element {
     }
 
     //Return true if the item has been selected, Return false if it has been deselected
-    public boolean clickButton(int x, int y, int button) {    	
+    public boolean clickButton(int x, int y, int button) {
         int relX = x - this.x;
         int relY = y - this.y;
-        
+
         if (button == 0) {
             if (isSelected) {
                 if (x <= 0) {

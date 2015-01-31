@@ -40,8 +40,8 @@ public class FeatureJump extends FeatureWithText {
                 image.drawFeature();
             }
         }
-        
-      //Draw The Search stuff
+
+        //Draw The Search stuff
         if (isSelected) {
             DesignerHelper.drawRect(-102, -55, -100, -37, 0xFFFFFFFF);
             DesignerHelper.drawRect(0, -55, 2, -37, 0xFFFFFFFF);

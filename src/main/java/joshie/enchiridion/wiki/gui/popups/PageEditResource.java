@@ -100,7 +100,7 @@ public class PageEditResource extends PageEdit {
             editing.setPath(resource.getText(), true);
         }
     }
-    
+
     @Override
     public void cancel() {
         super.cancel();

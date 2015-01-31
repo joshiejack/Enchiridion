@@ -1,6 +1,10 @@
 package joshie.enchiridion.wiki.gui;
 
+import static joshie.enchiridion.helpers.OpenGLHelper.disable;
+import static joshie.enchiridion.helpers.OpenGLHelper.enable;
+import static joshie.enchiridion.helpers.OpenGLHelper.end;
 import static joshie.enchiridion.helpers.OpenGLHelper.fixShitForThePedia;
+import static joshie.enchiridion.helpers.OpenGLHelper.start;
 import static joshie.enchiridion.wiki.WikiHelper.drawRect;
 import static joshie.enchiridion.wiki.WikiHelper.getHeight;
 import static joshie.enchiridion.wiki.WikiHelper.getPage;
@@ -15,10 +19,6 @@ import static org.lwjgl.opengl.GL11.GL_REPLACE;
 import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_STENCIL_TEST;
 import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glStencilFunc;
 import static org.lwjgl.opengl.GL11.glStencilMask;
 import static org.lwjgl.opengl.GL11.glStencilOp;
@@ -33,10 +33,10 @@ public class GuiCanvas extends GuiExtension {
     @Override
     public void draw() {
         fixShitForThePedia();
-        glPushMatrix();
-        glEnable(GL_BLEND);
+        start();
+        enable(GL_BLEND);
         glClear(GL_DEPTH_BUFFER_BIT);
-        glEnable(GL_STENCIL_TEST);
+        enable(GL_STENCIL_TEST);
         glStencilFunc(GL_NEVER, 1, 0xFF);
         glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
         glStencilMask(0xFF);
@@ -45,14 +45,14 @@ public class GuiCanvas extends GuiExtension {
         glStencilMask(0x00);
         glStencilFunc(GL_EQUAL, 0, 0xFF);
         glStencilFunc(GL_EQUAL, 1, 0xFF);
-        GL11.glDisable(GL11.GL_LIGHTING);
+        disable(GL11.GL_LIGHTING);
         drawRect(0, 0, 2048, 5000 + 10, (WikiHelper.isLibrary() ? DEFAULT_COLOR : getPage().getData().getBackground()));
         drawRect(630, -45, 910, -10, 0xFF000000);
         getPage().display();
-        glDisable(GL_STENCIL_TEST);
-        glDisable(GL_BLEND);
-        GL11.glEnable(GL11.GL_LIGHTING);
-        glPopMatrix();
+        disable(GL_STENCIL_TEST);
+        disable(GL_BLEND);
+        enable(GL11.GL_LIGHTING);
+        end();
     }
 
     @Override

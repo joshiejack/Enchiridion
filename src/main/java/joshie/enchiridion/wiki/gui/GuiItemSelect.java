@@ -1,4 +1,5 @@
 package joshie.enchiridion.wiki.gui;
+
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledStack;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
@@ -25,13 +26,13 @@ public class GuiItemSelect extends GuiExtension implements ITextEditable, IGuiDi
     public GuiItemSelect() {
         ItemHelper.addInventory();
     }
-    
+
     public static void select(IItemSelectable selectable) {
         /** Clear all history when selecting this gui **/
         WikiHelper.clearEditGUIs();
         GuiItemSelect.selectable = selectable;
     }
-    
+
     public static void clear() {
         GuiItemSelect.selectable = null;
         GuiItemSelect.search = "";
@@ -60,7 +61,7 @@ public class GuiItemSelect extends GuiExtension implements ITextEditable, IGuiDi
             //Draw the Search box
             drawScaledTexture(texture, 10, 1, 0, 147, 254, 39, 1F);
             drawScaledTexture(texture, 126, 1, 100, 147, 154, 39, 1F);
-            
+
             if (sorted == null) {
                 updateSearch();
             }
@@ -104,7 +105,7 @@ public class GuiItemSelect extends GuiExtension implements ITextEditable, IGuiDi
                         }
                     }
                 }
-                
+
                 if (isEditMode()) {
                     if (getIntFromMouse(0, 299, 0, 45, 0, 1) == 1) {
                         GuiTextEdit.select(this);
@@ -138,7 +139,7 @@ public class GuiItemSelect extends GuiExtension implements ITextEditable, IGuiDi
     public String getText() {
         return this.search;
     }
-    
+
     @Override
     public boolean canEdit(Object... objects) {
         return true;

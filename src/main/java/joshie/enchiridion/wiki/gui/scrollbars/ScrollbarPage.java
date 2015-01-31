@@ -6,11 +6,11 @@ import joshie.enchiridion.wiki.WikiHelper;
 public class ScrollbarPage extends ScrollbarAbstract {
     public static boolean isMoving = false;
     public static int lastY;
-    
+
     public ScrollbarPage() {
         super(1002);
     }
-    
+
     public int getScrollHeight() {
         return 100;
     }

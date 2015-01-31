@@ -296,11 +296,11 @@ public class GuiDesigner extends GuiScreen {
         if (canvas != null) {
             canvas.follow(mouseX, mouseY);
             int wheel = Mouse.getDWheel();
-            if(wheel != 0) {
+            if (wheel != 0) {
                 canvas.scroll(wheel < 0);
             }
         }
-        
+
         super.handleMouseInput();
     }
 }

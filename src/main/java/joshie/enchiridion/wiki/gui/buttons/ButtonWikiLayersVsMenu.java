@@ -12,7 +12,7 @@ public class ButtonWikiLayersVsMenu extends ButtonWikiSwitch {
     @Override
     public void onClicked() {
         try {
-            if(GuiMenu.isEditing()) {
+            if (GuiMenu.isEditing()) {
                 WikiHelper.clearEditGUIs();
                 GuiLayers.setActive(true);
             } else {

@@ -64,7 +64,7 @@ public class DesignerHelper {
 
     public static void drawStack(ItemStack stack, int left, int top, float size) {
         GL11.glDisable(GL11.GL_ALPHA_TEST);
-        GL11.glPushMatrix();
+        start();
         GL11.glScalef(size, size, size);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glColor3f(1F, 1F, 1F); //Forge: Reset color in case Items change it.
@@ -77,7 +77,7 @@ public class DesignerHelper {
         FeatureItem.itemRenderer.renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, (int) ((x + left) / size), (int) ((y + top) / size));
         RenderHelper.disableStandardItemLighting();
         GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glPopMatrix();
+        end();
         GL11.glEnable(GL11.GL_ALPHA_TEST);
     }
 

@@ -7,16 +7,17 @@ public abstract class FeatureWithText extends Feature {
     protected int position;
     private int tick;
     private boolean white;
-    
+
     @Override
     public void setSelected() {
         super.setSelected();
         position = getTextField().length();
     }
-    
+
     public abstract String getTextField();
+
     public abstract void setTextField(String str);
-    
+
     public String getText(String field) {
         if (isSelected) {
             tick++;
@@ -35,7 +36,7 @@ public abstract class FeatureWithText extends Feature {
             }
         } else return getTextField();
     }
-    
+
     public String getText() {
         return getText(getTextField());
     }

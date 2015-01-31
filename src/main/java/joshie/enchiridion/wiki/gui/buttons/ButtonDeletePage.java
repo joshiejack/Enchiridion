@@ -11,7 +11,7 @@ public class ButtonDeletePage extends ButtonBase {
 
     @Override
     public void onClicked() {
-    	WikiHelper.setVisibility(ConfirmDeletion.class, true);
+        WikiHelper.setVisibility(ConfirmDeletion.class, true);
     }
 
     @Override

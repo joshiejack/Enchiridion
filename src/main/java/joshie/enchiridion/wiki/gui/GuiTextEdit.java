@@ -13,33 +13,33 @@ public class GuiTextEdit extends GuiExtension {
     private static int tick;
     private static boolean white;
     private static String blink;
-    
+
     public static void clear() {
         GuiTextEdit.editable = null;
         GuiTextEdit.position = 0;
         GuiMenu.isEditing = false;
     }
-    
+
     public static boolean isSelected(ITextEditable editable) {
         return editable == GuiTextEdit.editable;
     }
-    
+
     public static void select(ITextEditable editable) {
         select(editable, editable.getText().length());
     }
 
     public static void select(ITextEditable editable, int position) {
-        if(!(editable instanceof IGuiDisablesMenu)) {
+        if (!(editable instanceof IGuiDisablesMenu)) {
             WikiHelper.clearEditGUIs();
             GuiMenu.isEditing = true;
         }
-        
+
         GuiTextEdit.editable = editable;
         GuiTextEdit.position = position;
     }
 
     @Override
-    public void keyTyped(char character, int key) {       
+    public void keyTyped(char character, int key) {
         if (ClientHelper.isShiftPressed()) {
             if (key == 78) {
                 return;
@@ -47,7 +47,7 @@ public class GuiTextEdit extends GuiExtension {
                 return;
             }
         }
-        
+
         if (editable != null) {
             if (key == 203) {
                 cursorLeft(1);
@@ -100,12 +100,12 @@ public class GuiTextEdit extends GuiExtension {
             else if (count >= 0) cursorRight(count);
         }
     }
-    
+
     public static String getText(ITextEditable editable) {
         return getText(editable, editable.getText());
     }
 
-    public static String getText(ITextEditable editable, String text, Object...objects) {
+    public static String getText(ITextEditable editable, String text, Object... objects) {
         if (GuiTextEdit.editable == editable && editable.canEdit(objects)) {
             tick++;
             if (blink == null) blink = "F";

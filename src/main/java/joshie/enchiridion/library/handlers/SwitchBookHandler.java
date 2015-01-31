@@ -10,11 +10,11 @@ public class SwitchBookHandler implements IBookHandler {
     public String getName() {
         return "switch";
     }
-    
+
     @Override
     public void handle(ItemStack stack, World world, EntityPlayer player) {
         ItemStack previous = player.getCurrentEquippedItem();
-        if(previous != null) previous = previous.copy();
+        if (previous != null) previous = previous.copy();
         player.setCurrentItemOrArmor(0, stack);
         stack.getItem().onItemRightClick(stack, world, player);
         player.setCurrentItemOrArmor(0, previous);

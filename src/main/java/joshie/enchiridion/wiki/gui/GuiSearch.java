@@ -1,7 +1,9 @@
 package joshie.enchiridion.wiki.gui;
+
 import static joshie.enchiridion.helpers.OpenGLHelper.end;
 import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
 import static joshie.enchiridion.helpers.OpenGLHelper.resetZ;
+import static joshie.enchiridion.helpers.OpenGLHelper.scaleZ;
 import static joshie.enchiridion.helpers.OpenGLHelper.start;
 import static joshie.enchiridion.wiki.WikiHelper.drawRect;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
@@ -22,8 +24,6 @@ import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.data.WikiData;
 
-import org.lwjgl.opengl.GL11;
-
 public class GuiSearch extends GuiExtension implements ITextEditable {
     public static String search = "";
     public static int visible;
@@ -32,7 +32,7 @@ public class GuiSearch extends GuiExtension implements ITextEditable {
     public void draw() {
         start();
         resetZ();
-        
+
         int x = 0;
         if (getIntFromMouse(920, 1044, -45, -6, 0, 1) == 1) {
             x = 130;
@@ -48,18 +48,18 @@ public class GuiSearch extends GuiExtension implements ITextEditable {
             if (pages.size() > 0) {
                 for (int i = 0; i < pages.size(); i++) {
                     int[] colors = getContentBGColors(-5 + (i * 40));
-                    GL11.glScalef(1.0F, 1.0F, 100F);
+                    scaleZ(100F);
                     drawSearchBox(pages.get(i).getTitle(), -48 + (i * 40), colors[0], colors[1], 638, 0);
                 }
             } else {
                 int[] colors = getContentBGColors(-5);
-                GL11.glScalef(1.0F, 1.0F, 100F);
+                scaleZ(100F);
                 drawSearchBox(ETranslate.translate("noresults"), -48, colors[0], colors[1], 638, 0);
             }
 
             end();
         }
-        
+
         fixColors();
         drawScaledTexture(texture, 630, -45, 0, 57, 254, 39, 1F);
         drawScaledTexture(texture, 756, -45, 100, 57, 154, 39, 1F);

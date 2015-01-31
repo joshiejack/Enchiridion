@@ -1,5 +1,9 @@
 package joshie.enchiridion.wiki.elements;
 
+import static joshie.enchiridion.helpers.OpenGLHelper.end;
+import static joshie.enchiridion.helpers.OpenGLHelper.scaleAll;
+import static joshie.enchiridion.helpers.OpenGLHelper.start;
+
 import java.util.List;
 
 import joshie.enchiridion.api.IItemSelectable;
@@ -11,8 +15,6 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
-import org.lwjgl.opengl.GL11;
 
 import com.google.gson.annotations.Expose;
 
@@ -43,12 +45,12 @@ public class ElementItem extends Element implements IItemSelectable {
         width += change;
         this.size = (float) (width / 8D);
     }
-    
+
     @Override
     public String getTitle() {
-        return stack != null? stack.getDisplayName(): super.getTitle();
+        return stack != null ? stack.getDisplayName() : super.getTitle();
     }
-    
+
     public void setItemStack(ItemStack stack) {
         setStack(stack);
         markDirty();
@@ -68,7 +70,7 @@ public class ElementItem extends Element implements IItemSelectable {
         return this;
     }
 
-    public void renderStack(ItemStack stack, int x, int y) {        
+    public void renderStack(ItemStack stack, int x, int y) {
         WikiHelper.renderStack(stack, x, y);
     }
 
@@ -77,18 +79,18 @@ public class ElementItem extends Element implements IItemSelectable {
         if (stack == null) {
             stack = StackHelper.getStackFromString(item);
         }
-        
-        GL11.glPushMatrix();
-        GL11.glScalef(size, size, size);
+
+        start();
+        scaleAll(size);
         renderStack(stack, scaledX, scaledY);
-        GL11.glPopMatrix();
+        end();
     }
 
     @Override
     public void onSelected(int x, int y) {
         GuiItemSelect.select(this);
     }
-    
+
     @Override
     public void onDeselected() {
         markDirty();

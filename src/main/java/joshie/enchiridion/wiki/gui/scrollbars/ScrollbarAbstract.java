@@ -1,4 +1,5 @@
 package joshie.enchiridion.wiki.gui.scrollbars;
+
 import static joshie.enchiridion.wiki.WikiHelper.drawRect;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
 import static joshie.enchiridion.wiki.WikiHelper.getHeight;
@@ -77,11 +78,18 @@ public abstract class ScrollbarAbstract extends GuiExtension {
     }
 
     public abstract void setLastY(int y);
+
     public abstract int getLastY();
+
     public abstract void setMoving(boolean value);
+
     public abstract boolean isMoving();
+
     public abstract boolean displayScroll();
+
     public abstract int getScrollbarHeight();
+
     public abstract int getScrollbarPosition();
+
     public abstract void scroll(int amount);
 }

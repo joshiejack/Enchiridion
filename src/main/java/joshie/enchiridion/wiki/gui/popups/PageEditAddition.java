@@ -9,17 +9,17 @@ public class PageEditAddition extends PageEdit {
     }
 
     @Override
-    public void add() {        
+    public void add() {
         ConfirmAddition.mod = mod.getText();
         ConfirmAddition.tab = tab.getText();
         ConfirmAddition.cat = cat.getText();
         ConfirmAddition.page = page.getText();
         WikiHelper.setVisibility(ConfirmAddition.class, true);
     }
-    
+
     public void setToDefault() {
         this.page.setText("");
-        if(GuiTextEdit.isSelected(page)) {
+        if (GuiTextEdit.isSelected(page)) {
             GuiTextEdit.select(page);
         }
     }

@@ -103,12 +103,12 @@ public class StackHelper {
             return 0;
         }
     }
-    
+
     public static NBTTagCompound writeItemStackToNBT(NBTTagCompound tag, ItemStack stack) {
         if (tag == null) {
             tag = new NBTTagCompound();
         }
-        
+
         tag.setString("Name", Item.itemRegistry.getNameForObject(stack.getItem()));
         tag.setInteger("Count", (byte) stack.stackSize);
         tag.setInteger("Damage", (short) stack.getItemDamage());
@@ -124,7 +124,7 @@ public class StackHelper {
         if (tag == null) {
             tag = new NBTTagCompound();
         }
-        
+
         Item item = (Item) Item.itemRegistry.getObject(tag.getString("Name"));
         int count = tag.getInteger("Count");
         int damage = tag.getInteger("Damage");

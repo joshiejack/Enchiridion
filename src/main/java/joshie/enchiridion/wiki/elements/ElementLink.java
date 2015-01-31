@@ -31,10 +31,10 @@ public class ElementLink extends Element {
     @Override
     public void display(boolean isEditMode) {
         if (isEditMode) {
-        	WikiHelper.drawRect(BASE_X + left - 2, BASE_Y + top, BASE_X + left, BASE_Y + bottom, 0xFFFFFF00);
-        	WikiHelper.drawRect(BASE_X + right, BASE_Y + top, BASE_X + right + 2, BASE_Y + bottom, 0xFFFFFF00);
-        	WikiHelper.drawRect(BASE_X + left, BASE_Y + top - 2, BASE_X + right, BASE_Y + top, 0xFFFFFF00);
-        	WikiHelper.drawRect(BASE_X + left, BASE_Y + bottom, BASE_X + right, BASE_Y + bottom + 2, 0xFFFFFF00);
+            WikiHelper.drawRect(BASE_X + left - 2, BASE_Y + top, BASE_X + left, BASE_Y + bottom, 0xFFFFFF00);
+            WikiHelper.drawRect(BASE_X + right, BASE_Y + top, BASE_X + right + 2, BASE_Y + bottom, 0xFFFFFF00);
+            WikiHelper.drawRect(BASE_X + left, BASE_Y + top - 2, BASE_X + right, BASE_Y + top, 0xFFFFFF00);
+            WikiHelper.drawRect(BASE_X + left, BASE_Y + bottom, BASE_X + right, BASE_Y + bottom + 2, 0xFFFFFF00);
         }
     }
 
@@ -59,25 +59,25 @@ public class ElementLink extends Element {
 
     @Override
     public void onSelected(int x, int y, int button) {
-        ((PageEditLink)(WikiHelper.getInstance(PageEditLink.class))).setEditing(this);
+        ((PageEditLink) (WikiHelper.getInstance(PageEditLink.class))).setEditing(this);
     }
-    
+
     public String getMod() {
         return mod;
     }
-    
+
     public String getTab() {
         return tab;
     }
-    
+
     public String getCat() {
         return cat;
     }
-    
+
     public String getPage() {
         return page;
     }
-    
+
     public void set(String mod, String tab, String cat, String page) {
         this.mod = mod;
         this.tab = tab;

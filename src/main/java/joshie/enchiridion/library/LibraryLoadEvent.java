@@ -19,7 +19,7 @@ public class LibraryLoadEvent {
                     data = new LibraryDataServer(LibraryDataServer.DATA_NAME);
                     event.world.setItemData(LibraryDataServer.DATA_NAME, data);
                 }
-                
+
                 isInit = true;
             }
         }

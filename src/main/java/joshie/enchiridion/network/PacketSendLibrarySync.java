@@ -21,6 +21,7 @@ public class PacketSendLibrarySync implements IMessage, IMessageHandler<PacketSe
     ArrayList<ItemStack> stacks;
 
     public PacketSendLibrarySync() {}
+
     public PacketSendLibrarySync(String handlerData, ArrayList<ItemStack> stacks) {
         this.handlerData = handlerData;
         this.stacks = stacks;

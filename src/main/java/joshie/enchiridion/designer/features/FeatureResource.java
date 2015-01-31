@@ -33,11 +33,10 @@ public class FeatureResource extends FeatureWithText {
     //Loads the image in to memory
     public void loadImage(String path) {
         String[] split = path.split(":");
-        if(split.length == 2 || split.length == 3 || split.length == 4)
-        resource = new ResourceLocation(split[0], split[1]);
+        if (split.length == 2 || split.length == 3 || split.length == 4) resource = new ResourceLocation(split[0], split[1]);
         try {
-            double splitX = split.length >= 3? Double.parseDouble(split[2]): 1D;
-            double splitY = split.length == 4? Double.parseDouble(split[3]): 1D;
+            double splitX = split.length >= 3 ? Double.parseDouble(split[2]) : 1D;
+            double splitY = split.length == 4 ? Double.parseDouble(split[3]) : 1D;
             BufferedImage image = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(resource).getInputStream());
             img_width = (int) (image.getWidth() / splitX);
             img_height = (int) (image.getHeight() / splitY);

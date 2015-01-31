@@ -7,7 +7,7 @@ public class ETranslate {
         return StatCollector.translateToLocal("enchiridion." + text);
     }
 
-	public static String translate(String string, Object...data) {
-		return StatCollector.translateToLocalFormatted("enchiridion." + string, data);
-	}
+    public static String translate(String string, Object... data) {
+        return StatCollector.translateToLocalFormatted("enchiridion." + string, data);
+    }
 }

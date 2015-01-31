@@ -32,6 +32,7 @@ public class WikiCategory extends WikiPart {
     }
 
     private WikiTab tab;
+
     public WikiCategory setTab(WikiTab tab) {
         this.tab = tab;
         return this;
@@ -48,20 +49,20 @@ public class WikiCategory extends WikiPart {
 
     @Override
     public String getPath() {
-    	WikiMod mod = getTab().getMod();
+        WikiMod mod = getTab().getMod();
         WikiTab tab = getTab();
         WikiCategory cat = this;
         String lang = ClientHelper.getLang();
-        
+
         String dir = getData().getSaveDirectory();
-        if(dir.equals("")) {
-        	return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey()  + "\\" + lang + ".json";
+        if (dir.equals("")) {
+            return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + lang + ".json";
         } else {
-        	String root = Enchiridion.root.getParentFile().getParentFile().getParentFile().toString();
-        	return root + "\\src\\main\\resources\\assets\\" + dir + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + lang + ".json";
+            String root = Enchiridion.root.getParentFile().getParentFile().getParentFile().toString();
+            return root + "\\src\\main\\resources\\assets\\" + dir + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + lang + ".json";
         }
     }
-    
+
     @Override
     public void markDirty() {
         super.markDirty();

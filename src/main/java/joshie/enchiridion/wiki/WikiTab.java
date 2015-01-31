@@ -46,37 +46,37 @@ public class WikiTab extends WikiPart {
     public String getUnlocalized() {
         return mod.getUnlocalized() + "." + getKey();
     }
-    
+
     @Override
     public String getPath() {
-    	WikiMod mod = getMod();
+        WikiMod mod = getMod();
         WikiTab tab = this;
         String lang = ClientHelper.getLang();
-        
+
         String dir = getData().getSaveDirectory();
-        if(dir.equals("")) {
-        	return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey()  + "\\" + lang + ".json";
+        if (dir.equals("")) {
+            return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + lang + ".json";
         } else {
-        	String root = Enchiridion.root.getParentFile().getParentFile().getParentFile().toString();
-        	return root + "\\src\\main\\resources\\assets\\" + dir + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + lang + ".json";
+            String root = Enchiridion.root.getParentFile().getParentFile().getParentFile().toString();
+            return root + "\\src\\main\\resources\\assets\\" + dir + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + lang + ".json";
         }
     }
-    
+
     @Override
     public void markDirty() {
         super.markDirty();
         mod.markDirty();
     }
-    
+
     @Override
     public DataTab getData() {
         return WikiData.instance().getTab(getUnlocalized() + "." + ClientHelper.getLang());
     }
-    
+
     public ItemStack getItemStack() {
         return getData().getStack();
     }
-    
+
     public WikiPart setStack(ItemStack stack) {
         getData().setStack(stack);
         this.markDirty();

@@ -42,12 +42,12 @@ public class EClientProxy extends ECommonProxy {
     public void preClient() {
         /** Register the GuiHandler clientSide only, no need for a server side gui **/
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new EGuiHandler());
-        
+
         /** If we have the books enabled let's load them all up clientside only **/
         if (EConfig.ENABLE_BOOKS) {
             //Load in all the books
             BookRegistry.init();
-            
+
             //Create a copy of the book
             //Save the tab data
             if (EConfig.GEN_EXAMPLE_BOOK) {
@@ -73,17 +73,17 @@ public class EClientProxy extends ECommonProxy {
 
             MinecraftForge.EVENT_BUS.register(new BookIconPatcher());
         }
-        
+
         /** Init the LibraryRegistry**/
         BookHandlerRegistry.initRegistry();
     }
-    
+
     @Override
     public void initClient() {
         if (Loader.isModLoaded("Botania")) {
             BotaniaClient.INSTANCE.init();
         }
-        
+
         /** Let's initialise the wiki and search through it **/
         //Search through all the mods for relevant pages
         WikiRegistry.instance().registerMods();

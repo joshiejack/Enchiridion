@@ -1,4 +1,5 @@
 package joshie.enchiridion.wiki.gui;
+
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledCentredText;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
@@ -18,10 +19,9 @@ public class GuiMode extends GuiExtension {
         if (getIntFromMouse(920, 1044, -45, -6, 0, 1) == 1) {
             x = 130;
         }
-        
-        
+
         drawScaledTexture(texture, 920, -45, x, 104, 124, 39, 1F);
-        if(!WikiHelper.isLibrary()) {
+        if (!WikiHelper.isLibrary()) {
             drawScaledCentredText(2F, "[b]" + ETranslate.translate("library") + "[/b]", 978, -32, 0xFFFFFF);
         } else {
             drawScaledCentredText(2F, "[b]" + ETranslate.translate("wiki") + "[/b]", 978, -32, 0xFFFFFF);
@@ -45,13 +45,13 @@ public class GuiMode extends GuiExtension {
     @Override
     public void clicked(int button) {
         if (getIntFromMouse(920, 1040, -45, -6, 0, 1) == 1) {
-           if(WikiHelper.isLibrary()) {
-               if (EConfig.EDIT_ENABLED) {
-                   WikiHelper.switchGui(SaveMode.getInstance(), WikiHelper.wiki);
-               } else WikiHelper.switchGui(DisplayMode.getInstance(), WikiHelper.wiki);
-           } else {
-               WikiHelper.switchGui(DisplayMode.getInstance(), WikiHelper.library);
-           }
+            if (WikiHelper.isLibrary()) {
+                if (EConfig.EDIT_ENABLED) {
+                    WikiHelper.switchGui(SaveMode.getInstance(), WikiHelper.wiki);
+                } else WikiHelper.switchGui(DisplayMode.getInstance(), WikiHelper.wiki);
+            } else {
+                WikiHelper.switchGui(DisplayMode.getInstance(), WikiHelper.library);
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ public class GuiHistory extends GuiExtension {
             GuiMain.setPage(history.get(page_number));
         }
     }
-    
+
     public static void delete() {
         history.remove(page_number);
         backPage();
@@ -42,13 +42,13 @@ public class GuiHistory extends GuiExtension {
     @Override
     public void draw() {
         OpenGLHelper.fixColors();
-        
+
         if (getIntFromMouse(-18, 5, 5, 33, 0, 1) == 1) {
             drawScaledTexture(texture, -18, 5, 189, 2, 24, 28, 1F);
         } else {
             drawScaledTexture(texture, -18, 5, 134, 2, 24, 28, 1F);
         }
-        
+
         if (getIntFromMouse(273, 297, 5, 33, 0, 1) == 1) {
             drawScaledTexture(texture, 273, 5, 216, 2, 24, 28, 1F);
         } else {
@@ -62,7 +62,7 @@ public class GuiHistory extends GuiExtension {
             if (getIntFromMouse(-18, 5, 5, 33, 0, 1) == 1) {
                 backPage();
             }
-            
+
             if (getIntFromMouse(273, 297, 5, 33, 0, 1) == 1) {
                 forwardPage();
             }

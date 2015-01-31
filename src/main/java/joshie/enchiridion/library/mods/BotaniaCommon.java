@@ -11,7 +11,7 @@ public class BotaniaCommon {
     public static final BotaniaCommon INSTANCE = new BotaniaCommon();
     public static ItemStack alfheim;
     public static ItemStack lexicon;
-    
+
     public void init() {
         EPacketHandler.registerPacket(PacketAlfheim.class, Side.SERVER);
         lexicon = new ItemStack(GameRegistry.findItem("Botania", "lexicon"), 1, 0);

@@ -9,6 +9,7 @@ import net.minecraft.client.resources.I18n;
 
 public abstract class ButtonBase extends GuiButton {
     protected final float scale;
+
     public ButtonBase(int id, int x, int y, int width, int height, String text, float scale) {
         super(id, x, y, width, height, I18n.format("enchiridion." + text, new Object[0], 2F));
         this.scale = scale;

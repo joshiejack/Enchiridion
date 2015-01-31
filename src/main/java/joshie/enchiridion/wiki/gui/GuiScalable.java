@@ -1,5 +1,7 @@
 package joshie.enchiridion.wiki.gui;
 
+import static joshie.enchiridion.helpers.OpenGLHelper.disable;
+import static joshie.enchiridion.helpers.OpenGLHelper.enable;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -58,7 +60,7 @@ public class GuiScalable extends GuiScreen {
             this.selectedButton = null;
             return true;
         }
-        
+
         return false;
     }
 
@@ -75,9 +77,9 @@ public class GuiScalable extends GuiScreen {
         float r2 = (float) (to >> 16 & 255) / 255.0F;
         float g2 = (float) (to >> 8 & 255) / 255.0F;
         float b2 = (float) (to & 255) / 255.0F;
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_ALPHA_TEST);
+        disable(GL11.GL_TEXTURE_2D);
+        enable(GL11.GL_BLEND);
+        disable(GL11.GL_ALPHA_TEST);
         OpenGlHelper.glBlendFunc(770, 771, 1, 0);
         GL11.glShadeModel(GL11.GL_SMOOTH);
         Tessellator tessellator = Tessellator.instance;
@@ -90,8 +92,8 @@ public class GuiScalable extends GuiScreen {
         tessellator.addVertex((double) width, (double) y, (double) this.zLevel);
         tessellator.draw();
         GL11.glShadeModel(GL11.GL_FLAT);
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glEnable(GL11.GL_ALPHA_TEST);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        disable(GL11.GL_BLEND);
+        enable(GL11.GL_ALPHA_TEST);
+        enable(GL11.GL_TEXTURE_2D);
     }
 }

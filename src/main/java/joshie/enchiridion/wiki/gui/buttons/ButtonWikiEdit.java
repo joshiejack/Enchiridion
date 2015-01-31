@@ -1,5 +1,10 @@
 package joshie.enchiridion.wiki.gui.buttons;
 
+import static joshie.enchiridion.helpers.OpenGLHelper.enable;
+import static joshie.enchiridion.helpers.OpenGLHelper.end;
+import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
+import static joshie.enchiridion.helpers.OpenGLHelper.scaleAll;
+import static joshie.enchiridion.helpers.OpenGLHelper.start;
 import static joshie.enchiridion.wiki.WikiHelper.gui;
 
 import java.util.List;
@@ -18,10 +23,10 @@ public class ButtonWikiEdit extends ButtonBase {
         super(id, x, y, 55, 20, clazz.getSimpleName().substring(7).toLowerCase(), 2F);
         this.clazz = clazz;
         try {
-            ((Element)clazz.newInstance()).addEditButtons(list);
+            ((Element) clazz.newInstance()).addEditButtons(list);
         } catch (Exception e) {}
     }
-    
+
     public ButtonWikiEdit(int id, int x, int y, String text) {
         super(id, x, y, 55, 20, text, 2F);
     }
@@ -31,16 +36,16 @@ public class ButtonWikiEdit extends ButtonBase {
         if (this.visible) {
             int xPosition = this.xPosition;
             int yPosition = this.yPosition;
-            GL11.glPushMatrix();
-            GL11.glScalef(scale, scale, scale);
+            start();
+            scaleAll(scale);
             xPosition = gui.getLeft(scale, xPosition);
             yPosition = gui.getTop(scale, yPosition);
             FontRenderer fontrenderer = mc.fontRenderer;
             mc.getTextureManager().bindTexture(buttonTextures);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            fixColors();
             this.field_146123_n = x >= xPosition && y >= yPosition && x < xPosition + this.width && y < yPosition + this.height;
             int k = isOverButton(mc, x, y) ? 2 : 1;
-            GL11.glEnable(GL11.GL_BLEND);
+            enable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             this.drawTexturedModalRect(xPosition, yPosition, 0, 46 + k * 20, this.width / 2, this.height);
@@ -52,7 +57,7 @@ public class ButtonWikiEdit extends ButtonBase {
             }
 
             this.drawCenteredString(fontrenderer, this.displayString, xPosition + this.width / 2, yPosition + (this.height - 8) / 2, l);
-            GL11.glPopMatrix();
+            end();
         }
     }
 

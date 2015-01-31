@@ -1,4 +1,5 @@
 package joshie.enchiridion.wiki.gui;
+
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledCentredText;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledStack;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
@@ -9,9 +10,6 @@ import static joshie.enchiridion.wiki.WikiHelper.isEditMode;
 import static joshie.enchiridion.wiki.WikiHelper.isTabSelected;
 import static joshie.enchiridion.wiki.WikiHelper.setTab;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
-
-import org.lwjgl.opengl.GL11;
-
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.api.IItemSelectable;
 import joshie.enchiridion.api.ITextEditable;
@@ -19,13 +17,15 @@ import joshie.enchiridion.helpers.OpenGLHelper;
 import joshie.enchiridion.wiki.WikiTab;
 import net.minecraft.item.ItemStack;
 
+import org.lwjgl.opengl.GL11;
+
 public class GuiTabs extends GuiExtension implements IItemSelectable, ITextEditable {
     @Override
     public void draw() {
         OpenGLHelper.disable(GL11.GL_LIGHTING);
         /* Tab Title */
         drawScaledCentredText(2.5F, GuiTextEdit.getText(this, getTab().getTitle()), 510, 14, 0xFFFFFF);
-        
+
         int i = 0;
         for (WikiTab tab : getMod().getTabs()) {
             int yBonus = isTabSelected(tab) ? -5 : 0;
@@ -34,7 +34,7 @@ public class GuiTabs extends GuiExtension implements IItemSelectable, ITextEdita
             drawScaledStack(tab.getItemStack(), 28 + (50 * i), -41 + yBonus, 1.85F);
             i++;
         }
-        
+
         OpenGLHelper.enable(GL11.GL_LIGHTING);
     }
 
@@ -56,8 +56,8 @@ public class GuiTabs extends GuiExtension implements IItemSelectable, ITextEdita
                 i++;
             }
         }
-        
-        if(isEditMode()) {
+
+        if (isEditMode()) {
             if (getIntFromMouse(300, 700, 0, 45, 0, 1) == 1) {
                 GuiTextEdit.select(this);
             }
@@ -68,14 +68,14 @@ public class GuiTabs extends GuiExtension implements IItemSelectable, ITextEdita
     public void setItemStack(ItemStack stack) {
         getTab().setStack(stack);
     }
-    
+
     @Override
     public void setText(String text) {
-        if(EClientProxy.font.getStringWidth(text) <= 130) {
+        if (EClientProxy.font.getStringWidth(text) <= 130) {
             getTab().setTranslation(text);
         }
     }
-    
+
     @Override
     public String getText() {
         return getTab().getTitle();

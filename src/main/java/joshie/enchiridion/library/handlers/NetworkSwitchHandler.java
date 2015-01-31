@@ -16,7 +16,7 @@ public class NetworkSwitchHandler implements IBookHandler {
     @Override
     public void handle(ItemStack stack, World world, EntityPlayer player) {
         player.closeScreen();
-        
+
         EPacketHandler.sendToServer(new PacketNetworkSwitch(stack, true));
     }
 }
