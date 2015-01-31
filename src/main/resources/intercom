@@ -1,1 +1,0 @@
-Send a message to Enchiridion2 containing your modid followed by the 'root' path of the wiki in the format "MODID$Path", if no root path is specified, it will default to assets/modid/wiki
