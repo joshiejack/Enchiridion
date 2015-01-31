@@ -3,25 +3,23 @@ package joshie.enchiridion.wiki.elements;
 import static joshie.enchiridion.helpers.OpenGLHelper.end;
 import static joshie.enchiridion.helpers.OpenGLHelper.scaleAll;
 import static joshie.enchiridion.helpers.OpenGLHelper.start;
-
-import java.util.List;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import joshie.enchiridion.EClientProxy;
+import joshie.enchiridion.api.IColorSelectable;
 import joshie.enchiridion.api.IGuiDisablesMenu;
 import joshie.enchiridion.api.ITextEditable;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.WikiHelper;
+import joshie.enchiridion.wiki.gui.GuiColorEdit;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
 import joshie.enchiridion.wiki.gui.buttons.ButtonBase;
 import joshie.enchiridion.wiki.gui.buttons.ButtonWikiTextEdit;
-import joshie.enchiridion.wiki.gui.buttons.ButtonWikiTextMode;
-import joshie.enchiridion.wiki.gui.buttons.ButtonWikiTextSize;
 import net.minecraft.util.StatCollector;
+
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.google.gson.annotations.Expose;
 
-public class ElementText extends Element implements ITextEditable, IGuiDisablesMenu {
+public class ElementText extends Element implements ITextEditable, IGuiDisablesMenu, IColorSelectable {
     //Whether text elements should display bbcode or display the formatted text
     public static boolean showBBCode = true;
 
@@ -59,18 +57,6 @@ public class ElementText extends Element implements ITextEditable, IGuiDisablesM
     }
 
     @Override
-    public void addEditButtons(List list) {
-        int yCoord = 10;
-        list.add(new ButtonWikiTextMode(wiki, wiki.button_id++, 75, yCoord += 50, "mode"));
-        list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, 0.01F, "larger.slightly"));
-        list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, 0.1F, "larger"));
-        list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, 0.5F, "larger.greatly"));
-        list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, -0.01F, "smaller.slightly"));
-        list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, -0.1F, "smaller"));
-        list.add(new ButtonWikiTextSize(wiki, wiki.button_id++, 75, yCoord += 50, -0.5F, "smaller.greatly"));
-    }
-
-    @Override
     public void onSelected(int x, int y) {
         WikiHelper.clearEditGUIs();
 
@@ -81,6 +67,7 @@ public class ElementText extends Element implements ITextEditable, IGuiDisablesM
         }
 
         GuiTextEdit.select(this, getText().length());
+        GuiColorEdit.select(this);
     }
 
     @Override
@@ -110,5 +97,28 @@ public class ElementText extends Element implements ITextEditable, IGuiDisablesM
     @Override
     public boolean canEdit(Object... objects) {
         return isSelected;
+    }
+
+    @Override
+    public void keyTyped(char character, int key) {
+        if (isSelected) {
+            if (ClientHelper.isShiftPressed()) {
+                if (key == 78) {
+                    size = Math.min(15F, Math.max(0.5F, size + 0.1F));
+                    return;
+                } else if (key == 74) {
+                    size = Math.min(15F, Math.max(0.5F, size - 0.1F));
+                    return;
+                }
+            }
+        }
+
+        super.keyTyped(character, key);
+    }
+
+    @Override
+    public void setColor(int hex) {
+        this.color = hex;
+        markDirty();
     }
 }

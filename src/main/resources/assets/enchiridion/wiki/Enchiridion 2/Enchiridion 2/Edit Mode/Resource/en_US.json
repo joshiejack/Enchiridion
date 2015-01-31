@@ -50,11 +50,23 @@
     {
       "type": "ElementImage",
       "properties": {
-        "path": "minecraft:textures/items/apple.png",
-        "x": 92,
+        "path": "minecraft:textures/gui/book.png",
+        "x": 154,
         "y": 517,
-        "width": 100,
-        "height": 100,
+        "width": 126,
+        "height": 133,
+        "size": 2.0
+      }
+    },
+    {
+      "type": "ElementText",
+      "properties": {
+        "text": "minecraft:textures/gui/book.png",
+        "color": -1,
+        "x": 356,
+        "y": 622,
+        "width": 165,
+        "height": 29,
         "size": 2.0
       }
     }
@@ -63,6 +75,6 @@
   "isPriority": false,
   "backgroundColor": -301989888,
   "name": "",
-  "canEdit": true,
+  "canEdit": false,
   "saveDir": "enchiridion"
 }

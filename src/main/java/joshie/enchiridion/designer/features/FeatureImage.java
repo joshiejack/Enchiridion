@@ -8,6 +8,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.ELogger;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.designer.DesignerHelper;
@@ -42,6 +43,10 @@ public class FeatureImage extends Feature {
         this.width = 100;
         this.height = 100;
         this.path = path;
+        if (!EConfig.DEFAULT_DIR.equals("")) {
+            this.path = "mod@" + EConfig.DEFAULT_DIR + "@" + path;
+        }
+
         loadImage(path);
         return this;
     }
@@ -50,12 +55,18 @@ public class FeatureImage extends Feature {
     public void loadImage(String path) {
         if (!path.contains(":")) {
             try {
-                BufferedImage img = ImageIO.read(new File(Enchiridion.root, "books/images/" + path));
+                BufferedImage img = null;
+                if (path.startsWith("mod@")) {
+                    String[] split = path.split("@");
+                    String image = "/assets/" + split[1] + "/books/images/" + split[2];
+                    img = ImageIO.read(Enchiridion.class.getResourceAsStream(image));
+                } else img = ImageIO.read(new File(Enchiridion.root, "books/images/" + path));
+
                 texture = new DynamicTexture(img);
                 resource = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(path, texture);
             } catch (Exception e) {
                 ELogger.log(Level.ERROR, "Enchiridion 2 failed to read in the image at the following path: ");
-                ELogger.log(Level.ERROR, path + separator + path);
+                ELogger.log(Level.ERROR, path);
             }
         }
     }

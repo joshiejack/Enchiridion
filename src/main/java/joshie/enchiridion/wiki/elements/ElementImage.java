@@ -13,6 +13,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.ELogger;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.ClientHelper;
@@ -40,11 +41,15 @@ public class ElementImage extends Element {
     public int img_width;
     public int img_height;
 
-    public ElementImage setPath(String fileName) {
+    public ElementImage setPath(String fileName, boolean resource) {
         WikiPage page = WikiHelper.getPage();
         this.width = 100;
         this.height = 100;
         this.path = fileName;
+        if (!resource && !EConfig.DEFAULT_DIR.equals("")) {
+            this.path = "mod@" + EConfig.DEFAULT_DIR + "@" + path;
+        }
+
         loadImage(WikiHelper.getPage());
         this.markDirty();
         return this;
@@ -58,7 +63,15 @@ public class ElementImage extends Element {
                 if (path.startsWith("root.")) {
                     ImageIO.read(new File(Enchiridion.root + separator + "wiki" + separator + path.replace("root.", "")));
                 } else {
-                    img = ImageIO.read(new File(new File(page.getPath()).getParentFile(), path));
+                    if (path.startsWith("mod@")) {
+                        String[] split = path.split("@");
+                        String mod = page.getCategory().getTab().getMod().getKey();
+                        String tab = page.getCategory().getTab().getKey();
+                        String cat = page.getCategory().getKey();
+                        String article = page.getKey();
+                        String image = "/assets/" + split[1] + "/wiki/" + mod + "/" + tab + "/" + cat + "/" + article + "/" + split[2];
+                        img = ImageIO.read(Enchiridion.class.getResourceAsStream(image));
+                    } else img = ImageIO.read(new File(new File(page.getPath()).getParentFile(), path)); //If We fail to read the image from the live directory, let's grab it from resources
                 }
 
                 texture = new DynamicTexture(img);
@@ -68,7 +81,9 @@ public class ElementImage extends Element {
                 img_height = img.getHeight();
             } catch (Exception e) {
                 ELogger.log(Level.ERROR, "Enchiridion 2 failed to read in the image at the following path: ");
-                ELogger.log(Level.ERROR, page.getPath() + separator + path);
+                ELogger.log(Level.ERROR, path);
+                
+                e.printStackTrace();
             }
         } else {
             String[] split = path.split(":");

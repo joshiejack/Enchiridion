@@ -27,7 +27,7 @@
     {
       "type": "ElementImage",
       "properties": {
-        "path": "Abstract-Landscape.png",
+        "path": "mod@enchiridion@Abstract-Landscape.png",
         "x": 42,
         "y": 176,
         "width": 184,
@@ -38,7 +38,7 @@
     {
       "type": "ElementImage",
       "properties": {
-        "path": "flat-lemmling-Cartoon-penguin.png",
+        "path": "mod@enchiridion@flat-lemmling-Cartoon-penguin.png",
         "x": 428,
         "y": 91,
         "width": 134,
@@ -49,7 +49,7 @@
     {
       "type": "ElementImage",
       "properties": {
-        "path": "fox-transparent.png",
+        "path": "mod@enchiridion@fox-transparent.png",
         "x": 152,
         "y": 475,
         "width": 110,
@@ -60,7 +60,7 @@
     {
       "type": "ElementImage",
       "properties": {
-        "path": "jubilee-teapot-red.png",
+        "path": "mod@enchiridion@jubilee-teapot-red.png",
         "x": 420,
         "y": 391,
         "width": 133,

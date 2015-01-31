@@ -74,10 +74,6 @@ public class EClientProxy extends ECommonProxy {
             MinecraftForge.EVENT_BUS.register(new BookIconPatcher());
         }
         
-        /** Let's initialise the wiki and search through it **/
-        //Search through all the mods for relevant pages
-        WikiRegistry.instance().registerMods();
-        
         /** Init the LibraryRegistry**/
         BookHandlerRegistry.initRegistry();
     }
@@ -87,6 +83,10 @@ public class EClientProxy extends ECommonProxy {
         if (Loader.isModLoaded("Botania")) {
             BotaniaClient.INSTANCE.init();
         }
+        
+        /** Let's initialise the wiki and search through it **/
+        //Search through all the mods for relevant pages
+        WikiRegistry.instance().registerMods();
     }
 
     @Override

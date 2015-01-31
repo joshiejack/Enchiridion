@@ -3,47 +3,13 @@
     {
       "type": "ElementText",
       "properties": {
-        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "text": "Text elements are incredibly simple. Simply click on one, make sure it is selected and then you can edit it as you like. There are a few formatting things to know. For example if you want to bold anything simply type [ b ] to start off the bold and [ / b ] to end it. ( Without the spaces. You can also do [ u ] for underline, [ s ] for strikethrough and [ i ] for italics.\n\nExamples:\n[b]Bold[/b]\n[u]Underlined[/u]\n[s]Strikethrough[/s]\n[i]Italics[/i]\n\nYou can of course do them anyway you like. Take note that in edit mode you will see the code and not the formatted text. So you will need to switch to display mode. You can disable this in the config if you trust yourself. You can select a colour for the text on the left hand side. You can also increase or reduce the size of text. To do this, you need to press shift + \u0027+\u0027 or shift + \u0027-\u0027 on the numberpad to increase or decrease the font size.\n\nOther than that, that is all you need to know about text!",
         "color": -1,
-        "x": 72,
-        "y": 27,
-        "width": 268,
-        "height": 29,
+        "x": 44,
+        "y": 6,
+        "width": 324,
+        "height": 180,
         "size": 2.0
-      }
-    },
-    {
-      "type": "ElementItem",
-      "properties": {
-        "item": "minecraft:gold_ingot",
-        "x": 80,
-        "y": 168,
-        "width": 52,
-        "height": 52,
-        "size": 6.5
-      }
-    },
-    {
-      "type": "ElementImage",
-      "properties": {
-        "path": "enchiridion:enchiridion_logo.png",
-        "x": 32,
-        "y": 627,
-        "width": 246,
-        "height": 82,
-        "size": 2.0
-      }
-    },
-    {
-      "type": "ElementText",
-      "properties": {
-        "text": "Fuck yeah :D",
-        "color": -1,
-        "x": 42,
-        "y": 16,
-        "width": 158,
-        "height": 32,
-        "size": 3.5
       }
     }
   ],

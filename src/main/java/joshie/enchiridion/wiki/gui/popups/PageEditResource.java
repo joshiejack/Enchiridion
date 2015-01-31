@@ -97,7 +97,7 @@ public class PageEditResource extends PageEdit {
     @Override
     public void add() {
         if (editing != null) {
-            editing.setPath(resource.getText());
+            editing.setPath(resource.getText(), true);
         }
     }
     

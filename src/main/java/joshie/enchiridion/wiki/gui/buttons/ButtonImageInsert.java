@@ -52,7 +52,7 @@ public class ButtonImageInsert extends ButtonWikiEdit {
             File new_location = new File(directory, selectedFile.getName());
             try {
                 FileUtils.copyFile(selectedFile, new_location);
-                ElementImage img = new ElementImage().setPath(selectedFile.getName());
+                ElementImage img = new ElementImage().setPath(selectedFile.getName(), false);
                 gui.page.add(img);
             } catch (Exception e) {
                 e.printStackTrace();
