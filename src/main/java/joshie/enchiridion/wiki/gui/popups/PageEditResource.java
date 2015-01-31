@@ -14,17 +14,23 @@ import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.ETranslate;
 import joshie.enchiridion.api.ITextEditable;
+import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.ElementImage;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
 
-public class ResourceEdit extends PageEdit {
+public class PageEditResource extends PageEdit {
     public ITextEditable resource = new AbstractTextEdit("enchiridion:textures/wiki/enchiridion_logo.png:2.5");
     public ElementImage editing;
 
-    public ResourceEdit() {
+    public PageEditResource() {
         super("image");
     }
-    
+
+    //Clear the editing when we switch page
+    public void clear() {
+        editing = null;
+    }
+
     @Override
     public void draw() {
         start();
@@ -66,7 +72,7 @@ public class ResourceEdit extends PageEdit {
         drawScaledCentredText(2F, "[b]" + ETranslate.translate("cancel") + "[/b]", 720, 262, 0xFFFFFF);
         end();
     }
-    
+
     @Override
     public String getConfirmationText() {
         return "edit";
@@ -93,6 +99,12 @@ public class ResourceEdit extends PageEdit {
         if (editing != null) {
             editing.setPath(resource.getText());
         }
+    }
+    
+    @Override
+    public void cancel() {
+        super.cancel();
+        ((PageEditResource) (WikiHelper.getInstance(PageEditResource.class))).setEditing(null);
     }
 
     public boolean isEditingResource() {

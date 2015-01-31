@@ -19,7 +19,7 @@ import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.OpenGLHelper;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.WikiPage;
-import joshie.enchiridion.wiki.gui.popups.ResourceEdit;
+import joshie.enchiridion.wiki.gui.popups.PageEditResource;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -137,6 +137,8 @@ public class ElementImage extends Element {
 
     @Override
     public void onSelected(int x, int y, int button) {
-        ((ResourceEdit) (WikiHelper.getInstance(ResourceEdit.class))).setEditing(this);
+        if (!isDynamic) {
+            ((PageEditResource) (WikiHelper.getInstance(PageEditResource.class))).setEditing(this);
+        }
     }
 }

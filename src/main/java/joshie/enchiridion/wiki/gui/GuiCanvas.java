@@ -1,4 +1,5 @@
 package joshie.enchiridion.wiki.gui;
+
 import static joshie.enchiridion.helpers.OpenGLHelper.fixShitForThePedia;
 import static joshie.enchiridion.wiki.WikiHelper.drawRect;
 import static joshie.enchiridion.wiki.WikiHelper.getHeight;
@@ -26,10 +27,11 @@ import joshie.enchiridion.wiki.elements.Element;
 
 import org.lwjgl.opengl.GL11;
 
-public class GuiCanvas extends GuiExtension {	
-	private static final int DEFAULT_COLOR = 0xEE000000;
+public class GuiCanvas extends GuiExtension {
+    private static final int DEFAULT_COLOR = 0xEE000000;
+
     @Override
-    public void draw() {  
+    public void draw() {
         fixShitForThePedia();
         glPushMatrix();
         glEnable(GL_BLEND);
@@ -44,7 +46,7 @@ public class GuiCanvas extends GuiExtension {
         glStencilFunc(GL_EQUAL, 0, 0xFF);
         glStencilFunc(GL_EQUAL, 1, 0xFF);
         GL11.glDisable(GL11.GL_LIGHTING);
-        drawRect(0, 0, 2048, 5000 + 10, (WikiHelper.isLibrary()? DEFAULT_COLOR: getPage().getData().getBackground()));
+        drawRect(0, 0, 2048, 5000 + 10, (WikiHelper.isLibrary() ? DEFAULT_COLOR : getPage().getData().getBackground()));
         drawRect(630, -45, 910, -10, 0xFF000000);
         getPage().display();
         glDisable(GL_STENCIL_TEST);
@@ -55,23 +57,25 @@ public class GuiCanvas extends GuiExtension {
 
     @Override
     public void clicked(int button) {
-        getPage().clickButton(mouseX - Element.BASE_X, mouseY - Element.BASE_Y, button);
+        if (!WikiHelper.hasPopupOpen()) {
+            getPage().clickButton(mouseX - Element.BASE_X, mouseY - Element.BASE_Y, button);
+        }
     }
-    
+
     @Override
     public void release(int button) {
         getPage().releaseButton(mouseX - Element.BASE_X, mouseY - Element.BASE_Y, button);
     }
-    
+
     @Override
     public void follow() {
         getPage().follow(mouseX - Element.BASE_X, mouseY - Element.BASE_Y);
     }
-    
+
     @Override
     public void scroll(boolean scrolledDown) {
-        if(mouseX >= 290 && mouseX <= 1024) {
-            getPage().scroll(scrolledDown? -100: 100);
+        if (mouseX >= 290 && mouseX <= 1024) {
+            getPage().scroll(scrolledDown ? -100 : 100);
         }
     }
 }

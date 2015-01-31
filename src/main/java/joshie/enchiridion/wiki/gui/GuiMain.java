@@ -18,6 +18,8 @@ import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.WikiRegistry;
 import joshie.enchiridion.wiki.WikiTab;
 import joshie.enchiridion.wiki.gui.buttons.ButtonBase;
+import joshie.enchiridion.wiki.gui.popups.PageEditLink;
+import joshie.enchiridion.wiki.gui.popups.PageEditResource;
 import joshie.enchiridion.wiki.mode.DisplayMode;
 import joshie.enchiridion.wiki.mode.SaveMode;
 import net.minecraft.client.Minecraft;
@@ -65,6 +67,10 @@ public class GuiMain extends GuiScalable {
     	}
     	
     	GuiMain.page = page;
+    	
+    	//Clear the resource editing and page editing
+    	((PageEditResource) (WikiHelper.getInstance(PageEditResource.class))).setEditing(null);
+    	((PageEditLink) (WikiHelper.getInstance(PageEditLink.class))).setEditing(null);
     }
 
     @Override

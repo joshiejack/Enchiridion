@@ -15,7 +15,7 @@ import joshie.enchiridion.ETranslate;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiExtension;
 
-public abstract class Confirm extends GuiExtension {	
+public abstract class Confirm extends GuiExtension implements IPopupIDoItellYou {	
     protected final String descriptor;
 	public Confirm(String descriptor) {
 		setVisibility(false);

@@ -33,9 +33,10 @@ import joshie.enchiridion.wiki.gui.GuiTextEdit;
 import joshie.enchiridion.wiki.gui.popups.ConfirmAddition;
 import joshie.enchiridion.wiki.gui.popups.ConfirmDeletion;
 import joshie.enchiridion.wiki.gui.popups.ConfirmLocking;
+import joshie.enchiridion.wiki.gui.popups.IPopupIDoItellYou;
 import joshie.enchiridion.wiki.gui.popups.PageEditAddition;
 import joshie.enchiridion.wiki.gui.popups.PageEditLink;
-import joshie.enchiridion.wiki.gui.popups.ResourceEdit;
+import joshie.enchiridion.wiki.gui.popups.PageEditResource;
 import joshie.enchiridion.wiki.gui.scrollbars.ScrollbarMenu;
 import joshie.enchiridion.wiki.gui.scrollbars.ScrollbarPage;
 import joshie.enchiridion.wiki.mode.SaveMode;
@@ -82,7 +83,7 @@ public class WikiHelper {
         wiki.add(new ConfirmAddition());
         wiki.add(new PageEditAddition());
         wiki.add(new PageEditLink());
-        wiki.add(new ResourceEdit());
+        wiki.add(new PageEditResource());
 
         library = new ArrayList();
         library.add(new GuiBackground());
@@ -95,6 +96,18 @@ public class WikiHelper {
         if (selected == null) {
             selected = wiki;
         }
+    }
+
+    public static boolean hasPopupOpen() {
+        for (GuiExtension e : getGui()) {
+            if (e instanceof IPopupIDoItellYou) {
+                if (e.isVisible()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public static int getHeight() {
@@ -249,7 +262,7 @@ public class WikiHelper {
     }
 
     public static void renderStack(ItemStack stack, int x, int y) {
-        if(stack == null) return;
+        if (stack == null) return;
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glColor3f(1F, 1F, 1F); //Forge: Reset color in case Items change it.

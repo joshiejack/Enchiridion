@@ -17,7 +17,7 @@ import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiExtension;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
 
-public abstract class PageEdit extends GuiExtension { 
+public abstract class PageEdit extends GuiExtension implements IPopupIDoItellYou { 
     public ITextEditable mod = new AbstractTextEdit("Enchiridion 2");
     public ITextEditable tab = new AbstractTextEdit("Enchiridion 2");
     public ITextEditable cat = new AbstractTextEdit("Enchiridion 2");
