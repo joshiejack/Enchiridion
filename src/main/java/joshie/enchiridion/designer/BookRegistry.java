@@ -57,6 +57,7 @@ public class BookRegistry {
             this.information = info;
             this.color = color;
             this.book = new ArrayList();
+            this.book.add(new DesignerCanvas());
         }
 
         public BookData(String unique) {
