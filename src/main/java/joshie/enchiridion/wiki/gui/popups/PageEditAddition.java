@@ -17,10 +17,12 @@ public class PageEditAddition extends PageEdit {
         WikiHelper.setVisibility(ConfirmAddition.class, true);
     }
 
-    public void setToDefault() {
+    public PageEditAddition setToDefault() {
         this.page.setText("");
         if (GuiTextEdit.isSelected(page)) {
             GuiTextEdit.select(page);
         }
+        
+        return this;
     }
 }
