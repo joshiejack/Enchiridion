@@ -22,6 +22,7 @@ import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glStencilFunc;
 import static org.lwjgl.opengl.GL11.glStencilMask;
 import static org.lwjgl.opengl.GL11.glStencilOp;
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.Element;
 
@@ -32,7 +33,10 @@ public class GuiCanvas extends GuiExtension {
 
     @Override
     public void draw() {
-        fixShitForThePedia();
+        if(!EConfig.SHIT_COMPUTER) {
+            fixShitForThePedia();
+        }
+        
         start();
         enable(GL_BLEND);
         glClear(GL_DEPTH_BUFFER_BIT);
@@ -46,7 +50,7 @@ public class GuiCanvas extends GuiExtension {
         glStencilFunc(GL_EQUAL, 0, 0xFF);
         glStencilFunc(GL_EQUAL, 1, 0xFF);
         disable(GL11.GL_LIGHTING);
-        drawRect(0, 0, 2048, 5000 + 10, (WikiHelper.isLibrary() ? DEFAULT_COLOR : getPage().getData().getBackground()));
+        drawRect(295, 43, 1002, 5000 + 10, (WikiHelper.isLibrary() ? DEFAULT_COLOR : getPage().getData().getBackground()));
         drawRect(630, -45, 910, -10, 0xFF000000);
         getPage().display();
         disable(GL_STENCIL_TEST);

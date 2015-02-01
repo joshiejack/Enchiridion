@@ -4,7 +4,6 @@ import static joshie.enchiridion.helpers.OpenGLHelper.disable;
 import static joshie.enchiridion.helpers.OpenGLHelper.enable;
 import static joshie.enchiridion.helpers.OpenGLHelper.end;
 import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
-import static joshie.enchiridion.helpers.OpenGLHelper.fixShitForThePedia;
 import static joshie.enchiridion.helpers.OpenGLHelper.start;
 import static joshie.enchiridion.wiki.WikiHelper.drawRect;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledCentredText;
@@ -15,17 +14,6 @@ import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_EQUAL;
-import static org.lwjgl.opengl.GL11.GL_KEEP;
-import static org.lwjgl.opengl.GL11.GL_NEVER;
-import static org.lwjgl.opengl.GL11.GL_REPLACE;
-import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_STENCIL_TEST;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glStencilFunc;
-import static org.lwjgl.opengl.GL11.glStencilMask;
-import static org.lwjgl.opengl.GL11.glStencilOp;
 import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.OpenGLHelper;
 import joshie.enchiridion.wiki.WikiHelper;
@@ -39,22 +27,10 @@ public class GuiLibrary extends GuiExtension {
 
     @Override
     public void draw() {
-        fixShitForThePedia();
         start();
         enable(GL_BLEND);
-        glClear(GL_DEPTH_BUFFER_BIT);
-        enable(GL_STENCIL_TEST);
-        glStencilFunc(GL_NEVER, 1, 0xFF);
-        glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-        glStencilMask(0xFF);
-        glClear(GL_STENCIL_BUFFER_BIT);
-        drawRect(5, 43, 1020, getHeight() + 10, 0x22000000);
-        glStencilMask(0x00);
-        glStencilFunc(GL_EQUAL, 0, 0xFF);
-        glStencilFunc(GL_EQUAL, 1, 0xFF);
-        drawRect(0, 0, 2048, 5000 + 10, 0xEE000000);
-        drawRect(630, -45, 910, -10, 0xFF000000);
-        disable(GL_STENCIL_TEST);
+
+        drawRect(5, 43, 1019, 5000 + 10, 0xEE000000);
         drawScaledCentredText(2.5F, I18n.format("enchiridion.library", new Object[0], 2F), 510, 14, 0xFFFFFF);
         fixColors();
         drawBooks();
