@@ -18,7 +18,7 @@ public class GuiShelves extends GuiExtension {
     @Override
     public void draw() {
         if (type == WOOD) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 15; i++) {
                 int y = (i * 74) + 116;
                 for (int w = 0; w < 24; w++) {
                     drawScaledTexture(texture, 30 + (int) (w * (16 * 2.5)), y, 240, 0, 16, 5, 2.5F);
@@ -30,7 +30,7 @@ public class GuiShelves extends GuiExtension {
                 drawScaledTexture(texture, 989, 106 + (int) (i * (16 * 2)) - 50, 252, 5, 4, 16, 2F);
             }
         } else if (type == LINES) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 15; i++) {
                 int y = (i * 74) + 120;
                 drawRect(20, y + 3, 1000, y + 5, 0xFFC2C29C);
                 drawRect(20, y + 1, 1000, y + 3, 0xCC2A535E);

@@ -2,6 +2,7 @@ package joshie.enchiridion.wiki.gui;
 
 import static joshie.enchiridion.helpers.OpenGLHelper.disable;
 import static joshie.enchiridion.helpers.OpenGLHelper.enable;
+import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -15,7 +16,6 @@ import org.lwjgl.opengl.GL11;
 public class GuiScalable extends GuiScreen {
     public ScaledResolution resolution;
     public int theLeft;
-    public int theTop = 150;
 
     @Override
     public void initGui() {
@@ -31,7 +31,7 @@ public class GuiScalable extends GuiScreen {
     }
 
     public int getTop(float scale, int y) {
-        return (int) ((theTop + y) / scale);
+        return (int) ((WikiHelper.theTop + y) / scale);
     }
 
     /** Only perform ONE click action... don't repeat button presses **/

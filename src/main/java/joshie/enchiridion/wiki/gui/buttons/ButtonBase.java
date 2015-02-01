@@ -27,7 +27,7 @@ public abstract class ButtonBase extends GuiButton {
         if (cont) {
             //COPY X
             int realY = y * gui.resolution.getScaleFactor();
-            int farTop = gui.theTop;
+            int farTop = WikiHelper.theTop;
             int extraBottom = height * 2 - 2;
             if (height == 1) {
                 extraBottom = 14;

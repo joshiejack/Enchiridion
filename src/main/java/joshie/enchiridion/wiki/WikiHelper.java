@@ -50,12 +50,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 public class WikiHelper {
+    public static final int theTop = 60;
     public static GuiMain gui = new GuiMain();
     private static boolean EDIT_MODE;
 
     public static boolean lighting;
     public static int theLeft;
-    public static int theTop;
     public static int mouseX;
     public static int mouseY;
     private static int height;
@@ -171,7 +171,6 @@ public class WikiHelper {
 
     public static void updateGUI() {
         theLeft = (int) (gui.mc.displayWidth / 2D) - 512;
-        theTop = 150;
         height = gui.mc.displayHeight;
     }
 

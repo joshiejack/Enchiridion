@@ -8,6 +8,7 @@ import static joshie.enchiridion.wiki.WikiHelper.getPage;
 import static joshie.enchiridion.wiki.WikiHelper.mouseY;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.helpers.OpenGLHelper;
+import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.Element;
 import joshie.enchiridion.wiki.gui.GuiExtension;
 
@@ -25,17 +26,17 @@ public abstract class ScrollbarAbstract extends GuiExtension {
         drawRect(x, 43, x + 17, getHeight(), getPage().getData().getBackground());
 
         //Draw Scrollbar if the menu is long as fuck.
-        drawRect(x, 48, x + 2, getHeight() - 155, 0xFFC2C29C);
-        drawRect(x + 12, 48, x + 14, getHeight() - 155, 0xFFC2C29C);
-        drawRect(x, getHeight() - 157, x + 14, getHeight() - 155, 0xFFC2C29C);
+        drawRect(x, 48, x + 2, getHeight() - (WikiHelper.theTop + 5), 0xFFC2C29C);
+        drawRect(x + 12, 48, x + 14, getHeight() - (WikiHelper.theTop + 5), 0xFFC2C29C);
+        drawRect(x, getHeight() - (WikiHelper.theTop + 7), x + 14, getHeight() - (WikiHelper.theTop + 5), 0xFFC2C29C);
         drawRect(x, 46, x + 14, 48, 0xFFC2C29C);
 
         OpenGLHelper.fixColors();
         //Draw the Bottom Arrow
-        if (getIntFromMouse(x + 3, x + 11, getHeight() - 170, getHeight() - 157, 0, 1) == 1) {
-            drawScaledTexture(texture, x + 3, getHeight() - 170, 229, 201, 8, 13, 1F);
+        if (getIntFromMouse(x + 3, x + 11, getHeight() - (WikiHelper.theTop + 20), getHeight() - (WikiHelper.theTop + 7), 0, 1) == 1) {
+            drawScaledTexture(texture, x + 3, getHeight() - (WikiHelper.theTop + 20), 229, 201, 8, 13, 1F);
         } else {
-            drawScaledTexture(texture, x + 3, getHeight() - 170, 216, 201, 8, 13, 1F);
+            drawScaledTexture(texture, x + 3, getHeight() - (WikiHelper.theTop + 20), 216, 201, 8, 13, 1F);
         }
 
         //Draw the Top Arrow
