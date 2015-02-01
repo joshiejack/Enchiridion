@@ -68,6 +68,19 @@ public class LibraryStorage {
             index++;
         }
 
+        //Now we check if it exist
+        for (ItemStack libBook : library.books) {
+            boolean hasBook = false;
+            for (ItemStack book : books) {
+                if (book.isItemEqual(libBook)) hasBook = true;
+                return;
+            }
+
+            if (!hasBook) {
+                add(libBook, BookHandlerRegistry.getHandler(libBook).getName());
+            }
+        }
+
         //Now that we have cached all the items that need to be removed Let's do it
         for (Integer i : toRemove) {
             ItemStack stack = books.get(i);
