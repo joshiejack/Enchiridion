@@ -13,7 +13,7 @@ public class LibraryLoadEvent {
     public void onLoad(WorldEvent.Load event) {
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
             if (!isInit) {
-                data.preloadBooks();
+                LibraryDataServer.preloadBooks();
                 data = (LibraryDataServer) event.world.loadItemData(LibraryDataServer.class, LibraryDataServer.DATA_NAME);
                 if (data == null) {
                     data = new LibraryDataServer(LibraryDataServer.DATA_NAME);

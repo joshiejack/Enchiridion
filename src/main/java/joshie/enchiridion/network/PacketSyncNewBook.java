@@ -14,7 +14,6 @@ public class PacketSyncNewBook implements IMessage, IMessageHandler<PacketSyncNe
     String tag;
 
     public PacketSyncNewBook() {}
-
     public PacketSyncNewBook(String tag) {
         this.tag = tag;
     }
