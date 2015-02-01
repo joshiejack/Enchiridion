@@ -32,7 +32,7 @@ public class WikiPart {
     }
 
     public Data getData() {
-        return WikiData.instance().getData(getUnlocalized() + "." + ClientHelper.getLang());
+        return WikiData.instance().getData(getUnlocalized(), ClientHelper.getLang());
     }
 
     public void setTranslation(String text) {

@@ -110,7 +110,7 @@ public class WikiPage extends WikiPart {
 
     @Override
     public DataPage getData() {
-        return WikiData.instance().getPage(getUnlocalized() + "." + ClientHelper.getLang());
+        return WikiData.instance().getPage(getUnlocalized(), ClientHelper.getLang());
     }
 
     public void display() {

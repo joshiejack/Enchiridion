@@ -70,7 +70,7 @@ public class WikiTab extends WikiPart {
 
     @Override
     public DataTab getData() {
-        return WikiData.instance().getTab(getUnlocalized() + "." + ClientHelper.getLang());
+        return WikiData.instance().getTab(getUnlocalized(), ClientHelper.getLang());
     }
 
     public ItemStack getItemStack() {

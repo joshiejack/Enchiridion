@@ -76,42 +76,60 @@ public class WikiData {
     }
 
     public String translateToLocal(String unlocalized) {
-        String ret = getData(unlocalized + "." + ClientHelper.getLang()).getLocalisation();
+        String ret = getData(unlocalized, ClientHelper.getLang()).getLocalisation();
         if (ret == null || ret.equals(unlocalized + "." + ClientHelper.getLang()) || ret.equals("")) {
             return StatCollector.translateToLocal("wiki." + unlocalized.replace(" ", "").toLowerCase());
         } else return ret;
     }
 
-    public Data getData(String string) {
-        Data data = translate.get(string);
+    public Data getData(String unlocalized, String lang) {
+        String key = unlocalized + "." + lang;
+        Data data = translate.get(key);
         if (data != null) {
             return data;
         } else {
-            data = new Data(string);
-            translate.put(string, data);
-            return data;
+            data = translate.get(unlocalized + ".en_US");
+            if (data != null) {
+                return data;
+            } else {
+                data = new Data(key);
+                translate.put(key, data);
+                return data;
+            }
         }
     }
 
-    public DataPage getPage(String string) {
-        DataPage data = (DataPage) translate.get(string);
-        if (data != null) {
-            return data;
+    public DataPage getPage(String unlocalized, String lang) {
+        String key = unlocalized + "." + lang;
+        Data data = translate.get(key);
+        if (data instanceof DataPage) {
+            return (DataPage) data;
         } else {
-            data = new DataPage(string);
-            translate.put(string, data);
-            return data;
+            data = translate.get(unlocalized + ".en_US");
+            if (data instanceof DataPage) {
+                return (DataPage) data;
+            } else {
+                data = new DataPage(key);
+                translate.put(key, data);
+                return (DataPage) data;
+            }
         }
     }
 
-    public DataTab getTab(String string) {
-        Data data = translate.get(string);
+    public DataTab getTab(String unlocalized, String lang) {
+        String key = unlocalized + "." + lang;
+        Data data = translate.get(key);
         if (data instanceof DataTab) {
             return (DataTab) data;
         } else {
-            data = new DataTab(string, new ItemStack(Blocks.stone));
-            translate.put(string, data);
-            return (DataTab) data;
+            data = translate.get(unlocalized + ".en_US");
+            if (data instanceof DataTab) {
+                return (DataTab) data;
+            } else {
+                data = new DataTab(key, new ItemStack(Blocks.stone));
+                translate.put(key, data);
+                return (DataTab) data;
+            }
         }
     }
 }
