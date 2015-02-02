@@ -18,7 +18,7 @@ import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.GsonClientHelper;
 import joshie.enchiridion.helpers.ItemHelper;
 import joshie.enchiridion.library.BookHandlerRegistry;
-import joshie.enchiridion.library.mods.BotaniaClient;
+import joshie.enchiridion.library.handlers.BookObtainEvents;
 import joshie.enchiridion.wiki.WikiFont;
 import joshie.enchiridion.wiki.WikiHandler;
 import joshie.enchiridion.wiki.WikiRegistry;
@@ -32,7 +32,6 @@ import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class EClientProxy extends ECommonProxy {
@@ -42,6 +41,8 @@ public class EClientProxy extends ECommonProxy {
     public void preClient() {
         /** Register the GuiHandler clientSide only, no need for a server side gui **/
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new EGuiHandler());
+        FMLCommonHandler.instance().bus().register(new BookObtainEvents());
+        MinecraftForge.EVENT_BUS.register(new BookObtainEvents());
 
         /** If we have the books enabled let's load them all up clientside only **/
         if (EConfig.ENABLE_BOOKS) {
@@ -80,10 +81,6 @@ public class EClientProxy extends ECommonProxy {
 
     @Override
     public void initClient() {
-        if (Loader.isModLoaded("Botania")) {
-            BotaniaClient.INSTANCE.init();
-        }
-
         /** Let's initialise the wiki and search through it **/
         //Search through all the mods for relevant pages
         WikiRegistry.instance().registerMods();

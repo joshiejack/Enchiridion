@@ -1,5 +1,8 @@
 package joshie.enchiridion.library;
 
+import org.apache.logging.log4j.Level;
+
+import joshie.enchiridion.ELogger;
 import net.minecraft.world.WorldServer;
 
 public class LibraryHelper {
@@ -11,6 +14,7 @@ public class LibraryHelper {
     public static void init(WorldServer world) {
         data = (LibrarySaveData) world.loadItemData(LibrarySaveData.class, LibrarySaveData.DATA_NAME);
         if (data == null) {
+            ELogger.log(Level.INFO, "Enchiridion 2 couldn't find the world data for the library so is creating it fresh");
             data = new LibrarySaveData(LibrarySaveData.DATA_NAME);
             world.setItemData(LibrarySaveData.DATA_NAME, data);
         }

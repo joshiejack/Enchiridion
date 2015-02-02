@@ -10,7 +10,6 @@ import java.util.UUID;
 
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.GsonServerHelper;
-import joshie.enchiridion.library.ModBooks.ModBookData;
 import joshie.enchiridion.network.EPacketHandler;
 import joshie.enchiridion.network.PacketSyncLibraryBooks;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,15 +37,7 @@ public class LibrarySaveData extends WorldSavedData {
     }
 
     /** Adds a 'new' book to the library storage if it is allowed' **/
-    public void addUnlockedBook(EntityPlayer player, ItemStack stack, ItemStack overwrites) {
-        boolean canAddBook = false;
-        for (ModBookData book : modBooks.books) {
-            if (book.item == null || book.free == true) continue;
-            if (book.item.isItemEqual(stack)) {
-                canAddBook = true;
-            }
-        }
-
+    public void addUnlockedBook(EntityPlayer player, ItemStack stack, ItemStack overwrites) {        
         LibraryStorage storage = getOrCreateStorage(player.getPersistentID());
         if (overwrites == null) {
             storage.add(stack);
@@ -99,20 +90,20 @@ public class LibrarySaveData extends WorldSavedData {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(NBTTagCompound nbt) {        
         //Read in the stored list of UUID > Data Mappings
         NBTTagList tracker = nbt.getTagList("LibraryTracker", 10);
         for (int i = 0; i < tracker.tagCount(); i++) {
             NBTTagCompound tag = tracker.getCompoundTagAt(i);
             UUID uuid = new UUID(tag.getLong("UUIDMost"), tag.getLong("UUIDLeast"));
             LibraryStorage storage = new LibraryStorage();
-            storage.readFromNBT(nbt);
+            storage.readFromNBT(tag);
             data.put(uuid, storage);
         }
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public void writeToNBT(NBTTagCompound nbt) {        
         //Write the list of UUID > Data Mappings
         NBTTagList tracker = new NBTTagList();
         for (Map.Entry<UUID, LibraryStorage> entry : data.entrySet()) {

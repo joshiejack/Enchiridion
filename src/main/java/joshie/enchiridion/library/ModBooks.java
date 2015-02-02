@@ -59,16 +59,19 @@ public class ModBooks {
         }
 
         public ModBookData setOverwrites(String overwrite) {
+            this.free = false;
             this.overwrite = overwrite;
             return this;
         }
 
         public ModBookData setOpenGuiClass(String clazz) {
+            this.free = false;
             this.openGuiClass = clazz;
             return this;
         }
 
         public ModBookData setOpenGuiNBT(String nbt) {
+            this.free = false;
             this.openGuiNBT = nbt;
             return this;
         }
@@ -101,7 +104,8 @@ public class ModBooks {
         data.addBook(new ModBookData("AgriCraft", "journal", 0, "default"));
         data.addBook(new ModBookData("aura", "lexicon", 0, "switch"));
         data.addBook(new ModBookData("AWWayofTime", "itemBloodMagicBook", 0, "switch"));
-        data.addBook(new ModBookData("Botania", "Botania:lexicon 0", "network").setOpenGuiClass("vazkii.botania.client.gui.lexicon.GuiLexicon"));
+        data.addBook(new ModBookData("Botania", "Botania:lexicon 0", "network"));
+        data.addBook(new ModBookData("Botania", "Botania:lexicon 0 {knowledge.minecraft:1b,knowledge.alfheim:1b}", "network").setOpenGuiClass("vazkii.botania.client.gui.lexicon.BotaniaHijackLexiconIndex").setOpenGuiNBT("knowledge.alfheim").setOverwrites("Botania:lexicon 0"));
         data.addBook(new ModBookData("factorization", "docbook", 0, "default"));
         data.addBook(new ModBookData("HardcoreQuesting", "quest_book", 0, "network"));
         data.addBook(new ModBookData("Mariculture", "guide", 0, "switch"));

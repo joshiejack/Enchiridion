@@ -27,7 +27,7 @@ public class LibraryStorage {
 
     /** Runs through the list of books, comparing it against the books list
      * adding and removing where appropriate */
-    public LibraryStorage updateStoredBooks(ModBooks modBooks) {
+    public LibraryStorage updateStoredBooks(ModBooks modBooks) {        
         //If books isn't created create it
         if (books == null) {
             books = new ArrayList();
@@ -52,7 +52,7 @@ public class LibraryStorage {
                 }
             }
         }
-
+        
         //Now we loop through the stacks to see if the book should be removed
         //If it is no longer allowed in the list
         Iterator<ItemStack> it = books.iterator();
@@ -69,7 +69,7 @@ public class LibraryStorage {
                 it.remove();
             }
         }
-
+        
         return this;
     }
     
@@ -87,13 +87,13 @@ public class LibraryStorage {
                 break;
             }
         }
-
+        
         books.set(index, stack);
     }
 
     /** Called to read the data that is stored on these books from nbt **/
     public void readFromNBT(NBTTagCompound nbt) {
-        NBTTagList stacks = nbt.getTagList("BooksList", 10);
+        NBTTagList stacks = nbt.getTagList("BooksList", 10);        
         for (int i = 0; i < stacks.tagCount(); i++) {
             NBTTagCompound tag = stacks.getCompoundTagAt(i);
             ItemStack stack = StackHelper.getItemStackFromNBT(tag);
@@ -108,7 +108,7 @@ public class LibraryStorage {
         for (ItemStack stack : books) {
             stacks.appendTag(StackHelper.writeItemStackToNBT(new NBTTagCompound(), stack));
         }
-
+        
         nbt.setTag("BooksList", stacks);
     }
 }

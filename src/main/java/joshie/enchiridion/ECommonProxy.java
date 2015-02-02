@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 
 import joshie.enchiridion.designer.ItemBook;
 import joshie.enchiridion.library.LibraryOnConnect;
-import joshie.enchiridion.library.mods.BotaniaCommon;
 import joshie.enchiridion.network.EPacketHandler;
 import joshie.enchiridion.network.PacketLibraryCommand;
 import joshie.enchiridion.network.PacketNetworkSwitch;
@@ -56,11 +55,7 @@ public class ECommonProxy {
         preClient();
     }
 
-    public void initClient() {
-        if (Loader.isModLoaded("Botania")) {
-            BotaniaCommon.INSTANCE.init();
-        }
-    }
+    public void initClient() {}
 
     public void postClient() {}
 
