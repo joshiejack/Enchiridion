@@ -83,7 +83,9 @@ public class EClientProxy extends ECommonProxy {
     public void initClient() {
         /** Let's initialise the wiki and search through it **/
         //Search through all the mods for relevant pages
-        WikiRegistry.instance().registerMods();
+        if(!EConfig.DISABLE_AUTODISCOVERY) {
+            WikiRegistry.instance().registerMods();
+        }
     }
 
     @Override
