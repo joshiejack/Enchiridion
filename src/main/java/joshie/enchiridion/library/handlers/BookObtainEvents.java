@@ -9,7 +9,7 @@ import joshie.enchiridion.network.PacketOverwrite;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import vazkii.botania.client.gui.lexicon.BotaniaHijackLexicon;
+import vazkii.botania.client.gui.lexicon.BotaniaHijackHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
@@ -49,7 +49,7 @@ public class BookObtainEvents {
 
         /** Botania fix...**/
         if (clazz.equals("vazkii.botania.client.gui.lexicon.GuiLexicon")) {
-            event.gui = new BotaniaHijackLexicon();
+            event.gui = BotaniaHijackHelper.getGui();
         }
     }
 
