@@ -9,6 +9,8 @@ import static joshie.enchiridion.EInfo.VERSION;
 
 import java.io.File;
 
+import joshie.enchiridion.library.LibraryHelper;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -17,6 +19,8 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartedEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = MODID, name = MODNAME, version = VERSION)
 public class Enchiridion {
@@ -42,5 +46,15 @@ public class Enchiridion {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postClient();
+    }
+    
+    @EventHandler
+    public void onServerStarting(FMLServerStartingEvent event) {
+        ECommands.init(event.getServer().getCommandManager());
+    }
+    
+    @EventHandler
+    public void onServerStarted(FMLServerStartedEvent event) {
+        LibraryHelper.init(MinecraftServer.getServer().worldServers[0]);
     }
 }

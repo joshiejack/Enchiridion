@@ -1,7 +1,7 @@
 package joshie.enchiridion.network;
 
 import io.netty.buffer.ByteBuf;
-import joshie.enchiridion.library.LibraryLoadEvent;
+import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.library.mods.BotaniaCommon;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -22,7 +22,7 @@ public class PacketAlfheim implements IMessage, IMessageHandler<PacketAlfheim, I
 
     @Override
     public IMessage onMessage(PacketAlfheim message, MessageContext ctx) {
-        LibraryLoadEvent.data.overwrite(ctx.getServerHandler().playerEntity, BotaniaCommon.alfheim.copy());
+        LibraryHelper.data.addUnlockedBook(ctx.getServerHandler().playerEntity, BotaniaCommon.alfheim.copy(), BotaniaCommon.lexicon.copy());
 
         return null;
     }

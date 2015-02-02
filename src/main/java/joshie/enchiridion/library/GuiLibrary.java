@@ -9,7 +9,6 @@ import static joshie.enchiridion.wiki.WikiHelper.drawRect;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledCentredText;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledStack;
 import static joshie.enchiridion.wiki.WikiHelper.drawScaledText;
-import static joshie.enchiridion.wiki.WikiHelper.getHeight;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
@@ -43,8 +42,8 @@ public class GuiLibrary extends GuiExtension {
     public void drawBooks() {
         int j = 0;
         int k = 0;
-        for (int i = SHELF * MAX_PER_ROW; i < LibraryDataClient.storage.getBooks().size(); i++) {
-            ItemStack stack = LibraryDataClient.storage.getBooks().get(i);
+        for (int i = SHELF * MAX_PER_ROW; i < LibraryHelper.storage.getBooks().size(); i++) {
+            ItemStack stack = LibraryHelper.storage.getBooks().get(i);
             drawScaledStack(stack, 36 + (j * 74), 50 + (k * 80), 4F);
             j++;
 
@@ -60,8 +59,8 @@ public class GuiLibrary extends GuiExtension {
         OpenGLHelper.resetZ();
         int j = 0;
         int k = 0;
-        for (int i = SHELF * MAX_PER_ROW; i < LibraryDataClient.storage.getBooks().size(); i++) {
-            ItemStack stack = LibraryDataClient.storage.getBooks().get(i);
+        for (int i = SHELF * MAX_PER_ROW; i < LibraryHelper.storage.getBooks().size(); i++) {
+            ItemStack stack = LibraryHelper.storage.getBooks().get(i);
             //Drawing the tooltips
             int xStart = 36 + (j * 74);
             int yStart = 50 + (k * 74);
@@ -98,10 +97,10 @@ public class GuiLibrary extends GuiExtension {
     public void clicked(int button) {
         int j = 0;
         int k = 0;
-        for (int i = SHELF * MAX_PER_ROW; i < LibraryDataClient.storage.getBooks().size(); i++) {
-            ItemStack stack = LibraryDataClient.storage.getBooks().get(i);
+        for (int i = SHELF * MAX_PER_ROW; i < LibraryHelper.storage.getBooks().size(); i++) {
+            ItemStack stack = LibraryHelper.storage.getBooks().get(i);
             if (getIntFromMouse(36 + (j * 74), 36 + 74 + (j * 74), 50 + (k * 80), 50 + 74 + (k * 80), 0, 1) == 1) {
-                BookHandlerRegistry.getHandler(stack).handle(stack, ClientHelper.getWorld(), ClientHelper.getPlayer());
+                BookHandlerRegistry.getHandlerForStack(stack).handle(stack, ClientHelper.getWorld(), ClientHelper.getPlayer());
             }
 
             j++;

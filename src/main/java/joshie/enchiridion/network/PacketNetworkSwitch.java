@@ -2,8 +2,7 @@ package joshie.enchiridion.network;
 
 import io.netty.buffer.ByteBuf;
 import joshie.enchiridion.helpers.ClientHelper;
-import joshie.enchiridion.library.LibraryDataClient;
-import joshie.enchiridion.library.LibraryLoadEvent;
+import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -46,15 +45,15 @@ public class PacketNetworkSwitch implements IMessage, IMessageHandler<PacketNetw
             ItemStack ret = message.stack.getItem().onItemRightClick(message.stack, player.worldObj, player);
             player.setCurrentItemOrArmor(0, previous);
             EPacketHandler.sendToClient(new PacketNetworkSwitch(ret, false), player);
-            LibraryLoadEvent.data.overwrite(player, ret);
+            LibraryHelper.data.addUnlockedBook(player, ret, message.stack);
         } else {
-            LibraryDataClient.storage.overwrite(message.stack);
             EntityPlayer player = ClientHelper.getPlayer();
             ItemStack previous = player.getCurrentEquippedItem();
             if (previous != null) previous = previous.copy();
             player.setCurrentItemOrArmor(0, message.stack);
             message.stack.getItem().onItemRightClick(message.stack, player.worldObj, player);
             player.setCurrentItemOrArmor(0, previous);
+            LibraryHelper.storage.overwrite(message.stack, message.stack);
         }
 
         return null;

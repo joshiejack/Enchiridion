@@ -1,6 +1,7 @@
 package joshie.enchiridion.library;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import joshie.enchiridion.api.IBookHandler;
 import joshie.enchiridion.helpers.StackHelper;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemStack;
 public class BookHandlerRegistry {
     //Only ever one instance of this
     private static final ArrayList<IBookHandler> bookHandlers = new ArrayList();
+    private static final HashMap<String, IBookHandler> handlers = new HashMap();
 
     //Called to setup the default bookhandlers
     public static void initRegistry() {
@@ -30,16 +32,27 @@ public class BookHandlerRegistry {
 
         bookHandlers.add(handler);
     }
-
-    /** Returns the approparite bookhandler for this itemstack **/
-    public static IBookHandler getHandler(ItemStack stack) {
+    
+    public static IBookHandler getHandlerForStack(ItemStack stack) {
         ItemStack removed_nbt = stack.copy();
-        removed_nbt.stackTagCompound = null;
-        //Remove the nbt to get the correct handling for this book type
-        String key = StackHelper.getStringFromStack(removed_nbt);
+        removed_nbt.stackTagCompound = null; //Remove the NBT
+        String key = StackHelper.getStringFromStack(removed_nbt); //Grab the key
+        IBookHandler bookHandler = handlers.get(key);
+        return bookHandler != null? bookHandler: bookHandlers.get(0);
+    }
+    
+    public static void registerBook(ItemStack stack, String handler) {
+        ItemStack removed_nbt = stack.copy();
+        removed_nbt.stackTagCompound = null; //Remove the NBT
+        String key = StackHelper.getStringFromStack(removed_nbt); //Grab the key
+        IBookHandler bookHandler = getHandlerFromString(handler);
+        handlers.put(key, bookHandler);
+    }
+
+    public static IBookHandler getHandlerFromString(String key) {
         IBookHandler theHandler = null;
         for (IBookHandler handler : bookHandlers) {
-            if (handler.getName().equals(LibraryDataClient.storage.getHandler(key))) {
+            if (handler.getName().equals(key)) {
                 theHandler = handler;
             }
         }

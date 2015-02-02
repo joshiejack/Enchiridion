@@ -9,7 +9,6 @@ public class BotaniaClient extends BotaniaCommon {
     @Override
     public void init() {
         super.init();
-
         MinecraftForge.EVENT_BUS.register(new BotaniaBookHandler());
     }
 }

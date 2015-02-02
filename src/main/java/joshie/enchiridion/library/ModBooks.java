@@ -2,11 +2,16 @@ package joshie.enchiridion.library;
 
 import java.util.ArrayList;
 
+import joshie.enchiridion.helpers.StackHelper;
+import net.minecraft.item.ItemStack;
+
 import com.google.gson.annotations.Expose;
+
+import cpw.mods.fml.common.Loader;
 
 public class ModBooks {
     @Expose
-    ArrayList<ModBookData> books = new ArrayList();
+    public ArrayList<ModBookData> books = new ArrayList();
 
     public ModBooks addBook(ModBookData book) {
         books.add(book);
@@ -20,13 +25,74 @@ public class ModBooks {
         public String stack;
         @Expose
         public String type;
+        @Expose
+        public boolean free;
+        @Expose
+        public boolean onCrafted;
+        @Expose
+        public String openGuiClass;
+        @Expose
+        public String openGuiNBT;
+        @Expose
+        public boolean pickUp;
+        @Expose
+        public String overwrite;
+
+        public ItemStack item; //If this isn't null then this book is actively installed
 
         public ModBookData() {}
 
-        public ModBookData(String mod, String item, int meta, String register) {
+        public ModBookData(String mod, String stack, String register) {
             this.mod = mod;
-            this.stack = mod + ":" + item + " " + meta;
+            this.stack = stack;
             this.type = register;
+            this.free = true;
+            this.onCrafted = false;
+            this.openGuiClass = "";
+            this.openGuiNBT = "";
+            this.pickUp = false;
+            this.overwrite = "";
+        }
+
+        public ModBookData(String mod, String item, int meta, String register) {
+            this(mod, mod + ":" + item + " " + meta, register);
+        }
+
+        public ModBookData setOverwrites(String overwrite) {
+            this.overwrite = overwrite;
+            return this;
+        }
+
+        public ModBookData setOpenGuiClass(String clazz) {
+            this.openGuiClass = clazz;
+            return this;
+        }
+
+        public ModBookData setOpenGuiNBT(String nbt) {
+            this.openGuiNBT = nbt;
+            return this;
+        }
+    }
+
+    /** sets up the items with their actual item **/
+    public ModBooks init() {
+        for (ModBookData book : books) {
+            if (Loader.isModLoaded(book.mod)) {
+                try {
+                    book.item = StackHelper.getStackFromString(book.stack);
+                } catch (Exception e) {}
+            }
+        }
+
+        return this;
+    }
+
+    /** Register books to the bookhandler registry, Called client side whenever a server
+     * sends a new list of books, this is jsut so we know how they should be handled **/
+    public void registerBooks() {
+        for (ModBookData book : books) {
+            if (book.item == null) continue;
+            BookHandlerRegistry.registerBook(book.item, book.type);
         }
     }
 
@@ -35,7 +101,7 @@ public class ModBooks {
         data.addBook(new ModBookData("AgriCraft", "journal", 0, "default"));
         data.addBook(new ModBookData("aura", "lexicon", 0, "switch"));
         data.addBook(new ModBookData("AWWayofTime", "itemBloodMagicBook", 0, "switch"));
-        data.addBook(new ModBookData("Botania", "lexicon", 0, "switch"));
+        data.addBook(new ModBookData("Botania", "Botania:lexicon 0", "network").setOpenGuiClass("vazkii.botania.client.gui.lexicon.GuiLexicon"));
         data.addBook(new ModBookData("factorization", "docbook", 0, "default"));
         data.addBook(new ModBookData("HardcoreQuesting", "quest_book", 0, "network"));
         data.addBook(new ModBookData("Mariculture", "guide", 0, "switch"));

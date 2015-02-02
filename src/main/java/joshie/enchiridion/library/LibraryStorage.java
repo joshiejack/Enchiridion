@@ -1,48 +1,89 @@
 package joshie.enchiridion.library;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Iterator;
 
 import joshie.enchiridion.helpers.StackHelper;
+import joshie.enchiridion.library.ModBooks.ModBookData;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-import com.google.gson.annotations.Expose;
-
 public class LibraryStorage {
-    @Expose
-    private HashMap<String, String> handlers = new HashMap(); //List of the books and which handler they correlate to
-    private ArrayList<ItemStack> books = new ArrayList(); ///List of all the books on display in the library
+    private ArrayList<ItemStack> books;
 
-    private ArrayList<Integer> toRemove = new ArrayList();
-
-    public LibraryStorage() {}
-
-    public LibraryStorage(LibraryStorage copy) {
-        this.handlers = copy.handlers;
-        this.books = copy.books;
+    public LibraryStorage() {
+        books = new ArrayList();
     }
 
-    public String getHandler(String key) {
-        return handlers.get(key);
+    public LibraryStorage(ArrayList<ItemStack> books) {
+        this.books = books;
     }
 
+    /** Returns this list of books in this storage **/
     public ArrayList<ItemStack> getBooks() {
         return books;
     }
 
-    public void setBooks(ArrayList<ItemStack> stacks) {
-        this.books = stacks;
-    }
+    /** Runs through the list of books, comparing it against the books list
+     * adding and removing where appropriate */
+    public LibraryStorage updateStoredBooks(ModBooks modBooks) {
+        //If books isn't created create it
+        if (books == null) {
+            books = new ArrayList();
+        }
 
-    //Overwrite the data stored for this
-    public void overwrite(ItemStack stack) {
+        //Loop through the ModBookData
+        for (ModBookData book : modBooks.books) {
+            if (book.item == null) continue; //Skip over this book if it is null
+            if (book.free) { //If the book should be obtained for free, loop through the list
+                boolean hasBook = false;
+                for (ItemStack stack : books) { //Let's check the list of books
+                    if (stack.isItemEqual(book.item)) {
+                        hasBook = true;
+                        break;
+                    }
+                }
+
+                //If we don't have the book already and it is supposed to be free
+                //Then we should add it to the list of books
+                if (!hasBook) {
+                    books.add(book.item);
+                }
+            }
+        }
+
+        //Now we loop through the stacks to see if the book should be removed
+        //If it is no longer allowed in the list
+        Iterator<ItemStack> it = books.iterator();
+        while (it.hasNext()) {
+            ItemStack stack = it.next();
+            boolean isAllowed = false;
+            for (ModBookData book : modBooks.books) {
+                if (book.item == null) continue;
+                if (book.item.isItemEqual(stack)) isAllowed = true;
+            }
+
+            //If this stack isn't allowed in the library, mark it for removal
+            if (!isAllowed) {
+                it.remove();
+            }
+        }
+
+        return this;
+    }
+    
+    /** Adds a book **/
+    public void add(ItemStack stack) {
+        books.add(stack);
+    }
+    
+    /** Overwrites one book with another **/
+    public void overwrite(ItemStack stack, ItemStack overwrites) {
         int index = 0;
         for (index = 0; index < books.size(); index++) {
             ItemStack book = books.get(index);
-            if (book.isItemEqual(stack)) {
+            if (book.isItemEqual(overwrites)) {
                 break;
             }
         }
@@ -50,68 +91,8 @@ public class LibraryStorage {
         books.set(index, stack);
     }
 
-    //Loops through the books and cleans them up and removes ones that are no longer allowed, Passes the default
-    public void sanitize(LibraryStorage library) {
-        int index = 0;
-        //Loop through the books
-        for (ItemStack book : books) {
-            boolean toRemove = true;
-            for (ItemStack libBook : library.books) { //Loop through the default library
-                if (libBook.isItemEqual(book)) toRemove = false;
-                break;
-            }
-
-            if (toRemove) {
-                this.toRemove.add(index);
-            }
-
-            index++;
-        }
-
-        //Now we check if it exist
-        for (ItemStack libBook : library.books) {
-            boolean hasBook = false;
-            for (ItemStack book : books) {
-                if (book.isItemEqual(libBook)) hasBook = true;
-                return;
-            }
-
-            if (!hasBook) {
-                add(libBook, BookHandlerRegistry.getHandler(libBook).getName());
-            }
-        }
-
-        //Now that we have cached all the items that need to be removed Let's do it
-        for (Integer i : toRemove) {
-            ItemStack stack = books.get(i);
-            String key = StackHelper.getStringFromStack(stack);
-            handlers.remove(key);
-            books.remove(i);
-        }
-    }
-
-    //Adds this book in to handlers and books
-    public void add(ItemStack stack, String type) {
-        //Remove the nbt to set the correct handling for this book type
-        ItemStack removed_nbt = stack.copy();
-        removed_nbt.stackTagCompound = null;
-
-        //Get the key from the removed_nbt
-        String key = StackHelper.getStringFromStack(removed_nbt);
-        books.add(stack);
-        handlers.put(key, type);
-    }
-
-    //Called ServerSide to read this data
+    /** Called to read the data that is stored on these books from nbt **/
     public void readFromNBT(NBTTagCompound nbt) {
-        NBTTagList handles = nbt.getTagList("Handles", 10);
-        for (int i = 0; i < handles.tagCount(); i++) {
-            NBTTagCompound tag = handles.getCompoundTagAt(i);
-            String key = tag.getString("Key");
-            String value = tag.getString("Value");
-            handlers.put(key, value);
-        }
-
         NBTTagList stacks = nbt.getTagList("BooksList", 10);
         for (int i = 0; i < stacks.tagCount(); i++) {
             NBTTagCompound tag = stacks.getCompoundTagAt(i);
@@ -120,19 +101,8 @@ public class LibraryStorage {
         }
     }
 
-    //Called ServerSide to save this data
+    /** Write the stored books to nbt **/
     public void writeToNBT(NBTTagCompound nbt) {
-        //Saving the handlers
-        NBTTagList handles = new NBTTagList();
-        for (Map.Entry<String, String> entry : handlers.entrySet()) {
-            NBTTagCompound tag = new NBTTagCompound();
-            tag.setString("Key", entry.getKey());
-            tag.setString("Value", entry.getValue());
-            handles.appendTag(tag);
-        }
-
-        nbt.setTag("Handles", handles);
-
         //Saving the books
         NBTTagList stacks = new NBTTagList();
         for (ItemStack stack : books) {
