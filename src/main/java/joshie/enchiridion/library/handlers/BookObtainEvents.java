@@ -9,7 +9,6 @@ import joshie.enchiridion.network.PacketOverwrite;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import vazkii.botania.client.gui.lexicon.BotaniaHijackHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
@@ -32,7 +31,7 @@ public class BookObtainEvents {
             if (data.item == null || data.free == true || data.openGuiClass.equals("") || hasBook(data.item, data.openGuiNBT)) continue;
             if (data.openGuiClass.equals(clazz)) {
                 ItemStack held = ClientHelper.getPlayer().getCurrentEquippedItem();
-                if (data.openGuiNBT.equals("") || (held != null && held.hasTagCompound() && held.stackTagCompound.hasKey(data.openGuiNBT))) {                    
+                if (data.openGuiNBT.equals("") || (held != null && held.hasTagCompound() && held.stackTagCompound.hasKey(data.openGuiNBT))) {
                     ItemStack overwrites = null;
                     try {
                         if (!data.overwrite.equals("")) overwrites = StackHelper.getStackFromString(data.overwrite);
@@ -45,11 +44,6 @@ public class BookObtainEvents {
                     EPacketHandler.sendToServer(new PacketOverwrite(data.item, overwrites));
                 }
             }
-        }
-
-        /** Botania fix...**/
-        if (clazz.equals("vazkii.botania.client.gui.lexicon.GuiLexicon")) {
-            event.gui = BotaniaHijackHelper.getGui();
         }
     }
 
