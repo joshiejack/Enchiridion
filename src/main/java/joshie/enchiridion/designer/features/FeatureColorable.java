@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 
 public abstract class FeatureColorable extends FeatureWithText {
     @Expose
-    protected String color = "FFFFFFFF";
+    protected String color = "FF555555";
     protected int colorI;
     private boolean init;
 
