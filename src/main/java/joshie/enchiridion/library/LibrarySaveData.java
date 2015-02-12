@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.WorldSavedData;
+import net.minecraftforge.common.UsernameCache;
 
 import org.apache.commons.io.FileUtils;
 
@@ -38,7 +39,7 @@ public class LibrarySaveData extends WorldSavedData {
 
     /** Adds a 'new' book to the library storage if it is allowed' **/
     public void addUnlockedBook(EntityPlayer player, ItemStack stack, ItemStack overwrites) {        
-        LibraryStorage storage = getOrCreateStorage(player.getPersistentID());
+        LibraryStorage storage = getOrCreateStorage(getUUID((EntityPlayerMP) player));
         if (overwrites == null) {
             storage.add(stack);
         } else storage.overwrite(stack, overwrites);
@@ -73,8 +74,8 @@ public class LibrarySaveData extends WorldSavedData {
 
     /** Sends the ModBooks to the client as json, and sends their LibraryStorage value **/
     public void updateClient(EntityPlayerMP player) {
-        LibraryStorage storage = getOrCreateStorage(player.getPersistentID()).updateStoredBooks(modBooks); //Get the storage
-        data.put(player.getPersistentID(), storage); //Save the updated data
+        LibraryStorage storage = getOrCreateStorage(getUUID(player)).updateStoredBooks(modBooks); //Get the storage
+        data.put(getUUID(player), storage); //Save the updated data
         //TODO: SEND A PACKET WITH THE NEW LIBRARYSTORAGE TO PLAYERS, AND THE MODBOOKS FILE
         EPacketHandler.sendToClient(new PacketSyncLibraryBooks(storage, modBooks), player);
         //No matter what when we are updating the client, it means we have updated their storage
@@ -87,6 +88,22 @@ public class LibrarySaveData extends WorldSavedData {
         if (data.containsKey(uuid)) {
             return data.get(uuid);
         } else return new LibraryStorage();
+    }
+    
+    public UUID getUUID(EntityPlayerMP player) {
+        if(data.containsKey(player.getPersistentID())) {
+            return player.getPersistentID();
+        } else {
+            for (Map.Entry<UUID, String> entry : UsernameCache.getMap().entrySet()) {
+                if (entry.getValue().equals(player.getDisplayName())) {
+                    if(data.containsKey(entry.getKey())) {
+                        return entry.getKey();
+                    }
+                }
+            }
+            
+            return player.getPersistentID();
+        }
     }
 
     @Override
