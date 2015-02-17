@@ -147,11 +147,13 @@ public class FeatureItem extends FeatureWithText {
             position = 0;
             sorted = new ArrayList();
             for (ItemStack stack : ItemHelper.items) {
-                if (stack != null && stack.getItem() != null) {
-                    if (stack.getDisplayName().toLowerCase().contains(search.toLowerCase())) {
-                        sorted.add(stack);
+                try {
+                    if (stack != null && stack.getItem() != null) {
+                        if (stack.getDisplayName().toLowerCase().contains(search.toLowerCase())) {
+                            sorted.add(stack);
+                        }
                     }
-                }
+                } catch (Exception e) { }
             }
         }
     }

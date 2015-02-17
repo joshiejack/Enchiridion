@@ -115,7 +115,7 @@ public class ModBooks {
         data.addBook(new ModBookData("Mariculture", "guide", 3, "switch"));
         data.addBook(new ModBookData("Mariculture", "guide", 4, "switch"));
         data.addBook(new ModBookData("OpenBlocks", "infoBook", 0, "network"));
-        data.addBook(new ModBookData("Steamcraft", "book", 0, "default"));
+        data.addBook(new ModBookData("Steamcraft", "book", 0, "switch"));
         data.addBook(new ModBookData("TConstruct", "manualBook", 0, "default"));
         data.addBook(new ModBookData("TConstruct", "manualBook", 1, "default"));
         data.addBook(new ModBookData("TConstruct", "manualBook", 2, "default"));
