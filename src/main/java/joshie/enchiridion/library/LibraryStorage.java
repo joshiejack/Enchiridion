@@ -15,6 +15,11 @@ public class LibraryStorage {
     public LibraryStorage() {
         books = new ArrayList();
     }
+    
+    //Dummy creation for the client
+    public LibraryStorage(ModBooks modBooks) {
+        updateStoredBooks(modBooks);
+    }
 
     public LibraryStorage(ArrayList<ItemStack> books) {
         this.books = books;

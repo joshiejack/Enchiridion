@@ -1,13 +1,13 @@
 package joshie.enchiridion.library;
 
-import org.apache.logging.log4j.Level;
-
 import joshie.enchiridion.ELogger;
 import net.minecraft.world.WorldServer;
 
+import org.apache.logging.log4j.Level;
+
 public class LibraryHelper {
     public static ModBooks modBooks; //The Client instance of ModBooks
-    public static LibraryStorage storage = null; //The Clients instance of LibraryStorage
+    public static LibraryStorage storage = new LibraryStorage(ModBooks.getModBooks(new ModBooks())); //The Clients instance of LibraryStorage, Gets overwritten by the server
     public static LibrarySaveData data = null; //The Servers Save Data
 
     //Setup the data file
