@@ -2,6 +2,7 @@ package joshie.enchiridion;
 
 import static java.io.File.separator;
 import static joshie.enchiridion.Enchiridion.instance;
+import static joshie.enchiridion.helpers.OpenGLHelper.fixShitForThePedia;
 import static joshie.enchiridion.wiki.WikiHandler.wiki;
 
 import java.io.File;
@@ -39,6 +40,10 @@ public class EClientProxy extends ECommonProxy {
 
     @Override
     public void preClient() {
+        if (!EConfig.SHIT_COMPUTER) {
+            fixShitForThePedia();
+        }
+
         /** Register the GuiHandler clientSide only, no need for a server side gui **/
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new EGuiHandler());
         FMLCommonHandler.instance().bus().register(new BookObtainEvents());
@@ -83,7 +88,7 @@ public class EClientProxy extends ECommonProxy {
     public void initClient() {
         /** Let's initialise the wiki and search through it **/
         //Search through all the mods for relevant pages
-        if(!EConfig.DISABLE_AUTODISCOVERY) {
+        if (!EConfig.DISABLE_AUTODISCOVERY) {
             WikiRegistry.instance().registerMods();
         }
     }

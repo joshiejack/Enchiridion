@@ -33,10 +33,6 @@ public class GuiCanvas extends GuiExtension {
 
     @Override
     public void draw() {
-        if(!EConfig.SHIT_COMPUTER) {
-            fixShitForThePedia();
-        }
-        
         start();
         enable(GL_BLEND);
         glClear(GL_DEPTH_BUFFER_BIT);

@@ -10,6 +10,13 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glScalef;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.shader.Framebuffer;
+import net.minecraftforge.client.ForgeHooksClient;
+
+import org.lwjgl.opengl.EXTFramebufferObject;
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.relauncher.ReflectionHelper;
 
 public class OpenGLHelper {
     public static void start() {
@@ -74,13 +81,20 @@ public class OpenGLHelper {
     public static boolean FIXED = false;
 
     public static void fixShitForThePedia() {
-        Minecraft mc = ClientHelper.getMinecraft();
-        OpenGlHelper.func_153186_a(OpenGlHelper.field_153199_f, org.lwjgl.opengl.EXTPackedDepthStencil.GL_DEPTH24_STENCIL8_EXT, Minecraft.getMinecraft().getFramebuffer().framebufferTextureWidth, Minecraft.getMinecraft().getFramebuffer().framebufferHeight);
-        OpenGlHelper.func_153190_b(OpenGlHelper.field_153198_e, org.lwjgl.opengl.EXTFramebufferObject.GL_STENCIL_ATTACHMENT_EXT, OpenGlHelper.field_153199_f, Minecraft.getMinecraft().getFramebuffer().depthBuffer);
+        if (!Boolean.parseBoolean(System.getProperty("forge.forceDisplayStencil", "false"))) {
+            try {
+                Framebuffer buffer = Minecraft.getMinecraft().getFramebuffer();
+                buffer.createBindFramebuffer(buffer.framebufferWidth, buffer.framebufferHeight);
+                int stencilBits = GL11.glGetInteger(GL11.GL_STENCIL_BITS);
+                ReflectionHelper.findField(ForgeHooksClient.class, "stencilBits").setInt(null, stencilBits);
 
-        if (!FIXED) {
-            mc.getFramebuffer().createBindFramebuffer(mc.displayWidth, mc.displayHeight);
-            FIXED = true;
+                if (ReflectionHelper.findField(OpenGlHelper.class, "field_153212_w").getInt(null) == 2) {
+                    if (EXTFramebufferObject.glCheckFramebufferStatusEXT(buffer.framebufferObject) != EXTFramebufferObject.GL_FRAMEBUFFER_COMPLETE_EXT) {
+                        ReflectionHelper.findField(ForgeHooksClient.class, "stencilBits").setInt(null, 0);
+                        buffer.createBindFramebuffer(buffer.framebufferWidth, buffer.framebufferHeight);
+                    }
+                }
+            } catch (Exception e) {}
         }
     }
 }
