@@ -5,6 +5,7 @@ import static joshie.enchiridion.wiki.gui.GuiMain.button_id;
 
 import java.util.List;
 
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.IWikiMode;
 import joshie.enchiridion.wiki.WikiCategory;
 import joshie.enchiridion.wiki.WikiMod;
@@ -33,7 +34,11 @@ public class SaveMode implements IWikiMode {
     public List addButtons(List list) {
         list.add(new ButtonSwitchMode(button_id++, 975, 14, 1, 1, "edit", 2F, EditMode.getInstance()));
         list.add(new ButtonAddPage(button_id++, 723, 14, 1, 1, 2F));
-        list.add(new ButtonDeletePage(button_id++, 843, 14, 1, 1, 2F));
+
+        if (EConfig.ENABLE_DELETE) {
+            list.add(new ButtonDeletePage(button_id++, 843, 14, 1, 1, 2F));
+        }
+        
         return list;
     }
 
