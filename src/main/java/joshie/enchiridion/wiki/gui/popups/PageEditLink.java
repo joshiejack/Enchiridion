@@ -16,10 +16,11 @@ public class PageEditLink extends PageEdit {
     }
 
     @Override
-    public void add() {
+    public boolean add() {
         if (editing != null) {
             editing.set(mod.getText(), tab.getText(), cat.getText(), page.getText());
-        }
+            return true;
+        } else return false;
     }
 
     @Override

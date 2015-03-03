@@ -95,10 +95,11 @@ public class PageEditResource extends PageEdit {
     }
 
     @Override
-    public void add() {
+    public boolean add() {
         if (editing != null) {
             editing.setPath(resource.getText(), true);
-        }
+            return true;
+        } else return false;
     }
 
     @Override

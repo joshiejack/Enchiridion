@@ -38,7 +38,7 @@ public class LibrarySaveData extends WorldSavedData {
     }
 
     /** Adds a 'new' book to the library storage if it is allowed' **/
-    public void addUnlockedBook(EntityPlayer player, ItemStack stack, ItemStack overwrites) {        
+    public void addUnlockedBook(EntityPlayer player, ItemStack stack, ItemStack overwrites) {
         LibraryStorage storage = getOrCreateStorage(getUUID((EntityPlayerMP) player));
         if (overwrites == null) {
             storage.add(stack);
@@ -74,40 +74,46 @@ public class LibrarySaveData extends WorldSavedData {
 
     /** Sends the ModBooks to the client as json, and sends their LibraryStorage value **/
     public void updateClient(EntityPlayerMP player) {
-        LibraryStorage storage = getOrCreateStorage(getUUID(player)).updateStoredBooks(modBooks); //Get the storage
-        data.put(getUUID(player), storage); //Save the updated data
-        //TODO: SEND A PACKET WITH THE NEW LIBRARYSTORAGE TO PLAYERS, AND THE MODBOOKS FILE
-        EPacketHandler.sendToClient(new PacketSyncLibraryBooks(storage, modBooks), player);
-        //No matter what when we are updating the client, it means we have updated their storage
-        //So we should mark this as dirty
-        this.markDirty();
+        if (modBooks != null) {
+            LibraryStorage storage = getOrCreateStorage(getUUID(player)).updateStoredBooks(modBooks); //Get the storage
+            if (storage != null) {
+                data.put(getUUID(player), storage); //Save the updated data
+                //TODO: SEND A PACKET WITH THE NEW LIBRARYSTORAGE TO PLAYERS, AND THE MODBOOKS FILE
+                EPacketHandler.sendToClient(new PacketSyncLibraryBooks(storage, modBooks), player);
+                //No matter what when we are updating the client, it means we have updated their storage
+                //So we should mark this as dirty
+                this.markDirty();
+            }
+        }
     }
 
     /** Returns either a new piece of librarystorage or the one that is attached to this UUID **/
     public LibraryStorage getOrCreateStorage(UUID uuid) {
-        if (data.containsKey(uuid)) {
+        if (data.containsKey(uuid) && data.get(uuid) != null) {
             return data.get(uuid);
-        } else return new LibraryStorage();
+        } else {
+            return new LibraryStorage();
+        }
     }
-    
+
     public UUID getUUID(EntityPlayerMP player) {
-        if(data.containsKey(player.getPersistentID())) {
+        if (data.containsKey(player.getPersistentID())) {
             return player.getPersistentID();
         } else {
             for (Map.Entry<UUID, String> entry : UsernameCache.getMap().entrySet()) {
                 if (entry.getValue().equals(player.getDisplayName())) {
-                    if(data.containsKey(entry.getKey())) {
+                    if (data.containsKey(entry.getKey())) {
                         return entry.getKey();
                     }
                 }
             }
-            
+
             return player.getPersistentID();
         }
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {        
+    public void readFromNBT(NBTTagCompound nbt) {
         //Read in the stored list of UUID > Data Mappings
         NBTTagList tracker = nbt.getTagList("LibraryTracker", 10);
         for (int i = 0; i < tracker.tagCount(); i++) {
@@ -120,7 +126,7 @@ public class LibrarySaveData extends WorldSavedData {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {        
+    public void writeToNBT(NBTTagCompound nbt) {
         //Write the list of UUID > Data Mappings
         NBTTagList tracker = new NBTTagList();
         for (Map.Entry<UUID, LibraryStorage> entry : data.entrySet()) {

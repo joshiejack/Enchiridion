@@ -4,6 +4,7 @@ import static joshie.enchiridion.helpers.OpenGLHelper.end;
 import static joshie.enchiridion.helpers.OpenGLHelper.resetZ;
 import static joshie.enchiridion.helpers.OpenGLHelper.start;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import joshie.enchiridion.Enchiridion;
@@ -45,10 +46,10 @@ public class WikiPage extends WikiPart {
 
         String dir = getData().getSaveDirectory();
         if (dir.equals("")) {
-            return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + page.getKey() + "\\" + lang + ".json";
+            return Enchiridion.root + File.separator + "wiki" + File.separator + mod.getKey() + File.separator + tab.getKey() + File.separator + cat.getKey() + File.separator + page.getKey() + File.separator + lang + ".json";
         } else {
             String root = Enchiridion.root.getParentFile().getParentFile().getParentFile().toString();
-            return root + "\\src\\main\\resources\\assets\\" + dir + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + page.getKey() + "\\" + lang + ".json";
+            return root + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "assets" + File.separator + dir + File.separator + "wiki" + File.separator + mod.getKey() + File.separator + tab.getKey()+ File.separator + cat.getKey() + File.separator + page.getKey() + File.separator + lang + ".json";
         }
     }
 

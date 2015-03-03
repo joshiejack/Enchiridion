@@ -1,5 +1,7 @@
 package joshie.enchiridion.wiki.gui;
 
+import java.util.regex.Pattern;
+
 import joshie.enchiridion.api.IGuiDisablesMenu;
 import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.helpers.ClientHelper;
@@ -13,6 +15,7 @@ public class GuiTextEdit extends GuiExtension {
     private static int tick;
     private static boolean white;
     private static String blink;
+    private static boolean ALPHANUMERIC;
 
     public static void clear() {
         GuiTextEdit.editable = null;
@@ -26,6 +29,12 @@ public class GuiTextEdit extends GuiExtension {
 
     public static void select(ITextEditable editable) {
         select(editable, editable.getText().length());
+        GuiTextEdit.ALPHANUMERIC = false;
+    }
+
+    public static void selectAlphaNumeric(ITextEditable editable) {
+        select(editable, editable.getText().length());
+        GuiTextEdit.ALPHANUMERIC = true;
     }
 
     public static void select(ITextEditable editable, int position) {
@@ -83,6 +92,10 @@ public class GuiTextEdit extends GuiExtension {
     }
 
     private void add(String string) {
+        if (ALPHANUMERIC) {
+            string = string.replaceAll("\\P{Alnum}", "");
+        }
+        
         String text = editable.getText();
         StringBuilder builder = new StringBuilder(text);
         text = builder.insert(position, string).toString();

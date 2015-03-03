@@ -5,7 +5,9 @@ import static joshie.enchiridion.wiki.WikiHelper.getPage;
 
 import java.io.File;
 
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.ELogger;
+import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.wiki.WikiCategory;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.WikiMod;
@@ -55,16 +57,24 @@ public class ConfirmDeletion extends Confirm {
     }
 
     private void removeDirectory(String path) {
-        File directory = new File(path).getParentFile();
-        ELogger.log(Level.INFO, "Deleting all files in the directory: " + directory);
-        String[] files = directory.list();
-        if (files != null) {
-            for (String s : files) {
-                File currentFile = new File(directory.getPath(), s);
-                currentFile.delete();
+       if (EConfig.ENABLE_DELETE) {
+            File directory = new File(path).getParentFile();
+            File root = Enchiridion.root;
+            if (!directory.toString().startsWith(root.toString() + File.separator +  "wiki")) {
+                ELogger.log(Level.INFO, "No files in the directory: " + directory + " were deleted, an invalid path was discovered.");
+                return;
             }
-        }
 
-        directory.delete();
+            ELogger.log(Level.INFO, "Deleting all files in the directory: " + directory);
+            String[] files = directory.list();
+            if (files != null) {
+                for (String s : files) {
+                    File currentFile = new File(directory.getPath(), s);
+                    currentFile.delete();
+                }
+            }
+
+            directory.delete();
+        }
     }
 }

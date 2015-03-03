@@ -23,6 +23,14 @@ public class ConfirmAddition extends Confirm {
         return translate("pageedit." + descriptor + ".description", mod, tab, cat, page);
     }
 
+    public static boolean isValidated() {
+        return (validate(mod) && validate(tab) && validate(cat) && validate(page));
+    }
+
+    private static boolean validate(String str) {
+        return str.length() > 0;
+    }
+
     @Override
     public void confirm() {
         WikiHelper.loadPage(mod, tab, cat, page);

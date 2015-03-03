@@ -1,5 +1,6 @@
 package joshie.enchiridion.wiki;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -56,10 +57,10 @@ public class WikiCategory extends WikiPart {
 
         String dir = getData().getSaveDirectory();
         if (dir.equals("")) {
-            return Enchiridion.root + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + lang + ".json";
+            return Enchiridion.root + File.separator + "wiki" + File.separator + mod.getKey() + File.separator + tab.getKey() + File.separator + cat.getKey() + File.separator + lang + ".json";
         } else {
             String root = Enchiridion.root.getParentFile().getParentFile().getParentFile().toString();
-            return root + "\\src\\main\\resources\\assets\\" + dir + "\\wiki\\" + mod.getKey() + "\\" + tab.getKey() + "\\" + cat.getKey() + "\\" + lang + ".json";
+            return root + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "assets" + File.separator + dir + File.separator + "wiki" + File.separator + mod.getKey() + File.separator + tab.getKey()+ File.separator + cat.getKey() + File.separator + lang + ".json";
         }
     }
 

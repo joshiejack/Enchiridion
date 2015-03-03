@@ -113,24 +113,25 @@ public abstract class PageEdit extends GuiExtension implements IPopupIDoItellYou
     @Override
     public void clicked(int button) {
         if (getIntFromMouse(570, 844, 190, 229, 0, 1) == 1) {
-            GuiTextEdit.select(mod);
+            GuiTextEdit.selectAlphaNumeric(mod);
         }
 
         if (getIntFromMouse(570, 844, 235, 274, 0, 1) == 1) {
-            GuiTextEdit.select(tab);
+            GuiTextEdit.selectAlphaNumeric(tab);
         }
 
         if (getIntFromMouse(570, 844, 280, 319, 0, 1) == 1) {
-            GuiTextEdit.select(cat);
+            GuiTextEdit.selectAlphaNumeric(cat);
         }
 
         if (getIntFromMouse(570, 844, 325, 364, 0, 1) == 1) {
-            GuiTextEdit.select(page);
+            GuiTextEdit.selectAlphaNumeric(page);
         }
 
         if (getIntFromMouse(500, 624, 380, 419, 0, 1) == 1) {
-            add();
-            cancel();
+            if (add()) {
+                cancel();
+            }
         }
 
         if (getIntFromMouse(650, 774, 380, 419, 0, 1) == 1) {
@@ -150,5 +151,5 @@ public abstract class PageEdit extends GuiExtension implements IPopupIDoItellYou
         WikiHelper.setVisibility(getClass(), false);
     }
 
-    public abstract void add();
+    public abstract boolean add();
 }

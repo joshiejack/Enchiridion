@@ -54,7 +54,7 @@ public class WikiPart {
     public String getPath() {
         WikiPart part = this;
         String lang = ClientHelper.getLang();
-        return Enchiridion.root + "\\wiki\\" + getKey() + "\\" + lang + ".json";
+        return Enchiridion.root + File.separator + "wiki" + File.separator + getKey() + File.separator + lang + ".json";
     }
 
     public void save() {

@@ -9,12 +9,16 @@ public class PageEditAddition extends PageEdit {
     }
 
     @Override
-    public void add() {
+    public boolean add() {
         ConfirmAddition.mod = mod.getText();
         ConfirmAddition.tab = tab.getText();
         ConfirmAddition.cat = cat.getText();
         ConfirmAddition.page = page.getText();
-        WikiHelper.setVisibility(ConfirmAddition.class, true);
+
+        if (ConfirmAddition.isValidated()) {
+            WikiHelper.setVisibility(ConfirmAddition.class, true);
+            return true;
+        } else return false;
     }
 
     public PageEditAddition setToDefault() {
@@ -22,7 +26,7 @@ public class PageEditAddition extends PageEdit {
         if (GuiTextEdit.isSelected(page)) {
             GuiTextEdit.select(page);
         }
-        
+
         return this;
     }
 }
