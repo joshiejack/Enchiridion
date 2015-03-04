@@ -90,10 +90,10 @@ public class GuiMain extends GuiScalable {
 
         setMode(DisplayMode.getInstance());
         if (page == null) {
-            page = WikiRegistry.instance().getPage("Enchiridion 2", "Enchiridion 2", "Enchiridion 2", "About");
-            tab = WikiRegistry.instance().getTab("Enchiridion 2", "Enchiridion 2");
-            mod = WikiRegistry.instance().getMod("Enchiridion 2");
-            loadPage("Enchiridion 2", "Enchiridion 2", "Enchiridion 2", "About");
+            page = WikiRegistry.instance().getPage(EConfig.DEFAULT_MOD, EConfig.DEFAULT_TAB, EConfig.DEFAULT_CAT, EConfig.DEFAULT_PAGE);
+            tab = WikiRegistry.instance().getTab(EConfig.DEFAULT_MOD, EConfig.DEFAULT_TAB);
+            mod = WikiRegistry.instance().getMod(EConfig.DEFAULT_MOD);
+            loadPage(EConfig.DEFAULT_MOD, EConfig.DEFAULT_TAB, EConfig.DEFAULT_CAT, EConfig.DEFAULT_PAGE);
         }
 
         setPage(page);

@@ -2,6 +2,7 @@ package joshie.enchiridion.wiki.elements;
 
 import java.util.List;
 
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.popups.PageEditLink;
 
@@ -21,10 +22,10 @@ public class ElementLink extends Element {
     public ElementLink setToDefault() {
         this.width = 100;
         this.height = 20;
-        this.mod = "Enchiridion 2";
-        this.tab = "Enchiridion 2";
-        this.cat = "Enchiridion 2";
-        this.page = "About";
+        this.mod = EConfig.DEFAULT_MOD;
+        this.tab = EConfig.DEFAULT_TAB;
+        this.cat = EConfig.DEFAULT_CAT;
+        this.page = EConfig.DEFAULT_PAGE;
         return this;
     }
 

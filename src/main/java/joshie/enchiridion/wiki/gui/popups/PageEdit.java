@@ -12,6 +12,7 @@ import static joshie.enchiridion.wiki.WikiHelper.drawScaledTexture;
 import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.ETranslate;
 import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.wiki.WikiHelper;
@@ -19,9 +20,9 @@ import joshie.enchiridion.wiki.gui.GuiExtension;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;
 
 public abstract class PageEdit extends GuiExtension implements IPopupIDoItellYou {
-    public ITextEditable mod = new AbstractTextEdit("Enchiridion 2");
-    public ITextEditable tab = new AbstractTextEdit("Enchiridion 2");
-    public ITextEditable cat = new AbstractTextEdit("Enchiridion 2");
+    public ITextEditable mod = new AbstractTextEdit(EConfig.DEFAULT_MOD);
+    public ITextEditable tab = new AbstractTextEdit(EConfig.DEFAULT_TAB);
+    public ITextEditable cat = new AbstractTextEdit(EConfig.DEFAULT_CAT);
     public ITextEditable page = new AbstractTextEdit("");
 
     public static class AbstractTextEdit implements ITextEditable {
