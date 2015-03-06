@@ -83,6 +83,9 @@ public class ModBooks {
             if (Loader.isModLoaded(book.mod)) {
                 try {
                     book.item = StackHelper.getStackFromString(book.stack);
+                    if (book.item == null || book.item.getItem() == null) {
+                        book.item = null; //Make the book item null if it's item is null
+                    }
                 } catch (Exception e) {}
             }
         }
