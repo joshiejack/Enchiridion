@@ -41,7 +41,7 @@ public class Enchiridion {
         EConfig.init(new Configuration(new File(root + File.separator + "enchiridion2.cfg")));
         proxy.preInit();
 
-        if (EConfig.DISABLE_AUTODISCOVERY) {
+        if (EConfig.DISABLE_AUTODISCOVERY && EConfig.ENABLE_WIKI) {
             ModContainer mod = Loader.instance().activeModContainer();
             String jar = mod.getSource().toString();
             if (jar.contains(".jar") || jar.contains(".zip")) {
@@ -64,17 +64,21 @@ public class Enchiridion {
 
     @EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
-        ECommands.init(event.getServer().getCommandManager());
+        if (EConfig.ENABLE_WIKI) {
+            ECommands.init(event.getServer().getCommandManager());
+        }
     }
 
     @EventHandler
     public void onServerStarted(FMLServerStartedEvent event) {
-        LibraryHelper.init(MinecraftServer.getServer().worldServers[0]);
+        if (EConfig.ENABLE_WIKI) {
+            LibraryHelper.init(MinecraftServer.getServer().worldServers[0]);
+        }
     }
 
     @EventHandler
     public void handleIMCMessages(FMLInterModComms.IMCEvent event) {
-        if (EConfig.DISABLE_AUTODISCOVERY) {
+        if (EConfig.DISABLE_AUTODISCOVERY && EConfig.ENABLE_WIKI) {
             for (FMLInterModComms.IMCMessage message : event.getMessages()) {
                 if (message.key.equalsIgnoreCase("RegisterWikiMod")) {
                     String modid = message.getStringValue();

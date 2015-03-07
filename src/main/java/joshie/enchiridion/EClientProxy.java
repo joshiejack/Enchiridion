@@ -40,14 +40,16 @@ public class EClientProxy extends ECommonProxy {
 
     @Override
     public void preClient() {
-        if (!EConfig.SHIT_COMPUTER) {
-            fixShitForThePedia();
-        }
+        if (EConfig.ENABLE_WIKI) {
+            if (!EConfig.SHIT_COMPUTER) {
+                fixShitForThePedia();
+            }
 
-        /** Register the GuiHandler clientSide only, no need for a server side gui **/
-        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new EGuiHandler());
-        FMLCommonHandler.instance().bus().register(new BookObtainEvents());
-        MinecraftForge.EVENT_BUS.register(new BookObtainEvents());
+            /** Register the GuiHandler clientSide only, no need for a server side gui **/
+            NetworkRegistry.INSTANCE.registerGuiHandler(instance, new EGuiHandler());
+            FMLCommonHandler.instance().bus().register(new BookObtainEvents());
+            MinecraftForge.EVENT_BUS.register(new BookObtainEvents());
+        }
 
         /** If we have the books enabled let's load them all up clientside only **/
         if (EConfig.ENABLE_BOOKS) {
@@ -80,25 +82,30 @@ public class EClientProxy extends ECommonProxy {
             MinecraftForge.EVENT_BUS.register(new BookIconPatcher());
         }
 
-        /** Init the LibraryRegistry**/
-        BookHandlerRegistry.initRegistry();
+        if (EConfig.ENABLE_WIKI) {
+            /** Init the LibraryRegistry**/
+            BookHandlerRegistry.initRegistry();
+        }
     }
 
     @Override
     public void initClient() {
         /** Let's initialise the wiki and search through it **/
         //Search through all the mods for relevant pages
-        if (!EConfig.DISABLE_AUTODISCOVERY) {
+        if (!EConfig.DISABLE_AUTODISCOVERY && EConfig.ENABLE_WIKI) {
             WikiRegistry.instance().registerMods();
         }
     }
 
     @Override
     public void postClient() {
-        MinecraftForge.EVENT_BUS.register(new WikiHandler());
-        FMLCommonHandler.instance().bus().register(new WikiHandler());
-        wiki = new KeyBinding("enchiridion.key.wiki", Keyboard.KEY_H, "key.categories.misc");
-        ClientRegistry.registerKeyBinding(wiki);
+        if (EConfig.ENABLE_WIKI) {
+            MinecraftForge.EVENT_BUS.register(new WikiHandler());
+            FMLCommonHandler.instance().bus().register(new WikiHandler());
+            wiki = new KeyBinding("enchiridion.key.wiki", Keyboard.KEY_H, "key.categories.misc");
+            ClientRegistry.registerKeyBinding(wiki);
+        }
+        
         Minecraft mc = ClientHelper.getMinecraft();
         font = new WikiFont(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine, false);
         if (mc.getLanguageManager() != null) {

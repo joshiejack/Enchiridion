@@ -21,14 +21,16 @@ public class ECommonProxy {
     public static Item book;
 
     public void preInit() {
-        /** Register network packets for handling the network switch book handler **/
-        EPacketHandler.registerPacket(PacketNetworkSwitch.class, Side.SERVER);
-        EPacketHandler.registerPacket(PacketNetworkSwitch.class, Side.CLIENT);
-        /** Send a list of library books to the client when they login **/
-        EPacketHandler.registerPacket(PacketSyncLibraryBooks.class, Side.CLIENT);
-        /** Send a command to refresh the library **/
-        EPacketHandler.registerPacket(PacketLibraryCommand.class, Side.SERVER);
-        EPacketHandler.registerPacket(PacketOverwrite.class, Side.SERVER);
+        if (EConfig.ENABLE_WIKI) {
+            /** Register network packets for handling the network switch book handler **/
+            EPacketHandler.registerPacket(PacketNetworkSwitch.class, Side.SERVER);
+            EPacketHandler.registerPacket(PacketNetworkSwitch.class, Side.CLIENT);
+            /** Send a list of library books to the client when they login **/
+            EPacketHandler.registerPacket(PacketSyncLibraryBooks.class, Side.CLIENT);
+            /** Send a command to refresh the library **/
+            EPacketHandler.registerPacket(PacketLibraryCommand.class, Side.SERVER);
+            EPacketHandler.registerPacket(PacketOverwrite.class, Side.SERVER);
+        }
 
         /** If we have books enabled **/
         if (EConfig.ENABLE_BOOKS) {
@@ -48,8 +50,10 @@ public class ECommonProxy {
             }
         }
 
-        /** Register the handler for connecting to a world **/
-        FMLCommonHandler.instance().bus().register(new LibraryOnConnect());
+        if (EConfig.ENABLE_WIKI) {
+            /** Register the handler for connecting to a world **/
+            FMLCommonHandler.instance().bus().register(new LibraryOnConnect());
+        }
 
         /** PreInit Everything Client Side **/
         preClient();
