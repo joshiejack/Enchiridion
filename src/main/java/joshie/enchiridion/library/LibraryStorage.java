@@ -93,7 +93,9 @@ public class LibraryStorage {
             }
         }
         
-        books.set(index, stack);
+        if (index < books.size() && index >= 0) {
+            books.set(index, stack);
+        }
     }
 
     /** Called to read the data that is stored on these books from nbt **/
