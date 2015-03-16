@@ -13,6 +13,7 @@ import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.wiki.WikiRegistry;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.config.Configuration;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -25,6 +26,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = MODID, name = MODNAME, version = VERSION)
 public class Enchiridion {
@@ -40,16 +42,6 @@ public class Enchiridion {
         root = new File(event.getModConfigurationDirectory() + separator + MODPATH);
         EConfig.init(new Configuration(new File(root + File.separator + "enchiridion2.cfg")));
         proxy.preInit();
-
-        if (EConfig.DISABLE_AUTODISCOVERY && EConfig.ENABLE_WIKI) {
-            ModContainer mod = Loader.instance().activeModContainer();
-            String jar = mod.getSource().toString();
-            if (jar.contains(".jar") || jar.contains(".zip")) {
-                WikiRegistry.instance().registerJar(new File(jar));
-            } else {
-                WikiRegistry.instance().registerInDev(mod.getSource());
-            }
-        }
     }
 
     @EventHandler
@@ -78,15 +70,17 @@ public class Enchiridion {
 
     @EventHandler
     public void handleIMCMessages(FMLInterModComms.IMCEvent event) {
-        if (EConfig.DISABLE_AUTODISCOVERY && EConfig.ENABLE_WIKI) {
-            for (FMLInterModComms.IMCMessage message : event.getMessages()) {
-                if (message.key.equalsIgnoreCase("RegisterWikiMod")) {
-                    String modid = message.getStringValue();
-                    for (ModContainer mod : Loader.instance().getModList()) {
-                        if (mod.getModId().equals(modid)) {
-                            String jar = mod.getSource().toString();
-                            if (jar.contains(".jar") || jar.contains(".zip")) {
-                                WikiRegistry.instance().registerJar(new File(jar));
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            if (EConfig.DISABLE_AUTODISCOVERY && EConfig.ENABLE_WIKI) {
+                for (FMLInterModComms.IMCMessage message : event.getMessages()) {
+                    if (message.key.equalsIgnoreCase("RegisterWikiMod")) {
+                        String modid = message.getStringValue();
+                        for (ModContainer mod : Loader.instance().getModList()) {
+                            if (mod.getModId().equals(modid)) {
+                                String jar = mod.getSource().toString();
+                                if (jar.contains(".jar") || jar.contains(".zip")) {
+                                    WikiRegistry.instance().registerJar(new File(jar));
+                                }
                             }
                         }
                     }

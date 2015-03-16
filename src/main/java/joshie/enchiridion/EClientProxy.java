@@ -33,6 +33,8 @@ import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class EClientProxy extends ECommonProxy {
@@ -85,6 +87,17 @@ public class EClientProxy extends ECommonProxy {
         if (EConfig.ENABLE_WIKI) {
             /** Init the LibraryRegistry**/
             BookHandlerRegistry.initRegistry();
+
+            //rwgister ench pages
+            if (EConfig.DISABLE_AUTODISCOVERY) {
+                ModContainer mod = Loader.instance().activeModContainer();
+                String jar = mod.getSource().toString();
+                if (jar.contains(".jar") || jar.contains(".zip")) {
+                    WikiRegistry.instance().registerJar(new File(jar));
+                } else {
+                    WikiRegistry.instance().registerInDev(mod.getSource());
+                }
+            }
         }
     }
 
@@ -105,7 +118,7 @@ public class EClientProxy extends ECommonProxy {
             wiki = new KeyBinding("enchiridion.key.wiki", Keyboard.KEY_H, "key.categories.misc");
             ClientRegistry.registerKeyBinding(wiki);
         }
-        
+
         Minecraft mc = ClientHelper.getMinecraft();
         font = new WikiFont(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine, false);
         if (mc.getLanguageManager() != null) {
