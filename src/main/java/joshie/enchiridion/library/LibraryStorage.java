@@ -95,6 +95,8 @@ public class LibraryStorage {
         
         if (index < books.size() && index >= 0) {
             books.set(index, stack);
+        } else { //If we were unable to find the book to overwrite, add it?
+            add(stack); //Add the book, if overwriting was not found???
         }
     }
 
