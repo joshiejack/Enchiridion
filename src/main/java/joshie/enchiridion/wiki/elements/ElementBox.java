@@ -2,7 +2,7 @@ package joshie.enchiridion.wiki.elements;
 
 import java.util.List;
 
-import joshie.enchiridion.api.IColorSelectable;
+import joshie.enchiridion.util.IColorSelectable;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiColorEdit;
 

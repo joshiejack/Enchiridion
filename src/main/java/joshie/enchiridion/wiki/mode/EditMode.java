@@ -5,7 +5,7 @@ import static joshie.enchiridion.wiki.gui.GuiMain.button_id;
 
 import java.util.List;
 
-import joshie.enchiridion.api.IWikiMode;
+import joshie.enchiridion.util.IWikiMode;
 import joshie.enchiridion.wiki.elements.ElementBox;
 import joshie.enchiridion.wiki.elements.ElementImage;
 import joshie.enchiridion.wiki.elements.ElementItem;

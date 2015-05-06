@@ -14,12 +14,11 @@ public class GsonClientHelper {
             GsonBuilder builder = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation();
             builder.registerTypeAdapter(Element.class, new ElementAbstractAdapter());
             builder.registerTypeAdapter(Feature.class, new FeatureAbstractAdapter());
-
             GsonClientHelper.gson = builder.create();
         }
 
         return GsonClientHelper.gson;
     }
-
+    
     public static Gson gson = null;
 }

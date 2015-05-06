@@ -6,8 +6,8 @@ import static joshie.enchiridion.helpers.OpenGLHelper.start;
 
 import java.util.List;
 
-import joshie.enchiridion.api.IItemSelectable;
 import joshie.enchiridion.helpers.StackHelper;
+import joshie.enchiridion.util.IItemSelectable;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiItemSelect;
 import net.minecraft.client.renderer.RenderBlocks;

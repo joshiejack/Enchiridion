@@ -48,6 +48,7 @@ enchiridion.edit.shift=Sneak to Open in Edit Mode
 enchiridion.edit.save=Autosaves when you close the GUI
 enchiridion.edit.create=Right click me to create a new Book
 enchiridion.jump=Jump
+enchiridion.recipe=Recipe
 enchiridion.book.new=Create New Book
 enchiridion.searching=Searching
 enchiridion.canvas=The Canvas.

@@ -112,10 +112,13 @@ public class ItemBook extends Item {
         list.add(new ItemStack(item));
 
         for (String identifier : BookRegistry.getIDs()) {
-            ItemStack stack = new ItemStack(item);
-            stack.setTagCompound(new NBTTagCompound());
-            stack.stackTagCompound.setString("identifier", identifier);
-            list.add(stack);
+            BookData data = BookRegistry.getData(identifier);
+            if (data.displayInCreative) {
+                ItemStack stack = new ItemStack(item);
+                stack.setTagCompound(new NBTTagCompound());
+                stack.stackTagCompound.setString("identifier", identifier);
+                list.add(stack);
+            }
         }
     }
 

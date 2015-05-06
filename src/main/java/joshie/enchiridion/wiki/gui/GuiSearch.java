@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.ETranslate;
-import joshie.enchiridion.api.ITextEditable;
+import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.wiki.WikiPage;
 import joshie.enchiridion.wiki.data.WikiData;
 

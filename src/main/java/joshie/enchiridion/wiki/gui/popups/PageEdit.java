@@ -14,7 +14,7 @@ import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.ETranslate;
-import joshie.enchiridion.api.ITextEditable;
+import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiExtension;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;

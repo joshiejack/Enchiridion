@@ -13,7 +13,7 @@ import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.ETranslate;
-import joshie.enchiridion.api.ITextEditable;
+import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.ElementImage;
 import joshie.enchiridion.wiki.gui.GuiTextEdit;

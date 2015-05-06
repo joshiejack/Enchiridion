@@ -9,6 +9,7 @@ import static joshie.enchiridion.EInfo.VERSION;
 
 import java.io.File;
 
+import joshie.enchiridion.designer.BookRegistry;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.wiki.WikiRegistry;
 import net.minecraft.server.MinecraftServer;
@@ -71,19 +72,19 @@ public class Enchiridion {
     @EventHandler
     public void handleIMCMessages(FMLInterModComms.IMCEvent event) {
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-            if (EConfig.DISABLE_AUTODISCOVERY && EConfig.ENABLE_WIKI) {
-                for (FMLInterModComms.IMCMessage message : event.getMessages()) {
-                    if (message.key.equalsIgnoreCase("RegisterWikiMod")) {
-                        String modid = message.getStringValue();
-                        for (ModContainer mod : Loader.instance().getModList()) {
-                            if (mod.getModId().equals(modid)) {
-                                String jar = mod.getSource().toString();
-                                if (jar.contains(".jar") || jar.contains(".zip")) {
-                                    WikiRegistry.instance().registerJar(new File(jar));
-                                }
+            for (FMLInterModComms.IMCMessage message : event.getMessages()) {
+                if (EConfig.ENABLE_WIKI && message.key.equalsIgnoreCase("RegisterWikiMod")) {
+                    String modid = message.getStringValue();
+                    for (ModContainer mod : Loader.instance().getModList()) {
+                        if (mod.getModId().equals(modid)) {
+                            String jar = mod.getSource().toString();
+                            if (jar.contains(".jar") || jar.contains(".zip")) {
+                                WikiRegistry.instance().registerJar(new File(jar));
                             }
                         }
                     }
+                } else if (EConfig.ENABLE_BOOKS && message.key.equalsIgnoreCase("RegisterBook")) {
+                    //BookRegistry.registerBook(message.getStringValue());
                 }
             }
         }

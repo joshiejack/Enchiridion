@@ -7,9 +7,9 @@ import static joshie.enchiridion.wiki.WikiHelper.getIntFromMouse;
 import static joshie.enchiridion.wiki.WikiHelper.isEditMode;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.EConfig;
-import joshie.enchiridion.api.IColorSelectable;
-import joshie.enchiridion.api.IGuiDisablesMenu;
-import joshie.enchiridion.api.ITextEditable;
+import joshie.enchiridion.util.IColorSelectable;
+import joshie.enchiridion.util.IGuiDisablesMenu;
+import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.wiki.WikiHelper;
 
 public class GuiColorEdit extends GuiExtension implements ITextEditable, IGuiDisablesMenu {

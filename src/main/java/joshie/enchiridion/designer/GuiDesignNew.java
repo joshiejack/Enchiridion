@@ -6,9 +6,11 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 import joshie.enchiridion.EClientProxy;
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.designer.BookRegistry.BookData;
 import joshie.enchiridion.helpers.ClientHelper;
+import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonClientHelper;
 import joshie.enchiridion.network.EPacketHandler;
 import joshie.enchiridion.network.PacketSyncNewBook;
@@ -128,8 +130,17 @@ public class GuiDesignNew extends GuiScreen {
             try {
                 String sanitized = text.replaceAll("[^A-Za-z0-9]", "_");
                 BookData data = new BookData(sanitized);
-                File example = new File(Enchiridion.root, "books/" + sanitized + ".json");
-                Writer writer = new OutputStreamWriter(new FileOutputStream(example), "UTF-8");
+                File toSave = FileHelper.getBookSaveDirectory(data);
+                if (!EConfig.DEFAULT_DIR.equals("")) {
+                    File root = FileHelper.getSourceFromConfigFolderInDev();
+                    toSave = new File(FileHelper.getDevAssetsForModPath(root, EConfig.DEFAULT_DIR, "books"), data.uniqueName + ".json");
+                }
+
+                if (!toSave.getParentFile().exists()) {
+                    toSave.getParentFile().mkdir();
+                }
+                                
+                Writer writer = new OutputStreamWriter(new FileOutputStream(toSave), "UTF-8");
                 writer.write(GsonClientHelper.getGson().toJson(data));
                 writer.close();
 

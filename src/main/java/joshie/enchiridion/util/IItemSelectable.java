@@ -1,4 +1,4 @@
-package joshie.enchiridion.api;
+package joshie.enchiridion.util;
 
 import net.minecraft.item.ItemStack;
 

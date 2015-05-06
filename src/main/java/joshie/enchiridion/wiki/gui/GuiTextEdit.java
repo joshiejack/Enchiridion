@@ -2,9 +2,9 @@ package joshie.enchiridion.wiki.gui;
 
 import java.util.regex.Pattern;
 
-import joshie.enchiridion.api.IGuiDisablesMenu;
-import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.helpers.ClientHelper;
+import joshie.enchiridion.util.IGuiDisablesMenu;
+import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ChatAllowedCharacters;

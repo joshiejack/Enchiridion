@@ -1,0 +1,22 @@
+{
+  "book": [
+    {
+      "features": [],
+      "pageName": ""
+    }
+  ],
+  "displayNames": {
+    "en_US": "fish_breeding"
+  },
+  "uniqueName": "fish_breeding",
+  "color": 16777215,
+  "showBackground": true,
+  "showArrows": true,
+  "showNumber": true,
+  "iconPass1": "",
+  "iconPass2": "",
+  "iconColorisePass1": false,
+  "iconColorisePass2": false,
+  "iconColorPass1": 0,
+  "iconColorPass2": 0
+}

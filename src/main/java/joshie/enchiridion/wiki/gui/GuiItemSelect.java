@@ -10,10 +10,10 @@ import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 
 import java.util.ArrayList;
 
-import joshie.enchiridion.api.IGuiDisablesMenu;
-import joshie.enchiridion.api.IItemSelectable;
-import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.helpers.ItemHelper;
+import joshie.enchiridion.util.IGuiDisablesMenu;
+import joshie.enchiridion.util.IItemSelectable;
+import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.item.ItemStack;
 

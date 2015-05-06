@@ -15,7 +15,6 @@ public class EConfig {
     public static boolean CAN_EDIT_BOOKS;
     public static int MAX_PAGES_PER_BOOK;
     public static boolean SHIT_COMPUTER;
-    public static boolean DISABLE_AUTODISCOVERY;
     public static boolean ENABLE_DELETE;
     public static boolean ENABLE_WIKI;
     private static ArrayList<String> colors = new ArrayList();
@@ -36,7 +35,6 @@ public class EConfig {
             CAN_EDIT_BOOKS = config.get("Settings", "Enable Editing of Books", true).getBoolean(true);
             SHOW_BB_CODE_IN_EDIT_MODE = config.get("Settings", "Show BBCode in Edit Mode", true).getBoolean(true);
             SHIT_COMPUTER = config.get("Settings", "I have a shit Computer", false).getBoolean(false);
-            DISABLE_AUTODISCOVERY = config.get("Settings", "Disable Autodiscovery", true, "Enchiridion 2 searches the jars of all mods by default for pedia articles, if your load time is long, disable this and it might help reduce the load time.").getBoolean(false);
             DEFAULT_DIR = config.get("Settings", "Default Save Folder", "").getString();
             MAX_PAGES_PER_BOOK = config.get("Settings", "Maximum Pages per Book", 150).getInt();
             ENABLE_DELETE = config.get("Settings", "Enable Delete Button in Wiki", false).getBoolean(false);

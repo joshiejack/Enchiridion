@@ -21,9 +21,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Level;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ModContainer;
-
 public class WikiRegistry {
     private HashMap<String, WikiMod> mods = new HashMap();
     private final static WikiRegistry instance = new WikiRegistry();
@@ -83,20 +80,6 @@ public class WikiRegistry {
         return mods.values();
     }
 
-    public static boolean registeredDev = false;
-
-    /** Searches all the mod files for files in the assets/wiki/ folder and registers them **/
-    public void registerMods() {
-        for (ModContainer mod : Loader.instance().getModList()) {
-            String jar = mod.getSource().toString();
-            if (jar.contains(".jar") || jar.contains(".zip")) {
-                registerJar(new File(jar));
-            } else if (!registeredDev) {
-                registerInDev(mod.getSource());
-            }
-        }
-    }
-
     private boolean isWikiContents(String name) {
         if (!name.startsWith("assets")) return false;
         if (!name.contains("wiki")) return false;
@@ -122,8 +105,6 @@ public class WikiRegistry {
                 e.printStackTrace();
             }
         }
-
-        registeredDev = true;
     }
 
     public void registerJar(File jar) {

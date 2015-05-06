@@ -18,6 +18,7 @@ public class FeatureItem extends FeatureWithText {
     public ItemStack stack;
     public float size;
     private String search = "";
+    protected boolean drawStack = true;
 
     //List of items
     private static ArrayList<ItemStack> sorted;
@@ -29,7 +30,7 @@ public class FeatureItem extends FeatureWithText {
         item = "minecraft:stone";
     }
 
-    private void setItemStack(ItemStack stack) {
+    protected void setItemStack(ItemStack stack) {
         this.stack = stack;
         item = Item.itemRegistry.getNameForObject(stack.getItem());
         if (stack.getHasSubtypes()) {
@@ -65,7 +66,9 @@ public class FeatureItem extends FeatureWithText {
             stack = StackHelper.getStackFromString(item);
         }
 
-        DesignerHelper.drawStack(stack, left, top, size);
+        if (drawStack) {
+            DesignerHelper.drawStack(stack, left, top, size);
+        }
 
         //Draw The Search stuff
         if (isSelected) {

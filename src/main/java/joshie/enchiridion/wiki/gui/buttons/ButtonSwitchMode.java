@@ -1,7 +1,7 @@
 package joshie.enchiridion.wiki.gui.buttons;
 
 import static joshie.enchiridion.wiki.WikiHelper.gui;
-import joshie.enchiridion.api.IWikiMode;
+import joshie.enchiridion.util.IWikiMode;
 import joshie.enchiridion.wiki.mode.SaveMode;
 
 public class ButtonSwitchMode extends ButtonBase {

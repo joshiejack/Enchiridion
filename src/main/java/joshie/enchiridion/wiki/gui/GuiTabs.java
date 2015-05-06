@@ -11,9 +11,9 @@ import static joshie.enchiridion.wiki.WikiHelper.isTabSelected;
 import static joshie.enchiridion.wiki.WikiHelper.setTab;
 import static joshie.enchiridion.wiki.gui.GuiMain.texture;
 import joshie.enchiridion.EClientProxy;
-import joshie.enchiridion.api.IItemSelectable;
-import joshie.enchiridion.api.ITextEditable;
 import joshie.enchiridion.helpers.OpenGLHelper;
+import joshie.enchiridion.util.IItemSelectable;
+import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.wiki.WikiTab;
 import net.minecraft.item.ItemStack;
 

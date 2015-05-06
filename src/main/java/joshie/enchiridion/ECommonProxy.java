@@ -2,6 +2,7 @@ package joshie.enchiridion;
 
 import java.lang.reflect.Field;
 
+import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.designer.ItemBook;
 import joshie.enchiridion.library.LibraryOnConnect;
 import joshie.enchiridion.network.EPacketHandler;
@@ -21,6 +22,8 @@ public class ECommonProxy {
     public static Item book;
 
     public void preInit() {
+        EnchiridionAPI.instance = new EAPIHandler();
+        
         if (EConfig.ENABLE_WIKI) {
             /** Register network packets for handling the network switch book handler **/
             EPacketHandler.registerPacket(PacketNetworkSwitch.class, Side.SERVER);

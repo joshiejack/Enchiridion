@@ -83,8 +83,6 @@ public class ElementImage extends Element {
             } catch (Exception e) {
                 ELogger.log(Level.ERROR, "Enchiridion 2 failed to read in the image at the following path: ");
                 ELogger.log(Level.ERROR, path);
-
-                e.printStackTrace();
             }
         } else {
             String[] split = path.split(":");

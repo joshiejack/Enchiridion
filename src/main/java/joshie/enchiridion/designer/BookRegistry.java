@@ -1,19 +1,23 @@
 package joshie.enchiridion.designer;
 
-import static java.io.File.separator;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
+import joshie.enchiridion.ELogger;
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonClientHelper;
 import net.minecraft.item.ItemStack;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.Level;
 
 import com.google.gson.annotations.Expose;
 
@@ -47,6 +51,7 @@ public class BookRegistry {
         public int iconColorPass1;
         @Expose
         public int iconColorPass2;
+        public boolean displayInCreative = true;
 
         public BookData() {}
 
@@ -65,8 +70,9 @@ public class BookRegistry {
         }
     }
 
+    //Loads in all the books from the config directory
     public static void init() {
-        File directory = new File(Enchiridion.root + separator + "books");
+        File directory = new File(Enchiridion.root, "books");
         if (!directory.exists() && !directory.mkdirs()) {
             throw new IllegalStateException("Couldn't create dir: " + directory);
         }
@@ -82,8 +88,45 @@ public class BookRegistry {
         }
     }
 
+    public static void registerModInDev(String modid, File source) {
+        File path = FileHelper.getDevAssetsForModPath(source.getParentFile(), modid, "books");
+        Collection<File> files = FileUtils.listFiles(path, new String[] { "json" }, true);
+        for (File file : files) {
+            try {
+                String json = FileUtils.readFileToString(file);
+                BookData data = BookRegistry.register(GsonClientHelper.getGson().fromJson(json, BookData.class));
+                ELogger.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.uniqueName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void registerModInJar(File jar) {
+        try {
+            ZipFile zipfile = new ZipFile(jar);
+            Enumeration enumeration = zipfile.entries();
+            while (enumeration.hasMoreElements()) {
+                ZipEntry zipentry = (ZipEntry) enumeration.nextElement();
+                String fileName = zipentry.getName();
+            }
+
+            zipfile.close();
+        } catch (Exception e) {}
+    }
+
+    private static final HashMap<ItemStack, String> stackToIdentifier = new HashMap();
     private static final HashMap<String, BookData> books = new HashMap();
     private static int lastID = 1;
+
+    public static void registerItemStack(String identifier, ItemStack stack) {
+        if (books.get(identifier) == null) {
+            ELogger.log(Level.WARN, "A book with the identifier " + identifier + " could not be found");
+        } else {
+            stackToIdentifier.put(stack, identifier);
+            books.get(identifier).displayInCreative = false;
+        }
+    }
 
     public static String getID(ItemStack stack) {
         if (stack == null || !stack.hasTagCompound()) return null;
@@ -91,9 +134,27 @@ public class BookRegistry {
         return identifier;
     }
 
+    public static boolean opensGui(ItemStack stack) {
+        for (ItemStack check : stackToIdentifier.keySet()) {
+            if (check.isItemEqual(stack)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static BookData getData(ItemStack stack) {
         String identifier = getID(stack);
-        if (identifier == null) return null;
+        if (identifier == null) {
+            for (ItemStack check : stackToIdentifier.keySet()) {
+                if (check.isItemEqual(stack)) {
+                    identifier = stackToIdentifier.get(check);
+                    break;
+                }
+            }
+        }
+
         return getData(identifier);
     }
 
@@ -101,8 +162,9 @@ public class BookRegistry {
         return books.get(unique);
     }
 
-    public static void register(BookData data) {
+    public static BookData register(BookData data) {
         books.put(data.uniqueName, data);
+        return data;
     }
 
     public static Set<String> getIDs() {

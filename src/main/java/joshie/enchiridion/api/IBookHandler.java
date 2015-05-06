@@ -6,8 +6,8 @@ import net.minecraft.world.World;
 
 public interface IBookHandler {
     /** The name of this handler, used in configs **/
-    String getName();
+    public String getName();
 
     /** Called whenever the book is clicked on in the library gui, default simply calls right click **/
-    void handle(ItemStack stack, World world, EntityPlayer player);
+    public void handle(ItemStack stack, World world, EntityPlayer player);
 }

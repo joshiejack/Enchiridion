@@ -52,6 +52,10 @@ public class BookBinderHelper {
 			return false;
 		}
 		
+		try {
+		    stack.getDisplayName();
+		} catch (Exception e) { return false; }
+		
 		for(ItemStack check: blacklisted_books) {
 			if(matches(stack, check)) return false;
 		}

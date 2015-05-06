@@ -1,6 +1,5 @@
 package joshie.enchiridion.designer;
 
-import static java.io.File.separator;
 import static joshie.enchiridion.helpers.OpenGLHelper.color;
 import static joshie.enchiridion.helpers.OpenGLHelper.fixColors;
 
@@ -12,14 +11,15 @@ import java.util.HashMap;
 
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.ETranslate;
-import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.designer.BookRegistry.BookData;
 import joshie.enchiridion.designer.features.FeatureBox;
 import joshie.enchiridion.designer.features.FeatureImage;
 import joshie.enchiridion.designer.features.FeatureItem;
 import joshie.enchiridion.designer.features.FeatureJump;
+import joshie.enchiridion.designer.features.FeatureRecipe;
 import joshie.enchiridion.designer.features.FeatureResource;
 import joshie.enchiridion.designer.features.FeatureText;
+import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonClientHelper;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -78,6 +78,7 @@ public class GuiDesigner extends GuiScreen {
     private static final int IMAGE = 4;
     private static final int EXTRA = 5;
     private static final int JUMP = 6;
+    private static final int RECIPE = 7;
 
     private static boolean SHOW_EDIT = false;
 
@@ -96,6 +97,7 @@ public class GuiDesigner extends GuiScreen {
             buttonList.add(new ButtonEditBook(INSERT, x + 200, y - 18, ETranslate.translate("insert")));
             buttonList.add(new ButtonEditBook(IMAGE, x + 260, y - 18, ETranslate.translate("image")));
             buttonList.add(new ButtonEditBook(JUMP, x + 320, y - 18, ETranslate.translate("jump")));
+            buttonList.add(new ButtonEditBook(RECIPE, x + 320, y + 220, ETranslate.translate("recipe")));
         }
     }
 
@@ -124,6 +126,9 @@ public class GuiDesigner extends GuiScreen {
                 case JUMP:
                     canvas.features.add(new FeatureJump());
                     break;
+                case RECIPE:
+                    canvas.features.add(new FeatureRecipe());
+                    break;
             }
         }
     }
@@ -135,8 +140,18 @@ public class GuiDesigner extends GuiScreen {
         //If we were in edit mode, save the book
         if (canEdit) {
             try {
-                File example = new File(Enchiridion.root + separator + "books", bookData.uniqueName.replace(":", "_").replace(".", "_") + ".json");
-                Writer writer = new OutputStreamWriter(new FileOutputStream(example), "UTF-8");
+                File toSave = FileHelper.getBookSaveDirectory(bookData);
+                if (!EConfig.DEFAULT_DIR.equals("")) {
+                    File root = FileHelper.getSourceFromConfigFolderInDev();
+                    toSave = new File(FileHelper.getDevAssetsForModPath(root, EConfig.DEFAULT_DIR, "books"), bookData.uniqueName + ".json");
+                }
+
+                if (!toSave.getParentFile().exists()) {
+                    toSave.getParentFile().mkdir();
+                }
+
+                System.out.println("SAVING TO: " + toSave);
+                Writer writer = new OutputStreamWriter(new FileOutputStream(toSave), "UTF-8");
                 writer.write(GsonClientHelper.getGson().toJson(bookData));
                 writer.close();
             } catch (Exception e) {

@@ -10,6 +10,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
+import joshie.enchiridion.api.EnchiridionAPI;
+import joshie.enchiridion.designer.BookEventsHandler;
 import joshie.enchiridion.designer.BookIconPatcher;
 import joshie.enchiridion.designer.BookRegistry;
 import joshie.enchiridion.designer.BookRegistry.BookData;
@@ -26,6 +28,8 @@ import joshie.enchiridion.wiki.WikiRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -81,32 +85,24 @@ public class EClientProxy extends ECommonProxy {
                 }
             }
 
+            MinecraftForge.EVENT_BUS.register(new BookEventsHandler());
             MinecraftForge.EVENT_BUS.register(new BookIconPatcher());
         }
 
         if (EConfig.ENABLE_WIKI) {
             /** Init the LibraryRegistry**/
             BookHandlerRegistry.initRegistry();
+            EnchiridionAPI.instance.registerModBooks("enchiridion");
+            EnchiridionAPI.instance.registerBookData(new ItemStack(Items.apple), "fish_breeding");
 
-            //rwgister ench pages
-            if (EConfig.DISABLE_AUTODISCOVERY) {
-                ModContainer mod = Loader.instance().activeModContainer();
-                String jar = mod.getSource().toString();
-                if (jar.contains(".jar") || jar.contains(".zip")) {
-                    WikiRegistry.instance().registerJar(new File(jar));
-                } else {
-                    WikiRegistry.instance().registerInDev(mod.getSource());
-                }
+            //register ench pages
+            ModContainer mod = Loader.instance().activeModContainer();
+            String jar = mod.getSource().toString();
+            if (jar.contains(".jar") || jar.contains(".zip")) {
+                WikiRegistry.instance().registerJar(new File(jar));
+            } else {
+                WikiRegistry.instance().registerInDev(mod.getSource());
             }
-        }
-    }
-
-    @Override
-    public void initClient() {
-        /** Let's initialise the wiki and search through it **/
-        //Search through all the mods for relevant pages
-        if (!EConfig.DISABLE_AUTODISCOVERY && EConfig.ENABLE_WIKI) {
-            WikiRegistry.instance().registerMods();
         }
     }
 

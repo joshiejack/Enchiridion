@@ -63,6 +63,8 @@ public class DesignerHelper {
     }
 
     public static void drawStack(ItemStack stack, int left, int top, float size) {
+        if (stack == null || stack.getItem() == null) return; //Don't draw stacks that don't exist
+        
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         start();
         GL11.glScalef(size, size, size);

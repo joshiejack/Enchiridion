@@ -11,7 +11,7 @@ import static joshie.enchiridion.wiki.WikiHelper.verticalGradient;
 
 import java.util.Collection;
 
-import joshie.enchiridion.api.ITextEditable;
+import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.wiki.WikiCategory;
 import joshie.enchiridion.wiki.WikiPage;
 

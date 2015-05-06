@@ -10,9 +10,9 @@ import static org.lwjgl.opengl.GL11.GL_BLEND;
 
 import java.util.ArrayList;
 
-import joshie.enchiridion.api.IWikiMode;
 import joshie.enchiridion.library.GuiLibrary;
 import joshie.enchiridion.library.GuiShelves;
+import joshie.enchiridion.util.IWikiMode;
 import joshie.enchiridion.wiki.data.WikiData;
 import joshie.enchiridion.wiki.elements.ElementItem;
 import joshie.enchiridion.wiki.gui.GuiBackground;
