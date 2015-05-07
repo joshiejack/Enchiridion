@@ -1,6 +1,8 @@
 package joshie.enchiridion.designer;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -17,6 +19,7 @@ import joshie.enchiridion.helpers.GsonClientHelper;
 import net.minecraft.item.ItemStack;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Level;
 
 import com.google.gson.annotations.Expose;
@@ -102,13 +105,25 @@ public class BookRegistry {
         }
     }
 
-    public static void registerModInJar(File jar) {
+    public static void registerModInJar(String modid, File jar) {
         try {
             ZipFile zipfile = new ZipFile(jar);
             Enumeration enumeration = zipfile.entries();
             while (enumeration.hasMoreElements()) {
                 ZipEntry zipentry = (ZipEntry) enumeration.nextElement();
                 String fileName = zipentry.getName();
+                Path path1 = Paths.get(fileName);
+                Path path2 = Paths.get("assets", modid, "books");
+                
+                if (path1.startsWith(path2)) {
+                    try {
+                        String json = IOUtils.toString(zipfile.getInputStream(zipentry));
+                        BookData data = BookRegistry.register(GsonClientHelper.getGson().fromJson(json, BookData.class));
+                        ELogger.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.uniqueName);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             zipfile.close();

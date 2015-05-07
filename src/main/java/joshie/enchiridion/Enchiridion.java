@@ -9,9 +9,11 @@ import static joshie.enchiridion.EInfo.VERSION;
 
 import java.io.File;
 
-import joshie.enchiridion.designer.BookRegistry;
+import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.wiki.WikiRegistry;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -73,7 +75,7 @@ public class Enchiridion {
     public void handleIMCMessages(FMLInterModComms.IMCEvent event) {
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
             for (FMLInterModComms.IMCMessage message : event.getMessages()) {
-                if (EConfig.ENABLE_WIKI && message.key.equalsIgnoreCase("RegisterWikiMod")) {
+                if (EConfig.ENABLE_WIKI && message.key.equalsIgnoreCase("registerWikiMod")) {
                     String modid = message.getStringValue();
                     for (ModContainer mod : Loader.instance().getModList()) {
                         if (mod.getModId().equals(modid)) {
@@ -83,8 +85,15 @@ public class Enchiridion {
                             }
                         }
                     }
-                } else if (EConfig.ENABLE_BOOKS && message.key.equalsIgnoreCase("RegisterBook")) {
-                    //BookRegistry.registerBook(message.getStringValue());
+                } else if (EConfig.ENABLE_BOOKS) {
+                    if (message.key.equalsIgnoreCase("registerBookMod")) {
+                        EnchiridionAPI.instance.registerModBooks(message.getStringValue());
+                    } else if (message.key.equalsIgnoreCase("registerBookItem")) {
+                        NBTTagCompound tag = message.getNBTValue();
+                        String name = tag.getString("book");
+                        ItemStack stack = ItemStack.loadItemStackFromNBT(tag);
+                        EnchiridionAPI.instance.registerBookData(stack, name);
+                    }
                 }
             }
         }

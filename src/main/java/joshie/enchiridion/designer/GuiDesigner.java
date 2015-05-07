@@ -150,7 +150,6 @@ public class GuiDesigner extends GuiScreen {
                     toSave.getParentFile().mkdir();
                 }
 
-                System.out.println("SAVING TO: " + toSave);
                 Writer writer = new OutputStreamWriter(new FileOutputStream(toSave), "UTF-8");
                 writer.write(GsonClientHelper.getGson().toJson(bookData));
                 writer.close();

@@ -3,21 +3,29 @@ package joshie.enchiridion.designer.features;
 import java.util.ArrayList;
 
 import joshie.enchiridion.api.IRecipeHandler;
+import joshie.enchiridion.designer.DrawHelper;
 import joshie.enchiridion.designer.recipe.RecipeHandlerShapedOre;
+import joshie.enchiridion.designer.recipe.RecipeHandlerShapedVanilla;
 import joshie.enchiridion.designer.recipe.RecipeHandlerShapelessOre;
+import joshie.enchiridion.designer.recipe.RecipeHandlerShapelessVanilla;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 import com.google.gson.annotations.Expose;
 
 public class FeatureRecipe extends FeatureItem {
     public static final ArrayList<IRecipeHandler> handlers = new ArrayList();
-    
+
     @Expose
+    private String uniqueRecipe;
     private int index = 0;
     private IRecipeHandler handler;
 
     static {
+        handlers.add(new RecipeHandlerShapedVanilla());
         handlers.add(new RecipeHandlerShapedOre());
+        handlers.add(new RecipeHandlerShapelessVanilla());
         handlers.add(new RecipeHandlerShapelessOre());
     }
 
@@ -28,18 +36,27 @@ public class FeatureRecipe extends FeatureItem {
         item = "minecraft:piston";
     }
 
-    private boolean buildRecipe() {
+    private boolean buildRecipe(boolean isLoading) {
         ArrayList<IRecipeHandler> recipes = new ArrayList();
         for (IRecipeHandler handler : handlers) {
             handler.addRecipes(stack, recipes);
         }
-        
+
         int number = -1;
         for (IRecipeHandler handler : recipes) {
-            number++;
-            if (number == index) {
-                this.handler = handler;
-                return true;
+            String uniqueName = handler.getUniqueName();
+            if (isLoading) {
+                if (uniqueName.equals(uniqueRecipe)) {
+                    this.handler = handler;
+                    return true;
+                }
+            } else {
+                number++;
+                if (number == index) {
+                    this.handler = handler;
+                    this.uniqueRecipe = uniqueName;
+                    return true;
+                }
             }
         }
 
@@ -55,29 +72,31 @@ public class FeatureRecipe extends FeatureItem {
 
         IRecipeHandler previous = handler;
         super.setItemStack(stack);
-        buildRecipe();
+        buildRecipe(false);
         if (previous == handler) {
             index = 0;
-            buildRecipe();
+            buildRecipe(false);
         }
     }
 
     @Override
     public void recalculate(int x, int y) {
         super.recalculate(x, y);
-        height = (width * 2) / 3;
-        size = (float) (width / 80D);
+        // height = (width * 2) / 3;
+        //size = (float) (width / 80D);
+        if (handler != null) {
+            width = handler.getWidth(width);
+            height = handler.getHeight(width);
+            size = handler.getSize(width);
+        }
     }
 
     @Override
     public void drawFeature() {
         super.drawFeature();
         if (handler != null) {
-            handler.draw(left, top, height, width, size);
-        } else buildRecipe();
-
-        /** Draw Shaped **/
-
-        /** Draw Shapeless **/
+            DrawHelper.update(true, left, top, height, width, size);
+            handler.draw();
+        } else buildRecipe(true);
     }
 }

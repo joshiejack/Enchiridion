@@ -1,6 +1,5 @@
 package joshie.enchiridion.designer.recipe;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,16 +9,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-public class RecipeHandlerShapelessOre extends RecipeHandlerBase {
-    private ShapelessOreRecipe recipe;
+public class RecipeHandlerShapedVanilla extends RecipeHandlerBase {
+    private ShapedRecipes recipe;
 
-    public RecipeHandlerShapelessOre() {}
-
-    public RecipeHandlerShapelessOre(ShapelessOreRecipe recipe) {
+    public RecipeHandlerShapedVanilla() {}
+    public RecipeHandlerShapedVanilla(ShapedRecipes recipe) {
         this.recipe = recipe;
     }
 
@@ -27,44 +24,32 @@ public class RecipeHandlerShapelessOre extends RecipeHandlerBase {
     public String getUniqueName() {
         String extra = "";
         try {
-            ArrayList<Object> input = (ArrayList<Object>) this.input.get(recipe);
-            for (Object object : input) {
-                if (object instanceof ItemStack) {
-                    extra += ((ItemStack) object).getUnlocalizedName();
-                } else if ((object instanceof List)) {
-                    extra += OreDictionary.getOreIDs((ItemStack) ((List) object).get(0))[0];
-                }
+            ItemStack[] input = recipe.recipeItems;
+            for (ItemStack stack : input) {
+                extra += stack.getUnlocalizedName();
             }
         } catch (Exception e) {}
 
-        return "ShapelessOre:" + recipe.getRecipeOutput().getUnlocalizedName() + recipe.getRecipeSize() + extra;
+        return "ShapedVanilla:" + recipe.getRecipeOutput().getUnlocalizedName() + recipe.getRecipeSize() + extra;
     }
 
     @Override
     public void addRecipes(ItemStack output, List<IRecipeHandler> list) {
         for (IRecipe check : (ArrayList<IRecipe>) CraftingManager.getInstance().getRecipeList()) {
             ItemStack stack = check.getRecipeOutput();
-            if (stack == null || (!(check instanceof ShapelessOreRecipe))) continue;
+            if (stack == null || (!(check instanceof ShapedRecipes))) continue;
 
             if (stack.isItemEqual(output)) {
-                list.add(new RecipeHandlerShapelessOre((ShapelessOreRecipe) check));
+                list.add(new RecipeHandlerShapedVanilla((ShapedRecipes) check));
             }
         }
     }
 
-    private static Field input;
-    static {
-        try {
-            input = ShapelessOreRecipe.class.getDeclaredField("input");
-            input.setAccessible(true);
-        } catch (Exception e) {}
-    }
-
-    private static ItemStack getStack(ArrayList<Object> list, int index) {
-        if (index >= list.size()) return null;
-        Object object = list.get(index);
-
-        return (ItemStack) (object == null ? null : (object instanceof List) ? ((List) object).get(0) : (ItemStack) object);
+    private static ItemStack getStack(ItemStack[] array, int i) {
+        if (i >= array.length || array[i] == null) return null;
+        ItemStack stack = array[i].copy();
+        stack.stackSize = 1;
+        return stack;
     }
 
     private static final ResourceLocation location = new ResourceLocation("books", "textures/gui/guide_elements.png");
@@ -75,21 +60,25 @@ public class RecipeHandlerShapelessOre extends RecipeHandlerBase {
         EnchiridionAPI.draw.drawTexturedRect(0D, 0D, 0, 0, 58, 58);
         EnchiridionAPI.draw.drawTexturedRect(84D, 50D, 1, 63, 20, 14);
 
-        /*
-        EnchiridionAPI.draw.drawStack(recipe.getRecipeOutput(), 115D, 35D, 1.75F);
+        /*EnchiridionAPI.draw.drawStack(recipe.getRecipeOutput(), 115D, 35D, 1.75F);
 
         try {
-            ArrayList<Object> input = (ArrayList<Object>) this.input.get(recipe);
-            if (input.size() == 1) {
+            ItemStack[] input = recipe.recipeItems;
+            if (input.length == 1) {
                 EnchiridionAPI.draw.drawStack(getStack(input, 0), 29D, 48D, 1F);
-            } else if (input.size() == 2) {
-                EnchiridionAPI.draw.drawStack(getStack(input, 0), 29D, 48D, 1F);
-                EnchiridionAPI.draw.drawStack(getStack(input, 1), 56D, 48D, 1F);
-            } else if (input.size() == 3) {
+            } else if (input.length == 2) {
+                if (recipe.recipeWidth == 1) {
+                    EnchiridionAPI.draw.drawStack(getStack(input, 0), 29D, 2D, 1F);
+                    EnchiridionAPI.draw.drawStack(getStack(input, 1), 29D, 48D, 1F);
+                } else {
+                    EnchiridionAPI.draw.drawStack(getStack(input, 0), 29D, 48D, 1F);
+                    EnchiridionAPI.draw.drawStack(getStack(input, 1), 56D, 48D, 1F);
+                }
+            } else if (input.length == 3) {
                 EnchiridionAPI.draw.drawStack(getStack(input, 0), 1D, 48D, 1F);
                 EnchiridionAPI.draw.drawStack(getStack(input, 1), 29D, 48D, 1F);
                 EnchiridionAPI.draw.drawStack(getStack(input, 2), 56D, 48D, 1F);
-            } else if (input.size() == 4) {
+            } else if (input.length == 4) {
                 EnchiridionAPI.draw.drawStack(getStack(input, 0), 1D, 2D, 1F);
                 EnchiridionAPI.draw.drawStack(getStack(input, 1), 29D, 2D, 1F);
                 EnchiridionAPI.draw.drawStack(getStack(input, 2), 1D, 48D, 1F);

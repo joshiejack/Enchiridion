@@ -7,6 +7,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -19,7 +20,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -57,6 +57,15 @@ public class Enchiridion {
 				MinecraftForge.EVENT_BUS.register(new TooltipHandler());
 			}
 		}
+		
+		/** Register this mod as containing books **/
+		FMLInterModComms.sendMessage("Enchiridion2", "registerBookMod", "Enchiridion");
+		
+		/** Build a NBT Tag **/
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setString("book", "fish_breeding");
+		new ItemStack(Items.apple).writeToNBT(tag);
+		FMLInterModComms.sendMessage("Enchiridion2", "registerBookItem", tag);
 	}
 
 	@EventHandler

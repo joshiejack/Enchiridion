@@ -50,6 +50,10 @@ public class DesignerHelper {
     public static void drawRect(int left, int top, int right, int bottom, int color) {
         gui.drawRect(x + left, y + top, x + right, y + bottom, color);
     }
+    
+    public static void drawTexturedRect(int left, int top, int u, int v, int w, int h) {
+        gui.drawTexturedModalRect(x + left, y + top, u, v, w, h);
+    }
 
     public static void drawSplitString(String text, int left, int top, int wrap, int color) {
         EClientProxy.font.drawSplitString(text, x + left, y + top, wrap, color);
@@ -99,6 +103,17 @@ public class DesignerHelper {
         disable(GL_BLEND);
         end();
     }
+    
+    public static void drawTexturedRect(int left, int top, int u, int v, int w, int h, float scale) {
+        start();
+        enable(GL_BLEND);
+        GL11.glColor4f(1F, 1F, 1F, 1F);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        glScalef(scale, scale, 1.0F);
+        gui.drawTexturedModalRect((int) ((x + left) / scale), (int) ((y + top) / scale), u, v, w, h);
+        disable(GL_BLEND);
+        end();
+    }
 
     public static void drawResource(ResourceLocation resource, int left, int top, int width, int height, float scaleX, float scaleY) {
         start();
@@ -106,7 +121,6 @@ public class DesignerHelper {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         ClientHelper.bindTexture(resource);
         glScalef(scaleX, scaleY, 1.0F);
-        ClientHelper.getMinecraft().getTextureManager().bindTexture(resource);
         gui.drawTexturedModalRect((int) ((x + left) / scaleX), (int) ((y + top) / scaleY), 0, 0, width, height);
         disable(GL_BLEND);
         end();

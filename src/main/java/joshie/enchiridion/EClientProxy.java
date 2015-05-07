@@ -16,6 +16,7 @@ import joshie.enchiridion.designer.BookIconPatcher;
 import joshie.enchiridion.designer.BookRegistry;
 import joshie.enchiridion.designer.BookRegistry.BookData;
 import joshie.enchiridion.designer.DesignerCanvas;
+import joshie.enchiridion.designer.DrawHelper;
 import joshie.enchiridion.designer.features.FeatureText;
 import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.GsonClientHelper;
@@ -59,6 +60,8 @@ public class EClientProxy extends ECommonProxy {
 
         /** If we have the books enabled let's load them all up clientside only **/
         if (EConfig.ENABLE_BOOKS) {
+            EnchiridionAPI.draw = new DrawHelper();
+            
             //Load in all the books
             BookRegistry.init();
 
@@ -92,8 +95,8 @@ public class EClientProxy extends ECommonProxy {
         if (EConfig.ENABLE_WIKI) {
             /** Init the LibraryRegistry**/
             BookHandlerRegistry.initRegistry();
-            EnchiridionAPI.instance.registerModBooks("enchiridion");
-            EnchiridionAPI.instance.registerBookData(new ItemStack(Items.apple), "fish_breeding");
+            //EnchiridionAPI.instance.registerModBooks("enchiridion");
+            //EnchiridionAPI.instance.registerBookData(new ItemStack(Items.apple), "fish_breeding");
 
             //register ench pages
             ModContainer mod = Loader.instance().activeModContainer();
