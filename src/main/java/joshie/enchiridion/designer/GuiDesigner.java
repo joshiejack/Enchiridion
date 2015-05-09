@@ -9,7 +9,6 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import joshie.enchiridion.EConfig;
@@ -24,17 +23,13 @@ import joshie.enchiridion.designer.features.FeatureResource;
 import joshie.enchiridion.designer.features.FeatureText;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonClientHelper;
-import joshie.enchiridion.helpers.OpenGLHelper;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 public class GuiDesigner extends GuiScreen {
     public int mouseX = 0;
@@ -235,8 +230,10 @@ public class GuiDesigner extends GuiScreen {
         drawRightPage(x + 212, y);
 
         //Draw Page
+        tooltip.clear();
         if (canvas != null) {
             canvas.draw(x, y);
+            canvas.addTooltip(tooltip, mouseX, mouseY);
         }
         
         super.drawScreen(i, j, f);
@@ -316,7 +313,6 @@ public class GuiDesigner extends GuiScreen {
         mouseX = x - (width - xSize) / 2;
         mouseY = y - (height - ySize) / 2;
 
-        tooltip.clear();
         if (canvas != null) {
             canvas.follow(mouseX, mouseY);
             int wheel = Mouse.getDWheel();

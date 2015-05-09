@@ -157,15 +157,17 @@ public abstract class Feature {
             prevX = x;
             prevY = y;
         }
-        
+    }
+    
+    public void addTooltip(int x, int y, List list) { 
         if (isOverFeature(x, y)) {
             List<String> tooltip = new ArrayList();
-            addTooltip(tooltip);
+            addTooltip(list);
             DesignerHelper.addTooltip(tooltip);
         }
     }
-    
-    public void addTooltip(List list) { }
+
+    public void addTooltip(List list) {}
 
     //Do nothing by default
     public void keyTyped(char character, int key) {
