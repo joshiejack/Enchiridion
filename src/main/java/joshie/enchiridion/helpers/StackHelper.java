@@ -13,20 +13,8 @@ import net.minecraft.util.IChatComponent;
 
 public class StackHelper {
     public static ItemStack getStackFromString(String str) {
+        if (str == null || str.equals("")) return null;
         return getStackFromArray(str.trim().split(" "));
-    }
-
-    public static String getStringFromStack(ItemStack stack) {
-        String str = Item.itemRegistry.getNameForObject(stack.getItem());
-        if (stack.getHasSubtypes() || stack.hasTagCompound()) {
-            str = str + " " + stack.getItemDamage();
-        }
-
-        if (stack.hasTagCompound()) {
-            str = str + " " + stack.stackTagCompound.toString();
-        }
-
-        return str;
     }
 
     public static String getStringFromObject(Object object) {
@@ -43,25 +31,67 @@ public class StackHelper {
         } else return "";
     }
 
-    private static ItemStack getStackFromArray(String[] str) {
-        Item item = getItemByText(str[0]);
-        int meta = 0;
-        if (str.length > 1) {
-            meta = parseInt(str[1]);
+    public static String getStringFromStack(ItemStack stack) {
+        String str = Item.itemRegistry.getNameForObject(stack.getItem());
+        str = str + " " + stack.getItemDamage();
+
+        if (stack.hasTagCompound()) {
+            str = str + " " + stack.stackTagCompound.toString();
         }
 
+        str = str + " *" + stack.stackSize;
+
+        return str;
+    }
+
+    private static NBTTagCompound getTag(String[] str, int pos) {
+        String s = formatNBT(str, pos).getUnformattedText();
+        try {
+            NBTBase nbtbase = JsonToNBT.func_150315_a(s);
+            if (!(nbtbase instanceof NBTTagCompound)) return null;
+            return (NBTTagCompound) nbtbase;
+        } catch (Exception nbtexception) {
+            return null;
+        }
+    }
+
+    public static boolean isAmount(String str) {
+        return str.startsWith("*");
+    }
+
+    private static ItemStack getStackFromArray(String[] str) {
+        Item item = getItemByText(str[0]);
+        if (item == null) return null;
+
+        int meta = 0;
+        int amount = 1;
         ItemStack stack = new ItemStack(item, 1, meta);
-        if (str.length > 2) {
-            String s = formatNBT(str, 2).getUnformattedText();
-            try {
-                NBTBase nbtbase = JsonToNBT.func_150315_a(s);
-
-                if (!(nbtbase instanceof NBTTagCompound)) return null;
-
-                stack.setTagCompound((NBTTagCompound) nbtbase);
-            } catch (Exception nbtexception) {
-                return null;
+        NBTTagCompound tag = null;
+        if (str.length > 1) {
+            tag = getTag(str, 1);
+            if (tag == null) {
+                if (isAmount(str[1])) amount = parseAmount(str[1]);
+                else meta = parseMeta(str[1]);
             }
+        }
+
+        if (str.length > 2) {
+            tag = getTag(str, 2);
+            if (tag == null) amount = parseAmount(str[2]);
+        }
+
+        if (str.length > 3) {
+            amount = parseAmount(str[3]);
+        }
+
+        stack.setItemDamage(meta);
+
+        if (tag != null) {
+            stack.setTagCompound(tag);
+        }
+
+        if (amount >= 1) {
+            stack.stackSize = amount;
         }
 
         return stack;
@@ -96,9 +126,17 @@ public class StackHelper {
         return chatcomponenttext;
     }
 
-    private static int parseInt(String str) {
+    private static int parseMeta(String str) {
         try {
             return Integer.parseInt(str);
+        } catch (NumberFormatException numberformatexception) {
+            return 0;
+        }
+    }
+
+    private static int parseAmount(String str) {
+        try {
+            return Integer.parseInt(str.substring(1, str.length()));
         } catch (NumberFormatException numberformatexception) {
             return 0;
         }
