@@ -2,6 +2,11 @@ package joshie.enchiridion.designer.features;
 
 import static joshie.enchiridion.designer.DesignerHelper.drawRect;
 import static joshie.enchiridion.designer.DesignerHelper.getGui;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import joshie.enchiridion.designer.DesignerHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 
 import com.google.gson.annotations.Expose;
@@ -152,7 +157,15 @@ public abstract class Feature {
             prevX = x;
             prevY = y;
         }
+        
+        if (isOverFeature(x, y)) {
+            List<String> tooltip = new ArrayList();
+            addTooltip(tooltip);
+            DesignerHelper.addTooltip(tooltip);
+        }
     }
+    
+    public void addTooltip(List list) { }
 
     //Do nothing by default
     public void keyTyped(char character, int key) {

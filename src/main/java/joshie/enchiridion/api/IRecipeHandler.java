@@ -24,4 +24,7 @@ public interface IRecipeHandler {
 
     /** Returns a unique name for this recipe, saved in the json **/
     public String getUniqueName();
+
+    /** Add Tooltip **/
+    public void addTooltip(List list);
 }

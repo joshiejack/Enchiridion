@@ -9,4 +9,12 @@ public class FeatureBox extends FeatureColorable {
 
         DesignerHelper.drawRect(left, top, right, bottom, colorI);
     }
+    
+    @Override
+    public void updateWidth(int change) {
+        width += change;
+        if (width <= 1) {
+            width = 1;
+        }
+    }
 }

@@ -2,6 +2,7 @@ package joshie.enchiridion.helpers;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import joshie.enchiridion.ELogger;
 import net.minecraft.creativetab.CreativeTabs;
@@ -11,7 +12,8 @@ import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Level;
 
 public class ItemHelper {
-    public static final ArrayList<ItemStack> items = new ArrayList();
+    private static final ArrayList<ItemStack> items = new ArrayList();
+    private static final ArrayList<ItemStack> allItems = new ArrayList();
 
     public static void init() {
         Iterator iterator = Item.itemRegistry.iterator();
@@ -32,13 +34,23 @@ public class ItemHelper {
                 }
             }
         }
+        
+        allItems.addAll(items);
+    }
+    
+    public static List<ItemStack> items() {
+        return items;
+    }
+
+    public static List<ItemStack> allItems() {
+        return allItems;
     }
 
     public static void addInventory() {
         for (ItemStack stack : ClientHelper.getPlayer().inventory.mainInventory) {
             if (stack != null) {
-                if (!items.contains(stack)) {
-                    items.add(stack);
+                if (!allItems.contains(stack)) {
+                    allItems.add(stack);
                 }
             }
         }

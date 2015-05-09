@@ -3,8 +3,10 @@ package joshie.enchiridion.designer.features;
 import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import joshie.enchiridion.designer.DesignerHelper;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.ItemHelper;
 import joshie.enchiridion.helpers.StackHelper;
 import net.minecraft.item.Item;
@@ -129,6 +131,13 @@ public class FeatureItem extends FeatureWithText {
     }
 
     @Override
+    public void addTooltip(List list) {
+        if (stack != null) {
+            list.addAll(stack.getTooltip(ClientHelper.getPlayer(), false));
+        }
+    }
+
+    @Override
     public void scroll(boolean scrolledDown) {
         if (isSelected) {
             if (mouseX <= 0) {
@@ -145,18 +154,18 @@ public class FeatureItem extends FeatureWithText {
         ItemHelper.addInventory();
 
         if (search == null || search.equals("")) {
-            sorted = new ArrayList(ItemHelper.items);
+            sorted = new ArrayList(ItemHelper.allItems());
         } else {
             position = 0;
             sorted = new ArrayList();
-            for (ItemStack stack : ItemHelper.items) {
+            for (ItemStack stack : ItemHelper.allItems()) {
                 try {
                     if (stack != null && stack.getItem() != null) {
                         if (stack.getDisplayName().toLowerCase().contains(search.toLowerCase())) {
                             sorted.add(stack);
                         }
                     }
-                } catch (Exception e) { }
+                } catch (Exception e) {}
             }
         }
     }

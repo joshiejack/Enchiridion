@@ -3,10 +3,15 @@ package joshie.enchiridion.library;
 import java.util.ArrayList;
 import java.util.List;
 
+import joshie.enchiridion.EInfo;
 import joshie.enchiridion.network.EPacketHandler;
 import joshie.enchiridion.network.PacketLibraryCommand;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 public class LibraryCommand implements ICommand {
     @Override
@@ -33,7 +38,16 @@ public class LibraryCommand implements ICommand {
     public void processCommand(ICommandSender sender, String[] parameters) {
         if (parameters == null || parameters.length != 1) return;
         try {
-            EPacketHandler.sendToServer(new PacketLibraryCommand());
+            if (parameters[0].equals("refresh")) {
+                EPacketHandler.sendToServer(new PacketLibraryCommand());
+            } else if (parameters[0].equals("lang")) {
+                for (ModContainer mod: Loader.instance().getActiveModList()) {
+                    if (mod.getModId().equals(EInfo.MODID)) {
+                        LanguageRegistry.instance().loadLanguagesFor(mod, Side.SERVER);
+                        break;
+                    }
+                }
+            }
         } catch (NumberFormatException e) {}
     }
 

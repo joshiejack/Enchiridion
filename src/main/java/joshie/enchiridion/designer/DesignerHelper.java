@@ -11,6 +11,7 @@ import static org.lwjgl.opengl.GL11.glScalef;
 import java.awt.Component;
 import java.awt.HeadlessException;
 import java.io.File;
+import java.util.List;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -50,7 +51,7 @@ public class DesignerHelper {
     public static void drawRect(int left, int top, int right, int bottom, int color) {
         gui.drawRect(x + left, y + top, x + right, y + bottom, color);
     }
-    
+
     public static void drawTexturedRect(int left, int top, int u, int v, int w, int h) {
         gui.drawTexturedModalRect(x + left, y + top, u, v, w, h);
     }
@@ -68,7 +69,9 @@ public class DesignerHelper {
 
     public static void drawStack(ItemStack stack, int left, int top, float size) {
         if (stack == null || stack.getItem() == null) return; //Don't draw stacks that don't exist
-        
+        int x2 = (int) Math.floor(((x + left) / size));
+        int y2 = (int) Math.floor( ((y + top) / size));
+
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         start();
         GL11.glScalef(size, size, size);
@@ -79,8 +82,8 @@ public class DesignerHelper {
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         RenderHelper.enableGUIStandardItemLighting();
         Minecraft mc = ClientHelper.getMinecraft();
-        FeatureItem.itemRenderer.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, (int) ((x + left) / size), (int) ((y + top) / size));
-        FeatureItem.itemRenderer.renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, (int) ((x + left) / size), (int) ((y + top) / size));
+        FeatureItem.itemRenderer.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x2, y2);
+        FeatureItem.itemRenderer.renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x2, y2);
         RenderHelper.disableStandardItemLighting();
         GL11.glDisable(GL11.GL_LIGHTING);
         end();
@@ -103,14 +106,31 @@ public class DesignerHelper {
         disable(GL_BLEND);
         end();
     }
-    
-    public static void drawTexturedRect(int left, int top, int u, int v, int w, int h, float scale) {
+
+    public static void drawTexturedRect(int left, int top, int u, int v, int w, int h, float size) {
+        int x2 = (int) Math.floor(((x + left) / size));
+        int y2 = (int) Math.floor( ((y + top) / size));
+        
         start();
         enable(GL_BLEND);
         GL11.glColor4f(1F, 1F, 1F, 1F);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        glScalef(scale, scale, 1.0F);
-        gui.drawTexturedModalRect((int) ((x + left) / scale), (int) ((y + top) / scale), u, v, w, h);
+        glScalef(size, size, 1.0F);
+        gui.drawTexturedModalRect(x2, y2, u, v, w, h);
+        disable(GL_BLEND);
+        end();
+    }
+
+    public static void drawReversedTexturedRect(int left, int top, int u, int v, int w, int h, float size) {
+        int x2 = (int) Math.floor(((x + left) / size));
+        int y2 = (int) Math.floor( ((y + top) / size));
+        
+        start();
+        enable(GL_BLEND);
+        GL11.glColor4f(1F, 1F, 1F, 1F);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        glScalef(size, size, 1.0F);
+        gui.drawReversedTexturedModalRect(x2, y2, u, v, w, h);
         disable(GL_BLEND);
         end();
     }
@@ -168,5 +188,9 @@ public class DesignerHelper {
         }
 
         return null;
+    }
+
+    public static void addTooltip(List<String> tooltip) {
+        gui.addTooltip(tooltip);
     }
 }

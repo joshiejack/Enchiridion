@@ -7,7 +7,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -57,15 +56,6 @@ public class Enchiridion {
 				MinecraftForge.EVENT_BUS.register(new TooltipHandler());
 			}
 		}
-		
-		/** Register this mod as containing books **/
-		FMLInterModComms.sendMessage("Enchiridion2", "registerBookMod", "Enchiridion");
-		
-		/** Build a NBT Tag **/
-		NBTTagCompound tag = new NBTTagCompound();
-		tag.setString("book", "fish_breeding");
-		new ItemStack(Items.apple).writeToNBT(tag);
-		FMLInterModComms.sendMessage("Enchiridion2", "registerBookItem", tag);
 	}
 
 	@EventHandler

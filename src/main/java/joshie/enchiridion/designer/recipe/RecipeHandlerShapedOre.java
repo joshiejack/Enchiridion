@@ -7,27 +7,25 @@ import java.util.Arrays;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-public class RecipeHandlerShapedOre extends RecipeHandlerBase {
-    private ShapedOreRecipe recipe;
-
+public class RecipeHandlerShapedOre extends RecipeHandlerRecipeBase {
     public RecipeHandlerShapedOre() {}
     public RecipeHandlerShapedOre(IRecipe recipe) {
-        this.recipe = (ShapedOreRecipe) recipe;
         try {
             init(recipe.getRecipeOutput(), new ArrayList<Object>(Arrays.asList((Object[]) this.input.get(recipe))), width.getInt(recipe));
         } catch (Exception e) { e.printStackTrace(); }
     }
     
     @Override
-    protected Class getRecipeClass() {
+    protected String getRecipeName() {
+        return "ShapedOreRecipe";
+    }
+    
+    @Override
+    protected Class getHandlerClass() {
         return this.getClass();
     }
 
-    @Override
-    public String getUniqueName() {
-        return super.getUniqueName();
-    }
-    
+    /** Setup Reflection for grabbing the input and recipe width **/
     private static Field input;
     private static Field width;
     static {

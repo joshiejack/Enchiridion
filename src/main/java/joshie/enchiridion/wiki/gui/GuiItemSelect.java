@@ -41,11 +41,11 @@ public class GuiItemSelect extends GuiExtension implements ITextEditable, IGuiDi
 
     public void updateSearch() {
         if (search == null || search.equals("")) {
-            sorted = new ArrayList(ItemHelper.items);
+            sorted = new ArrayList(ItemHelper.allItems());
         } else {
             position = 0;
             sorted = new ArrayList();
-            for (ItemStack stack : ItemHelper.items) {
+            for (ItemStack stack : ItemHelper.allItems()) {
                 if (stack != null && stack.getItem() != null) {
                     if (stack.getDisplayName().toLowerCase().contains(search.toLowerCase())) {
                         sorted.add(stack);

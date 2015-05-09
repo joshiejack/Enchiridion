@@ -7,7 +7,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.ETranslate;
@@ -21,12 +24,17 @@ import joshie.enchiridion.designer.features.FeatureResource;
 import joshie.enchiridion.designer.features.FeatureText;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonClientHelper;
+import joshie.enchiridion.helpers.OpenGLHelper;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 public class GuiDesigner extends GuiScreen {
     public int mouseX = 0;
@@ -37,6 +45,7 @@ public class GuiDesigner extends GuiScreen {
     private ResourceLocation page_left;
     private ResourceLocation page_right;
 
+    public List<String> tooltip = new ArrayList();
     protected float red, green, blue;
     protected int leftX = 212;
     protected int rightX = 218;
@@ -222,7 +231,6 @@ public class GuiDesigner extends GuiScreen {
         int x = (width - 430) / 2;
         int y = (height - ySize) / 2;
         DesignerHelper.setGui(this, x, y);
-
         drawLeftPage(x, y);
         drawRightPage(x + 212, y);
 
@@ -230,8 +238,9 @@ public class GuiDesigner extends GuiScreen {
         if (canvas != null) {
             canvas.draw(x, y);
         }
-
+        
         super.drawScreen(i, j, f);
+        drawHoveringText(tooltip, i, j, mc.fontRenderer);
     }
 
     @Override
@@ -307,6 +316,7 @@ public class GuiDesigner extends GuiScreen {
         mouseX = x - (width - xSize) / 2;
         mouseY = y - (height - ySize) / 2;
 
+        tooltip.clear();
         if (canvas != null) {
             canvas.follow(mouseX, mouseY);
             int wheel = Mouse.getDWheel();
@@ -316,5 +326,23 @@ public class GuiDesigner extends GuiScreen {
         }
 
         super.handleMouseInput();
+    }
+
+    public void drawReversedTexturedModalRect(int x2, int y2, int u, int v, int width, int height) {
+        int x = x2 - width;
+        int y = y2 - height;
+        float f = 0.00390625F;
+        float f1 = 0.00390625F;
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV((double) (x + 0), (double) (y + height), (double) this.zLevel, (double) ((float) (u + 0) * f), (double) ((float) (v + height) * f1));
+        tessellator.addVertexWithUV((double) (x + width), (double) (y + height), (double) this.zLevel, (double) ((float) (u + width) * f), (double) ((float) (v + height) * f1));
+        tessellator.addVertexWithUV((double) (x + width), (double) (y + 0), (double) this.zLevel, (double) ((float) (u + width) * f), (double) ((float) (v + 0) * f1));
+        tessellator.addVertexWithUV((double) (x + 0), (double) (y + 0), (double) this.zLevel, (double) ((float) (u + 0) * f), (double) ((float) (v + 0) * f1));
+        tessellator.draw();
+    }
+
+    public void addTooltip(List<String> tooltip) {
+        this.tooltip.addAll(tooltip);
     }
 }

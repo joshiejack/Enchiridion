@@ -10,10 +10,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class WrappedStack implements IItemStack {
-    private static final Random rand = new Random();
-    private List<ItemStack> permutations = new ArrayList();
-    private boolean hasPermutations = false;
-    private ItemStack stack;
+    protected static final Random rand = new Random();
+    protected List<ItemStack> permutations = new ArrayList();
+    protected boolean hasPermutations = false;
+    protected ItemStack stack;
     private int ticker = 0;
     private final double x;
     private final double y;
@@ -28,7 +28,7 @@ public class WrappedStack implements IItemStack {
             stack = ((ItemStack) object).copy();
             if (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
                 ArrayList<Integer> metaList = new ArrayList();
-                for (ItemStack aStack : ItemHelper.items) {
+                for (ItemStack aStack : ItemHelper.items()) {
                     if (aStack.getItem() == stack.getItem()) {
                         permutations.add(aStack);
                     }
@@ -38,7 +38,7 @@ public class WrappedStack implements IItemStack {
             List<ItemStack> stacks = (ArrayList<ItemStack>) object;
             for (ItemStack stacky: stacks) {
                 if (stacky.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
-                    for (ItemStack aStack : ItemHelper.items) {
+                    for (ItemStack aStack : ItemHelper.items()) {
                         if (aStack.getItem() == stacky.getItem()) {
                             permutations.add(aStack);
                         }

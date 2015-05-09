@@ -1,5 +1,8 @@
 package joshie.enchiridion.designer;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import joshie.enchiridion.api.IDrawHelper;
 import joshie.enchiridion.api.IItemStack;
 
@@ -24,14 +27,14 @@ public class DrawHelper implements IDrawHelper {
         return (int) (left + ((x / 150D) * width));
     }
     
-    public static int getTop(double y) {
+    public static int getTop(double y) {       
         return (int) (top + ((y / 100D) * height));
     }
 
     @Override
-    public void drawStack(IItemStack stack, double x, double y, float scale) {
+    public void drawStack(IItemStack stack) {
         if (isBook) {
-            DesignerHelper.drawStack(stack.getItemStack(), getLeft(x), getTop(y), size * scale);
+            DesignerHelper.drawStack(stack.getItemStack(), getLeft(stack.getX()), getTop(stack.getY()), size * stack.getScale());
         }
     }
 
@@ -40,9 +43,31 @@ public class DrawHelper implements IDrawHelper {
         // TODO Auto-generated method stub
         
     }
+    
+    public static void testDrawRect(int x, int y, int u, int v, int w, int h, float scale) {
+        DesignerHelper.drawTexturedRect(left + x, top + y, u, v, w, h, size * scale);
+    }
 
     @Override
-    public void drawTexturedRect(double x, double y, int u, int v, int w, int h) {
-        DesignerHelper.drawTexturedRect(getLeft(x), getTop(y), u, v, w, h, size);
+    public void drawTexturedRect(double x, double y, int u, int v, int w, int h, float scale) {
+        DesignerHelper.drawTexturedRect(getLeft(x), getTop(y), u, v, w, h, size * scale);
+    }
+
+    @Override
+    public void drawTexturedReversedRect(double x, double y, int u, int v, int w, int h, float scale) {
+        DesignerHelper.drawReversedTexturedRect(getLeft(x), getTop(y), u, v, w, h, size * scale);
+    }
+
+    @Override
+    public boolean isMouseOver(IItemStack stack) {
+        if (stack == null || stack.getItemStack() == null) return false;
+        int left = getLeft(stack.getX());
+        int top = getTop(stack.getY());
+        int scaled = (int) (16 * stack.getScale() * size);
+        int right = left + scaled;
+        int bottom = top + scaled;
+        int x = DesignerHelper.getGui().mouseX;
+        int y = DesignerHelper.getGui().mouseY;      
+        return x >= left && x <= right && y >= top && y <= bottom;
     }
 }
