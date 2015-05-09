@@ -12,10 +12,13 @@ import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Level;
 
 public class ItemHelper {
-    private static final ArrayList<ItemStack> items = new ArrayList();
-    private static final ArrayList<ItemStack> allItems = new ArrayList();
+    private static ArrayList<ItemStack> items = null;
+    private static ArrayList<ItemStack> allItems = null;
 
-    public static void init() {
+    public static List<ItemStack> init() {
+        items = new ArrayList();
+        allItems = new ArrayList();
+        
         Iterator iterator = Item.itemRegistry.iterator();
         while (iterator.hasNext()) {
             Item item = (Item) iterator.next();
@@ -36,20 +39,21 @@ public class ItemHelper {
         }
         
         allItems.addAll(items);
+        return items;
     }
     
     public static List<ItemStack> items() {
-        return items;
+        return items != null? items: init();
     }
 
     public static List<ItemStack> allItems() {
-        return allItems;
+        return allItems != null? allItems: init();
     }
 
     public static void addInventory() {
         for (ItemStack stack : ClientHelper.getPlayer().inventory.mainInventory) {
             if (stack != null) {
-                if (!allItems.contains(stack)) {
+                if (!allItems().contains(stack)) {
                     allItems.add(stack);
                 }
             }

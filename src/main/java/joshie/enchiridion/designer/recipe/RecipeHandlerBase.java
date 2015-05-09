@@ -71,8 +71,6 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
         return getRecipeName() + unique;
     }
 
-    protected abstract String getRecipeName();
-
     @Override
     public void draw() {
         drawBackground();

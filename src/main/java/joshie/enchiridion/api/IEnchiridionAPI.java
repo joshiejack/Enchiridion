@@ -25,4 +25,7 @@ public interface IEnchiridionAPI {
     
     /** Register a method for handling the opening of books **/
     public void registerBookHandler(IBookHandler handler);
+
+    /** Register a recipe handler **/
+    public void registerRecipeHandler(IRecipeHandler handler);
 }

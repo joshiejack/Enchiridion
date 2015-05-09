@@ -14,7 +14,6 @@ public class RecipeHandlerFurnace extends RecipeHandlerBase {
     private static WrappedFuelStack fuels;
 
     public RecipeHandlerFurnace() {}
-
     public RecipeHandlerFurnace(ItemStack output, ItemStack input) {
         stackList.add(new WrappedStack(output, 110D, 32D, 2.5F));
         stackList.add(new WrappedStack(input, 0D, 0D, 2.5F));
@@ -40,7 +39,7 @@ public class RecipeHandlerFurnace extends RecipeHandlerBase {
     }
 
     @Override
-    protected String getRecipeName() {
+    public String getRecipeName() {
         return "VanillaFurnace";
     }
 

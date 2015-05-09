@@ -4,7 +4,9 @@ import java.io.File;
 
 import joshie.enchiridion.api.IBookHandler;
 import joshie.enchiridion.api.IEnchiridionAPI;
+import joshie.enchiridion.api.IRecipeHandler;
 import joshie.enchiridion.designer.BookRegistry;
+import joshie.enchiridion.designer.features.FeatureRecipe;
 import joshie.enchiridion.library.BookHandlerRegistry;
 import net.minecraft.item.ItemStack;
 
@@ -55,5 +57,11 @@ public class EAPIHandler implements IEnchiridionAPI {
     @Override
     public void registerBookHandler(IBookHandler handler) {
         BookHandlerRegistry.registerHandler(handler);
+    }
+    
+    @Override
+    public void registerRecipeHandler(IRecipeHandler handler) {
+        FeatureRecipe.handlers.add(handler);
+        ELogger.log(Level.INFO, "Registered a new recipe handler: " + handler.getRecipeName());
     }
 }

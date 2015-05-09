@@ -17,7 +17,7 @@ public class RecipeHandlerShapedVanilla extends RecipeHandlerRecipeBase {
     }
     
     @Override
-    protected String getRecipeName() {
+    public String getRecipeName() {
         return "ShapedRecipes";
     }
     

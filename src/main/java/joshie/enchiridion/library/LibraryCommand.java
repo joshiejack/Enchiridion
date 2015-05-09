@@ -41,11 +41,9 @@ public class LibraryCommand implements ICommand {
             if (parameters[0].equals("refresh")) {
                 EPacketHandler.sendToServer(new PacketLibraryCommand());
             } else if (parameters[0].equals("lang")) {
-                for (ModContainer mod: Loader.instance().getActiveModList()) {
-                    if (mod.getModId().equals(EInfo.MODID)) {
-                        LanguageRegistry.instance().loadLanguagesFor(mod, Side.SERVER);
-                        break;
-                    }
+                for (ModContainer mod : Loader.instance().getActiveModList()) {
+                    LanguageRegistry.instance().loadLanguagesFor(mod, Side.SERVER);
+                    break;
                 }
             }
         } catch (NumberFormatException e) {}

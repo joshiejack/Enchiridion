@@ -27,6 +27,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 
 import org.apache.commons.io.FileUtils;
@@ -142,6 +143,20 @@ public class DesignerHelper {
         ClientHelper.bindTexture(resource);
         glScalef(scaleX, scaleY, 1.0F);
         gui.drawTexturedModalRect((int) ((x + left) / scaleX), (int) ((y + top) / scaleY), 0, 0, width, height);
+        disable(GL_BLEND);
+        end();
+    }
+    
+    public static void drawIcon(IIcon icon, int left, int top, int w, int h, float size) {
+        int x2 = (int) Math.floor(((x + left) / size));
+        int y2 = (int) Math.floor( ((y + top) / size));
+        
+        start();
+        enable(GL_BLEND);
+        GL11.glColor4f(1F, 1F, 1F, 1F);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        glScalef(size, size, 1.0F);
+        gui.drawTexturedModelRectFromIcon(x2, y2, icon, w, h);
         disable(GL_BLEND);
         end();
     }

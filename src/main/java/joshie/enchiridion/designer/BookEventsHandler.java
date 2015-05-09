@@ -19,6 +19,9 @@ public class BookEventsHandler {
                     if (EConfig.CAN_EDIT_BOOKS && player.isSneaking()) {
                         player.openGui(Enchiridion.instance, EInfo.BOOKS_EDIT_ID, player.worldObj, 0, 0, 0);
                     } else player.openGui(Enchiridion.instance, EInfo.BOOKS_VIEW_ID, player.worldObj, 0, 0, 0);
+                    
+                    //Refuse further processing for opening this book
+                    event.setCanceled(true);
                 }
             }
         }

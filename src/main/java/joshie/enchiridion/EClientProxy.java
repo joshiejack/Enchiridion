@@ -18,9 +18,13 @@ import joshie.enchiridion.designer.BookRegistry.BookData;
 import joshie.enchiridion.designer.DesignerCanvas;
 import joshie.enchiridion.designer.DrawHelper;
 import joshie.enchiridion.designer.features.FeatureText;
+import joshie.enchiridion.designer.recipe.RecipeHandlerFurnace;
+import joshie.enchiridion.designer.recipe.RecipeHandlerShapedOre;
+import joshie.enchiridion.designer.recipe.RecipeHandlerShapedVanilla;
+import joshie.enchiridion.designer.recipe.RecipeHandlerShapelessOre;
+import joshie.enchiridion.designer.recipe.RecipeHandlerShapelessVanilla;
 import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.GsonClientHelper;
-import joshie.enchiridion.helpers.ItemHelper;
 import joshie.enchiridion.library.BookHandlerRegistry;
 import joshie.enchiridion.library.handlers.BookObtainEvents;
 import joshie.enchiridion.wiki.WikiFont;
@@ -29,8 +33,6 @@ import joshie.enchiridion.wiki.WikiRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -90,6 +92,12 @@ public class EClientProxy extends ECommonProxy {
 
             MinecraftForge.EVENT_BUS.register(new BookEventsHandler());
             MinecraftForge.EVENT_BUS.register(new BookIconPatcher());
+            
+            EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapedVanilla());
+            EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapedOre());
+            EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessVanilla());
+            EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessOre());
+            EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerFurnace());
         }
 
         if (EConfig.ENABLE_WIKI) {
@@ -126,8 +134,5 @@ public class EClientProxy extends ECommonProxy {
         }
 
         ((IReloadableResourceManager) mc.getResourceManager()).registerReloadListener(font);
-
-        /** Initialise the item helper **/
-        ItemHelper.init();
     }
 }

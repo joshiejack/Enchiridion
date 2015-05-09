@@ -1,10 +1,8 @@
 package joshie.enchiridion.designer;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import joshie.enchiridion.api.IDrawHelper;
 import joshie.enchiridion.api.IItemStack;
+import net.minecraft.util.IIcon;
 
 public class DrawHelper implements IDrawHelper {
     private static boolean isBook;
@@ -39,8 +37,8 @@ public class DrawHelper implements IDrawHelper {
     }
 
     @Override
-    public void drawResource(double x1, double y1, double x2, double y2, int color) {
-        // TODO Auto-generated method stub
+    public void drawIcon(IIcon icon, double x, double y, int width, int height, float scale) {
+        DesignerHelper.drawIcon(icon, getLeft(x), getTop(y), width, height, size * scale);
         
     }
     
@@ -69,5 +67,23 @@ public class DrawHelper implements IDrawHelper {
         int x = DesignerHelper.getGui().mouseX;
         int y = DesignerHelper.getGui().mouseY;      
         return x >= left && x <= right && y >= top && y <= bottom;
+    }
+    
+    @Override
+    public boolean isOverArea(double x2, double y2, int width, int height, float scale) {
+        int left = getLeft(x2);
+        int top = getTop(y2);
+        int scaledX = (int) (width * scale * size);
+        int scaledY = (int) (height * scale * size);
+        int right = left + scaledX;
+        int bottom = top + scaledY;
+        int x = DesignerHelper.getGui().mouseX;
+        int y = DesignerHelper.getGui().mouseY;      
+        return x >= left && x <= right && y >= top && y <= bottom;
+    }
+
+    @Override
+    public void drawText(String text, double x, double y, int color, float scale) {
+        DesignerHelper.drawSplitScaledString(text, getLeft(x), getTop(y), 300, color, size * scale);
     }
 }

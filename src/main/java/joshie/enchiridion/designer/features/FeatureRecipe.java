@@ -22,14 +22,6 @@ public class FeatureRecipe extends FeatureItem {
     private int index = 0;
     private IRecipeHandler handler;
 
-    static {
-        handlers.add(new RecipeHandlerShapedVanilla());
-        handlers.add(new RecipeHandlerShapedOre());
-        handlers.add(new RecipeHandlerShapelessVanilla());
-        handlers.add(new RecipeHandlerShapelessOre());
-        handlers.add(new RecipeHandlerFurnace());
-    }
-
     public FeatureRecipe() {
         drawStack = false;
         width = 128;

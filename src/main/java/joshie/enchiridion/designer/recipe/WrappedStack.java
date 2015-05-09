@@ -15,39 +15,44 @@ public class WrappedStack implements IItemStack {
     protected boolean hasPermutations = false;
     protected ItemStack stack;
     private int ticker = 0;
-    private final double x;
-    private final double y;
-    private final float scale;
+    private double x;
+    private double y;
+    private float scale;
 
     public WrappedStack(Object object, double x, double y, float scale) {
-        this.x = x;
-        this.y = y;
-        this.scale = scale;
+        if (object == null) stack = null;
+        else {
+            this.x = x;
+            this.y = y;
+            this.scale = scale;
 
-        if (object instanceof ItemStack) {
-            stack = ((ItemStack) object).copy();
-            if (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
-                ArrayList<Integer> metaList = new ArrayList();
-                for (ItemStack aStack : ItemHelper.items()) {
-                    if (aStack.getItem() == stack.getItem()) {
-                        permutations.add(aStack);
-                    }
-                }
-            } else permutations.add(stack);
-        } else if (object instanceof List) {
-            List<ItemStack> stacks = (ArrayList<ItemStack>) object;
-            for (ItemStack stacky: stacks) {
-                if (stacky.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
+            if (object instanceof String) {
+                object = OreDictionary.getOres((String) object);
+            }
+            
+            if (object instanceof ItemStack) {
+                stack = ((ItemStack) object).copy();
+                if (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
+                    ArrayList<Integer> metaList = new ArrayList();
                     for (ItemStack aStack : ItemHelper.items()) {
-                        if (aStack.getItem() == stacky.getItem()) {
+                        if (aStack.getItem() == stack.getItem()) {
                             permutations.add(aStack);
                         }
                     }
-                } else permutations.add(stacky);
+                } else permutations.add(stack);
+            } else if (object instanceof List) {
+                List<ItemStack> stacks = (ArrayList<ItemStack>) object;
+                for (ItemStack stacky : stacks) {
+                    if (stacky.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
+                        for (ItemStack aStack : ItemHelper.items()) {
+                            if (aStack.getItem() == stacky.getItem()) {
+                                permutations.add(aStack);
+                            }
+                        }
+                    } else permutations.add(stacky);
+                }
             }
-        }
 
-        if (object != null) {
             hasPermutations = permutations.size() > 1;
             stack = permutations.get(rand.nextInt(permutations.size()));
         }

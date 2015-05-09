@@ -15,7 +15,7 @@ public class RecipeHandlerShapelessVanilla extends RecipeHandlerRecipeBase {
     }
     
     @Override
-    protected String getRecipeName() {
+    public String getRecipeName() {
         return "ShapelessRecipes";
     }
     

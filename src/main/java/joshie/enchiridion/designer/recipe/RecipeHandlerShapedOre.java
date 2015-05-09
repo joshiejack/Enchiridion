@@ -16,7 +16,7 @@ public class RecipeHandlerShapedOre extends RecipeHandlerRecipeBase {
     }
     
     @Override
-    protected String getRecipeName() {
+    public String getRecipeName() {
         return "ShapedOreRecipe";
     }
     

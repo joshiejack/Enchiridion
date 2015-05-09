@@ -135,11 +135,13 @@ public class BookRegistry {
     private static int lastID = 1;
 
     public static void registerItemStack(String identifier, ItemStack stack) {
-        if (books.get(identifier) == null) {
+        if (stack == null) ELogger.log(Level.WARN, "A book with the identifier " + identifier + " could not be registered as the stack was null");
+        else if (books.get(identifier) == null) {
             ELogger.log(Level.WARN, "A book with the identifier " + identifier + " could not be found");
         } else {
             stackToIdentifier.put(stack, identifier);
             books.get(identifier).displayInCreative = false;
+            ELogger.log(Level.WARN, "Successfully registered " + stack.getDisplayName() + " as a book that will open the identifier " + identifier);
         }
     }
 

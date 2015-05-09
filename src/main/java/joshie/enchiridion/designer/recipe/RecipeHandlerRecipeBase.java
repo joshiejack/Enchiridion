@@ -26,14 +26,37 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
                 stackList.add(new WrappedStack(getObject(input, 1), 56D, 38D, 1F));
             }
         } else if (length == 3) {
-            stackList.add(new WrappedStack(getObject(input, 0), 1D, 38D, 1F));
-            stackList.add(new WrappedStack(getObject(input, 1), 29D, 38D, 1F));
-            stackList.add(new WrappedStack(getObject(input, 2), 56D, 38D, 1F));
+            if (width == 1) {
+                stackList.add(new WrappedStack(getObject(input, 0), 29D, 2D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 1), 29D, 38D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 2), 29D, 75D, 1F));
+            } else {
+                stackList.add(new WrappedStack(getObject(input, 0), 1D, 38D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 1), 29D, 38D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 2), 56D, 38D, 1F));
+            }
         } else if (length == 4) {
             stackList.add(new WrappedStack(getObject(input, 0), 1D, 2D, 1F));
             stackList.add(new WrappedStack(getObject(input, 1), 29D, 2D, 1F));
             stackList.add(new WrappedStack(getObject(input, 2), 1D, 38D, 1F));
             stackList.add(new WrappedStack(getObject(input, 3), 29D, 38D, 1F));
+        } else if (length == 6) {
+            if (width == 2) {
+                stackList.add(new WrappedStack(getObject(input, 0), 1D, 2D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 1), 29D, 2D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 2), 1D, 38D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 3), 29D, 38D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 4), 1D, 75D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 5), 29D, 75D, 1F));
+            } else {
+                stackList.add(new WrappedStack(getObject(input, 0), 1D, 2D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 1), 29D, 2D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 2), 56D, 2D, 1F));
+
+                stackList.add(new WrappedStack(getObject(input, 3), 1D, 38D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 4), 29D, 38D, 1F));
+                stackList.add(new WrappedStack(getObject(input, 5), 56D, 38D, 1F));
+            }
         } else {
             stackList.add(new WrappedStack(getObject(input, 0), 1D, 2D, 1F));
             stackList.add(new WrappedStack(getObject(input, 1), 29D, 2D, 1F));
