@@ -235,7 +235,7 @@ public class GuiDesigner extends GuiScreen {
             canvas.draw(x, y);
             canvas.addTooltip(tooltip, mouseX, mouseY);
         }
-        
+
         super.drawScreen(i, j, f);
         drawHoveringText(tooltip, i, j, mc.fontRenderer);
     }
@@ -243,10 +243,6 @@ public class GuiDesigner extends GuiScreen {
     @Override
     protected void mouseClicked(int par1, int par2, int par3) {
         super.mouseClicked(par1, par2, par3);
-
-        if (canvas != null) {
-            canvas.clicked(mouseX, mouseY);
-        }
 
         boolean clicked = false;
         int new_page = page_number.get(bookData.uniqueName);
@@ -266,6 +262,8 @@ public class GuiDesigner extends GuiScreen {
 
         if (clicked) {
             setPage(new_page);
+        } else if (canvas != null) {
+            canvas.clicked(mouseX, mouseY);
         }
     }
 
