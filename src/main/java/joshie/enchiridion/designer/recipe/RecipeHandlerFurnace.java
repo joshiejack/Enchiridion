@@ -14,11 +14,12 @@ public class RecipeHandlerFurnace extends RecipeHandlerBase {
     private static WrappedFuelStack fuels;
 
     public RecipeHandlerFurnace() {}
+
     public RecipeHandlerFurnace(ItemStack output, ItemStack input) {
         stackList.add(new WrappedStack(output, 110D, 32D, 2.5F));
         stackList.add(new WrappedStack(input, 0D, 0D, 2.5F));
 
-        fuels = new WrappedFuelStack(0D, 65D, 2.5F);
+        if (fuels == null) fuels = new WrappedFuelStack(0D, 65D, 2.5F);
         stackList.add(fuels);
 
         unique = "";
@@ -68,7 +69,7 @@ public class RecipeHandlerFurnace extends RecipeHandlerBase {
         return burnTime * scale / 2000;
     }
 
-    private double getHeightForScaled(int i1) {        
+    private double getHeightForScaled(int i1) {
         return i1;
     }
 
