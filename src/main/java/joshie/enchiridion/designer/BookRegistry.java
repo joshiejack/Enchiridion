@@ -121,6 +121,10 @@ public class BookRegistry {
 
     public static void registerModInDev(String modid, File source) {
         File path = FileHelper.getDevAssetsForModPath(source.getParentFile(), modid, "books");
+        if (!path.exists()) {
+            path.mkdir();
+        }
+        
         Collection<File> files = FileUtils.listFiles(path, new String[] { "json" }, true);
         for (File file : files) {
             try {
@@ -179,7 +183,7 @@ public class BookRegistry {
         Iterator it = Minecraft.getMinecraft().getLanguageManager().getLanguages().iterator();
         while (it.hasNext()) {
             String code = ((Language) it.next()).getLanguageCode();
-            HashMap<String, BookData> data = books.get(identifier);
+            HashMap<String, BookData> data = books.get(code);
             if (data != null) {
                 if (data.get(identifier) != null) {
                     data.get(identifier).displayInCreative = false;
@@ -190,7 +194,7 @@ public class BookRegistry {
 
     public static void registerItemStack(String identifier, ItemStack stack) {
         if (stack == null) ELogger.log(Level.WARN, "A book with the identifier " + identifier + " could not be registered as the stack was null");
-        else if (getDataInFirstLanguage(identifier) != null) {
+        else if (getDataInFirstLanguage(identifier) == null) {
             ELogger.log(Level.WARN, "A book with the identifier " + identifier + " could not be found in any language");
         } else {
             stackToIdentifier.put(stack, identifier);

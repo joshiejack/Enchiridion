@@ -33,6 +33,8 @@ import joshie.enchiridion.wiki.WikiRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -93,7 +95,6 @@ public class EClientProxy extends ECommonProxy {
             MinecraftForge.EVENT_BUS.register(new BookEventsHandler());
             MinecraftForge.EVENT_BUS.register(new BookIconPatcher());
             
-            EnchiridionAPI.instance.registerModBooks("Enchiridion2:enchiridion");
             EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapedVanilla());
             EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapedOre());
             EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessVanilla());
