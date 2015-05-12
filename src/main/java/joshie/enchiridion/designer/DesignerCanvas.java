@@ -130,14 +130,20 @@ public class DesignerCanvas {
         }
     }
 
-    public void scroll(boolean scrolledDown) {
+    public boolean scroll(boolean scrolledDown) {
         for (Feature feature : features) {
-            feature.scroll(scrolledDown);
+            if(feature.scroll(scrolledDown)) {
+                return true;
+            }
         }
 
         if (DesignerHelper.getGui().canEdit) {
-            getLayers().scroll(scrolledDown);
+            if(getLayers().scroll(scrolledDown)) {
+                return true;
+            }
         }
+        
+        return false;
     }
 
     /** Text Editing **/

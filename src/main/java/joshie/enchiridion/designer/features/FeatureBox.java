@@ -12,6 +12,8 @@ public class FeatureBox extends FeatureColorable {
     
     @Override
     public void updateWidth(int change) {
+        if (height <= 1) height = 1;
+        
         width += change;
         if (width <= 1) {
             width = 1;

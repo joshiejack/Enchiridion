@@ -21,6 +21,7 @@ import joshie.enchiridion.designer.features.FeatureJump;
 import joshie.enchiridion.designer.features.FeatureRecipe;
 import joshie.enchiridion.designer.features.FeatureResource;
 import joshie.enchiridion.designer.features.FeatureText;
+import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonClientHelper;
 import net.minecraft.client.gui.GuiButton;
@@ -136,6 +137,8 @@ public class GuiDesigner extends GuiScreen {
             }
         }
     }
+    
+    public static String last_saved = "";
 
     @Override
     public void onGuiClosed() {
@@ -153,6 +156,18 @@ public class GuiDesigner extends GuiScreen {
                 if (!toSave.getParentFile().exists()) {
                     toSave.getParentFile().mkdir();
                 }
+                
+                if (!ClientHelper.getLang().equals("en_US")) {
+                    toSave = new File(toSave.toString().replace(".json", "_" + ClientHelper.getLang() + ".json"));
+                }
+                
+                String thisLang = ClientHelper.getLang();
+                String thatLang = last_saved;
+                if (!thisLang.equals(thatLang)) {
+                    bookData = BookRegistry.register(bookData);
+                }
+                
+                last_saved = thisLang;
 
                 Writer writer = new OutputStreamWriter(new FileOutputStream(toSave), "UTF-8");
                 writer.write(GsonClientHelper.getGson().toJson(bookData));
@@ -315,7 +330,14 @@ public class GuiDesigner extends GuiScreen {
             canvas.follow(mouseX, mouseY);
             int wheel = Mouse.getDWheel();
             if (wheel != 0) {
-                canvas.scroll(wheel < 0);
+                boolean down = wheel < 0;
+                if (!canvas.scroll(down)) {
+                    int new_page = page_number.get(bookData.uniqueName);
+                    if (down) new_page++;
+                    else new_page--;
+
+                    setPage(new_page);
+                }
             }
         }
 

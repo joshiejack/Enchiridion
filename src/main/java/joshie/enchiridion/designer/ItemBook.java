@@ -10,7 +10,6 @@ import joshie.enchiridion.EInfo;
 import joshie.enchiridion.ETranslate;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.designer.BookRegistry.BookData;
-import joshie.enchiridion.helpers.ClientHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,13 +28,7 @@ public class ItemBook extends Item {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         BookData data = getData(stack);
-        return data == null ? ETranslate.translate("book.new") : getDisplayName(data);
-    }
-
-    public String getDisplayName(BookData data) {
-        if (data.displayNames.containsKey(ClientHelper.getLang())) {
-            return data.displayNames.get(ClientHelper.getLang());
-        } else return data.displayNames.get("en_US");
+        return data == null || data.displayName == null ? ETranslate.translate("book.new") : data.displayName;
     }
 
     @Override
@@ -113,11 +106,13 @@ public class ItemBook extends Item {
 
         for (String identifier : BookRegistry.getIDs()) {
             BookData data = BookRegistry.getData(identifier);
-            if (data.displayInCreative) {
-                ItemStack stack = new ItemStack(item);
-                stack.setTagCompound(new NBTTagCompound());
-                stack.stackTagCompound.setString("identifier", identifier);
-                list.add(stack);
+            if (data != null) {
+                if (data.displayInCreative) {
+                    ItemStack stack = new ItemStack(item);
+                    stack.setTagCompound(new NBTTagCompound());
+                    stack.stackTagCompound.setString("identifier", identifier);
+                    list.add(stack);
+                }
             }
         }
     }

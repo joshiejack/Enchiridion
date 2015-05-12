@@ -138,7 +138,7 @@ public class FeatureItem extends FeatureWithText {
     }
 
     @Override
-    public void scroll(boolean scrolledDown) {
+    public boolean scroll(boolean scrolledDown) {
         if (isSelected) {
             if (mouseX <= 0) {
                 if (scrolledDown) {
@@ -146,8 +146,12 @@ public class FeatureItem extends FeatureWithText {
                 } else {
                     position = Math.max(0, position - 5);
                 }
+                
+                return true;
             }
         }
+        
+        return false;
     }
 
     public void updateSearch() {

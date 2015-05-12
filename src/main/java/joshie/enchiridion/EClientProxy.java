@@ -93,6 +93,7 @@ public class EClientProxy extends ECommonProxy {
             MinecraftForge.EVENT_BUS.register(new BookEventsHandler());
             MinecraftForge.EVENT_BUS.register(new BookIconPatcher());
             
+            EnchiridionAPI.instance.registerModBooks("Enchiridion2:enchiridion");
             EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapedVanilla());
             EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapedOre());
             EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessVanilla());
@@ -103,8 +104,6 @@ public class EClientProxy extends ECommonProxy {
         if (EConfig.ENABLE_WIKI) {
             /** Init the LibraryRegistry**/
             BookHandlerRegistry.initRegistry();
-            //EnchiridionAPI.instance.registerModBooks("enchiridion");
-            //EnchiridionAPI.instance.registerBookData(new ItemStack(Items.apple), "fish_breeding");
 
             //register ench pages
             ModContainer mod = Loader.instance().activeModContainer();

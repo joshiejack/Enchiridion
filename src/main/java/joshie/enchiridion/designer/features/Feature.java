@@ -174,7 +174,7 @@ public abstract class Feature {
         return;
     }
 
-    public void scroll(boolean scrolledDown) {
-        return;
+    public boolean scroll(boolean scrolledDown) {
+        return false;
     }
 }

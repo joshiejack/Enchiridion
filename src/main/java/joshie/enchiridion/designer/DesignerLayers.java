@@ -79,7 +79,7 @@ public class DesignerLayers {
         DesignerHelper.getGui().canvas.features.add(position, element);
     }
 
-    public void scroll(boolean scrolledDown) {
+    public boolean scroll(boolean scrolledDown) {
         if (DesignerHelper.getGui().mouseX >= 450) {
             if (scrolledDown) {
                 this.layerPosition++;
@@ -88,6 +88,10 @@ public class DesignerLayers {
                 this.layerPosition--;
                 this.layerPosition = Math.max(layerPosition, 0);
             }
+            
+            return true;
         }
+        
+        return false;
     }
 }

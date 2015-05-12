@@ -14,12 +14,14 @@ public class BookIconPatcher {
             map = event.map;
             for (String book : BookRegistry.getIDs()) {
                 BookData data = BookRegistry.getData(book);
-                if (data.iconPass1 != null && !data.iconPass1.equals("")) {
-                    map.setTextureEntry(data.iconPass1, new BookIconAtlas(data.iconPass1));
-                }
+                if (data != null) {
+                    if (data.iconPass1 != null && !data.iconPass1.equals("")) {
+                        map.setTextureEntry(data.iconPass1, new BookIconAtlas(data.iconPass1));
+                    }
 
-                if (data.iconPass2 != null && !data.iconPass2.equals("")) {
-                    map.setTextureEntry(data.iconPass2, new BookIconAtlas(data.iconPass2));
+                    if (data.iconPass2 != null && !data.iconPass2.equals("")) {
+                        map.setTextureEntry(data.iconPass2, new BookIconAtlas(data.iconPass2));
+                    }
                 }
             }
         }
