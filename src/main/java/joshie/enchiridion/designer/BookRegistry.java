@@ -61,6 +61,7 @@ public class BookRegistry {
         public String language = "en_US";
         @Expose
         public String displayName;
+        @Expose
         public boolean displayInCreative = true;
 
         public BookData() {}

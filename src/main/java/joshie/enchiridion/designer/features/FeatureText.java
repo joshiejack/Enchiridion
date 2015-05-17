@@ -22,10 +22,31 @@ public class FeatureText extends FeatureColorable {
     public void drawFeature() {
         super.drawFeature();
 
-        String display = this.text.startsWith("translate:") ? StringEscapeUtils.unescapeJava(StatCollector.translateToLocal(text.replaceFirst("translate:", ""))) : getText();
+        String display = this.text.contains("translate:") ? getTranslated() : getText();
+
         if (wrap >= 50) {
             DesignerHelper.drawSplitScaledString(display, left, top, wrap, colorI, size);
         } else DesignerHelper.drawSplitScaledString(display, left, top, Math.max(50, (int) ((width) / size) + 4), colorI, size);
+    }
+
+    private String getTranslated() {
+        String[] array = text.split("translate:");
+        StringBuilder builder = new StringBuilder();
+        for (String string : array) {
+            String text[] = string.split("((?<=;)|(?=;))");
+            for (int j = 0; j < text.length; j++) {
+                int k = Math.min(text.length - 1, j + 1);
+                String now = text[j];
+                String after = text[k];
+                if (!now.equals(";")) {
+                    if (after.equals(";") || text.length == 1) {
+                        builder.append(StringEscapeUtils.unescapeJava(StatCollector.translateToLocal(now)));
+                    } else builder.append(now);
+                }
+            }
+        }
+
+        return builder.toString();
     }
 
     @Override
