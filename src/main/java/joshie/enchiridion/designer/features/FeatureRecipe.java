@@ -3,6 +3,7 @@ package joshie.enchiridion.designer.features;
 import java.util.ArrayList;
 import java.util.List;
 
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.IRecipeHandler;
 import joshie.enchiridion.designer.DrawHelper;
 import net.minecraft.item.ItemStack;
@@ -96,6 +97,7 @@ public class FeatureRecipe extends FeatureItem {
     @Override
     public void drawFeature() {
         super.drawFeature();
+        if (EConfig.RECIPE_DEBUG) buildRecipe(true);
         if (handler != null) {
             DrawHelper.update(true, left, top, height, width, size);
             handler.draw();

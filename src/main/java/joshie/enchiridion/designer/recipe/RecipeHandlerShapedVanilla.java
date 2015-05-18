@@ -15,14 +15,14 @@ public class RecipeHandlerShapedVanilla extends RecipeHandlerRecipeBase {
             init(recipe.getRecipeOutput(), new ArrayList<Object>(Arrays.asList((ItemStack[]) shaped.recipeItems)), shaped.recipeWidth);
         } catch (Exception e) { e.printStackTrace(); }
     }
-    
-    @Override
-    public String getRecipeName() {
-        return "ShapedRecipes";
-    }
-    
+        
     @Override
     protected Class getHandlerClass() {
         return this.getClass();
+    }
+    
+    @Override
+    protected Class getRecipeClass() {
+        return ShapedRecipes.class;
     }
 }

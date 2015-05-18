@@ -71,13 +71,12 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
             stackList.add(new WrappedStack(getObject(input, 8), 56D, 75D, 1F));
         }
 
-        unique = "";
         for (Object o : input) {
             if (o instanceof List) {
-                unique += ":" + getMostCommonName((ArrayList<ItemStack>) o);
+                addToUnique(getMostCommonName((ArrayList<ItemStack>) o));
             } else if (o instanceof ItemStack) {
-                unique += ":" + Item.itemRegistry.getNameForObject(((ItemStack) o).getItem());
-                unique += ":" + ((ItemStack) o).getItemDamage();
+                addToUnique(Item.itemRegistry.getNameForObject(((ItemStack) o).getItem()));
+                addToUnique(((ItemStack) o).getItemDamage());
             }
         }
     }
@@ -86,7 +85,7 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
     public void addRecipes(ItemStack output, List<IRecipeHandler> list) {
         for (IRecipe check : (ArrayList<IRecipe>) CraftingManager.getInstance().getRecipeList()) {
             ItemStack stack = check.getRecipeOutput();
-            if (stack == null || (!check.getClass().getSimpleName().equals(getRecipeName()))) continue;
+            if (stack == null || (!check.getClass().equals(getRecipeClass()))) continue;
             if (stack.isItemEqual(output)) {
                 try {
                     list.add((IRecipeHandler) Class.forName(getHandlerClass().getName()).getConstructor(IRecipe.class).newInstance(check));
@@ -94,6 +93,13 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
             }
         }
     }
+    
+    @Override
+    public String getRecipeName() {
+        return getRecipeClass().getSimpleName();
+    }
+    
+    protected abstract Class getRecipeClass();
 
     protected abstract Class getHandlerClass();
 

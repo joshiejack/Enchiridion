@@ -23,6 +23,7 @@ public class EConfig {
     public static String DEFAULT_TAB;
     public static String DEFAULT_CAT;
     public static String DEFAULT_PAGE;
+    public static boolean RECIPE_DEBUG;
     
     public static void init(Configuration config) {
         try {
@@ -42,6 +43,7 @@ public class EConfig {
             DEFAULT_TAB = config.get("Settings", "Default Tab", "Enchiridion 2").getString();
             DEFAULT_CAT = config.get("Settings", "Default Category", "Enchiridion 2").getString();
             DEFAULT_PAGE = config.get("Settings", "Default Page", "About").getString();
+            RECIPE_DEBUG = config.get("Settings", "Book Recipe Debug Mode", false).getBoolean(false);
             for (String color : color_list) {
                 addColor(color);
             }

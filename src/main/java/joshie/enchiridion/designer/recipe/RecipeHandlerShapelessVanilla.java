@@ -11,16 +11,19 @@ public class RecipeHandlerShapelessVanilla extends RecipeHandlerRecipeBase {
         try {
             ShapelessRecipes shapeless = (ShapelessRecipes) recipe;
             init(recipe.getRecipeOutput(), new ArrayList<Object>(shapeless.recipeItems), 3);
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    
-    @Override
-    public String getRecipeName() {
-        return "ShapelessRecipes";
-    }
-    
+
     @Override
     protected Class getHandlerClass() {
         return this.getClass();
     }
+
+    @Override
+    protected Class getRecipeClass() {
+        return ShapelessRecipes.class;
+    }
+
 }

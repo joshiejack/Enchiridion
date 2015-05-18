@@ -15,9 +15,16 @@ import net.minecraftforge.oredict.OreDictionary;
 public abstract class RecipeHandlerBase implements IRecipeHandler {
     protected static final ResourceLocation location = new ResourceLocation("books", "textures/gui/guide_elements.png");
     protected ArrayList<IItemStack> stackList = new ArrayList();
-    protected String unique;
+    private String unique;
 
     public RecipeHandlerBase() {}
+    
+    public void addToUnique(Object o) {
+        String string = "" + o;
+        if (unique == null) {
+            unique = string;
+        } else unique += ":" + string;
+    }
     
     @Override
     public void addTooltip(List list) {
@@ -68,7 +75,7 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
 
     @Override
     public String getUniqueName() {
-        return getRecipeName() + unique;
+        return unique;
     }
 
     @Override

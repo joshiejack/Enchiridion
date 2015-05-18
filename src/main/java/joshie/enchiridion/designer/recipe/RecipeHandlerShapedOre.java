@@ -14,15 +14,15 @@ public class RecipeHandlerShapedOre extends RecipeHandlerRecipeBase {
             init(recipe.getRecipeOutput(), new ArrayList<Object>(Arrays.asList((Object[]) this.input.get(recipe))), width.getInt(recipe));
         } catch (Exception e) { e.printStackTrace(); }
     }
-    
-    @Override
-    public String getRecipeName() {
-        return "ShapedOreRecipe";
-    }
-    
+        
     @Override
     protected Class getHandlerClass() {
         return this.getClass();
+    }
+    
+    @Override
+    protected Class getRecipeClass() {
+        return ShapedOreRecipe.class;
     }
 
     /** Setup Reflection for grabbing the input and recipe width **/

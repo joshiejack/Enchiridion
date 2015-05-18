@@ -15,13 +15,13 @@ public class RecipeHandlerShapelessOre extends RecipeHandlerRecipeBase {
     }
     
     @Override
-    public String getRecipeName() {
-        return "ShapelessOreRecipe";
+    protected Class getHandlerClass() {
+        return this.getClass();
     }
     
     @Override
-    protected Class getHandlerClass() {
-        return this.getClass();
+    protected Class getRecipeClass() {
+        return ShapelessOreRecipe.class;
     }
 
     private static Field input;
