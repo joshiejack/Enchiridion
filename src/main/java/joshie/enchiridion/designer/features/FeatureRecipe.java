@@ -5,11 +5,6 @@ import java.util.List;
 
 import joshie.enchiridion.api.IRecipeHandler;
 import joshie.enchiridion.designer.DrawHelper;
-import joshie.enchiridion.designer.recipe.RecipeHandlerFurnace;
-import joshie.enchiridion.designer.recipe.RecipeHandlerShapedOre;
-import joshie.enchiridion.designer.recipe.RecipeHandlerShapedVanilla;
-import joshie.enchiridion.designer.recipe.RecipeHandlerShapelessOre;
-import joshie.enchiridion.designer.recipe.RecipeHandlerShapelessVanilla;
 import net.minecraft.item.ItemStack;
 
 import com.google.gson.annotations.Expose;
@@ -18,7 +13,9 @@ public class FeatureRecipe extends FeatureItem {
     public static final ArrayList<IRecipeHandler> handlers = new ArrayList();
 
     @Expose
-    private String uniqueRecipe = "ShapedOreRecipe:plankWood:plankWood:plankWood:cobblestone:ingotAluminum:cobblestone:cobblestone:dustRedstone:cobblestone";
+    private String ingredients = "plankWood:plankWood:plankWood:cobblestone:ingotAluminum:cobblestone:cobblestone:dustRedstone:cobblestone";
+    @Expose
+    private String recipeType = "ShapedOreRecipe";
     private int index = 0;
     private IRecipeHandler handler;
 
@@ -35,21 +32,36 @@ public class FeatureRecipe extends FeatureItem {
             handler.addRecipes(stack, recipes);
         }
 
+        //Basic loop checking type and recipe
+        if (isLoading) {
+            //Loop 1, Exact Match
+            for (IRecipeHandler handler : recipes) {
+                if (recipeType.equals(handler.getRecipeName())) {
+                    if (ingredients.equals(handler.getUniqueName())) {
+                        this.handler = handler;
+                        return true;
+                    }
+                }
+            }
+
+            //Loop 2, Fuzzy Match
+            for (IRecipeHandler handler : recipes) {
+                if (recipeType.equals(handler.getRecipeName())) {
+                    this.handler = handler;
+                    return true;
+                }
+            }
+        }
+
+        //General Search
         int number = -1;
         for (IRecipeHandler handler : recipes) {
-            String uniqueName = handler.getUniqueName();
-            if (isLoading) {
-                if (uniqueName.equals(uniqueRecipe)) {
-                    this.handler = handler;
-                    return true;
-                }
-            } else {
-                number++;
-                if (number == index) {
-                    this.handler = handler;
-                    this.uniqueRecipe = uniqueName;
-                    return true;
-                }
+            number++;
+            if (number == index) {
+                this.handler = handler;
+                this.recipeType = handler.getRecipeName();
+                this.ingredients = handler.getUniqueName();
+                return true;
             }
         }
 
@@ -75,8 +87,6 @@ public class FeatureRecipe extends FeatureItem {
     @Override
     public void recalculate(int x, int y) {
         super.recalculate(x, y);
-        // height = (width * 2) / 3;
-        //size = (float) (width / 80D);
         if (handler != null) {
             height = handler.getHeight(width);
             size = handler.getSize(width);
@@ -91,9 +101,9 @@ public class FeatureRecipe extends FeatureItem {
             handler.draw();
         } else buildRecipe(true);
     }
-    
+
     @Override
-    public void addTooltip(List list) {        
+    public void addTooltip(List list) {
         if (handler != null) {
             DrawHelper.update(true, left, top, height, width, size);
             handler.addTooltip(list);

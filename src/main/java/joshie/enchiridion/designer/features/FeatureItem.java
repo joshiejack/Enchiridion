@@ -9,7 +9,6 @@ import joshie.enchiridion.designer.DesignerHelper;
 import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.ItemHelper;
 import joshie.enchiridion.helpers.StackHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.google.gson.annotations.Expose;
@@ -34,14 +33,7 @@ public class FeatureItem extends FeatureWithText {
 
     protected void setItemStack(ItemStack stack) {
         this.stack = stack;
-        item = Item.itemRegistry.getNameForObject(stack.getItem());
-        if (stack.getHasSubtypes()) {
-            item += " " + stack.getItemDamage();
-        }
-
-        if (stack.hasTagCompound()) {
-            item += " " + stack.stackTagCompound.toString();
-        }
+        this.item = StackHelper.getStringFromStack(stack);
     }
 
     @Override
@@ -146,11 +138,11 @@ public class FeatureItem extends FeatureWithText {
                 } else {
                     position = Math.max(0, position - 5);
                 }
-                
+
                 return true;
             }
         }
-        
+
         return false;
     }
 
