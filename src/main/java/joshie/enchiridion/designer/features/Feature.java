@@ -3,7 +3,6 @@ package joshie.enchiridion.designer.features;
 import static joshie.enchiridion.designer.DesignerHelper.drawRect;
 import static joshie.enchiridion.designer.DesignerHelper.getGui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import joshie.enchiridion.designer.DesignerHelper;
@@ -161,9 +160,8 @@ public abstract class Feature {
     
     public void addTooltip(int x, int y, List list) { 
         if (isOverFeature(x, y)) {
-            List<String> tooltip = new ArrayList();
             addTooltip(list);
-            DesignerHelper.addTooltip(tooltip);
+            DesignerHelper.addTooltip(list);
         }
     }
 

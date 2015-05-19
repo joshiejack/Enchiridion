@@ -29,6 +29,9 @@ import org.apache.logging.log4j.Level;
 
 import com.google.gson.annotations.Expose;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+
 public class BookRegistry {
     public static class BookData {
         @Expose
@@ -235,7 +238,11 @@ public class BookRegistry {
     }
 
     public static BookData getData(String unique) {
-        String language = ClientHelper.getLang();
+        String language = "en_US";
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+            language = ClientHelper.getLang();
+        }
+        
         HashMap<String, BookData> data = books.get(language);
         BookData book = null;
         if (data != null) book = data.get(unique);
