@@ -32,6 +32,7 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
             if (stack == null || stack.getItemStack() == null) continue;
             if (EnchiridionAPI.draw.isMouseOver(stack)) {
                 list.addAll(stack.getItemStack().getTooltip(ClientHelper.getPlayer(), false));
+                break; //Only permit one item to display
             }
         }
     }

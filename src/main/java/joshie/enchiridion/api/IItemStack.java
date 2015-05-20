@@ -14,4 +14,7 @@ public interface IItemStack {
 
     /** Return the scale of this stack **/
     public float getScale();
+
+    /** Called when rendered, to update the stack if necessary **/
+    void onDisplayTick();
 }

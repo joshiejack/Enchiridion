@@ -161,7 +161,6 @@ public abstract class Feature {
     public void addTooltip(int x, int y, List list) { 
         if (isOverFeature(x, y)) {
             addTooltip(list);
-            DesignerHelper.addTooltip(list);
         }
     }
 

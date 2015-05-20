@@ -20,12 +20,12 @@ public class WrappedStack implements IItemStack {
     private float scale;
 
     public WrappedStack(Object object, double x, double y, float scale) {
+        this.x = x;
+        this.y = y;
+        this.scale = scale;
+        
         if (object == null) stack = null;
         else {
-            this.x = x;
-            this.y = y;
-            this.scale = scale;
-
             if (object instanceof String) {
                 object = OreDictionary.getOres((String) object);
             }
@@ -60,6 +60,11 @@ public class WrappedStack implements IItemStack {
 
     @Override
     public ItemStack getItemStack() {
+        return stack;
+    }
+    
+    @Override
+    public void onDisplayTick() {
         if (hasPermutations) {
             ticker--;
 
@@ -68,8 +73,6 @@ public class WrappedStack implements IItemStack {
                 ticker = 100;
             }
         }
-
-        return stack;
     }
 
     @Override

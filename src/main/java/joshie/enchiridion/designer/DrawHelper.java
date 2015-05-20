@@ -32,6 +32,8 @@ public class DrawHelper implements IDrawHelper {
     @Override
     public void drawStack(IItemStack stack) {
         if (isBook) {
+            stack.onDisplayTick();
+            
             DesignerHelper.drawStack(stack.getItemStack(), getLeft(stack.getX()), getTop(stack.getY()), size * stack.getScale());
         }
     }
