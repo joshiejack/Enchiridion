@@ -238,11 +238,7 @@ public class BookRegistry {
     }
 
     public static BookData getData(String unique) {
-        String language = "en_US";
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
-            language = ClientHelper.getLang();
-        }
-        
+        String language = ClientHelper.getLang();       
         HashMap<String, BookData> data = books.get(language);
         BookData book = null;
         if (data != null) book = data.get(unique);

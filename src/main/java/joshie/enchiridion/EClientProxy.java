@@ -2,7 +2,6 @@ package joshie.enchiridion;
 
 import static java.io.File.separator;
 import static joshie.enchiridion.Enchiridion.instance;
-import static joshie.enchiridion.helpers.OpenGLHelper.fixShitForThePedia;
 import static joshie.enchiridion.wiki.WikiHandler.wiki;
 
 import java.io.File;
@@ -33,8 +32,6 @@ import joshie.enchiridion.wiki.WikiRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -52,10 +49,6 @@ public class EClientProxy extends ECommonProxy {
     @Override
     public void preClient() {
         if (EConfig.ENABLE_WIKI) {
-            if (!EConfig.SHIT_COMPUTER) {
-                fixShitForThePedia();
-            }
-
             /** Register the GuiHandler clientSide only, no need for a server side gui **/
             NetworkRegistry.INSTANCE.registerGuiHandler(instance, new EGuiHandler());
             FMLCommonHandler.instance().bus().register(new BookObtainEvents());

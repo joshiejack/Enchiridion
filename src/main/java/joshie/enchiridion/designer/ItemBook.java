@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -27,6 +28,10 @@ public class ItemBook extends Item {
 
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
+            return "book";
+        }
+        
         BookData data = getData(stack);
         return data == null || data.displayName == null ? ETranslate.translate("book.new") : data.displayName;
     }

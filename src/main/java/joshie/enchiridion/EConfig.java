@@ -14,7 +14,6 @@ public class EConfig {
     public static boolean EDIT_ENABLED;
     public static boolean CAN_EDIT_BOOKS;
     public static int MAX_PAGES_PER_BOOK;
-    public static boolean SHIT_COMPUTER;
     public static boolean ENABLE_DELETE;
     public static boolean ENABLE_WIKI;
     private static ArrayList<String> colors = new ArrayList();
@@ -24,7 +23,7 @@ public class EConfig {
     public static String DEFAULT_CAT;
     public static String DEFAULT_PAGE;
     public static boolean RECIPE_DEBUG;
-    
+
     public static void init(Configuration config) {
         try {
             config.load();
@@ -35,7 +34,6 @@ public class EConfig {
             GEN_EXAMPLE_BOOK = config.get("Settings", "Generate Example Book", true).getBoolean(true);
             CAN_EDIT_BOOKS = config.get("Settings", "Enable Editing of Books", true).getBoolean(true);
             SHOW_BB_CODE_IN_EDIT_MODE = config.get("Settings", "Show BBCode in Edit Mode", true).getBoolean(true);
-            SHIT_COMPUTER = config.get("Settings", "I have a shit Computer", false).getBoolean(false);
             DEFAULT_DIR = config.get("Settings", "Default Save Folder", "").getString();
             MAX_PAGES_PER_BOOK = config.get("Settings", "Maximum Pages per Book", 150).getInt();
             ENABLE_DELETE = config.get("Settings", "Enable Delete Button in Wiki", false).getBoolean(false);
