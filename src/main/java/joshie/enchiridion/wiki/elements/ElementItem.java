@@ -6,6 +6,7 @@ import static joshie.enchiridion.helpers.OpenGLHelper.start;
 
 import java.util.List;
 
+import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.helpers.StackHelper;
 import joshie.enchiridion.util.IItemSelectable;
 import joshie.enchiridion.wiki.WikiHelper;
@@ -75,15 +76,17 @@ public class ElementItem extends Element implements IItemSelectable {
     }
 
     @Override
-    public void display(boolean isEditMode) {
+    public void display() {
         if (stack == null) {
             stack = StackHelper.getStackFromString(item);
         }
+        
+        EnchiridionAPI.draw.drawStack(stack, left, top, size);
 
-        start();
-        scaleAll(size);
-        renderStack(stack, scaledX, scaledY);
-        end();
+        //start();
+        //scaleAll(size);
+        //renderStack(stack, scaledX, scaledY);
+        //end();
     }
 
     @Override

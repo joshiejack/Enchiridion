@@ -2,6 +2,7 @@ package joshie.enchiridion.wiki.elements;
 
 import java.util.List;
 
+import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.util.IColorSelectable;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiColorEdit;
@@ -20,8 +21,8 @@ public class ElementBox extends Element implements IColorSelectable {
     }
 
     @Override
-    public void display(boolean isEditMode) {
-        WikiHelper.drawRect(BASE_X + left, BASE_Y + top, BASE_X + right, BASE_Y + bottom, color);
+    public void display() {
+        EnchiridionAPI.draw.drawRect(left, top, right, bottom, color);
     }
 
     @Override

@@ -6,6 +6,8 @@ import static joshie.enchiridion.designer.DesignerHelper.getGui;
 import java.util.List;
 
 import joshie.enchiridion.designer.DesignerHelper;
+import joshie.enchiridion.designer.DrawHelper;
+import joshie.enchiridion.designer.DrawHelper.DrawType;
 import net.minecraft.client.renderer.entity.RenderItem;
 
 import com.google.gson.annotations.Expose;
@@ -21,6 +23,8 @@ public abstract class Feature {
     protected double width;
     @Expose
     protected double height;
+    @Expose
+    protected float size = 1F;
 
     public boolean isSelected;
     private boolean isHeld;
@@ -57,7 +61,7 @@ public abstract class Feature {
 
     public void draw(int x, int y) {
         recalculate(x, y);
-        drawFeature();
+        DrawHelper.update(DrawType.BOOK, left, top, height, width, size);
         //If We are in edit mode draw the boxes around the feature
         if (getGui().canEdit && isSelected) {
             drawRect(left - 4, top - 4, left, top, 0xFF2693FF);
@@ -65,6 +69,8 @@ public abstract class Feature {
             drawRect(left - 4, bottom, left, bottom + 4, 0xFF2693FF);
             drawRect(right, bottom, right + 4, bottom + 4, 0XFFFFFF00);
         }
+        
+        drawFeature();
     }
 
     private boolean noOtherSelected() {

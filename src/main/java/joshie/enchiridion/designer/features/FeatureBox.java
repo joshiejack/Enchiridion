@@ -1,13 +1,12 @@
 package joshie.enchiridion.designer.features;
 
-import joshie.enchiridion.designer.DesignerHelper;
+import joshie.enchiridion.api.EnchiridionAPI;
 
 public class FeatureBox extends FeatureColorable {
     @Override
     public void drawFeature() {
         super.drawFeature();
-
-        DesignerHelper.drawRect(left, top, right, bottom, colorI);
+        EnchiridionAPI.draw.drawRect(left, top, right, bottom, colorI);
     }
     
     @Override

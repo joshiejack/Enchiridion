@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.IItemStack;
 import joshie.enchiridion.api.IRecipeHandler;
+import joshie.enchiridion.designer.DrawHelper;
 import joshie.enchiridion.helpers.ClientHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -18,19 +18,19 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
     private String unique;
 
     public RecipeHandlerBase() {}
-    
+
     public void addToUnique(Object o) {
         String string = "" + o;
         if (unique == null) {
             unique = string;
         } else unique += ":" + string;
     }
-    
+
     @Override
     public void addTooltip(List list) {
         for (IItemStack stack : stackList) {
             if (stack == null || stack.getItemStack() == null) continue;
-            if (EnchiridionAPI.draw.isMouseOver(stack)) {
+            if (DrawHelper.isMouseOver(stack)) {
                 list.addAll(stack.getItemStack().getTooltip(ClientHelper.getPlayer(), false));
                 break; //Only permit one item to display
             }
@@ -39,12 +39,12 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
 
     protected final Object getObject(ArrayList<Object> input, int i) {
         if (i >= input.size()) return null;
-        for (Object o: input) {
+        for (Object o : input) {
             if (o instanceof ItemStack) {
-                ((ItemStack)o).stackSize = 1;
+                ((ItemStack) o).stackSize = 1;
             }
         }
-        
+
         return input.get(i);
     }
 
@@ -83,7 +83,7 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
     public void draw() {
         drawBackground();
         for (IItemStack stack : stackList) {
-            EnchiridionAPI.draw.drawStack(stack);
+            DrawHelper.drawStack(stack);
         }
     }
 

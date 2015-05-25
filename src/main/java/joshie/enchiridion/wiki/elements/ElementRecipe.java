@@ -83,7 +83,7 @@ public class ElementRecipe extends ElementItem {
     }
 
     @Override
-    public void display(boolean isEditMode) {
+    public void display() {
         start();
         scaleAll(size);
         if (stack == null) {

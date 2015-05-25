@@ -6,6 +6,7 @@ import java.util.List;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.IRecipeHandler;
 import joshie.enchiridion.designer.DrawHelper;
+import joshie.enchiridion.designer.DrawHelper.DrawType;
 import net.minecraft.item.ItemStack;
 
 import com.google.gson.annotations.Expose;
@@ -99,16 +100,18 @@ public class FeatureRecipe extends FeatureItem {
         super.drawFeature();
         if (EConfig.RECIPE_DEBUG) buildRecipe(true);
         if (handler != null) {
-            DrawHelper.update(true, left, top, height, width, size);
+            DrawType previous = DrawHelper.update(DrawType.RECIPE, left, top, height, width, size);
             handler.draw();
+            DrawHelper.update(previous);
         } else buildRecipe(true);
     }
 
     @Override
     public void addTooltip(List list) {
         if (handler != null) {
-            DrawHelper.update(true, left, top, height, width, size);
+            DrawType previous = DrawHelper.update(DrawType.RECIPE, left, top, height, width, size);
             handler.addTooltip(list);
+            DrawHelper.update(previous);
         }
     }
 }

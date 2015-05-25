@@ -1,10 +1,6 @@
 package joshie.enchiridion.wiki.elements;
 
-import static joshie.enchiridion.helpers.OpenGLHelper.end;
-import static joshie.enchiridion.helpers.OpenGLHelper.scaleAll;
-import static joshie.enchiridion.helpers.OpenGLHelper.start;
-import joshie.enchiridion.EClientProxy;
-import joshie.enchiridion.EConfig;
+import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.util.IColorSelectable;
 import joshie.enchiridion.util.IGuiDisablesMenu;
@@ -36,22 +32,13 @@ public class ElementText extends Element implements ITextEditable, IGuiDisablesM
     }
 
     @Override
-    public void display(boolean isEditMode) {
+    public void display() {
         if (!init) {
             init = ((text = text.replace("Â§", "\u00a7").replace("§", "\u00a7")) != null);
         }
 
-        start();
-        scaleAll(size);
-
-        String display = this.text.startsWith("translate:") ? StringEscapeUtils.unescapeJava(StatCollector.translateToLocal(text.replaceFirst("translate:", ""))) : GuiTextEdit.getText(this, text);
-        if (EConfig.SHOW_BB_CODE_IN_EDIT_MODE && isEditMode) {
-            EClientProxy.font.drawUnformattedSplitString(display, (int) ((WikiHelper.theLeft + BASE_X + left) / size), ((int) ((WikiHelper.theTop + BASE_Y + top) / size)), (int) ((width * 2) / size) + 4, color);
-        } else {
-            EClientProxy.font.drawSplitString(display, (int) ((WikiHelper.theLeft + BASE_X + left) / size), ((int) ((WikiHelper.theTop + BASE_Y + top) / size)), (int) ((width * 2) / size) + 4, color);
-        }
-
-        end();
+        String display = text.startsWith("translate:") ? StringEscapeUtils.unescapeJava(StatCollector.translateToLocal(text.replaceFirst("translate:", ""))) : GuiTextEdit.getText(this, text);
+        EnchiridionAPI.draw.drawText(display, left, top, color, 0, size);
     }
 
     @Override

@@ -1,0 +1,60 @@
+{
+  "book": [
+    {
+      "features": [
+        {
+          "type": "FeatureText",
+          "properties": {
+            "text": "Lorem ipsum",
+            "wrap": 0,
+            "color": "FF555555",
+            "xPos": 25,
+            "yPos": 24,
+            "width": 178.0,
+            "height": 21.0,
+            "size": 1.0
+          }
+        },
+        {
+          "type": "FeatureItem",
+          "properties": {
+            "item": "minecraft:stone",
+            "xPos": 276,
+            "yPos": 84,
+            "width": 89.0,
+            "height": 89.0,
+            "size": 1.0
+          }
+        },
+        {
+          "type": "FeatureRecipe",
+          "properties": {
+            "ingredients": "plankWood:plankWood:plankWood:cobblestone:ingotAluminum:cobblestone:cobblestone:dustRedstone:cobblestone",
+            "recipeType": "ShapedOreRecipe",
+            "item": "minecraft:piston",
+            "xPos": 72,
+            "yPos": 90,
+            "width": 107.0,
+            "height": 53.5,
+            "size": 1.0
+          }
+        }
+      ],
+      "pageName": ""
+    }
+  ],
+  "uniqueName": "hhh",
+  "color": 16777215,
+  "showBackground": true,
+  "showArrows": true,
+  "showNumber": true,
+  "iconPass1": "",
+  "iconPass2": "",
+  "iconColorisePass1": false,
+  "iconColorisePass2": false,
+  "iconColorPass1": 0,
+  "iconColorPass2": 0,
+  "language": "en_CA",
+  "displayName": "hhh",
+  "displayInCreative": true
+}
