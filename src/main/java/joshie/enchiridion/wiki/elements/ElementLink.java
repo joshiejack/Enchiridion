@@ -30,8 +30,8 @@ public class ElementLink extends Element {
     }
 
     @Override
-    public void display() {
-        if (WikiHelper.isEditMode()) {
+    public void display(boolean isEditMode) {
+        if (isEditMode) {
             WikiHelper.drawRect(BASE_X + left - 2, BASE_Y + top, BASE_X + left, BASE_Y + bottom, 0xFFFFFF00);
             WikiHelper.drawRect(BASE_X + right, BASE_Y + top, BASE_X + right + 2, BASE_Y + bottom, 0xFFFFFF00);
             WikiHelper.drawRect(BASE_X + left, BASE_Y + top - 2, BASE_X + right, BASE_Y + top, 0xFFFFFF00);

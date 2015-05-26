@@ -14,7 +14,6 @@ import java.util.List;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.ETranslate;
 import joshie.enchiridion.designer.BookRegistry.BookData;
-import joshie.enchiridion.designer.DrawHelper.DrawType;
 import joshie.enchiridion.designer.features.FeatureBox;
 import joshie.enchiridion.designer.features.FeatureImage;
 import joshie.enchiridion.designer.features.FeatureItem;
@@ -92,7 +91,6 @@ public class GuiDesigner extends GuiScreen {
     public void initGui() {
         super.initGui();
 
-        DrawHelper.update(DrawType.BOOK);
         Keyboard.enableRepeatEvents(true);
         if (canEdit) {
             int x = (width - 430) / 2;

@@ -5,7 +5,6 @@ import static joshie.enchiridion.wiki.WikiHelper.mouseX;
 import java.util.ArrayList;
 import java.util.List;
 
-import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.designer.DesignerHelper;
 import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.ItemHelper;
@@ -62,8 +61,7 @@ public class FeatureItem extends FeatureWithText {
         }
 
         if (drawStack) {
-            EnchiridionAPI.draw.drawStack(stack, left, top, size);
-            //DesignerHelper.drawStack(stack, left, top, size);
+            DesignerHelper.drawStack(stack, left, top, size);
         }
 
         //Draw The Search stuff

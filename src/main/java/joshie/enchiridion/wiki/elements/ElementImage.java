@@ -112,7 +112,7 @@ public class ElementImage extends Element {
     }
 
     @Override
-    public void display() {
+    public void display(boolean isEditMode) {
         OpenGLHelper.fixColors();
 
         if (isDynamic) {

@@ -1,6 +1,5 @@
 package joshie.enchiridion.designer.features;
 
-import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.designer.DesignerHelper;
 import joshie.enchiridion.helpers.ClientHelper;
 import net.minecraft.util.StatCollector;
@@ -14,6 +13,8 @@ public class FeatureText extends FeatureColorable {
     private String text = "Lorem ipsum";
     @Expose
     private int wrap = 0;
+    @Expose
+    private float size = 1F;
 
     private boolean editingText;
 
@@ -22,7 +23,10 @@ public class FeatureText extends FeatureColorable {
         super.drawFeature();
 
         String display = this.text.contains("translate:") ? getTranslated() : getText();
-        EnchiridionAPI.draw.drawText(display, left, top, colorI, wrap, size);
+
+        if (wrap >= 50) {
+            DesignerHelper.drawSplitScaledString(display, left, top, wrap, colorI, size);
+        } else DesignerHelper.drawSplitScaledString(display, left, top, Math.max(50, (int) ((width) / size) + 4), colorI, size);
     }
 
     private String getTranslated() {

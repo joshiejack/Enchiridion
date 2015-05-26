@@ -2,8 +2,6 @@ package joshie.enchiridion.wiki.elements;
 
 import java.util.List;
 
-import joshie.enchiridion.designer.DrawHelper;
-import joshie.enchiridion.designer.DrawHelper.DrawType;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.gui.GuiMain;
 
@@ -52,13 +50,12 @@ public abstract class Element {
 
     public abstract Element setToDefault();
 
-    public abstract void display();
+    public abstract void display(boolean isEditMode);
 
     public void display(int scroll, boolean isEditMode) {
         this.scroll = scroll;
         recalculate();
 
-        DrawHelper.update(DrawType.WIKI, left, top, height, width, size);
         if (isEditMode && isSelected) {
             WikiHelper.drawRect((int) (BASE_X + left - (size * 4)), (int) (BASE_Y + top - (size * 4)), BASE_X + left, BASE_Y + top, 0xFF2693FF);
             WikiHelper.drawRect(BASE_X + right, (int) (BASE_Y + top - (size * 4)), (int) (BASE_X + right + (size * 4)), BASE_Y + top, 0xFF2693FF);
@@ -66,7 +63,7 @@ public abstract class Element {
             WikiHelper.drawRect(BASE_X + right, BASE_Y + bottom, (int) (BASE_X + right + (size * 4)), (int) (BASE_Y + bottom + (size * 4)), 0XFFFFFF00);
         }
 
-        display();
+        display(isEditMode);
     }
 
     public void markDirty() {

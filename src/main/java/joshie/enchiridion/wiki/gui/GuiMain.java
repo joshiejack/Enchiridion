@@ -11,8 +11,6 @@ import java.util.List;
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.EInfo;
-import joshie.enchiridion.designer.DrawHelper;
-import joshie.enchiridion.designer.DrawHelper.DrawType;
 import joshie.enchiridion.util.IWikiMode;
 import joshie.enchiridion.util.IWikiMode.WikiMode;
 import joshie.enchiridion.wiki.WikiHelper;
@@ -89,7 +87,6 @@ public class GuiMain extends GuiScalable {
     public void initGui() {
         super.initGui();
         WikiHelper.init();
-        DrawHelper.update(DrawType.WIKI);
 
         setMode(DisplayMode.getInstance());
         if (page == null) {
