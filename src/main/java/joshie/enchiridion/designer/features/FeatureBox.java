@@ -1,9 +1,8 @@
 package joshie.enchiridion.designer.features;
 
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.designer.editor.EditorColorable.IColorable;
 
-public class FeatureBox extends FeatureColorable implements IColorable {
+public class FeatureBox extends FeatureColorable {
     @Override
     public void drawFeature() {
         super.drawFeature();
@@ -18,15 +17,5 @@ public class FeatureBox extends FeatureColorable implements IColorable {
         if (width <= 1) {
             width = 1;
         }
-    }
-
-    @Override
-    public void setColor(int color) {
-        colorI = color;
-    }
-    
-    @Override
-    public int getColor() {
-        return colorI;
     }
 }

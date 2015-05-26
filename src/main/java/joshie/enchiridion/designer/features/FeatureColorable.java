@@ -34,7 +34,7 @@ public abstract class FeatureColorable extends FeatureWithText {
         }
 
         if (isSelected) {
-            /* DesignerHelper.drawRect(-102, -55, -100, -37, 0xFFFFFFFF);
+            DesignerHelper.drawRect(-102, -55, -100, -37, 0xFFFFFFFF);
             DesignerHelper.drawRect(0, -55, 2, -37, 0xFFFFFFFF);
             DesignerHelper.drawRect(-102, -57, 2, -55, 0xFFFFFFFF);
             DesignerHelper.drawRect(-100, -55, 0, -37, 0xFF000000);
@@ -54,14 +54,14 @@ public abstract class FeatureColorable extends FeatureWithText {
 
                     index++;
                 }
-            } */
+            }
         }
     }
 
     @Override
     public void click(int mouseX, int mouseY) {
         if (DesignerHelper.getGui().canEdit && isSelected) {
-            /*int index = 0;
+            int index = 0;
             for (int y = 0; y < 20; y++) {
                 for (int x = 0; x < 7; x++) {
                     String color = EConfig.getColor(index);
@@ -74,7 +74,7 @@ public abstract class FeatureColorable extends FeatureWithText {
 
                     index++;
                 }
-            } */
+            }
         }
 
         super.click(mouseX, mouseY);

@@ -3,12 +3,13 @@ package joshie.enchiridion.wiki.elements;
 import java.util.List;
 
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.designer.editor.EditorColorable;
-import joshie.enchiridion.designer.editor.EditorColorable.IColorable;
+import joshie.enchiridion.util.IColorSelectable;
+import joshie.enchiridion.wiki.WikiHelper;
+import joshie.enchiridion.wiki.gui.GuiColorEdit;
 
 import com.google.gson.annotations.Expose;
 
-public class ElementBox extends Element implements IColorable {
+public class ElementBox extends Element implements IColorSelectable {
     @Expose
     private int color = 0xFFFFFFFF;
 
@@ -47,8 +48,7 @@ public class ElementBox extends Element implements IColorable {
 
     @Override
     public void onSelected(int x, int y) {
-        EditorColorable.instance.select(this);
-        //GuiColorEdit.select(this);
+        GuiColorEdit.select(this);
     }
 
     @Override
@@ -58,12 +58,7 @@ public class ElementBox extends Element implements IColorable {
 
     @Override
     public void setColor(int hex) {
-        color = hex;
+        this.color = hex;
         markDirty();
-    }
-
-    @Override
-    public int getColor() {
-        return color;
     }
 }

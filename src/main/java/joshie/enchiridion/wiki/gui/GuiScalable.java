@@ -2,9 +2,9 @@ package joshie.enchiridion.wiki.gui;
 
 import static joshie.enchiridion.helpers.OpenGLHelper.disable;
 import static joshie.enchiridion.helpers.OpenGLHelper.enable;
-import joshie.enchiridion.gui.GuiEnchiridion;
 import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -13,9 +13,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 import org.lwjgl.opengl.GL11;
 
-public class GuiScalable extends GuiEnchiridion {
+public class GuiScalable extends GuiScreen {
     public ScaledResolution resolution;
-    public static int horizontal = 512;
     public int theLeft;
 
     @Override
@@ -28,7 +27,7 @@ public class GuiScalable extends GuiEnchiridion {
     }
 
     public int getLeft(float scale, int x) {
-        return (int) ((((mc.displayWidth / 2D) - horizontal) + x) / scale);
+        return (int) ((((mc.displayWidth / 2D) - 512) + x) / scale);
     }
 
     public int getTop(float scale, int y) {

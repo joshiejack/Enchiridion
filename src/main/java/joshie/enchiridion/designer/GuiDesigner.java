@@ -22,18 +22,21 @@ import joshie.enchiridion.designer.features.FeatureJump;
 import joshie.enchiridion.designer.features.FeatureRecipe;
 import joshie.enchiridion.designer.features.FeatureResource;
 import joshie.enchiridion.designer.features.FeatureText;
-import joshie.enchiridion.gui.GuiEnchiridion;
 import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonClientHelper;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-public class GuiDesigner extends GuiEnchiridion {
+public class GuiDesigner extends GuiScreen {
+    public int mouseX = 0;
+    public int mouseY = 0;
+
     private ResourceLocation cover_left;
     private ResourceLocation cover_right;
     private ResourceLocation page_left;
@@ -50,7 +53,6 @@ public class GuiDesigner extends GuiEnchiridion {
     public BookData bookData; //List of all pages in the book
     public DesignerCanvas canvas; //The current canvas we are displaying
     public static HashMap<String, Integer> page_number = new HashMap(); //The current page number for this book_id
-    public static int snapTo = 10;
 
     //The books id being initialised with this, use this to grab the books data
     public GuiDesigner(BookData data, boolean isEditMode) {

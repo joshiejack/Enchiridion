@@ -31,7 +31,7 @@ public class GuiColorEdit extends GuiExtension implements ITextEditable, IGuiDis
     public void draw() {
         if (selectable != null) {
             //Draw the Search box
-            /*drawScaledTexture(texture, 10, 1, 0, 147, 254, 39, 1F);
+            drawScaledTexture(texture, 10, 1, 0, 147, 254, 39, 1F);
             drawScaledTexture(texture, 126, 1, 100, 147, 154, 39, 1F);
             drawScaledText(2F, GuiTextEdit.getText(this, hex), 19, 13, 0xFFFFFFFF);
 
@@ -44,14 +44,14 @@ public class GuiColorEdit extends GuiExtension implements ITextEditable, IGuiDis
 
                     index++;
                 }
-            } */
+            }
         }
     }
 
     @Override
     public void clicked(int button) {
         if (selectable != null) {
-            /* if (button == 0) {
+            if (button == 0) {
                 //Draw Colour selection boxes
                 int index = 0;
                 for (int y = 0; y < 20; y++) {
@@ -71,7 +71,7 @@ public class GuiColorEdit extends GuiExtension implements ITextEditable, IGuiDis
                         GuiTextEdit.select(this);
                     }
                 }
-            } */
+            }
 
         }
     }
