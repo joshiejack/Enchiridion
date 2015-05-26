@@ -5,9 +5,9 @@ import static joshie.enchiridion.helpers.OpenGLHelper.scaleAll;
 import static joshie.enchiridion.helpers.OpenGLHelper.start;
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.EConfig;
-import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.IDrawHelper;
 import joshie.enchiridion.api.IItemStack;
+import joshie.enchiridion.designer.DrawHelper.DrawType;
 import joshie.enchiridion.wiki.WikiHelper;
 import joshie.enchiridion.wiki.elements.Element;
 import net.minecraft.item.ItemStack;
@@ -42,17 +42,16 @@ public class DrawHelper implements IDrawHelper {
         return previous;
     }
 
+    public static DrawType getDrawType() {
+        return type;
+    }
+
     public static int getLeft(double x) {
         return (int) (left + ((x / 150D) * width));
     }
 
     public static int getTop(double y) {
         return (int) (top + ((y / 100D) * height));
-    }
-
-    public static void drawStack(IItemStack stack) {
-        stack.onDisplayTick();
-        EnchiridionAPI.draw.drawStack(stack.getItemStack(), stack.getX(), stack.getY(), stack.getScale());
     }
     
     @Override

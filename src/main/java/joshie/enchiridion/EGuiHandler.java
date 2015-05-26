@@ -6,7 +6,7 @@ import static joshie.enchiridion.EInfo.BOOKS_VIEW_ID;
 import static joshie.enchiridion.EInfo.WIKI_ID;
 import joshie.enchiridion.designer.BookRegistry;
 import joshie.enchiridion.designer.BookRegistry.BookData;
-import joshie.enchiridion.designer.GuiDesignNew;
+import joshie.enchiridion.designer.GuiNewBook;
 import joshie.enchiridion.designer.GuiDesigner;
 import joshie.enchiridion.wiki.WikiHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +32,7 @@ public class EGuiHandler implements IGuiHandler {
             }
         } else if (ID == BOOKS_CREATE_ID) {
             if (player.getCurrentEquippedItem() != null) {
-                return new GuiDesignNew(player.getCurrentEquippedItem());
+                return new GuiNewBook(player.getCurrentEquippedItem());
             }
         }
 

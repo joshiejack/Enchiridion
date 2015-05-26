@@ -170,7 +170,7 @@ public class WikiHelper {
     }
 
     public static void updateGUI() {
-        theLeft = (int) (gui.mc.displayWidth / 2D) - 512;
+        theLeft = gui.getLeft();
         height = gui.mc.displayHeight;
     }
 

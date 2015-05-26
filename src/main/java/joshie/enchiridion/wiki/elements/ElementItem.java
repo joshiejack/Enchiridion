@@ -1,9 +1,5 @@
 package joshie.enchiridion.wiki.elements;
 
-import static joshie.enchiridion.helpers.OpenGLHelper.end;
-import static joshie.enchiridion.helpers.OpenGLHelper.scaleAll;
-import static joshie.enchiridion.helpers.OpenGLHelper.start;
-
 import java.util.List;
 
 import joshie.enchiridion.api.EnchiridionAPI;
@@ -82,11 +78,6 @@ public class ElementItem extends Element implements IItemSelectable {
         }
         
         EnchiridionAPI.draw.drawStack(stack, left, top, size);
-
-        //start();
-        //scaleAll(size);
-        //renderStack(stack, scaledX, scaledY);
-        //end();
     }
 
     @Override

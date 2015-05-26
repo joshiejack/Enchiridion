@@ -21,7 +21,7 @@ import net.minecraft.util.ChatAllowedCharacters;
 
 import org.lwjgl.input.Keyboard;
 
-public class GuiDesignNew extends GuiScreen {
+public class GuiNewBook extends GuiScreen {
     private String text;
     private int mouseX = 0;
     private int mouseY = 0;
@@ -33,7 +33,7 @@ public class GuiDesignNew extends GuiScreen {
 
     private ItemStack stack;
 
-    public GuiDesignNew(ItemStack stack) {
+    public GuiNewBook(ItemStack stack) {
         this.stack = stack;
         this.text = "";
         this.position = 0;

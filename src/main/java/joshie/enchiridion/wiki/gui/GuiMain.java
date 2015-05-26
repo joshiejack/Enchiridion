@@ -152,6 +152,8 @@ public class GuiMain extends GuiScalable {
                 element.draw();
             }
         }
+        
+        super.drawScreen(x, y, tick);
 
         if (page.getSelected() != null) {
             page.getSelected().whileSelected();
@@ -199,6 +201,8 @@ public class GuiMain extends GuiScalable {
                 }
             }
         }
+
+        super.mouseClicked(x, y, button);
     }
 
     @Override
@@ -221,12 +225,21 @@ public class GuiMain extends GuiScalable {
                 element.keyTyped(character, key);
             }
         }
+        
+        int amount = isShiftKeyDown() ? 50: 1;
+        if (key == 203) {
+            horizontal += amount;
+        } else if (key == 205) {
+            horizontal -= amount;
+        }
     }
 
     @Override
     public void handleMouseInput() {
         super.handleMouseInput();
         WikiHelper.updateMouse();
+        mouseX = WikiHelper.mouseX;
+        mouseY = WikiHelper.mouseY;
         int wheel = Mouse.getDWheel();
         for (GuiExtension element : WikiHelper.getGui()) {
             if (element.isVisible()) {

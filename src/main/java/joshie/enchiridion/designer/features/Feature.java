@@ -8,6 +8,7 @@ import java.util.List;
 import joshie.enchiridion.designer.DesignerHelper;
 import joshie.enchiridion.designer.DrawHelper;
 import joshie.enchiridion.designer.DrawHelper.DrawType;
+import joshie.enchiridion.designer.GuiDesigner;
 import net.minecraft.client.renderer.entity.RenderItem;
 
 import com.google.gson.annotations.Expose;
@@ -149,7 +150,7 @@ public abstract class Feature {
     }
 
     public void follow(int x, int y) {
-        if (isHeld) {
+        if (isHeld) {           
             xPos += x - prevX;
             yPos += y - prevY;
             prevX = x;

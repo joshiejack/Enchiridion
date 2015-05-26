@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.IItemStack;
 import joshie.enchiridion.api.IRecipeHandler;
 import joshie.enchiridion.designer.DrawHelper;
@@ -83,7 +84,8 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
     public void draw() {
         drawBackground();
         for (IItemStack stack : stackList) {
-            DrawHelper.drawStack(stack);
+            stack.onDisplayTick();
+            EnchiridionAPI.draw.drawStack(stack.getItemStack(), stack.getX(), stack.getY(), stack.getScale());
         }
     }
 
