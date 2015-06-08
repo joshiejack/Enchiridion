@@ -4,10 +4,14 @@ import static joshie.enchiridion.EInfo.WIKI_ID;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.ClientHelper;
 import joshie.enchiridion.wiki.gui.GuiMain;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+
+import org.lwjgl.input.Keyboard;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
@@ -16,7 +20,7 @@ public class WikiHandler {
 
     @SubscribeEvent
     public void onKeyPress(KeyInputEvent event) {
-        if (GameSettings.isKeyDown(wiki)) {
+        if (GameSettings.isKeyDown(wiki) && Minecraft.getMinecraft().inGameHasFocus && !Keyboard.isKeyDown(Keyboard.KEY_F3)) {
             ClientHelper.getPlayer().openGui(Enchiridion.instance, WIKI_ID, ClientHelper.getWorld(), 0, 0, 0);
         }
     }
