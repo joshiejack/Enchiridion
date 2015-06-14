@@ -31,7 +31,7 @@ public class ItemBook extends Item {
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
             return "book";
         }
-        
+
         BookData data = getData(stack);
         return data == null || data.displayName == null ? ETranslate.translate("book.new") : data.displayName;
     }
@@ -55,20 +55,22 @@ public class ItemBook extends Item {
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-        BookData data = getData(stack);
-        if (data != null) {
-            String id = getID(stack);
-            if (id != null) {
-                if (EConfig.CAN_EDIT_BOOKS) {
-                    if (player.isSneaking()) {
-                        player.openGui(Enchiridion.instance, EInfo.BOOKS_EDIT_ID, player.worldObj, 0, 0, 0);
-                    } else {
-                        player.openGui(Enchiridion.instance, EInfo.BOOKS_VIEW_ID, player.worldObj, 0, 0, 0);
-                    }
-                } else player.openGui(Enchiridion.instance, EInfo.BOOKS_VIEW_ID, player.worldObj, 0, 0, 0);
+        if (world.isRemote) {
+            BookData data = getData(stack);
+            if (data != null) {
+                String id = getID(stack);
+                if (id != null) {
+                    if (EConfig.CAN_EDIT_BOOKS) {
+                        if (player.isSneaking()) {
+                            player.openGui(Enchiridion.instance, EInfo.BOOKS_EDIT_ID, player.worldObj, 0, 0, 0);
+                        } else {
+                            player.openGui(Enchiridion.instance, EInfo.BOOKS_VIEW_ID, player.worldObj, 0, 0, 0);
+                        }
+                    } else player.openGui(Enchiridion.instance, EInfo.BOOKS_VIEW_ID, player.worldObj, 0, 0, 0);
+                }
+            } else {
+                player.openGui(Enchiridion.instance, EInfo.BOOKS_CREATE_ID, player.worldObj, 0, 0, 0);
             }
-        } else {
-            player.openGui(Enchiridion.instance, EInfo.BOOKS_CREATE_ID, player.worldObj, 0, 0, 0);
         }
 
         return stack;
