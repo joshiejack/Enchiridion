@@ -124,7 +124,7 @@ public class BookRegistry {
     }
 
     public static void registerModInDev(String modid, File source) {
-        File path = FileHelper.getDevAssetsForModPath(source.getParentFile(), modid, "books");
+        File path = FileHelper.getDevAssetsForModPath(source, modid, "books");
         if (!path.exists()) {
             path.mkdir();
         }
