@@ -2,6 +2,7 @@ eclipse/*
 bin/*
 .settings/*
 build/*
+out/*
 forge*
 MinecraftForge*
 *.txt
