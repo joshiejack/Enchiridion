@@ -112,6 +112,7 @@ public class ModBooks {
         data.addBook(new ModBookData("ChromatiCraft", "chromaticraft_item_help", 0, "default"));
         data.addBook(new ModBookData("factorization", "docbook", 0, "default"));
         data.addBook(new ModBookData("HardcoreQuesting", "quest_book", 0, "network"));
+        data.addBook(new ModBookData("ImmersiveEngineering", "tool" , 3, "default"));
         data.addBook(new ModBookData("Mariculture", "guide", 0, "switch"));
         data.addBook(new ModBookData("Mariculture", "guide", 1, "switch"));
         data.addBook(new ModBookData("Mariculture", "guide", 2, "switch"));
@@ -128,6 +129,7 @@ public class ModBooks {
         data.addBook(new ModBookData("TConstruct", "manualBook", 1, "default"));
         data.addBook(new ModBookData("TConstruct", "manualBook", 2, "default"));
         data.addBook(new ModBookData("TConstruct", "manualBook", 3, "default"));
+        data.addBook(new ModBookData("TConstruct", "manualBook", 4, "default"));
         data.addBook(new ModBookData("Thaumcraft", "ItemThaumonomicon", 0, "network"));
         data.addBook(new ModBookData("witchery", "bookbiomes2", 0, "switch"));
         data.addBook(new ModBookData("witchery", "cauldronbook", 0, "switch"));
