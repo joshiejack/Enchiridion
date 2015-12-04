@@ -109,10 +109,10 @@ public class ModBooks {
         data.addBook(new ModBookData("AWWayofTime", "itemBloodMagicBook", 0, "switch"));
         data.addBook(new ModBookData("Botania", "Botania:lexicon 0", "network"));
         data.addBook(new ModBookData("Botania", "Botania:lexicon 0 {knowledge.minecraft:1b,knowledge.alfheim:1b}", "network").setOpenGuiClass("vazkii.botania.client.gui.lexicon.GuiLexiconIndex").setOpenGuiNBT("knowledge.alfheim").setOverwrites("Botania:lexicon 0"));
-        data.addBook(new ModBookData("ChromatiCraft", "chromaticraft_item_help", 0, "default"));
+        //data.addBook(new ModBookData("ChromatiCraft", "chromaticraft_item_help", 0, "default")); //Disabled due to currently not fixable with current book types
         data.addBook(new ModBookData("factorization", "docbook", 0, "default"));
         data.addBook(new ModBookData("HardcoreQuesting", "quest_book", 0, "network"));
-        data.addBook(new ModBookData("ImmersiveEngineering", "tool" , 3, "default"));
+        data.addBook(new ModBookData("ImmersiveEngineering", "tool" , 3, "network"));
         data.addBook(new ModBookData("Mariculture", "guide", 0, "switch"));
         data.addBook(new ModBookData("Mariculture", "guide", 1, "switch"));
         data.addBook(new ModBookData("Mariculture", "guide", 2, "switch"));
