@@ -23,7 +23,8 @@ public class BookBinderHelper {
 	public static final String[] DFT_STACK_REMOVALS = new String[] { "minecraft:bookshelf" };
 	public static final String[] DFT_STACK_ADDITIONS = new String[] { 
     	"witchery:ingredient 46", "witchery:ingredient 47", "witchery:ingredient 48", "witchery:ingredient 49", "witchery:ingredient 81", 
-        "witchery:ingredient 106", "witchery:ingredient 107", "witchery:ingredient 127", "OpenComputers:item 98" };
+        "witchery:ingredient 106", "witchery:ingredient 107", "witchery:ingredient 127", "OpenComputers:item 98", "ImmersiveEngineering:tool 3",
+        "TConstruct:manualBook", "TConstruct:manualBook 1", "TConstruct:manualBook 2", "TConstruct:manualBook 3", "TConstruct:manualBook 4"};
 	public static final String[] DFT_STRING_ADDITIONS = new String[] { "guide", "book", "manual", "pedia", "thaumonomicon", "mudora", "lexicon", "compendium" };
 	
 	private static boolean matches(ItemStack stack, ItemStack stack2) {
