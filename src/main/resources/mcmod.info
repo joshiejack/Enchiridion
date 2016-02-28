@@ -1,14 +1,14 @@
 [
 {
-  "modid": "Enchiridion",
-  "name": "Enchiridion",
-  "description": "Custom books in minecraft!",
-  "version": "${mod_version}",
-  "mcversion": "${minecraft_version}",
+  "modid": "examplemod",
+  "name": "Example Mod",
+  "description": "Example placeholder mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authors": ["joshie"],
-  "credits": "",
+  "authorList": ["ExampleDude"],
+  "credits": "The Forge and FML guys, for making this example",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

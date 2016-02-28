@@ -1,10 +1,22 @@
-eclipse/*
-bin/*
-.settings/*
-build/*
-forge*
-MinecraftForge*
-*.txt
+# eclipse
+bin
+*.launch
+.settings
+.metadata
 .classpath
 .project
-.gradle/*
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
