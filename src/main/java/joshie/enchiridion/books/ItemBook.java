@@ -21,7 +21,7 @@ public class ItemBook extends ItemCoreMulti {
         }
 		
 		Book book = BookRegistry.INSTANCE.getBook(stack);
-		return book == null ? Enchiridion.translate("new") : book.displayName;
+		return book == null ? Enchiridion.translate("new") : book.getDisplayName();
     }
 	
 	@Override

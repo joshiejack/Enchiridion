@@ -53,7 +53,7 @@ public class ButtonChangeIcon extends AbstractButton {
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            String foldername = EnchiridionAPI.draw.getBookSaveName();
+            String foldername = EnchiridionAPI.book.getBook().getSaveName();
             File directory = new File(new File(Enchiridion.root, "books"), "icons");
             if (!directory.exists() && !directory.mkdirs()) {
                 throw new IllegalStateException("Couldn't create dir: " + directory);
@@ -61,7 +61,7 @@ public class ButtonChangeIcon extends AbstractButton {
             
             File new_location = new File(directory, selectedFile.getName());
             try {
-            	File iconJson = new File(directory, EnchiridionAPI.draw.getBookSaveName() + ".json");
+            	File iconJson = new File(directory, EnchiridionAPI.book.getBook().getSaveName() + ".json");
                 FileUtils.copyFile(selectedFile, new_location);
                 BookIconTemplate template = new BookIconTemplate();
                 template.parent = "enchiridion:item/book";

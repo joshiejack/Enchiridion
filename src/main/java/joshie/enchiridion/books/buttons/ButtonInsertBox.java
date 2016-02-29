@@ -11,8 +11,8 @@ public class ButtonInsertBox extends AbstractButton {
 
 	@Override
 	public void performAction() {
-		IPage current = EnchiridionAPI.draw.getPage();
+		IPage current = EnchiridionAPI.book.getPage();
 		FeatureBox feature = new FeatureBox("FF000000");
-		EnchiridionAPI.draw.getPage().addFeature(feature, 0, 0, 50D, 5D, false, false);
+		current.addFeature(feature, 0, 0, 50D, 5D, false, false);
 	}
 }

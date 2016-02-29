@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
 public class EConfig {
+	public static final boolean RECIPE_DEBUG = true;
 	public static boolean debugMode = true;
     public static boolean enableEditing = true;
 	public static String defaultText = "";

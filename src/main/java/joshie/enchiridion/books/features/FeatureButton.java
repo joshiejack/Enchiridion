@@ -1,5 +1,7 @@
 package joshie.enchiridion.books.features;
 
+import java.util.List;
+
 import joshie.enchiridion.api.IButtonAction;
 import joshie.enchiridion.api.IFeatureProvider;
 import joshie.enchiridion.books.gui.GuiSimpleEditor;
@@ -45,5 +47,20 @@ public class FeatureButton extends FeatureJump {
 	@Override
 	public void performAction(int mouseX, int mouseY) {
 		if (action != null) action.performAction();
+	}
+	
+	@Override
+	public void addTooltip(List<String> tooltip, int mouseX, int mouseY) {
+		if (action != null) {
+			String[] title = action.getTooltip().split("\n");
+			if (title != null) {
+				boolean first = false;
+				for (String t: title) {
+					if (first || !t.equals("")) {
+						tooltip.add(t);
+					} else first = true;
+				}
+			}
+		}
 	}
 }

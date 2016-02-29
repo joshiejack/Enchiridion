@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -66,7 +67,7 @@ public class BookRegistry implements ItemMeshDefinition {
             try {
                 String json = FileUtils.readFileToString(file);
                 Book data = BookRegistry.INSTANCE.register(GsonHelper.getModifiedGson().fromJson(json, Book.class));
-                ELogger.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.uniqueName + " for the language: " + data.language);
+                ELogger.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.getUniqueName() + " for the language: " + data.getLanguageKey());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -87,7 +88,7 @@ public class BookRegistry implements ItemMeshDefinition {
                     try {
                         String json = IOUtils.toString(zipfile.getInputStream(zipentry));
                         Book data = register(GsonHelper.getModifiedGson().fromJson(json, Book.class));
-                        ELogger.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.uniqueName + " for the language: " + data.language);
+                        ELogger.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.getUniqueName() + " for the language: " + data.getLanguageKey());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -103,31 +104,32 @@ public class BookRegistry implements ItemMeshDefinition {
     private ModelResourceLocation dflt = new ModelResourceLocation("minecraft:book", "inventory");
 
     public Book register(Book book) {
-    	if (book == null || book.uniqueName == null) return null;
+    	if (book == null || book.getUniqueName() == null) return null;
     	if (EConfig.debugMode) {
-    		ELogger.log(Level.INFO, "==== Start Logging of: " + book.uniqueName);
-    		ELogger.log(Level.INFO, "Language: " + book.language);
-    		ELogger.log(Level.INFO, "Locked: " + book.isLocked);
-    		if (book.book != null) {
-        		ELogger.log(Level.INFO, "Number of Pages: " + book.book.size());
+    		ELogger.log(Level.INFO, "==== Start Logging of: " + book.getUniqueName());
+    		ELogger.log(Level.INFO, "Language: " + book.getLanguageKey());
+    		ELogger.log(Level.INFO, "Locked: " + book.isLocked());
+    		if (book.getPages() != null) {
+        		ELogger.log(Level.INFO, "Number of Pages: " + book.getPages().size());
     		}
 
-    		ELogger.log(Level.INFO, "==== End Logging of: " + book.uniqueName);
+    		ELogger.log(Level.INFO, "==== End Logging of: " + book.getUniqueName());
     	}
     	
     	//**Init everything **//
-    	if (book.book != null) {
-    		for (int i = 0; i < book.book.size(); i++) {
-    			IPage page = book.book.get(i);
+    	if (book.getPages() != null) {
+    		List<IPage> pages = book.getPages();
+    		for (int i = 0; i < pages.size(); i++) {
+    			IPage page = pages.get(i);
     			//Add the arrow features
-	    		if (!book.mc189book) {
-	    			if (book.showArrows) {
+	    		if (book.isLegacyBook()) {
+	    			if (book.wereArrowsVisible()) {
 	    				DefaultHelper.addArrows(page);
 	    			}
 	    			
 	    			page.setPageNumber(i);
-	    			if (book.displayName == null || book.displayName.equals("")) {
-	    				book.displayName = book.uniqueName;
+	    			if (book.getDisplayName() == null || book.getDisplayName().equals("")) {
+	    				book.setDisplayName(book.getUniqueName());
 	    			}
 	    		}
 	    		
@@ -141,13 +143,13 @@ public class BookRegistry implements ItemMeshDefinition {
     		}
     	}
     	
-    	HashMap<String, Book> translations = getTranslations(book.uniqueName);
-    	String language = book.language == null ? "en_US" : book.language;
+    	HashMap<String, Book> translations = getTranslations(book.getUniqueName());
+    	String language = book.getLanguageKey() == null ? "en_US" : book.getLanguageKey();
     	translations.put(language, book);
     	
-        ModelResourceLocation location = new ModelResourceLocation(new ResourceLocation("enchiridion", book.uniqueName), "inventory");
+        ModelResourceLocation location = new ModelResourceLocation(new ResourceLocation("enchiridion", book.getUniqueName()), "inventory");
         ModelBakery.registerItemVariants(ECommonProxy.book, location);
-        locations.put(book.uniqueName, location);
+        locations.put(book.getUniqueName(), location);
         
         //Now that the book has been registered, we should go and check if the it has a corresponding json for it's icon,
         //If it does not, then we should create this json ourselves using the default enchiridion icon
@@ -159,14 +161,14 @@ public class BookRegistry implements ItemMeshDefinition {
         
         
        //Create the json for books which don't have the json already
-       File iconJson = new File(directory, book.saveName + ".json");
+       File iconJson = new File(directory, book.getSaveName() + ".json");
        if (!iconJson.exists()) {
     	   try {
     		   BookIconTemplate template = new BookIconTemplate();
     		   template.parent = "enchiridion:item/book";
 			   template.textures = new Icons();
-    		   if (book.iconPass1 != null && !book.iconPass1.equals("")) {
-    			   template.textures.layer0 = "enchiridion:items/" + book.iconPass1.replace(".png", "");
+    		   if (book.getIconPass1() != null && !book.getIconPass1().equals("")) {
+    			   template.textures.layer0 = "enchiridion:items/" + book.getIconPass1().replace(".png", "");
     		   } else template.textures.layer0 = "enchiridion:items/book";
     		   
     		   Writer writer = new OutputStreamWriter(new FileOutputStream(iconJson), "UTF-8");
@@ -213,6 +215,6 @@ public class BookRegistry implements ItemMeshDefinition {
 	public ModelResourceLocation getModelLocation(ItemStack stack) {
 		Book book = getBook(stack);
 		if (book == null) return dflt;
-		else return locations.get(book.uniqueName);
+		else return locations.get(book.getUniqueName());
 	}
 }

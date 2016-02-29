@@ -7,7 +7,9 @@ import org.lwjgl.input.Keyboard;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.IFeature;
 import joshie.enchiridion.api.IFeatureProvider;
+import joshie.enchiridion.books.gui.GuiGrid;
 import joshie.enchiridion.books.gui.GuiSimpleEditor;
+import joshie.lib.editables.TextEditor;
 import joshie.lib.helpers.ClientHelper;
 import joshie.lib.lib.CharacterCodes;
 
@@ -56,9 +58,9 @@ public class Feature implements IFeatureProvider {
 		left = xPos;
 		right = (int) (xPos + width);
 		top = yPos;
-		bottom = (int) (yPos + height);
-		
+		bottom = (int) (yPos + height);		
 		if (!isHidden) {
+			System.out.println("DRAWING BEFORE");
 			feature.draw(xPos, yPos, width, height, isOverFeature(mouseX, mouseY));
 			if (isSelected) {
 				int color = isEditing ? 0xCCFFFF00: 0xCC007FFF;
@@ -99,7 +101,9 @@ public class Feature implements IFeatureProvider {
 	public boolean keyTyped(char character, int key) {
 		if (isEditing) {
 			feature.keyTyped(character, key);
-		} else if (isSelected && key == CharacterCodes.DELETE_KEY) {
+		} else if (isSelected && key == CharacterCodes.DELETE_KEY && !TextEditor.INSTANCE.isEditing()) {
+			GuiSimpleEditor.INSTANCE.setEditor(null); //Reset the editor
+			TextEditor.INSTANCE.clearEditable();
 			return true;
 		}
 		
@@ -141,18 +145,19 @@ public class Feature implements IFeatureProvider {
 	}
 
 	public boolean mouseClicked(int mouseX, int mouseY) {
-		if (EnchiridionAPI.draw.isEditMode()) {
+		if (EnchiridionAPI.book.isEditMode()) {
 			GuiSimpleEditor.INSTANCE.setEditor(null); //Reset the editor
+			TextEditor.INSTANCE.clearEditable();
 		}
 		
 		if (isHidden) return false;
 		if (isOverFeature(mouseX, mouseY)) {
-			if (EnchiridionAPI.draw.isEditMode()) {
+			if (EnchiridionAPI.book.isEditMode()) {
 				isEditing = feature.getAndSetEditMode();
 			}
 			
 			//Perform clicks
-			if (!EnchiridionAPI.draw.isEditMode() || (EnchiridionAPI.draw.isEditMode() && ClientHelper.isShiftPressed())) {
+			if (!EnchiridionAPI.book.isEditMode() || (EnchiridionAPI.book.isEditMode() && ClientHelper.isShiftPressed())) {
 				feature.performAction(mouseX, mouseY);
 			}
 			
@@ -177,6 +182,25 @@ public class Feature implements IFeatureProvider {
 		if (isHeld) {		
 			xPos += mouseX - prevX;
             yPos += mouseY - prevY;
+            
+			if (GuiGrid.INSTANCE.isActivated()) {
+				int changeX = (mouseX - prevX);
+	            int changeY = (mouseY - prevY);
+	            int large = GuiGrid.INSTANCE.getGridSize();
+	            int small = large - 1;
+				
+	            if (changeX < 0) {
+	            	xPos = (xPos - small) / large * large;
+	            } else if (changeX > 0) {
+	            	xPos = (xPos + small) / large * large;
+	            }
+	            
+	            if (changeY < 0) {
+	            	yPos = (yPos - small) / large * large;
+	            } else if (changeY > 0) {
+	            	yPos = (yPos + small) / large * large;
+	            }
+			}
 		} else if (isDragging) {			
 			int changeX = (mouseX - prevX);
             int changeY = (mouseY - prevY);

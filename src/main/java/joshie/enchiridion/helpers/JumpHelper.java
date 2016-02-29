@@ -6,9 +6,9 @@ import joshie.enchiridion.api.IPage;
 public class JumpHelper {
 
 	public static boolean jumpToPageByName(String name) {
-		for (IPage page: EnchiridionAPI.draw.getBookPages()) {
+		for (IPage page: EnchiridionAPI.book.getBook().getPages()) {
 			if (page.getPageName().equals(name)) {
-				EnchiridionAPI.draw.setPage(page);
+				EnchiridionAPI.book.setPage(page);
 				return true;
 			}
 		}
@@ -17,7 +17,7 @@ public class JumpHelper {
 	}
 
 	public static IPage getPageByName(String name) {
-		for (IPage page: EnchiridionAPI.draw.getBookPages()) {
+		for (IPage page: EnchiridionAPI.book.getBook().getPages()) {
 			if (page.getPageName().equals(name)) {
 				return page;
 			}
@@ -27,9 +27,9 @@ public class JumpHelper {
 	}
 
 	public static boolean jumpToPageByNumber(int number) {
-		for (IPage page: EnchiridionAPI.draw.getBookPages()) {
+		for (IPage page: EnchiridionAPI.book.getBook().getPages()) {
 			if (page.getPageNumber() == number) {
-				EnchiridionAPI.draw.setPage(page);
+				EnchiridionAPI.book.setPage(page);
 				return true;
 			}
 		}
@@ -38,7 +38,7 @@ public class JumpHelper {
 	}
 	
 	public static IPage getPageByNumber(int number) {
-		for (IPage page: EnchiridionAPI.draw.getBookPages()) {
+		for (IPage page: EnchiridionAPI.book.getBook().getPages()) {
 			if (page.getPageNumber() == number) {
 				return page;
 			}
@@ -51,7 +51,7 @@ public class JumpHelper {
 		if (dragged.getPageNumber() != pageNumber) {
 			if (getPageByNumber(pageNumber) != null) {
 				dragged.setPageNumber(pageNumber);
-				for (IPage page: EnchiridionAPI.draw.getBookPages()) {
+				for (IPage page: EnchiridionAPI.book.getBook().getPages()) {
 					if (page == dragged) continue;
 					else {
 						//Increase any pagenumbers to come after the new insertion to their new value

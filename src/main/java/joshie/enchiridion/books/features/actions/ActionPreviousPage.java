@@ -19,15 +19,15 @@ public class ActionPreviousPage extends AbstractAction {
 	@Override
 	public void performAction() {
 		try {
-			List<IPage> pages = EnchiridionAPI.draw.getBookPages();
-			int number = EnchiridionAPI.draw.getPage().getPageNumber() - 1;
+			List<IPage> pages = EnchiridionAPI.book.getBook().getPages();
+			int number = EnchiridionAPI.book.getPage().getPageNumber() - 1;
 			boolean success = false;
 			
 			topLoop:
 			while (number >= 0) {
 				for (IPage page : pages) {
 					if (page.getPageNumber() == number) {
-						EnchiridionAPI.draw.setPage(page);
+						EnchiridionAPI.book.setPage(page);
 						success = true;
 						break topLoop;
 					}
@@ -45,7 +45,7 @@ public class ActionPreviousPage extends AbstractAction {
 					}
 				}
 				
-				EnchiridionAPI.draw.setPage(maxPage);
+				EnchiridionAPI.book.setPage(maxPage);
 			}
 		} catch (Exception e) {
 		}

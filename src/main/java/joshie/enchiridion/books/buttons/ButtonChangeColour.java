@@ -1,11 +1,8 @@
 package joshie.enchiridion.books.buttons;
 
-import joshie.enchiridion.EConfig;
-import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.api.IPage;
-import joshie.enchiridion.books.features.FeatureItem;
+import joshie.lib.editables.IColorable;
 
-public class ButtonChangeColour extends AbstractButton {
+public class ButtonChangeColour extends AbstractButton implements IColorable {
 	public ButtonChangeColour() {
 		super("colour");
 	}
@@ -18,5 +15,15 @@ public class ButtonChangeColour extends AbstractButton {
 	@Override
 	public boolean isLeftAligned() {
 		return false;
+	}
+
+	@Override
+	public String getColorAsHex() {
+		return null;
+	}
+
+	@Override
+	public void setColorAsHex(String color) {
+		//EnchiridionAPI.draw.setBookColor(color)
 	}
 }

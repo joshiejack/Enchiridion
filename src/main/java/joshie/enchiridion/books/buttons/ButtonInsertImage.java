@@ -48,7 +48,7 @@ public class ButtonInsertImage extends AbstractButton {
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            String foldername = EnchiridionAPI.draw.getBookSaveName();
+            String foldername = EnchiridionAPI.book.getBook().getSaveName();
             File directory = new File(new File(new File(Enchiridion.root, "books"), "images"), foldername);
             if (!directory.exists() && !directory.mkdirs()) {
                 throw new IllegalStateException("Couldn't create dir: " + directory);
@@ -57,12 +57,12 @@ public class ButtonInsertImage extends AbstractButton {
             File new_location = new File(directory, selectedFile.getName());
             try {
                 FileUtils.copyFile(selectedFile, new_location);
-                IPage current = EnchiridionAPI.draw.getPage();
+                IPage current = EnchiridionAPI.book.getPage();
                 FeatureImage feature = new FeatureImage(EInfo.MODID + ":images/" + foldername + "/" + selectedFile.getName());
                 BufferedImage buffered = ImageIO.read(new_location);
                 int width = buffered.getWidth();
                 int height = buffered.getHeight();
-                EnchiridionAPI.draw.getPage().addFeature(feature, 0, 0, width, height, false, false);
+                EnchiridionAPI.book.getPage().addFeature(feature, 0, 0, width, height, false, false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

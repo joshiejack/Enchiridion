@@ -10,7 +10,7 @@ public class ActionNextPage extends AbstractAction {
 	public ActionNextPage() {
 		super("next");
 	}
-	
+
 	@Override
 	public IButtonAction create() {
 		return new ActionNextPage();
@@ -19,8 +19,8 @@ public class ActionNextPage extends AbstractAction {
 	@Override
 	public void performAction() {
 		try {
-			List<IPage> pages = EnchiridionAPI.draw.getBookPages();
-			int number = EnchiridionAPI.draw.getPage().getPageNumber() + 1;
+			List<IPage> pages = EnchiridionAPI.book.getBook().getPages();
+			int number = EnchiridionAPI.book.getPage().getPageNumber() + 1;
 			boolean success = false;
 			IPage maxPage = null;
 			for (IPage page: pages) {
@@ -34,7 +34,7 @@ public class ActionNextPage extends AbstractAction {
 			while (number <= maxPage.getPageNumber()) {
 				for (IPage page : pages) {
 					if (page.getPageNumber() == number) {
-						EnchiridionAPI.draw.setPage(page);
+						EnchiridionAPI.book.setPage(page);
 						success = true;
 						break topLoop;
 					}
@@ -45,7 +45,7 @@ public class ActionNextPage extends AbstractAction {
 			
 			//If we failed to find the next available page, reset the book to page 1
 			if (!success) {
-				EnchiridionAPI.draw.setPage(EnchiridionAPI.draw.getBookPages().get(0));
+				EnchiridionAPI.book.setPage(EnchiridionAPI.book.getBook().getPages().get(0));
 			}
 		} catch (Exception e) {
 		}

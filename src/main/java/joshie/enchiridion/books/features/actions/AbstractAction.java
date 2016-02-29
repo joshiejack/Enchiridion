@@ -5,12 +5,14 @@ import com.google.gson.JsonObject;
 import joshie.enchiridion.ELocation;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.IButtonAction;
+import joshie.lib.helpers.JSONHelper;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class AbstractAction implements IButtonAction {
 	private transient ResourceLocation hovered;
 	private transient ResourceLocation unhovered;
 	private transient String name;
+	public transient String tooltip = "";
 	
 	public AbstractAction() {}
 	public AbstractAction(String name) {
@@ -21,14 +23,25 @@ public abstract class AbstractAction implements IButtonAction {
 	
 	@Override
 	public String[] getFieldNames() {
-		return new String[0];
+		return new String[] { "tooltip" };
 	}
 	
 	@Override
-	public void readFromJson(JsonObject object) {}
+	public String getTooltip() {
+		return tooltip;
+	}
+	
+	@Override
+	public void readFromJson(JsonObject object) {
+		tooltip = JSONHelper.getStringIfExists(object, "tooltip");
+	}
 
 	@Override
-	public void writeToJson(JsonObject object) {}
+	public void writeToJson(JsonObject object) {
+		if (tooltip != null && !tooltip.equals("")) {
+			object.addProperty("tooltip", tooltip);
+		}
+	}
 	
 	@Override
 	public String getName() {

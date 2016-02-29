@@ -16,11 +16,11 @@ public class FileHelper {
     }
 
     public static File getBookSaveDirectory(Book data) {
-        return new File(new File(Enchiridion.root, "books"), data.uniqueName + ".json");
+        return new File(new File(Enchiridion.root, "books"), data.getUniqueName() + ".json");
     }
     
     public static File getImageSaveDirectory() {
-    	File directory = new File(new File(new File(Enchiridion.root, "books"), "images"), EnchiridionAPI.draw.getBookSaveName());
+    	File directory = new File(new File(new File(Enchiridion.root, "books"), "images"), EnchiridionAPI.book.getBook().getSaveName());
         if (!directory.exists() && !directory.mkdirs()) {
             throw new IllegalStateException("Couldn't create dir: " + directory);
         }

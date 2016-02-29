@@ -12,6 +12,7 @@ import joshie.enchiridion.api.IEnchiridionAPI;
 import joshie.enchiridion.api.IRecipeHandler;
 import joshie.enchiridion.api.IToolbarButton;
 import joshie.enchiridion.books.BookRegistry;
+import joshie.enchiridion.books.features.FeatureRecipe;
 import joshie.enchiridion.books.gui.GuiBook;
 import joshie.enchiridion.books.gui.GuiSimpleEditorButton;
 import joshie.enchiridion.books.gui.GuiToolbar;
@@ -76,7 +77,7 @@ public class EAPIHandler implements IEnchiridionAPI {
     
     @Override
     public void registerRecipeHandler(IRecipeHandler handler) {
-        //FeatureRecipe.handlers.add(handler);
+        FeatureRecipe.handlers.add(handler);
         ELogger.log(Level.INFO, "Registered a new recipe handler: " + handler.getRecipeName());
     }
 

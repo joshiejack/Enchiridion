@@ -14,6 +14,6 @@ public abstract class GuiSimpleEditorAbstract extends AbstractGuiOverlay {
 	}
 	
 	public void drawSplitScaledString(String text, int x, int y, int color, float scale) {
-		EnchiridionAPI.draw.drawSplitScaledString(text, EConfig.editorXPos + x, EConfig.toolbarYPos + y, 250, color, scale);
+		EnchiridionAPI.draw.drawSplitScaledString(text, EConfig.editorXPos + x, EConfig.toolbarYPos + y, 155, color, scale);
 	}
 }

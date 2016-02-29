@@ -22,8 +22,8 @@ public class ActionJumpPage extends AbstractAction {
 	
 	@Override
 	public IButtonAction create() {
-		ActionJumpPage jump = new ActionJumpPage(EnchiridionAPI.draw.getPage());
-		jump.bookID = EnchiridionAPI.draw.getBookID();
+		ActionJumpPage jump = new ActionJumpPage(EnchiridionAPI.book.getPage());
+		jump.bookID = EnchiridionAPI.book.getBook().getUniqueName();
 		return jump;
 	}
 	
@@ -36,13 +36,13 @@ public class ActionJumpPage extends AbstractAction {
 	
 	@Override
 	public String[] getFieldNames() {
-		return new String[] { "bookID", "pageNumber" };
+		return new String[] { "tooltip", "bookID", "pageNumber" };
 	}
 	
 	@Override
 	public void performAction() {	
-		if (bookID != null && !bookID.equals("") && !bookID.equals(EnchiridionAPI.draw.getBookID())) {
-			GuiBook.INSTANCE.setBook(BookRegistry.INSTANCE.getBookByName(bookID), EnchiridionAPI.draw.isEditMode());
+		if (bookID != null && !bookID.equals("") && !bookID.equals(EnchiridionAPI.book.getBook().getUniqueName())) {
+			GuiBook.INSTANCE.setBook(BookRegistry.INSTANCE.getBookByName(bookID), EnchiridionAPI.book.isEditMode());
 		}
 		
 		if (page == null) {
@@ -50,11 +50,12 @@ public class ActionJumpPage extends AbstractAction {
 			if (page == null) page = JumpHelper.getPageByName(name);
 		}
 				
-		EnchiridionAPI.draw.setPage(page);
+		EnchiridionAPI.book.setPage(page);
 	}
 
 	@Override
 	public void readFromJson(JsonObject json) {
+		super.readFromJson(json);
 		bookID = JSONHelper.getStringIfExists(json, "bookID");
 		pageNumber = JSONHelper.getIntegerIfExists(json, "number");
 		name = JSONHelper.getStringIfExists(json, "name");
@@ -62,6 +63,7 @@ public class ActionJumpPage extends AbstractAction {
 
 	@Override
 	public void writeToJson(JsonObject object) {
+		super.writeToJson(object);
 		object.addProperty("bookID", bookID);
 		if (page != null) {
 			object.addProperty("number", page.getPageNumber());

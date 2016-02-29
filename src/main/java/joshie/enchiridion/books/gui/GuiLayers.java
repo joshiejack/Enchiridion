@@ -38,7 +38,7 @@ public class GuiLayers extends AbstractGuiOverlay {
         EnchiridionAPI.draw.drawSplitScaledString("[b]" + Enchiridion.translate("layers") + "[/b]", EConfig.layersXPos + 20, EConfig.toolbarYPos - 2, 250, 0xFFFFFFFF, 1F);
         int layerY = 0;
         int hoverY = 0;
-        ArrayList<IFeatureProvider> features = EnchiridionAPI.draw.getPage().getFeatures();
+        ArrayList<IFeatureProvider> features = EnchiridionAPI.book.getPage().getFeatures();
         for (int i = layerPosition; i < Math.min(features.size(), layerPosition + 20); i++) {
             layerY += 12;
         	IFeatureProvider feature = features.get(i);
@@ -79,7 +79,7 @@ public class GuiLayers extends AbstractGuiOverlay {
         	/** Layer itself **/
         	EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 20, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 83, EConfig.toolbarYPos + 7 + layerY, 0xFFE4D6AE, 0x5579725A);
         	
-        	if (isOverLayer(layerY, mouseX, mouseY) || feature == EnchiridionAPI.draw.getSelectedFeature()) {
+        	if (isOverLayer(layerY, mouseX, mouseY) || feature == EnchiridionAPI.book.getSelected()) {
             	hoverY = layerY;
             	EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 20, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 83, EConfig.toolbarYPos + 7 + layerY, 0xFFB0A483, 0xFF48453C);
             }
@@ -107,7 +107,7 @@ public class GuiLayers extends AbstractGuiOverlay {
     @Override
 	public boolean mouseClicked(int mouseX, int mouseY) {
     	int layerY = 0;
-    	ArrayList<IFeatureProvider> features = EnchiridionAPI.draw.getPage().getFeatures();
+    	ArrayList<IFeatureProvider> features = EnchiridionAPI.book.getPage().getFeatures();
     	for (int i = layerPosition; i < Math.min(features.size(), layerPosition + 20); i++) {
             layerY += 12;
             if (isOverLayer(layerY, mouseX, mouseY)) {
@@ -130,7 +130,7 @@ public class GuiLayers extends AbstractGuiOverlay {
 		if (dragged.getLayerIndex() != layerNumber) {
 			dragged.setLayerIndex(layerNumber + change);
 			//Resort
-			EnchiridionAPI.draw.getPage().sort();
+			EnchiridionAPI.book.getPage().sort();
 		}
 	}
     
@@ -138,17 +138,17 @@ public class GuiLayers extends AbstractGuiOverlay {
 	public void mouseReleased(int mouseX, int mouseY) {
     	boolean placing = held >= 20;
     	int layerY = 0;
-        ArrayList<IFeatureProvider> features = EnchiridionAPI.draw.getPage().getFeatures();
+        ArrayList<IFeatureProvider> features = EnchiridionAPI.book.getPage().getFeatures();
         for (int i = layerPosition; i < Math.min(features.size(), layerPosition + 20); i++) {
             layerY += 12;
             if (isOverLayer(layerY, mouseX, mouseY)) {
             	if (placing) {
             		insertLayerAt(mouseY, features.get(i).getLayerIndex());
             	} else {
-            		IFeatureProvider selected = EnchiridionAPI.draw.getSelectedFeature();
+            		IFeatureProvider selected = EnchiridionAPI.book.getSelected();
             		if (selected != null)  selected.deselect();
-            		EnchiridionAPI.draw.setSelected(features.get(i));
-            		selected = EnchiridionAPI.draw.getSelectedFeature();
+            		EnchiridionAPI.book.setSelected(features.get(i));
+            		selected = EnchiridionAPI.book.getSelected();
             		selected.select(mouseX, mouseY);
             		selected.select(mouseX, mouseY);
             		selected.mouseReleased(mouseX, mouseY);

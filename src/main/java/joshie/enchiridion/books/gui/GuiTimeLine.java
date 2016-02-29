@@ -6,7 +6,6 @@ import joshie.enchiridion.api.IPage;
 import joshie.enchiridion.books.Page;
 import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.JumpHelper;
-import net.minecraft.util.ResourceLocation;
 
 public class GuiTimeLine extends AbstractGuiOverlay {
 	public static final GuiTimeLine INSTANCE = new GuiTimeLine();
@@ -47,7 +46,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
 		EnchiridionAPI.draw.drawImage(toolbar, -9, EConfig.timelineYPos - 9, 440, EConfig.timelineYPos + 13);
 		//EnchiridionAPI.draw.drawBorderedRectangle(-6, EConfig.timelineYPos - 7, 437, EConfig.timelineYPos, 0xFF312921, 0xFF191511);
 		EnchiridionAPI.draw.drawBorderedRectangle(-6, EConfig.timelineYPos, 437, EConfig.timelineYPos + 11, 0x00000000, 0xFF191511);
-		int currentPageNumber = EnchiridionAPI.draw.getPage().getPageNumber();
+		int currentPageNumber = EnchiridionAPI.book.getPage().getPageNumber();
 		int hoverX = 0;
 		
 		for (int j = 0; j < 110; j++) {
@@ -109,7 +108,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
 					JumpHelper.insertPage(thisNumber, dragged);
 				} else if (!JumpHelper.jumpToPageByNumber(thisNumber)) {
 					IPage page = DefaultHelper.addDefaults(new Page(thisNumber));
-					EnchiridionAPI.draw.getBookPages().add(page);
+					EnchiridionAPI.book.getBook().addPage(page);
 					JumpHelper.jumpToPageByNumber(thisNumber);
 				}
 			}

@@ -12,8 +12,8 @@ public class ButtonInsertText extends AbstractButton {
 
 	@Override
 	public void performAction() {
-		IPage current = EnchiridionAPI.draw.getPage();
+		IPage current = EnchiridionAPI.book.getPage();
 		FeatureText feature = new FeatureText(EConfig.defaultText);
-		EnchiridionAPI.draw.getPage().addFeature(feature, 0, 0, 200D, 80D, false, false);
+		current.addFeature(feature, 0, 0, 200D, 80D, false, false);
 	}
 }

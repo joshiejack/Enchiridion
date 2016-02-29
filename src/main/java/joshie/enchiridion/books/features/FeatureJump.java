@@ -32,7 +32,7 @@ public class FeatureJump extends AbstractFeature {
 	
 	@Override
 	public void performAction (int mouseX, int mouseY) {
-		EnchiridionAPI.draw.setPage(page);
+		EnchiridionAPI.book.setPage(page);
 	}
 	
 	@Override

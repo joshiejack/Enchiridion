@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -18,12 +19,13 @@ import joshie.enchiridion.books.features.FeatureButton;
 import joshie.enchiridion.books.features.FeatureImage;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.lib.EInfo;
+import joshie.lib.PenguinFontRenderer;
 import joshie.lib.editables.ITextEditable;
 import joshie.lib.editables.TextEditor;
 import joshie.lib.helpers.FileCopier;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract implements ITextEditable {
+public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 	public static final GuiSimpleEditorButton INSTANCE = new GuiSimpleEditorButton();
 	private static final ResourceLocation arrow_right_on = new ELocation("arrow_right_on");
 	private static final ResourceLocation arrow_right_off = new ELocation("arrow_right_off");
@@ -32,49 +34,19 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract implements IT
 	
 	private final ArrayList<IButtonAction> actions = new ArrayList();
 	private ArrayList<IButtonAction> sorted = new ArrayList();
-	private FeatureButton button = null;
-	private String fieldName;
+	private HashMap<String, ITextEditable> fieldCache = new HashMap();
+	private static FeatureButton button = null;
+	
 	
 	protected GuiSimpleEditorButton() {}
-	
 
-	@Override
-	public String getTextField() {
-		try {		
-			Field f = button.action.getClass().getField(fieldName);
-			//Special case pageNumber
-			if (fieldName.equals("pageNumber")) {
-				int number = f.getInt(button.action);
-				return "" + (number + 1);
-			} else return "" + f.get(button.action);
-		} catch (Exception e) {}
-		
-		return "";
-	}
-
-	@Override
-	public void setTextField(String text) {
-		try {
-			Field f = button.action.getClass().getField(fieldName);
-			if (f.getType() == int.class) {
-				Integer number = Integer.parseInt(text);
-				//Special case pageNumber
-				if (fieldName.equals("pageNumber")) {
-					number -= 1;
-				}
-
-				f.set(button.action, number);
-			} else f.set(button.action, text);
-		} catch (Exception e) {}
-	}
-	
-	
 	public void registerAction(IButtonAction action) {
 		actions.add(action);
 	}
 
 	public IBookEditorOverlay setButton(FeatureButton button) {
 		this.button = button;
+		this.fieldCache = new HashMap();
 		return this;
 	}
 	
@@ -169,12 +141,25 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract implements IT
     		String name = Enchiridion.translate("button.action.field." + f);
     		drawSplitScaledString("[b]" + name + "[/b]", 4, yPos + 32, 0xFFFFFFFF, 0.5F);
     		
-    		fieldName = f;
-    		drawSplitScaledString("[b]" + TextEditor.INSTANCE.getText(this) + "[/b]", 4, yPos + 39, 0xFF191511, 0.5F);
-    		yPos += 15;
+    		ITextEditable editable = null;
+    		if (!fieldCache.containsKey(f)) {
+    			editable = new WrappedEditable(f);
+    			fieldCache.put(f, editable);
+    		} else editable = fieldCache.get(f);
+    		
+    		String text = TextEditor.INSTANCE.getText(editable);
+    		int lines = getLineCount(text) - 1;
+	    	drawSplitScaledString(text, 4, yPos + 39, 0xFF191511, 0.5F);
+    		yPos = yPos + 15 + (5 * lines);
     	}
     	
     	drawBorderedRectangle(2, yPos + 30, 83, yPos + 31, 0xFF312921, 0xFF191511);
+    }
+    
+    public int getLineCount (String text) {
+    	text = PenguinFontRenderer.INSTANCE.replaceFormatting(text);
+    	text = PenguinFontRenderer.INSTANCE.trimStringNewline(text);
+    	return PenguinFontRenderer.INSTANCE.listFormattedStringToWidth(text, 155).size();
     }
     
     @Override
@@ -222,7 +207,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract implements IT
     		FeatureImage image = loadResource();
     		if (image != null) {
     			button.deflt = image;
-    			button.deflt.update(EnchiridionAPI.draw.getSelectedFeature());
+    			button.deflt.update(EnchiridionAPI.book.getSelected());
     		}
     	}
     	
@@ -238,8 +223,31 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract implements IT
     		FeatureImage image = loadResource();
     		if (image != null) {
     			button.hover = image;
-    			button.hover.update(EnchiridionAPI.draw.getSelectedFeature());
+    			button.hover.update(EnchiridionAPI.book.getSelected());
     		}
+    	}
+    	
+    	yPos+= 25;
+    	//Draw the extra information for the actions
+    	drawBoxLabel("Extra Fields", yPos + 20);
+    	String[] fields = button.action.getFieldNames();
+    	for (String f: fields) {
+    		ITextEditable editable = null;
+    		if (!fieldCache.containsKey(f)) {
+    			editable = new WrappedEditable(f);
+    			fieldCache.put(f, editable);
+    		} else editable = fieldCache.get(f);
+    		String text = TextEditor.INSTANCE.getText(editable);
+    		int lines = getLineCount(text) - 1;
+    		
+    		
+    		if (isOverPosition(2, yPos + 37, 83, yPos + 44 + (5 * lines), mouseX, mouseY)) {
+        		TextEditor.INSTANCE.setEditable(editable);
+        		return true;
+    		}
+    		
+
+    		yPos = yPos + 15 + (5 * lines);
     	}
     	
     	return false;
@@ -250,9 +258,9 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract implements IT
 		if (file != null) {
 			try {
 				BufferedImage buffered = ImageIO.read(file);
-				FeatureImage feature = new FeatureImage(EInfo.MODID + ":images/" + EnchiridionAPI.draw.getBookSaveName() + "/" + file.getName());
-				EnchiridionAPI.draw.getSelectedFeature().setWidth(buffered.getWidth());
-				EnchiridionAPI.draw.getSelectedFeature().setHeight(buffered.getHeight());
+				FeatureImage feature = new FeatureImage(EInfo.MODID + ":images/" + EnchiridionAPI.book.getBook().getSaveName() + "/" + file.getName());
+				EnchiridionAPI.book.getSelected().setWidth(buffered.getWidth());
+				EnchiridionAPI.book.getSelected().setHeight(buffered.getHeight());
 				return feature;
 			} catch (Exception e) {}
 		}
@@ -273,4 +281,44 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract implements IT
 			}
 		}
     }
+	
+	//Helper Editable
+	private static class WrappedEditable implements ITextEditable {
+		private String fieldName;
+		
+		public WrappedEditable(String fieldName) {
+			this.fieldName = fieldName;
+		}
+
+		@Override
+		public String getTextField() {
+			try {		
+				Field f = button.action.getClass().getField(fieldName);
+				//Special case pageNumber
+				if (fieldName.equals("pageNumber")) {
+					int number = f.getInt(button.action);
+					return "" + (number + 1);
+				} else return "" + f.get(button.action);
+			} catch (Exception e) {}
+			
+			return "";
+		}
+
+		@Override
+		public void setTextField(String text) {
+			try {
+				Field f = button.action.getClass().getField(fieldName);
+				if (f.getType() == int.class) {
+					Integer number = Integer.parseInt(text);
+					//Special case pageNumber
+					if (fieldName.equals("pageNumber")) {
+						number -= 1;
+					}
+
+					f.set(button.action, number);
+				} else f.set(button.action, text);
+			} catch (Exception e) {}
+		}
+		
+	}
 }

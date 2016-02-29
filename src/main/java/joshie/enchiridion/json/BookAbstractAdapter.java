@@ -1,8 +1,8 @@
 package joshie.enchiridion.json;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 import org.apache.logging.log4j.Level;
 
@@ -24,11 +24,13 @@ public class BookAbstractAdapter implements JsonDeserializer<Book> {
     public Book deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
     	JsonObject jsonObject = json.getAsJsonObject();
     	Book book = new Book();
-    	book.color = 0xFFFFFFFF; //Default the colour loading to white
+    	book.setColorAsInt(0xFFFFFFFF); //Default the colour loading to white
     	try {
     		//Load the basic fields
-	    	Field[] fields = Book.class.getFields();
+	    	Field[] fields = Book.class.getDeclaredFields();
 	    	for (Field f: fields) {
+	    		f.setAccessible(true); //Screw my own private variables
+	    		if (Modifier.isTransient(f.getModifiers())) continue; //Ignore transients
 	    		if (f.getType().equals(boolean.class)) f.set(book, JSONHelper.getBooleanIfExists(jsonObject, f.getName()));
 	    		if (f.getType().equals(int.class)) f.set(book, JSONHelper.getIntegerIfExists(jsonObject, f.getName()));
 	    		if (f.getType().equals(String.class)) f.set(book, JSONHelper.getStringIfExists(jsonObject, f.getName()));
@@ -36,27 +38,25 @@ public class BookAbstractAdapter implements JsonDeserializer<Book> {
     	} catch (Exception e) { e.printStackTrace(); }
     	
     	//Add in the book data
-    	book.book = new ArrayList();
-    	if (EConfig.debugMode) ELogger.log(Level.INFO, "=== Preparing to read the book : " + book.displayName + " ===");
+    	book.create();
+    	if (EConfig.debugMode) ELogger.log(Level.INFO, "=== Preparing to read the book : " + book.getDisplayName() + " ===");
     	JsonArray array = jsonObject.get("book").getAsJsonArray();
     	for (int i = 0; i < array.size(); i++) {
     		JsonObject page = array.get(i).getAsJsonObject();
     		IPage ipage = context.deserialize(page, IPage.class);
-    		book.book.add(ipage);
+    		book.addPage(ipage);
     	}
     	
     	if (jsonObject.get("showArrows") != null) { //READING IN AN OLD BOOK
-    		book.mc189book = false;
-    		book.legacyTexture = true;
-    		book.showArrows = JSONHelper.getBooleanIfExists(jsonObject, "showArrows");
-    		book.iconPass1 = JSONHelper.getStringIfExists(jsonObject, "iconPass1");
-    		book.color = JSONHelper.getIntegerIfExists(jsonObject, "color");
-    		book.colorHex = Integer.toHexString(book.color);
-    	} else book.mc189book = true;
+    		book.setLegacy();
+    		book.setArrowVisiblity(JSONHelper.getBooleanIfExists(jsonObject, "showArrows"));
+    		book.setIconPass1(JSONHelper.getStringIfExists(jsonObject, "iconPass1"));
+    		book.setColorAsInt(JSONHelper.getIntegerIfExists(jsonObject, "color"));
+    	} else book.setMadeIn189();
     	
-    	if (book.displayName == null) book.displayName = book.uniqueName;
-    	if (book.language == null) book.language = "en_US";
-    	if (book.saveName == null) book.saveName = book.uniqueName;
+    	if (book.getDisplayName() == null) book.setDisplayName(book.getUniqueName());
+    	if (book.getLanguageKey() == null) book.setLanguageKey("en_US");
+    	if (book.getSaveName() == null) book.setSaveName(book.getUniqueName());
     	
     	return book;
     }

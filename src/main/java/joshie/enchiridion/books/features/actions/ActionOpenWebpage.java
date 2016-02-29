@@ -23,7 +23,7 @@ public class ActionOpenWebpage extends AbstractAction {
 	
 	@Override
 	public String[] getFieldNames() {
-		return new String[] { "url" };
+		return new String[] { "tooltip", "url" };
 	}
 		
 	@Override

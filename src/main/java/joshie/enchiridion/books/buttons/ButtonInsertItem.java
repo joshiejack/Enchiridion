@@ -12,8 +12,8 @@ public class ButtonInsertItem extends AbstractButton {
 
 	@Override
 	public void performAction() {
-		IPage current = EnchiridionAPI.draw.getPage();
+		IPage current = EnchiridionAPI.book.getPage();
 		FeatureItem feature = new FeatureItem(EConfig.getDefaultItem());
-		EnchiridionAPI.draw.getPage().addFeature(feature, 0, 0, 16D, 16D, false, false);
+		current.addFeature(feature, 0, 0, 16D, 16D, false, false);
 	}
 }
