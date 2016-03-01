@@ -20,6 +20,11 @@ public class FeatureButton extends FeatureJump {
 	}
 	
 	@Override
+	public FeatureButton copy() {
+	    return new FeatureButton(deflt.path, hover.path, action.copy());
+	}
+	
+	@Override
 	public void update(IFeatureProvider position) {
 		if (deflt == null || hover == null) return;
 		else {

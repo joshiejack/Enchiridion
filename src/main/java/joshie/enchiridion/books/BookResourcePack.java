@@ -48,7 +48,11 @@ public class BookResourcePack implements IResourcePack {
 	
 	//If the texture folder is the one enchiridion uses itself, use the normal loading
 	public boolean isValidLocation(ResourceLocation location) {
-		return !location.getResourcePath().startsWith("textures/books");
+	    String path = location.getResourcePath();
+	    if (path.startsWith("textures/books")) return false;
+	    if (path.startsWith("images/enchiridion")) return false;
+	    if (path.contains("enchiridion.json")) return false;
+	    return true;
 	}
 
 	@Override

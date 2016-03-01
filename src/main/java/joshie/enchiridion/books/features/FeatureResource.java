@@ -19,6 +19,13 @@ public class FeatureResource extends AbstractFeature {
     public transient int img_width;
     public transient int img_height;
     public transient boolean attempted;
+    
+    @Override
+    public FeatureResource copy() {
+        FeatureResource resource = new FeatureResource();
+        resource.path = path;
+        return resource;
+    }
 
     @Override
     public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {

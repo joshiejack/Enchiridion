@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import net.minecraft.util.ResourceLocation;
 
 public interface IButtonAction {
+    /** Create a copy of this action **/
+    public IButtonAction copy();
 	/** Return the name of all the fields that should be edited **/
 	public String[] getFieldNames();
 	public IButtonAction create();

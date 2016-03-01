@@ -10,6 +10,11 @@ public class ActionNextPage extends AbstractAction {
 	public ActionNextPage() {
 		super("next");
 	}
+	
+	@Override
+    public ActionNextPage copy() {
+        return new ActionNextPage();
+    }
 
 	@Override
 	public IButtonAction create() {

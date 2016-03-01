@@ -21,6 +21,15 @@ public class ActionJumpPage extends AbstractAction {
 	}
 	
 	@Override
+	public ActionJumpPage copy() {
+	    ActionJumpPage action = new ActionJumpPage();
+	    action.bookID = bookID;
+	    action.name = name;
+	    action.pageNumber = pageNumber;
+	    return action;
+	}
+	
+	@Override
 	public IButtonAction create() {
 		ActionJumpPage jump = new ActionJumpPage(EnchiridionAPI.book.getPage());
 		jump.bookID = EnchiridionAPI.book.getBook().getUniqueName();
@@ -45,7 +54,7 @@ public class ActionJumpPage extends AbstractAction {
 			GuiBook.INSTANCE.setBook(BookRegistry.INSTANCE.getBookByName(bookID), EnchiridionAPI.book.isEditMode());
 		}
 		
-		if (page == null) {
+		if (page == null || page.getPageNumber() != pageNumber) {
 			page = JumpHelper.getPageByNumber(pageNumber);
 			if (page == null) page = JumpHelper.getPageByName(name);
 		}

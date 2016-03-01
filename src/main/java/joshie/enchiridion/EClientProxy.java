@@ -5,7 +5,7 @@ import java.util.List;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.books.BookRegistry;
 import joshie.enchiridion.books.BookResourcePack;
-import joshie.enchiridion.books.buttons.ButtonChangeColour;
+import joshie.enchiridion.books.buttons.ButtonChangeBackground;
 import joshie.enchiridion.books.buttons.ButtonChangeIcon;
 import joshie.enchiridion.books.buttons.ButtonDeletePage;
 import joshie.enchiridion.books.buttons.ButtonInsertBox;
@@ -67,7 +67,7 @@ public class EClientProxy extends ECommonProxy {
         
         //Right aligned
         EnchiridionAPI.instance.registerToolbarButton(new ButtonDeletePage());
-        EnchiridionAPI.instance.registerToolbarButton(new ButtonChangeColour());
+        EnchiridionAPI.instance.registerToolbarButton(new ButtonChangeBackground());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonChangeIcon());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonToggleGrid());
         
@@ -83,5 +83,8 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessVanilla());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessOre());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerFurnace());
+        
+        //Register the Enchiridion Book
+        EnchiridionAPI.instance.registerModWithBooks("enchiridion");
     }
 }

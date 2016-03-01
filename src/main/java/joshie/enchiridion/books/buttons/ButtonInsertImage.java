@@ -57,7 +57,13 @@ public class ButtonInsertImage extends AbstractButton {
             File new_location = new File(directory, selectedFile.getName());
             try {
                 FileUtils.copyFile(selectedFile, new_location);
+                String modid = EnchiridionAPI.book.getBook().getModID();
                 IPage current = EnchiridionAPI.book.getPage();
+                String path = "";
+                if (modid == null || modid.equals("")) {
+                    path = EInfo.MODID + ":images/" + foldername + "/" + selectedFile.getName();
+                } else path = modid + ":textures/books/images/" + selectedFile.getName();
+                
                 FeatureImage feature = new FeatureImage(EInfo.MODID + ":images/" + foldername + "/" + selectedFile.getName());
                 BufferedImage buffered = ImageIO.read(new_location);
                 int width = buffered.getWidth();

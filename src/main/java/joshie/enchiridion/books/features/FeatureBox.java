@@ -16,6 +16,11 @@ public class FeatureBox extends AbstractFeatureWithColor {
 	}
 	
 	@Override
+	public FeatureBox copy() {
+	    return new FeatureBox(color);
+	}
+	
+	@Override
 	public String getName() {
 		return "Box: " + Integer.toHexString(colorI);
 	}

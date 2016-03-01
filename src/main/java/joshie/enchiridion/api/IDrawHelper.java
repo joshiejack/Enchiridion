@@ -16,6 +16,7 @@ public interface IDrawHelper {
 	public void setRenderData(int xPos, int yPos, double width, double height, float size); //Called internally to update the internal sizes
 	public void drawTexturedRectangle(double x, double y, int u, int v, int w, int h, float scale);
 	public void drawTexturedReversedRectangle(double x, double y, int u, int v, int w, int h, float scale);
-	public boolean isMouseOver(IItemStack stack);
 	public void drawIItemStack(IItemStack stack);
+	public boolean isMouseOverIItemStack(IItemStack stack);    
+	public boolean isMouseOverArea(double x, double y, int width, int height, float scale);
 }

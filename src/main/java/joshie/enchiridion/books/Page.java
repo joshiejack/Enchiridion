@@ -79,4 +79,9 @@ public class Page implements IPage {
 			i++;
 		}
 	}
+	
+	@Override
+	public void clear() {
+	    features = new ArrayList();
+	}
 }

@@ -16,29 +16,12 @@ import joshie.enchiridion.books.features.FeatureRecipe;
 import joshie.enchiridion.books.gui.GuiBook;
 import joshie.enchiridion.books.gui.GuiSimpleEditorButton;
 import joshie.enchiridion.books.gui.GuiToolbar;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 
 public class EAPIHandler implements IEnchiridionAPI {
-	@Override
-	public void registerEditorOverlay(IBookEditorOverlay overlay) {
-		GuiBook.INSTANCE.registerOverlay(overlay);
-	}
-	
     @Override
-    public void registerBookData(ItemStack stack, String identifier) {
-        //BookRegistry.registerItemStack(identifier, stack);
-    }
-    
-
-	@Override
-	public void registerToolbarButton(IToolbarButton button) {
-		GuiToolbar.INSTANCE.registerButton(button);
-	}
-
-    @Override
-    public void registerModBooks(String id) {
+    public void registerModWithBooks(String id) {
         /** Grab the modid and the assets path **/
         String modid = id;
         String assetspath = id.toLowerCase();
@@ -59,7 +42,7 @@ public class EAPIHandler implements IEnchiridionAPI {
         
         /** Attempt to register in dev or in jar **/
         if (mod == null) {
-            ELogger.log(Level.ERROR, "When attempting to register books with Enchiridion 2 a mod with the modid " + modid + " could not be found");
+            ELogger.log(Level.ERROR, "When attempting to register books with Enchiridion a mod with the modid " + modid + " could not be found");
         } else {
             String jar = mod.getSource().toString();
             if (jar.contains(".jar") || jar.contains(".zip")) {
@@ -69,12 +52,22 @@ public class EAPIHandler implements IEnchiridionAPI {
             }
         }
     }
-
+    
     @Override
     public void registerBookHandler(IBookHandler handler) {
         //BookHandlerRegistry.registerHandler(handler);
     }
-    
+	
+	@Override
+	public void registerEditorOverlay(IBookEditorOverlay overlay) {
+		GuiBook.INSTANCE.registerOverlay(overlay);
+	}
+
+	@Override
+	public void registerToolbarButton(IToolbarButton button) {
+		GuiToolbar.INSTANCE.registerButton(button);
+	}
+
     @Override
     public void registerRecipeHandler(IRecipeHandler handler) {
         FeatureRecipe.handlers.add(handler);

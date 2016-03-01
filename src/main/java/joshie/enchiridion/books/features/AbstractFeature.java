@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import joshie.enchiridion.api.IFeature;
 import joshie.enchiridion.api.IFeatureProvider;
 
-public class AbstractFeature implements IFeature {
+public abstract class AbstractFeature implements IFeature {
 	@Override
 	public void update(IFeatureProvider position) {}
 	

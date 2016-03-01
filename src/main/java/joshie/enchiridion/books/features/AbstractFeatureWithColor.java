@@ -2,7 +2,7 @@ package joshie.enchiridion.books.features;
 
 import joshie.enchiridion.api.IFeatureProvider;
 
-public class AbstractFeatureWithColor extends AbstractFeature {
+public abstract class AbstractFeatureWithColor extends AbstractFeature {
 	public String color;
 	public transient int colorI;
 	

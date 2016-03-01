@@ -22,6 +22,15 @@ public class FeatureRecipe extends FeatureItem {
     public FeatureRecipe(ItemStack item) {
 		setItemStack(item);
 	}
+    
+    @Override
+    public FeatureRecipe copy() {
+        FeatureRecipe recipe = new FeatureRecipe();
+        recipe.ingredients = ingredients;
+        recipe.recipeType = recipeType;
+        recipe.item = item;
+        return recipe;
+    }
 
     private boolean buildRecipe(boolean isLoading) {
         ArrayList<IRecipeHandler> recipes = new ArrayList();

@@ -39,7 +39,7 @@ public class GuiLayers extends AbstractGuiOverlay {
         int layerY = 0;
         int hoverY = 0;
         ArrayList<IFeatureProvider> features = EnchiridionAPI.book.getPage().getFeatures();
-        for (int i = layerPosition; i < Math.min(features.size(), layerPosition + 20); i++) {
+        for (int i = layerPosition; i < Math.min(features.size(), layerPosition + 24); i++) {
             layerY += 12;
         	IFeatureProvider feature = features.get(i);
         	/** LOCK ICON **/
@@ -87,7 +87,7 @@ public class GuiLayers extends AbstractGuiOverlay {
         	
         	String name = feature.getFeature().getName();
         	String truncated = name.substring(0, Math.min(name.length(), 20));
-        	EnchiridionAPI.draw.drawSplitScaledString(truncated, EConfig.layersXPos + 25, EConfig.toolbarYPos + layerY, 250, 0xFF000000, 0.5F);
+        	EnchiridionAPI.draw.drawSplitScaledString(truncated.replace("\n", " "), EConfig.layersXPos + 25, EConfig.toolbarYPos + layerY, 250, 0xFF000000, 0.5F);
         }
         
         
@@ -139,7 +139,7 @@ public class GuiLayers extends AbstractGuiOverlay {
     	boolean placing = held >= 20;
     	int layerY = 0;
         ArrayList<IFeatureProvider> features = EnchiridionAPI.book.getPage().getFeatures();
-        for (int i = layerPosition; i < Math.min(features.size(), layerPosition + 20); i++) {
+        for (int i = layerPosition; i < Math.min(features.size(), layerPosition + 24); i++) {
             layerY += 12;
             if (isOverLayer(layerY, mouseX, mouseY)) {
             	if (placing) {

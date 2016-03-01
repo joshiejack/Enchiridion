@@ -1,7 +1,7 @@
 package joshie.enchiridion.handlers;
 
 import joshie.enchiridion.ECommonProxy;
-import joshie.enchiridion.books.Book;
+import joshie.enchiridion.api.IBook;
 import joshie.enchiridion.books.BookRegistry;
 import joshie.enchiridion.books.gui.GuiBook;
 import joshie.enchiridion.books.gui.GuiBookCreate;
@@ -20,7 +20,7 @@ public class GuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         ItemStack held = player.getCurrentEquippedItem();
         if (held.getItem() == ECommonProxy.book) {
-            Book book = BookRegistry.INSTANCE.getBook(held);
+            IBook book = BookRegistry.INSTANCE.getBook(held);
             if (book != null) {
                 return GuiBook.INSTANCE.setBook(book, player.isSneaking());
             } else return GuiBookCreate.INSTANCE.setStack(player.getCurrentEquippedItem());

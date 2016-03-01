@@ -21,6 +21,7 @@ import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.ELogger;
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.api.IBook;
 import joshie.enchiridion.api.IFeatureProvider;
 import joshie.enchiridion.api.IPage;
 import joshie.enchiridion.helpers.DefaultHelper;
@@ -66,7 +67,8 @@ public class BookRegistry implements ItemMeshDefinition {
         for (File file : files) {
             try {
                 String json = FileUtils.readFileToString(file);
-                Book data = BookRegistry.INSTANCE.register(GsonHelper.getModifiedGson().fromJson(json, Book.class));
+                IBook data = register(GsonHelper.getModifiedGson().fromJson(json, Book.class).setModID(modid));
+                data.setModID(modid);
                 ELogger.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.getUniqueName() + " for the language: " + data.getLanguageKey());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -87,7 +89,7 @@ public class BookRegistry implements ItemMeshDefinition {
                 if (path1.startsWith(path2)) {
                     try {
                         String json = IOUtils.toString(zipfile.getInputStream(zipentry));
-                        Book data = register(GsonHelper.getModifiedGson().fromJson(json, Book.class));
+                        IBook data = register(GsonHelper.getModifiedGson().fromJson(json, Book.class).setModID(modid));
                         ELogger.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.getUniqueName() + " for the language: " + data.getLanguageKey());
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -99,11 +101,11 @@ public class BookRegistry implements ItemMeshDefinition {
         } catch (Exception e) {}
     }
     
-    private final HashMap<String, HashMap<String, Book>> books = new HashMap();
+    private final HashMap<String, HashMap<String, IBook>> books = new HashMap();
     private final HashMap<String, ModelResourceLocation> locations = new HashMap();
     private ModelResourceLocation dflt = new ModelResourceLocation("minecraft:book", "inventory");
 
-    public Book register(Book book) {
+    public IBook register(IBook book) {
     	if (book == null || book.getUniqueName() == null) return null;
     	if (EConfig.debugMode) {
     		ELogger.log(Level.INFO, "==== Start Logging of: " + book.getUniqueName());
@@ -143,11 +145,12 @@ public class BookRegistry implements ItemMeshDefinition {
     		}
     	}
     	
-    	HashMap<String, Book> translations = getTranslations(book.getUniqueName());
+    	HashMap<String, IBook> translations = getTranslations(book.getUniqueName());
     	String language = book.getLanguageKey() == null ? "en_US" : book.getLanguageKey();
     	translations.put(language, book);
     	
-        ModelResourceLocation location = new ModelResourceLocation(new ResourceLocation("enchiridion", book.getUniqueName()), "inventory");
+    	String id = book.getModID() == null || book.getModID().equals("") ? "enchiridion" : "enchiridion";
+        ModelResourceLocation location = new ModelResourceLocation(new ResourceLocation(id, book.getUniqueName()), "inventory");
         ModelBakery.registerItemVariants(ECommonProxy.book, location);
         locations.put(book.getUniqueName(), location);
         
@@ -161,27 +164,29 @@ public class BookRegistry implements ItemMeshDefinition {
         
         
        //Create the json for books which don't have the json already
-       File iconJson = new File(directory, book.getSaveName() + ".json");
-       if (!iconJson.exists()) {
-    	   try {
-    		   BookIconTemplate template = new BookIconTemplate();
-    		   template.parent = "enchiridion:item/book";
-			   template.textures = new Icons();
-    		   if (book.getIconPass1() != null && !book.getIconPass1().equals("")) {
-    			   template.textures.layer0 = "enchiridion:items/" + book.getIconPass1().replace(".png", "");
-    		   } else template.textures.layer0 = "enchiridion:items/book";
-    		   
-    		   Writer writer = new OutputStreamWriter(new FileOutputStream(iconJson), "UTF-8");
-               writer.write(GsonHelper.getModifiedGson().toJson(template));;
-               writer.close();
-    	   } catch (Exception e) { e.printStackTrace(); }
-    	}
+       if (book.getModID().equals(null) || book.getModID().equals("")) {
+           File iconJson = new File(directory, book.getSaveName() + ".json");
+           if (!iconJson.exists()) {
+        	   try {
+        		   BookIconTemplate template = new BookIconTemplate();
+        		   template.parent = "enchiridion:item/book";
+    			   template.textures = new Icons();
+        		   if (book.getIconPass1() != null && !book.getIconPass1().equals("")) {
+        			   template.textures.layer0 = "enchiridion:items/" + book.getIconPass1().replace(".png", "");
+        		   } else template.textures.layer0 = "enchiridion:items/book";
+        		   
+        		   Writer writer = new OutputStreamWriter(new FileOutputStream(iconJson), "UTF-8");
+                   writer.write(GsonHelper.getModifiedGson().toJson(template));;
+                   writer.close();
+        	   } catch (Exception e) { e.printStackTrace(); }
+        	}
+       }
         
         return book;
     }
     
-    public HashMap<String, Book> getTranslations(String identifier) {
-    	HashMap<String, Book> translations = books.get(identifier);
+    public HashMap<String, IBook> getTranslations(String identifier) {
+    	HashMap<String, IBook> translations = books.get(identifier);
     	if (translations != null) return translations;
     	else {
     		translations = new HashMap();
@@ -190,7 +195,7 @@ public class BookRegistry implements ItemMeshDefinition {
     	}
     }
 
-    public Book getBook(ItemStack held) {
+    public IBook getBook(ItemStack held) {
         if (held.getItem() == null) return null;
         if (!held.hasTagCompound()) return null;
         String identifier = held.getTagCompound().getString("identifier");
@@ -201,19 +206,19 @@ public class BookRegistry implements ItemMeshDefinition {
         return books.keySet();
     }
 
-	public Book getBookByName(String identifier) {
+	public IBook getBookByName(String identifier) {
 		if (identifier.equals("")) return null;
-        HashMap<String, Book> translations = books.get(identifier);
+        HashMap<String, IBook> translations = books.get(identifier);
         if (translations == null) return null;
         String language = ClientHelper.getLang();
-        Book translated = translations.get(language);
+        IBook translated = translations.get(language);
         if (translated != null) return translated;
         else return translations.get("en_US");
 	}
 
 	@Override
 	public ModelResourceLocation getModelLocation(ItemStack stack) {
-		Book book = getBook(stack);
+	    IBook book = getBook(stack);
 		if (book == null) return dflt;
 		else return locations.get(book.getUniqueName());
 	}

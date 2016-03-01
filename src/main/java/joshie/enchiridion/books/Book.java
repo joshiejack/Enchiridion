@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 public class Book implements IBook {
 	/** VARIABLES **/
 	//Internal Information
+    private String modid;
 	private String uniqueName;
 	private String saveName;
 	
@@ -63,6 +64,11 @@ public class Book implements IBook {
     }
     
     /** METHODS **/
+    @Override
+    public String getModID() {
+        return modid;
+    }
+    
 	@Override
 	public String getUniqueName() {
 		return uniqueName;
@@ -106,7 +112,7 @@ public class Book implements IBook {
 	}
 	
 	@Override
-    public ResourceLocation getResource() {
+    public ResourceLocation getBackgroundResource() {
     	if (resourceLocation == null) {
     		resourceLocation = new ResourceLocation(backgroundResource);
     	}
@@ -170,6 +176,12 @@ public class Book implements IBook {
 	}
 	
 	@Override
+	public IBook setModID(String modidi) {
+	    modid = modidi;
+	    return this;
+	}
+	
+	@Override
 	public void setSaveName(String name) {
 		saveName = name;
 	}
@@ -188,6 +200,12 @@ public class Book implements IBook {
 	@Override
 	public void setLanguageKey(String language) {
 		this.language = language;
+	}
+	
+	@Override
+	public void setBackgroundResource(String string) {
+	    backgroundResource = string;
+	    resourceLocation = new ResourceLocation(string);
 	}
 	
 	@Override
@@ -219,5 +237,10 @@ public class Book implements IBook {
 	@Override
 	public void addPage(IPage page) {
 		book.add(page);
+	}
+	
+	@Override
+	public void removePage(IPage page) {
+	    book.remove(page);
 	}
 }

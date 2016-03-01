@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "enchiridion",
+  "name": "Enchiridion",
+  "description": "Books mod for minecraft",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["joshie"],
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

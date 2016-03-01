@@ -17,6 +17,13 @@ public class ActionOpenWebpage extends AbstractAction {
 	}
 	
 	@Override
+    public ActionOpenWebpage copy() {
+	    ActionOpenWebpage action = new ActionOpenWebpage();
+        action.url = url;
+        return action;
+    }
+	
+	@Override
 	public IButtonAction create() {
 		return new ActionOpenWebpage();
 	}

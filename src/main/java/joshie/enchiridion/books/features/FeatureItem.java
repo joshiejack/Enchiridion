@@ -20,6 +20,11 @@ public class FeatureItem extends AbstractFeature implements IItemSelectable {
 	public transient ItemStack stack;
 	
 	@Override
+	public FeatureItem copy() {
+	    return new FeatureItem(stack);
+	}
+	
+	@Override
 	public String getName() {
 		return stack == null ? super.getName() : stack.getDisplayName();
 	}

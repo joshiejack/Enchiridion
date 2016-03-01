@@ -30,7 +30,7 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
     public void addTooltip(List list) {
         for (IItemStack stack : stackList) {
             if (stack == null || stack.getItemStack() == null) continue;
-            if (EnchiridionAPI.draw.isMouseOver(stack)) {
+            if (EnchiridionAPI.draw.isMouseOverIItemStack(stack)) {
                 list.addAll(stack.getItemStack().getTooltip(Minecraft.getMinecraft().thePlayer, false));
                 break; //Only permit one item to display
             }

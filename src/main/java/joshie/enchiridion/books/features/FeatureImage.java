@@ -19,6 +19,11 @@ public class FeatureImage extends FeatureResource {
 	}
 	
 	@Override
+	public FeatureImage copy() {
+	    return new FeatureImage(path);
+	}
+	
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -40,7 +45,7 @@ public class FeatureImage extends FeatureResource {
 	@Override
 	protected String getResourcePath() {
 		//If the path was created in 1.7, update it to use the new format
-		if (!path.startsWith(EInfo.MODID)) {
+		if (!path.contains(":")) {
 			path = EInfo.MODID + ":images/" + path;
 		}
 		

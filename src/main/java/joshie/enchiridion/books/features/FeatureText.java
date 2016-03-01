@@ -27,6 +27,13 @@ public class FeatureText extends AbstractFeature implements ITextEditable {
 	}
 	
 	@Override
+	public FeatureText copy() {
+	    FeatureText text = new FeatureText(this.text);
+	    text.size = size;
+	    return text;
+	}
+	
+	@Override
 	public String getName() {
 		return text;
 	}
@@ -41,8 +48,6 @@ public class FeatureText extends AbstractFeature implements ITextEditable {
     public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
     	EnchiridionAPI.draw.drawSplitScaledString(TextEditor.INSTANCE.getText(this), xPos, yPos, wrap, 0x555555, size);
     }
-    
-	private transient boolean firstClick = false;
     
     @Override
     public boolean getAndSetEditMode() {
@@ -64,15 +69,8 @@ public class FeatureText extends AbstractFeature implements ITextEditable {
 	    	
 	    	return false;
 		} else {
-	    	if (!firstClick) {
-	    		firstClick = true;
-	    		return false;
-	    	} else {
-	    		firstClick = false;
-	    		if (!ClientHelper.isShiftPressed())TextEditor.INSTANCE.setEditable(this);
-	    		
-	    		return true;
-	    	}
+		    TextEditor.INSTANCE.setEditable(this);
+	    	return true;
 		}
     }
         
@@ -84,7 +82,7 @@ public class FeatureText extends AbstractFeature implements ITextEditable {
 				encoded = Files.readAllBytes(Paths.get("enchiridion.temp.txt"));
 		    	text = (new String(encoded, Charset.defaultCharset()));
 		    	File file = new File("enchiridion.temp.txt");
-		    	file.delete();
+		    	//file.delete();
 		    	readTemp = false;
 			} catch (IOException e) {
 				e.printStackTrace();

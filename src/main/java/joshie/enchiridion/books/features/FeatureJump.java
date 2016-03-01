@@ -13,6 +13,18 @@ public class FeatureJump extends AbstractFeature {
 	private transient int number;
 	private transient String jumpTo;
 	
+	public FeatureJump(){}
+	public FeatureJump(String name, int number, String jumpTo) {
+	    this.name = name;
+	    this.number = number;
+	    this.jumpTo = jumpTo;
+	}
+	
+	@Override
+	public FeatureJump copy() {
+	    return new FeatureJump(name, number, jumpTo);
+	}
+	
 	@Override
 	public void draw(int posX, int posY, double width, double height, boolean isMouseHovering) {
 		if (page == null) {

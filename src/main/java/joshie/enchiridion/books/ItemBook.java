@@ -3,6 +3,7 @@ package joshie.enchiridion.books;
 import java.util.List;
 
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.api.IBook;
 import joshie.lib.item.ItemCoreMulti;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,7 +21,7 @@ public class ItemBook extends ItemCoreMulti {
             return Enchiridion.translate("new");
         }
 		
-		Book book = BookRegistry.INSTANCE.getBook(stack);
+		IBook book = BookRegistry.INSTANCE.getBook(stack);
 		return book == null ? Enchiridion.translate("new") : book.getDisplayName();
     }
 	

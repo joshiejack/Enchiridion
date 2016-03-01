@@ -52,7 +52,6 @@ public class GuiSimpleEditorItem extends AbstractGuiOverlay {
 	            if (i >= 0 && i < sorted.size()) {
 	            	if (mouseX >= (j * 12) + EConfig.editorXPos + 7 && mouseX <= (j * 12) + EConfig.editorXPos + 19) {
 	            		if (mouseY >= (k * 12) + EConfig.toolbarYPos + 14 && mouseY <= (k * 12) + EConfig.toolbarYPos + 26) {
-	            			System.out.println("SETTING");
 	            			if (selectable != null) { 
 		                		selectable.setItemStack(sorted.get(i));
 		                		

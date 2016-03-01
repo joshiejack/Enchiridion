@@ -6,6 +6,9 @@ import net.minecraft.util.ResourceLocation;
 
 public interface IBook {
 	/** GETTERS **/
+    /** Return the modid, returns enchiridion if config book **/
+    public String getModID();
+    
 	/** Return the unique identifier for this book,
 	 *  Is used to determine which book this is
 	 *  Used to grab language variants.
@@ -33,7 +36,7 @@ public interface IBook {
 	public boolean isBackgroundLegacy();
 	
 	/** The resource location of the background **/
-	public ResourceLocation getResource();
+	public ResourceLocation getBackgroundResource();
 	
 	/** The start position for the background on the x axis **/
 	public int getBackgroundStartX();
@@ -71,6 +74,9 @@ public interface IBook {
 	public String getIconPass1();
 	
 	/** SETTERS **/
+	/** Internal use only **/
+	public IBook setModID(String modid);
+	
 	/** Set the save name for this book **/
 	public void setSaveName(String name);
 	
@@ -82,6 +88,9 @@ public interface IBook {
 	
 	/** Set the language key for this book **/
 	public void setLanguageKey(String language);
+	
+	/** Sets the books background **/
+    public void setBackgroundResource(String string);
 	
 	/** Legacy Helpers **/
 	/** Marks this as a legacy book **/
@@ -101,4 +110,7 @@ public interface IBook {
 	
 	/** Adds a new page **/
 	public void addPage(IPage page);
+
+	/** Removes an existing page **/
+    public void removePage(IPage page);
 }

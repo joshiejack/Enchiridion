@@ -29,4 +29,7 @@ public interface IPage {
 
 	/** Call this to resort all the layers on the page by their index value **/
 	public void sort();
+
+	/** Removes all the features **/ 
+    public void clear();
 }
