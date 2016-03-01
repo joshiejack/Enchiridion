@@ -37,6 +37,11 @@ public class IFeatureAbstractAdapter implements JsonSerializer<IFeature>, JsonDe
         	clazz = jsonObject.get("class").getAsString();
         }
         
+        //For no reason except i changed the name during development
+        if (clazz.startsWith("joshie.enchiridion.books.features")) {
+            clazz = clazz.replace("joshie.enchiridion.books.features", "joshie.enchiridion.gui.book.features");
+        }
+        
         JsonElement element = jsonObject.get("properties");
         try {
         	IFeature feature = context.deserialize(element, Class.forName(clazz));

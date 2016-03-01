@@ -29,6 +29,7 @@ import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedOre;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedVanilla;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessOre;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessVanilla;
+import joshie.enchiridion.helpers.LibraryHandlerHelper;
 import joshie.enchiridion.util.EResourcePack;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraftforge.client.model.ModelLoader;
@@ -46,6 +47,7 @@ public class EClientProxy extends ECommonProxy {
 	
     @Override
     public void setupClient() {
+        LibraryHandlerHelper.reset(null);
         BookRegistry.INSTANCE.loadBooksFromConfig();
     	ModelLoader.setCustomMeshDefinition(ECommonProxy.book, BookRegistry.INSTANCE);
     	EnchiridionAPI.book = GuiBook.INSTANCE;

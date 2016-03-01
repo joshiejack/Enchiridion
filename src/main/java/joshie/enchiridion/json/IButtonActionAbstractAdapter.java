@@ -29,6 +29,11 @@ public class IButtonActionAbstractAdapter implements JsonSerializer<IButtonActio
         JsonObject jsonObject = json.getAsJsonObject();
         String clazz = jsonObject.get("class").getAsString();
         JsonElement element = jsonObject.get("properties");
+        
+        //Update actions
+        if (clazz.startsWith("joshie.enchiridion.books.features.actions")) {
+            clazz = clazz.replace("joshie.enchiridion.books.features.actions", "joshie.enchiridion.gui.book.buttons.actions");
+        }
 
         try {
             IButtonAction action = context.deserialize(element, Class.forName(clazz));

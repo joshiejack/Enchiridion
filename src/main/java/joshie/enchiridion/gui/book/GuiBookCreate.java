@@ -53,13 +53,13 @@ public class GuiBookCreate extends GuiScreen implements ITextEditable {
         super.initGui();
         Keyboard.enableRepeatEvents(true);
         TextEditor.INSTANCE.setEditable(this);
-        ButtonChangeIcon.refreshResources();
     }
 
     @Override
     public void onGuiClosed() {
         Keyboard.enableRepeatEvents(false);
         TextEditor.INSTANCE.clearEditable();
+        ButtonChangeIcon.refreshResources();
     }
 
     @Override

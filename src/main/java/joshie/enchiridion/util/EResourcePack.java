@@ -30,8 +30,7 @@ public class EResourcePack implements IResourcePack {
 	private File getFileLocationFromResource(ResourceLocation location) {
 		String path = location.getResourcePath();
 		String name = path.startsWith("images")? path.substring(7): path.startsWith("textures")? path.substring(14): path.substring(12);
-		String folder = path.startsWith("images") ? "images" : "icons";
-		File directory = FileHelper.getBooksDirectory();
+		File directory = path.startsWith("images") ? FileHelper.getImagesDirectory(): FileHelper.getIconsDirectory();
         return new File(directory, name);
 	}
 		
@@ -46,7 +45,6 @@ public class EResourcePack implements IResourcePack {
 	public boolean isValidLocation(ResourceLocation location) {
 	    String path = location.getResourcePath();
 	    if (path.startsWith("textures/books")) return false;
-	    if (path.startsWith("images/enchiridion")) return false;
 	    if (path.contains("enchiridion.json")) return false;
 	    return true;
 	}

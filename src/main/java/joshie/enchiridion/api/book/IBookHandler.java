@@ -5,9 +5,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public interface IBookHandler {
-    /** The name of this handler, used in configs **/
+    /** The name of this handler, used to associate this handler in configuration **/
     public String getName();
 
-    /** Called whenever the book is clicked on in the library gui, default simply calls right click, Called serverside and clientside **/
+    /** Called whenever the book is right clicked in the library
+     * This method is only ever called on the client **/
     public void handle(ItemStack stack, World world, EntityPlayer player);
 }
