@@ -5,6 +5,7 @@ import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.api.gui.IToolbarButton;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
+import net.minecraft.item.ItemStack;
 
 public interface IEnchiridionAPI {      
     /** Registering your mod, will have the mod search your assets folder
@@ -22,10 +23,6 @@ public interface IEnchiridionAPI {
      *              Although nowadays it's more than likely your modid is the same as
      *              your assets path so just that will do!.*/
     public void registerModWithBooks(String modid);
-    
-    /** Register a method for handling the opening of books
-     *  This method should be called on the client and the server **/
-    public void registerBookHandler(IBookHandler handler);
 
     /** Register a recipe handler, Client Side only **/
     public void registerRecipeHandler(IRecipeHandler handler);

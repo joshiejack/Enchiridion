@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Level;
 
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
+import joshie.enchiridion.api.book.IFeatureProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
@@ -25,6 +26,11 @@ public class FeatureResource extends FeatureAbstract {
         FeatureResource resource = new FeatureResource();
         resource.path = path;
         return resource;
+    }
+    
+    @Override
+    public void update(IFeatureProvider position) { //Preload the resource
+        attempted = loadResource();
     }
 
     @Override

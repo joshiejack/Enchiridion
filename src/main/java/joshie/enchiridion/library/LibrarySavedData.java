@@ -1,4 +1,4 @@
-package joshie.enchiridion.data.library;
+package joshie.enchiridion.library;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,17 +16,17 @@ import net.minecraftforge.common.UsernameCache;
 
 public class LibrarySavedData extends WorldSavedData {
     public static final String DATA_NAME = "Enchiridion-Library";
-    private HashMap<UUID, LibraryContents> players = new HashMap();
+    private HashMap<UUID, LibraryInventory> players = new HashMap();
 
     public LibrarySavedData(String string) {
         super(string);
     }
 
-    public Collection<LibraryContents> getPlayerData() {
+    public Collection<LibraryInventory> getPlayerData() {
         return players.values();
     }
 
-    public LibraryContents getLibraryContents(EntityPlayerMP player) {
+    public LibraryInventory getLibraryContents(EntityPlayerMP player) {
         UUID uuid = UUIDHelper.getPlayerUUID(player);
         if (players.containsKey(uuid)) {
             return players.get(uuid);
@@ -43,7 +43,7 @@ public class LibrarySavedData extends WorldSavedData {
             if (players.containsKey(uuid)) {
                 return players.get(uuid);
             } else {
-                LibraryContents data = new LibraryContents(player);
+                LibraryInventory data = new LibraryInventory(player);
                 players.put(uuid, data);
 
                 markDirty();
@@ -53,7 +53,7 @@ public class LibrarySavedData extends WorldSavedData {
     }
 
     /** CAN AND WILL RETURN NULL, IF THE UUID COULD NOT BE FOUND **/
-    public LibraryContents getLibraryContents(UUID uuid) {
+    public LibraryInventory getLibraryContents(UUID uuid) {
         if (players.containsKey(uuid)) {
             return players.get(uuid);
         } else {
@@ -65,10 +65,10 @@ public class LibrarySavedData extends WorldSavedData {
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
-        NBTTagList tag_list_players = nbt.getTagList("LibraryContents", 10);
+        NBTTagList tag_list_players = nbt.getTagList("LibraryInventory", 10);
         for (int i = 0; i < tag_list_players.tagCount(); i++) {
             NBTTagCompound tag = tag_list_players.getCompoundTagAt(i);
-            LibraryContents data = new LibraryContents();
+            LibraryInventory data = new LibraryInventory();
             boolean success = false;
             try {
                 data.readFromNBT(tag);
@@ -88,7 +88,7 @@ public class LibrarySavedData extends WorldSavedData {
     @Override
     public void writeToNBT(NBTTagCompound nbt) {
         NBTTagList tag_list_players = new NBTTagList();
-        for (Map.Entry<UUID, LibraryContents> entry : players.entrySet()) {
+        for (Map.Entry<UUID, LibraryInventory> entry : players.entrySet()) {
             if (entry.getKey() != null && entry.getValue() != null) {
                 NBTTagCompound tag = new NBTTagCompound();
                 entry.getValue().writeToNBT(tag);
@@ -96,6 +96,6 @@ public class LibrarySavedData extends WorldSavedData {
             }
         }
 
-        nbt.setTag("LibraryContents", tag_list_players);
+        nbt.setTag("LibraryInventory", tag_list_players);
     }
 }

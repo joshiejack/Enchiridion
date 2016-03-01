@@ -170,6 +170,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
     public void drawResource(ResourceLocation resource, int left, int top, int width, int height, float scaleX, float scaleY) {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
+        GlStateManager.color(1F, 1F, 1F);
         mc.getTextureManager().bindTexture(resource);
         GlStateManager.scale(scaleX, scaleY, 1.0F);
         drawTexturedModalRect((int) ((x + left) / scaleX), (int) ((y + top) / scaleY), 0, 0, width, height);

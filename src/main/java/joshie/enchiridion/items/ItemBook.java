@@ -5,6 +5,7 @@ import java.util.List;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.data.book.BookRegistry;
+import joshie.enchiridion.lib.GuiIDs;
 import joshie.lib.item.ItemCoreMulti;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +29,9 @@ public class ItemBook extends ItemCoreMulti {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		player.openGui(Enchiridion.instance, 0, world, 0, 0, 0);
+		if (player.isSneaking()) {
+		    player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, 0, 0);
+		} else player.openGui(Enchiridion.instance, GuiIDs.BOOK, world, 0, 0, 0);
 		return stack;
 	}
 

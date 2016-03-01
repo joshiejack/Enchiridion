@@ -2,6 +2,8 @@ package joshie.enchiridion;
 
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
+
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.GuiBook;
@@ -29,14 +31,18 @@ import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedOre;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedVanilla;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessOre;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessVanilla;
-import joshie.enchiridion.helpers.LibraryHandlerHelper;
+import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.util.EResourcePack;
 import net.minecraft.client.resources.IResourcePack;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class EClientProxy extends ECommonProxy {
+    public static KeyBinding libraryKeyBinding;
+    
 	@Override
 	public void onConstruction() {
 		try {
@@ -47,7 +53,7 @@ public class EClientProxy extends ECommonProxy {
 	
     @Override
     public void setupClient() {
-        LibraryHandlerHelper.reset(null);
+        LibraryHelper.resetClient();
         BookRegistry.INSTANCE.loadBooksFromConfig();
     	ModelLoader.setCustomMeshDefinition(ECommonProxy.book, BookRegistry.INSTANCE);
     	EnchiridionAPI.book = GuiBook.INSTANCE;
@@ -88,5 +94,9 @@ public class EClientProxy extends ECommonProxy {
         
         //Register the Enchiridion Book
         EnchiridionAPI.instance.registerModWithBooks("enchiridion");
+        
+        //Register the keybinding
+        libraryKeyBinding = new KeyBinding("enchiridion.key.library", Keyboard.KEY_L, "key.categories.misc");
+        ClientRegistry.registerKeyBinding(libraryKeyBinding);
     }
 }

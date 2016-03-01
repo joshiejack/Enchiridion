@@ -1,10 +1,9 @@
-package joshie.enchiridion.handlers;
+package joshie.enchiridion;
 
 import java.io.File;
 
 import org.apache.logging.log4j.Level;
 
-import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.IEnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.api.book.IButtonAction;
@@ -51,11 +50,6 @@ public class EAPIHandler implements IEnchiridionAPI {
                 BookRegistry.INSTANCE.registerModInDev(assetspath, mod.getSource());
             }
         }
-    }
-    
-    @Override
-    public void registerBookHandler(IBookHandler handler) {
-        //BookHandlerRegistry.registerHandler(handler);
     }
 	
 	@Override

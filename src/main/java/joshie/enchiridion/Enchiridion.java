@@ -15,6 +15,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import joshie.enchiridion.library.LibraryHelper;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -22,6 +24,7 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = MODID, name = MODNAME, version = VERSION, dependencies = DEPENDENCIES)
 public class Enchiridion {
@@ -44,6 +47,11 @@ public class Enchiridion {
         root = new File(event.getModConfigurationDirectory() + separator + MODPATH);
         EConfig.init();
         proxy.preInit();
+    }
+    
+    @EventHandler
+    public void onServerStarting(FMLServerStartingEvent event) {
+        LibraryHelper.resetServer(MinecraftServer.getServer().worldServers[0]);
     }
 
     //Universal log helper
