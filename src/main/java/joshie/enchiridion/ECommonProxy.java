@@ -3,9 +3,10 @@ package joshie.enchiridion;
 import static joshie.enchiridion.Enchiridion.instance;
 
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.books.ItemBook;
 import joshie.enchiridion.handlers.EAPIHandler;
 import joshie.enchiridion.handlers.GuiHandler;
+import joshie.enchiridion.items.ItemBook;
+import joshie.enchiridion.util.ECreativeTab;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 

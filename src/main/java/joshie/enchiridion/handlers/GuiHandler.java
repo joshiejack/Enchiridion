@@ -1,10 +1,10 @@
 package joshie.enchiridion.handlers;
 
 import joshie.enchiridion.ECommonProxy;
-import joshie.enchiridion.api.IBook;
-import joshie.enchiridion.books.BookRegistry;
-import joshie.enchiridion.books.gui.GuiBook;
-import joshie.enchiridion.books.gui.GuiBookCreate;
+import joshie.enchiridion.api.book.IBook;
+import joshie.enchiridion.data.book.BookRegistry;
+import joshie.enchiridion.gui.book.GuiBook;
+import joshie.enchiridion.gui.book.GuiBookCreate;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

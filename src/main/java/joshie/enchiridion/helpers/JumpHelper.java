@@ -1,7 +1,7 @@
 package joshie.enchiridion.helpers;
 
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.api.IPage;
+import joshie.enchiridion.api.book.IPage;
 
 public class JumpHelper {
 

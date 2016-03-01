@@ -11,7 +11,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import joshie.enchiridion.api.IButtonAction;
+import joshie.enchiridion.api.book.IButtonAction;
 
 public class IButtonActionAbstractAdapter implements JsonSerializer<IButtonAction>, JsonDeserializer<IButtonAction> {
     @Override

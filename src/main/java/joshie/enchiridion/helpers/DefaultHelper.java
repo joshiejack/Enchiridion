@@ -1,11 +1,11 @@
 package joshie.enchiridion.helpers;
 
-import joshie.enchiridion.api.IFeatureProvider;
-import joshie.enchiridion.api.IPage;
-import joshie.enchiridion.books.features.Feature;
-import joshie.enchiridion.books.features.FeatureButton;
-import joshie.enchiridion.books.features.actions.ActionNextPage;
-import joshie.enchiridion.books.features.actions.ActionPreviousPage;
+import joshie.enchiridion.api.book.IFeatureProvider;
+import joshie.enchiridion.api.book.IPage;
+import joshie.enchiridion.data.book.FeatureProvider;
+import joshie.enchiridion.gui.book.buttons.actions.ActionNextPage;
+import joshie.enchiridion.gui.book.buttons.actions.ActionPreviousPage;
+import joshie.enchiridion.gui.book.features.FeatureButton;
 import joshie.enchiridion.lib.EInfo;
 
 public class DefaultHelper {

@@ -9,8 +9,8 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import joshie.enchiridion.api.IPage;
-import joshie.enchiridion.books.Page;
+import joshie.enchiridion.api.book.IPage;
+import joshie.enchiridion.data.book.Page;
 
 public class IPageAbstractAdapter implements JsonSerializer<IPage>, JsonDeserializer<IPage> {
     @Override

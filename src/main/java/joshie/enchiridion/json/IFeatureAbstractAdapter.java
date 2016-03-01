@@ -11,7 +11,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import joshie.enchiridion.api.IFeature;
+import joshie.enchiridion.api.book.IFeature;
 import joshie.enchiridion.lib.EInfo;
 
 public class IFeatureAbstractAdapter implements JsonSerializer<IFeature>, JsonDeserializer<IFeature> {

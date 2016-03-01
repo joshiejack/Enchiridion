@@ -14,9 +14,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import joshie.enchiridion.EConfig;
-import joshie.enchiridion.ELogger;
-import joshie.enchiridion.api.IPage;
-import joshie.enchiridion.books.Book;
+import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.api.book.IPage;
+import joshie.enchiridion.data.book.Book;
 import joshie.lib.helpers.JSONHelper;
 
 public class BookAbstractAdapter implements JsonDeserializer<Book> {
@@ -39,7 +39,7 @@ public class BookAbstractAdapter implements JsonDeserializer<Book> {
     	
     	//Add in the book data
     	book.create();
-    	if (EConfig.debugMode) ELogger.log(Level.INFO, "=== Preparing to read the book : " + book.getDisplayName() + " ===");
+    	if (EConfig.debugMode) Enchiridion.log(Level.INFO, "=== Preparing to read the book : " + book.getDisplayName() + " ===");
     	JsonArray array = jsonObject.get("book").getAsJsonArray();
     	for (int i = 0; i < array.size(); i++) {
     		JsonObject page = array.get(i).getAsJsonObject();

@@ -1,0 +1,699 @@
+{
+  "uniqueName": "Enchiridion",
+  "saveName": "Enchiridion",
+  "displayName": "Enchiridion",
+  "colorHex": "FFFFFFFF",
+  "language": "en_US",
+  "hasCustomIcon": true,
+  "showBackground": true,
+  "legacyTexture": false,
+  "backgroundResource": "enchiridion:textures/books/rustic.png",
+  "backgroundStartX": -10,
+  "backgroundStartY": -10,
+  "backgroundEndX": 440,
+  "backgroundEndY": 240,
+  "defaultPage": 0,
+  "isLocked": true,
+  "forgetPageOnClose": false,
+  "book": [
+    {
+      "features": [
+        {
+          "xPos": 21,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_left_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_left_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionPreviousPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 0
+        },
+        {
+          "xPos": 387,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_right_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_right_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionNextPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 1
+        },
+        {
+          "xPos": 25,
+          "yPos": 20,
+          "width": 175.0,
+          "height": 167.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "This is the basic guide to editing with enchiridion. In order to get started you will need to ensure that you have editing enabled in the Enchiridion configuration file. If you have just installed this mod then you should be good to go.\n\nIn order to create a new book you will need to grab yourself one from the creative menu. It looks exactly like a normal book and should be the first item.\n\nNext step is to right click this book. A menu will popup asking for a name. Type the name of the book you want to create and press enter. ",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 2
+        },
+        {
+          "xPos": 230,
+          "yPos": 20,
+          "width": 176.0,
+          "height": 95.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "On pressing enter you will get a new book in your hand. It may or not have an item depending on whether you have the reload resources config on. If you have reload resources on, your game may freeze for quite a while after. If you don\u0027t then your book will not have an icon until you restart the game.\n\n[i]If you didn\u0027t receive an updated book, take a look in creative[/i]\n\nNow that you have your book, you can open it normally by right clicking it. But if you wish to enter edit mode then you must shift right click with this book in your hand.",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 3
+        }
+      ],
+      "pageName": "0",
+      "pageNumber": 0
+    },
+    {
+      "features": [
+        {
+          "xPos": 21,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_left_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_left_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionPreviousPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 0
+        },
+        {
+          "xPos": 387,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_right_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_right_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionNextPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 1
+        },
+        {
+          "xPos": 25,
+          "yPos": 20,
+          "width": 175.0,
+          "height": 167.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "Once in edit mode you can see various buttons at the top of the screen in the toolbar. \r\nOn the left hand side are buttons that allow you to insert various features, from text and images to buttons and recipes. Each one has it\u0027s own use when creating books. So you should experiment with them.\r\nOn the right hand side you can see the layers, allowing for adjusting of how things display in the book.\r\n\r\n[i]Top tip: You can click buttons in edit mode by holding shift[/i]",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 2
+        },
+        {
+          "xPos": 287,
+          "yPos": 192,
+          "width": 39.0,
+          "height": 12.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "[color\u003dwhite]Timeline[/color]",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 3
+        },
+        {
+          "xPos": 230,
+          "yPos": 20,
+          "width": 176.0,
+          "height": 95.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": " On the bottom you can find the timeline. This is where you can add new pages, or rearrange existing ones. The left hand side of the screen should currently be blank but it\u0027s where various different menus for editing features will appear.",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 4
+        },
+        {
+          "xPos": 232,
+          "yPos": 97,
+          "width": 166.0,
+          "height": 94.34099153567101,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureImage",
+            "properties": {
+              "path": "enchiridion:textures/books/images/editor.png"
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 5
+        },
+        {
+          "xPos": 369,
+          "yPos": 88,
+          "width": 39.0,
+          "height": 12.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "[color\u003dwhite]Layers[/color]",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 6
+        },
+        {
+          "xPos": 284,
+          "yPos": 89,
+          "width": 39.0,
+          "height": 12.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "[color\u003dwhite]Toolbar[/color]",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 7
+        }
+      ],
+      "pageName": "1",
+      "pageNumber": 1
+    },
+    {
+      "features": [
+        {
+          "xPos": 21,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_left_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_left_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionPreviousPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 0
+        },
+        {
+          "xPos": 387,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_right_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_right_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionNextPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 1
+        },
+        {
+          "xPos": 230,
+          "yPos": 20,
+          "width": 176.0,
+          "height": 95.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "Last but not least simply press the delete key to remove a feature from the page.\r\nNow that we have got the basics of moving, resizing, copying and deleting items, let\u0027s take a moment to talk about the top right.\r\n\r\nFrom right to left. \r\n[b]Cross:[/b] Deletes the Page\r\n[b]Square:[/b] Change the background of the book\r\n[b]Book:[/b] Change the icon of the book\r\n[i]If you have reload resources off this will require a restart to work[/i]\r\n[b]Grid:[/b] Toggles various grids which allow you to snap features when moving them, making it easier to align various things.",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 2
+        },
+        {
+          "xPos": 25,
+          "yPos": 20,
+          "width": 175.0,
+          "height": 167.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "There are some basic things to know about the editor. After creating something you can click and drag it to move it around. You should also notice tiny little squares in the corner. These you can drag to resize the feature, if you hold shift while dragging it should keep it\u0027s aspect ratio the same.\r\nYou can also ctrl click on different items so that you select them all, so you can move multiple things around at once. You can also use ctrl + c to copy features and ctrl + v to paste. This copying feature will work across pages and books.",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 3
+        }
+      ],
+      "pageName": "2",
+      "pageNumber": 2
+    },
+    {
+      "features": [
+        {
+          "xPos": 21,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_left_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_left_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionPreviousPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 0
+        },
+        {
+          "xPos": 387,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_right_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_right_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionNextPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 1
+        },
+        {
+          "xPos": 25,
+          "yPos": 20,
+          "width": 175.0,
+          "height": 167.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "[b]Features[/b] - [i]Text[/i]\r\nThe text feature is a simple feature. One placed it may have some default text, which you can set in the config. To edit the text simply click on the text once, it should then highlight with yellow corners instead of blue. In this mode you cannot delete the actual feature, but you can edit the text. \r\nWith the text you can use various bbcodes such as [ b ] for bold, or [ color \u003d red] to format your text. If you wish to delete the feature itself. Click on it again until it turns blue, you should then be able to delete it.\r\nYou can also use shift and + or - to increase/decrease font size.",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 2
+        },
+        {
+          "xPos": 230,
+          "yPos": 20,
+          "width": 176.0,
+          "height": 95.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "If you wish to use your system text editor you can, simply shift click on the text and it should open. Once you are done editing, save and then click back anywhere in the book and it should read in the text.\n\n[i]I would advise you to also close the file after you have edited it, as it can be tricky to tell when the system is actually going to let you edit the text otherwise[/i]\n\n[ b] bold , [ i ] italics, [ u ] underline, [ s ] strikethrough, [ color\u003dred ], colors: black, dark_blue, dark_aqua, dark_red, dark_purple, gold, gray, dark_gray, blue, green, aqua, reed, light_purple, yellow, white",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 3
+        }
+      ],
+      "pageName": "3",
+      "pageNumber": 3
+    },
+    {
+      "features": [
+        {
+          "xPos": 21,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_left_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_left_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionPreviousPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 0
+        },
+        {
+          "xPos": 387,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_right_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_right_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionNextPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 1
+        },
+        {
+          "xPos": 230,
+          "yPos": 20,
+          "width": 176.0,
+          "height": 95.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "They are one of the features that have an editor that pops up on the left. It\u0027s easy to understand from the menu so just go ahead and jump in to it.",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 2
+        },
+        {
+          "xPos": 25,
+          "yPos": 20,
+          "width": 175.0,
+          "height": 167.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "[b]Features[/b] - [i]Images[/i]\r\nImages are one of the simplest features, simply click the button and then browse until you find the one you want to insert. Please keep in mind that they will default to the size they are, so be warned when using huge images.\r\n\r\n[b]Features[/b] - [i]Buttons[/i]\r\nButtons are a fun feature, they can perform various functions. By default Enchiridion allows you to add next page, previous page, jump to page and web link arrows. With buttons you can set their hover and unhover texture, if you want to have them invisible just give them an invisible texture. ",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 3
+        },
+        {
+          "xPos": 238,
+          "yPos": 73,
+          "width": 143.0,
+          "height": 126.84629629629625,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureImage",
+            "properties": {
+              "path": "enchiridion:textures/books/images/buttons.png"
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 4
+        }
+      ],
+      "pageName": "4",
+      "pageNumber": 4
+    },
+    {
+      "features": [
+        {
+          "xPos": 21,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_left_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_left_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionPreviousPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 0
+        },
+        {
+          "xPos": 387,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_right_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_right_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionNextPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 1
+        },
+        {
+          "xPos": 25,
+          "yPos": 20,
+          "width": 175.0,
+          "height": 167.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "[b]Features[/b] - [i]Box[/i]\r\nBoxes are also very basic, just a simple shape where you can set the colour. Nothing much to explain!\r\n\r\n[b]Features[/b] - [i]Item[/i]\r\nThe item feature allows you to display any minecraft item you desire. On the left hand side while they are selected you can see a list of items. You can scroll up and down this list, or search. If you can\u0027t find the item you want to display, simply put it in your inventory and then reopen the book. You should be able to find it at the bottom of the list. ",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 2
+        },
+        {
+          "xPos": 235,
+          "yPos": 20,
+          "width": 176.0,
+          "height": 95.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "[b]Features[/b] - [i]Recipe[/i]\r\nRecipe works the same as items, just to choose a different recipe click on the icon once again to cycle through.",
+              "size": 1.0
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 3
+        },
+        {
+          "xPos": 235,
+          "yPos": 72,
+          "width": 156.0,
+          "height": 93.59999999999997,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureImage",
+            "properties": {
+              "path": "enchiridion:textures/books/images/items.png"
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 4
+        }
+      ],
+      "pageName": "5",
+      "pageNumber": 5
+    },
+    {
+      "features": [
+        {
+          "xPos": 21,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_left_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_left_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionPreviousPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 0
+        },
+        {
+          "xPos": 387,
+          "yPos": 200,
+          "width": 18.0,
+          "height": 10.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureButton",
+            "properties": {
+              "deflt": {
+                "path": "enchiridion:textures/books/arrow_right_off.png"
+              },
+              "hover": {
+                "path": "enchiridion:textures/books/arrow_right_on.png"
+              },
+              "action": {
+                "class": "joshie.enchiridion.books.features.actions.ActionNextPage",
+                "properties": {}
+              }
+            }
+          },
+          "isLocked": true,
+          "isHidden": false,
+          "layerIndex": 1
+        },
+        {
+          "xPos": 25,
+          "yPos": 20,
+          "width": 175.0,
+          "height": 167.0,
+          "feature": {
+            "class": "joshie.enchiridion.books.features.FeatureText",
+            "properties": {
+              "text": "[b]Layers[/b]\r\nLayers are a simple system. On the left is a lock icon, allowing you to lock layers in position. There\u0027s also an eye to hide layers. Finally to move layers around just drag them up or down.\r\n\r\n[b]Timeline[/b]\r\nThe last part of editing books is the timeline. With this you can create new pages by clicking on an empty slot and even move pages around by simply dragging them around.\r\n\r\n[i]Top Tip:[/i] You can use the scroll wheel on the layers/timeline to see more layers/pages.",
+              "size": 1.0
+            }
+          },
+          "isLocked": false,
+          "isHidden": false,
+          "layerIndex": 2
+        }
+      ],
+      "pageName": "6",
+      "pageNumber": 6
+    }
+  ]
+}

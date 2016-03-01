@@ -1,5 +1,11 @@
 package joshie.enchiridion.api;
 
+import joshie.enchiridion.api.book.IBookHandler;
+import joshie.enchiridion.api.book.IButtonAction;
+import joshie.enchiridion.api.gui.IBookEditorOverlay;
+import joshie.enchiridion.api.gui.IToolbarButton;
+import joshie.enchiridion.api.recipe.IRecipeHandler;
+
 public interface IEnchiridionAPI {      
     /** Registering your mod, will have the mod search your assets folder
      *  for a books folder with json. You need to do this if you wish your book data

@@ -1,11 +1,8 @@
 package joshie.enchiridion;
 
-import static joshie.enchiridion.Enchiridion.root;
-
-import java.io.File;
-
 import org.apache.logging.log4j.Level;
 
+import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.lib.EInfo;
 import joshie.lib.helpers.StackHelper;
 import net.minecraft.init.Items;
@@ -13,9 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
 public class EConfig {
-	public static final boolean RECIPE_DEBUG = true;
 	public static boolean debugMode = true;
     public static boolean enableEditing = true;
+    public static boolean resourceReload = true;
 	public static String defaultText = "";
 	private static String defaultItem = "";
 	
@@ -24,7 +21,7 @@ public class EConfig {
 	public static int layersXPos;
     
     public static void init() {
-        Configuration config = new Configuration(new File(root, "enchiridion.cfg"));
+        Configuration config = new Configuration(FileHelper.getConfigFile());
         try {
             config.load();
             debugMode = config.getBoolean("Debug", "Settings", true, "Enabling debug mode, logs a bunch of extra info to the console");
@@ -34,8 +31,9 @@ public class EConfig {
             toolbarYPos = config.getInt("Toolbar Y Pos", "Settings", -30, -1000, 1000, "This is the y position at which to render the toolbar (top bar)");
             timelineYPos = config.getInt("Timeline Y Pos", "Settings", 255, -1000, 1000, "This is the y position at which to render the timeline (bottom bar)");
             layersXPos = config.getInt("Layers X Pos", "Settings", 445, -5000, 5000, "This is the x position at which to render the layers (right bar)");
+            resourceReload = config.getBoolean("Reload Resources", "Settings", true, "Reloads resources whenever you change a books icon, causes long delays, the more mods you have the longer");
         } catch (Exception e) {
-            ELogger.log(Level.ERROR, EInfo.MODNAME + " failed to load it's config");
+            Enchiridion.log(Level.ERROR, EInfo.MODNAME + " failed to load it's config");
             e.printStackTrace();
         } finally {
             config.save();

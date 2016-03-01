@@ -4,18 +4,18 @@ import java.io.File;
 
 import org.apache.logging.log4j.Level;
 
-import joshie.enchiridion.ELogger;
-import joshie.enchiridion.api.IBookEditorOverlay;
-import joshie.enchiridion.api.IBookHandler;
-import joshie.enchiridion.api.IButtonAction;
+import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.IEnchiridionAPI;
-import joshie.enchiridion.api.IRecipeHandler;
-import joshie.enchiridion.api.IToolbarButton;
-import joshie.enchiridion.books.BookRegistry;
-import joshie.enchiridion.books.features.FeatureRecipe;
-import joshie.enchiridion.books.gui.GuiBook;
-import joshie.enchiridion.books.gui.GuiSimpleEditorButton;
-import joshie.enchiridion.books.gui.GuiToolbar;
+import joshie.enchiridion.api.book.IBookHandler;
+import joshie.enchiridion.api.book.IButtonAction;
+import joshie.enchiridion.api.gui.IBookEditorOverlay;
+import joshie.enchiridion.api.gui.IToolbarButton;
+import joshie.enchiridion.api.recipe.IRecipeHandler;
+import joshie.enchiridion.data.book.BookRegistry;
+import joshie.enchiridion.gui.book.GuiBook;
+import joshie.enchiridion.gui.book.GuiSimpleEditorButton;
+import joshie.enchiridion.gui.book.GuiToolbar;
+import joshie.enchiridion.gui.book.features.FeatureRecipe;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 
@@ -42,7 +42,7 @@ public class EAPIHandler implements IEnchiridionAPI {
         
         /** Attempt to register in dev or in jar **/
         if (mod == null) {
-            ELogger.log(Level.ERROR, "When attempting to register books with Enchiridion a mod with the modid " + modid + " could not be found");
+            Enchiridion.log(Level.ERROR, "When attempting to register books with Enchiridion a mod with the modid " + modid + " could not be found");
         } else {
             String jar = mod.getSource().toString();
             if (jar.contains(".jar") || jar.contains(".zip")) {
@@ -71,7 +71,7 @@ public class EAPIHandler implements IEnchiridionAPI {
     @Override
     public void registerRecipeHandler(IRecipeHandler handler) {
         FeatureRecipe.handlers.add(handler);
-        ELogger.log(Level.INFO, "Registered a new recipe handler: " + handler.getRecipeName());
+        Enchiridion.log(Level.INFO, "Registered a new recipe handler: " + handler.getRecipeName());
     }
 
 	@Override

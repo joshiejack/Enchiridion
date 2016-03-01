@@ -8,14 +8,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import joshie.enchiridion.api.IFeature;
-import joshie.enchiridion.books.features.Feature;
+import joshie.enchiridion.api.book.IFeature;
+import joshie.enchiridion.data.book.FeatureProvider;
 import joshie.lib.helpers.JSONHelper;
 
-public class FeatureAbstractAdapter implements JsonDeserializer<Feature> {
+public class FeatureAbstractAdapter implements JsonDeserializer<FeatureProvider> {
     @Override
-    public Feature deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-    	Feature feature = new Feature();
+    public FeatureProvider deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    	FeatureProvider feature = new FeatureProvider();
     	JsonObject jsonObject = json.getAsJsonObject();
     	if (jsonObject.get("type") != null && jsonObject.get("type").getAsString() != null) { //OLD SYSTEM
     		JsonObject properties = jsonObject.get("properties").getAsJsonObject();

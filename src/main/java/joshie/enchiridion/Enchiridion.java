@@ -11,6 +11,10 @@ import static joshie.enchiridion.lib.EInfo.VERSION;
 
 import java.io.File;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -27,6 +31,8 @@ public class Enchiridion {
     @Instance(MODID)
     public static Enchiridion instance;
     public static File root;
+
+    private static final Logger logger = LogManager.getLogger(MODNAME);
     
     @EventHandler
     public void onConstruction(FMLConstructionEvent event) {
@@ -38,6 +44,11 @@ public class Enchiridion {
         root = new File(event.getModConfigurationDirectory() + separator + MODPATH);
         EConfig.init();
         proxy.preInit();
+    }
+
+    //Universal log helper
+    public static void log(Level level, String message) {
+        logger.log(level, message);
     }
 
     //Universal helper translation
