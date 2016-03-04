@@ -26,6 +26,8 @@ public class GuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == GuiIDs.LIBRARY) {
             return new GuiLibrary(player.inventory, LibraryHelper.getClientLibraryContents());
+        } else if (ID == GuiIDs.BOOK_FORCE) {
+            return GuiBook.INSTANCE;
         } else {
             ItemStack held = player.getCurrentEquippedItem();
             if (held != null && held.getItem() == ECommonProxy.book) {

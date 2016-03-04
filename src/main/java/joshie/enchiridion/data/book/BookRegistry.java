@@ -60,7 +60,7 @@ public class BookRegistry implements ItemMeshDefinition {
             path.mkdir();
         }
         
-        Collection<File> files = FileUtils.listFiles(path, new String[] { "json" }, true);
+        Collection<File> files = FileUtils.listFiles(path, new String[] { "json" }, false);
         for (File file : files) {
             try {
                 String json = FileUtils.readFileToString(file);

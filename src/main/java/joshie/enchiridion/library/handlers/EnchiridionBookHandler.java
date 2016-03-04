@@ -1,4 +1,4 @@
-package joshie.enchiridion.data.library.handlers;
+package joshie.enchiridion.library.handlers;
 
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBookHandler;
@@ -16,9 +16,10 @@ public class EnchiridionBookHandler implements IBookHandler {
 
     @Override
     public void handle(ItemStack stack, EntityPlayer player, int slotID) {
-        player.openGui(Enchiridion.instance, GuiIDs.BOOK, player.worldObj, 0, 0, 0);
         if (player.worldObj.isRemote) {
             GuiBook.INSTANCE.setBook(BookRegistry.INSTANCE.getBook(stack), false);
         }
+        
+        player.openGui(Enchiridion.instance, GuiIDs.BOOK_FORCE, player.worldObj, 0, 0, 0);
     }
 }

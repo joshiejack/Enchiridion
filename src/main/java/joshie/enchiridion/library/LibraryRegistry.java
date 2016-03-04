@@ -12,6 +12,11 @@ import net.minecraft.item.ItemStack;
 public class LibraryRegistry implements ILibraryRegistry {
     private HashMap<String, IBookHandler> handlers = new HashMap();
     private HashMap<SafeStack, IBookHandler> bookRegistry = new HashMap();
+    
+    @Override
+    public void resetStacksAllowedInLibrary() {
+        bookRegistry = new HashMap();
+    }
 
     @Override
     public void registerBookHandler(IBookHandler handler) {
@@ -31,6 +36,8 @@ public class LibraryRegistry implements ILibraryRegistry {
 
     @Override
     public IBookHandler getBookHandlerForStack(ItemStack stack) {
+        if (stack == null) return null; //Oi back away!
+      
         for (SafeStack safeStack : SafeStack.allInstances(stack)) {
             IBookHandler handler = bookRegistry.get(safeStack);
             if (handler != null) return handler;

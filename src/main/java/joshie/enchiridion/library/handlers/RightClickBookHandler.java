@@ -1,4 +1,4 @@
-package joshie.enchiridion.data.library.handlers;
+package joshie.enchiridion.library.handlers;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;

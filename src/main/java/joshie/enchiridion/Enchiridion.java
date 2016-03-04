@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import joshie.enchiridion.helpers.SyncHelper;
 import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
@@ -23,6 +24,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
@@ -36,10 +38,10 @@ public class Enchiridion {
     public static File root;
 
     private static final Logger logger = LogManager.getLogger(MODNAME);
-    
+
     @EventHandler
     public void onConstruction(FMLConstructionEvent event) {
-    	proxy.onConstruction();
+        proxy.onConstruction();
     }
 
     @EventHandler
@@ -48,10 +50,11 @@ public class Enchiridion {
         EConfig.init();
         proxy.preInit();
     }
-    
+
     @EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
         LibraryHelper.resetServer(MinecraftServer.getServer().worldServers[0]);
+        SyncHelper.resetSyncing();
     }
 
     //Universal log helper
@@ -60,7 +63,7 @@ public class Enchiridion {
     }
 
     //Universal helper translation
-	public static String translate(String string) {
-		return StatCollector.translateToLocal("enchiridion." + string);
-	}
+    public static String translate(String string) {
+        return StatCollector.translateToLocal("enchiridion." + string);
+    }
 }

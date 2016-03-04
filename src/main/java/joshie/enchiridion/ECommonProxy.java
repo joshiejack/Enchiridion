@@ -3,15 +3,20 @@ package joshie.enchiridion;
 import static joshie.enchiridion.Enchiridion.instance;
 
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.data.library.handlers.EnchiridionBookHandler;
-import joshie.enchiridion.data.library.handlers.RightClickBookHandler;
 import joshie.enchiridion.gui.GuiHandler;
 import joshie.enchiridion.items.ItemBook;
 import joshie.enchiridion.library.LibraryEvents;
 import joshie.enchiridion.library.LibraryRegistry;
+import joshie.enchiridion.library.handlers.EnchiridionBookHandler;
+import joshie.enchiridion.library.handlers.RightClickBookHandler;
 import joshie.enchiridion.network.PacketHandleBook;
 import joshie.enchiridion.network.PacketHandler;
-import joshie.enchiridion.network.PacketSyncLibrary;
+import joshie.enchiridion.network.PacketOpenLibrary;
+import joshie.enchiridion.network.PacketReloadLibrary;
+import joshie.enchiridion.network.PacketSyncFile;
+import joshie.enchiridion.network.PacketSyncLibraryAllowed;
+import joshie.enchiridion.network.PacketSyncLibraryContents;
+import joshie.enchiridion.network.PacketSyncMD5;
 import joshie.enchiridion.util.ECreativeTab;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -36,8 +41,13 @@ public class ECommonProxy {
         FMLCommonHandler.instance().bus().register(new LibraryEvents());
         MinecraftForge.EVENT_BUS.register(new LibraryEvents());
         
-        //Register packets
-        PacketHandler.registerPacket(PacketSyncLibrary.class, Side.CLIENT);
+        //Register packets#
+        PacketHandler.registerPacket(PacketSyncLibraryAllowed.class);
+        PacketHandler.registerPacket(PacketReloadLibrary.class);
+        PacketHandler.registerPacket(PacketSyncMD5.class);
+        PacketHandler.registerPacket(PacketSyncFile.class);
+        PacketHandler.registerPacket(PacketSyncLibraryContents.class, Side.CLIENT);
+        PacketHandler.registerPacket(PacketOpenLibrary.class, Side.SERVER);
         PacketHandler.registerPacket(PacketHandleBook.class, Side.SERVER);
         
         //Prepare the client for shizz

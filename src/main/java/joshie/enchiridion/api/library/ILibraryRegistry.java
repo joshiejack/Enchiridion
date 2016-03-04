@@ -6,6 +6,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 public interface ILibraryRegistry {
+    /** Called when entering a new world **/
+    public void resetStacksAllowedInLibrary();
+    
     /** Register a method for handling the opening of books
      *  This method should be called on the client and the server **/
     public void registerBookHandler(IBookHandler handler);

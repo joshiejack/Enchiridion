@@ -9,9 +9,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 
-public class PacketSyncLibrary extends PacketNBT {
-    public PacketSyncLibrary() {}
-    public PacketSyncLibrary(LibraryInventory contents) {
+public class PacketSyncLibraryContents extends PacketNBT {
+    public PacketSyncLibraryContents() {}
+    public PacketSyncLibraryContents(LibraryInventory contents) {
         super(contents.getInventory());
     }
 
