@@ -36,6 +36,25 @@ public class ModdedBooks {
         public boolean shouldMatchNBT() {
             return matchNBT;
         }
+        
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((item == null) ? 0 : item.hashCode());
+            return result;
+        }
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null) return false;
+            if (getClass() != obj.getClass()) return false;
+            ModdedBook other = (ModdedBook) obj;
+            if (item == null) {
+                if (other.item != null) return false;
+            } else if (!item.equals(other.item)) return false;
+            return true;
+        }
     }
     
     public void add(String handlerType, String itemString, boolean matchDamage, boolean matchNBT) {
@@ -44,5 +63,25 @@ public class ModdedBooks {
 
     public ArrayList<ModdedBook> getList() {
         return books;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((books == null) ? 0 : books.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        ModdedBooks other = (ModdedBooks) obj;
+        if (books == null) {
+            if (other.books != null) return false;
+        } else if (!books.equals(other.books)) return false;
+        return true;
     }
 }
