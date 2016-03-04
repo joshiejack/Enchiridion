@@ -284,6 +284,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 	
 	//Helper Editable
 	private static class WrappedEditable implements ITextEditable {
+	    private String temporaryField;
 		private String fieldName;
 		
 		public WrappedEditable(String fieldName) {
@@ -292,33 +293,35 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
 		@Override
 		public String getTextField() {
-			try {		
-				Field f = button.action.getClass().getField(fieldName);
-				//Special case pageNumber
-				if (fieldName.equals("pageNumber")) {
-					int number = f.getInt(button.action);
-					return "" + (number + 1);
-				} else return "" + f.get(button.action);
-			} catch (Exception e) {}
-			
-			return "";
+		    if (temporaryField == null) {
+		        try {
+		            Field f = button.action.getClass().getField(fieldName);
+		            if (fieldName.equals("pageNumber")) {
+		                temporaryField = "" + (f.getInt(button.action) + 1);
+		            } else temporaryField = "" + f.get(button.action);
+		        } catch (Exception e) {}
+		    }
+		    
+		    return temporaryField;
 		}
 
 		@Override
 		public void setTextField(String text) {
-			try {
-				Field f = button.action.getClass().getField(fieldName);
-				if (f.getType() == int.class) {
-					Integer number = Integer.parseInt(text);
-					//Special case pageNumber
-					if (fieldName.equals("pageNumber")) {
-						number -= 1;
-					}
-
-					f.set(button.action, number);
-				} else f.set(button.action, text);
-			} catch (Exception e) {}
+		    temporaryField = text;
+		    
+		    try {
+		        Field f = button.action.getClass().getField(fieldName);
+		        if (f.getType() == int.class) {
+    		        try {
+    		            Integer number = Integer.parseInt(temporaryField);
+    		            if (fieldName.equals("pageNumber")) {
+    		                number -= 1;
+    		            }
+    		            
+    		            f.set(button.action, number);
+    		        } catch (Exception e) { f.set(button.action, 0); }
+		        } else f.set(button.action, text);
+		    } catch (Exception e) {}
 		}
-		
 	}
 }

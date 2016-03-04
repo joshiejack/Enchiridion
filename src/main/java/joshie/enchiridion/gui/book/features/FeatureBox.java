@@ -2,8 +2,11 @@ package joshie.enchiridion.gui.book.features;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
+import joshie.enchiridion.gui.book.GuiSimpleEditor;
+import joshie.enchiridion.gui.book.GuiSimpleEditorColor;
+import joshie.lib.editables.IColorable;
 
-public class FeatureBox extends FeatureAbstract {
+public class FeatureBox extends FeatureAbstract implements IColorable {
     public String color;
     public transient int colorI;
     
@@ -28,10 +31,33 @@ public class FeatureBox extends FeatureAbstract {
 	}
 	
 	@Override
-	public void update(IFeatureProvider position) {
+    public boolean getAndSetEditMode() {
+        GuiSimpleEditor.INSTANCE.setEditor(GuiSimpleEditorColor.INSTANCE.setColorable(this));     
+        return false;
+    }
+	
+	private void attemptToParseColor() {
+	    int previousColor = this.colorI;
+	    if (!attemptToParseString(color)) {
+	        String doubled = color.replaceAll(".", "$0$0");
+	        if (!attemptToParseString(doubled)) {
+	            if(!attemptToParseString(doubled.replace("#", ""))) {
+	                this.colorI = previousColor;
+	            }
+	        }
+	    }
+	}
+	
+	private boolean attemptToParseString(String string) {
 	    try {
-            colorI = (int) Long.parseLong(color, 16);
-        } catch (Exception e) {}
+	        colorI = (int) Long.parseLong(string, 16);
+	        return true;
+	    } catch (Exception e) { return false; }
+	}
+	
+	@Override
+	public void update(IFeatureProvider position) {
+	    attemptToParseColor();
 		
 		int xPos = position.getX();
 		int yPos = position.getY();
@@ -45,5 +71,16 @@ public class FeatureBox extends FeatureAbstract {
     @Override
     public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
     	EnchiridionAPI.draw.drawRectangle(left, top, right, bottom, colorI);
+    }
+    
+    @Override
+    public String getColorAsHex() {
+        return color;
+    }
+    
+    @Override
+    public void setColorAsHex(String color) {
+        this.color = color;
+        attemptToParseColor();
     }
 }

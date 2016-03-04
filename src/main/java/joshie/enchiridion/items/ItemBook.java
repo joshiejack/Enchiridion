@@ -29,9 +29,7 @@ public class ItemBook extends ItemCoreMulti {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if (player.isSneaking()) {
-		    player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, 0, 0);
-		} else player.openGui(Enchiridion.instance, GuiIDs.BOOK, world, 0, 0, 0);
+		player.openGui(Enchiridion.instance, GuiIDs.BOOK, world, 0, 0, 0);
 		return stack;
 	}
 

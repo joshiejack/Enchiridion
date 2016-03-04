@@ -582,7 +582,7 @@
           "feature": {
             "class": "joshie.enchiridion.books.features.FeatureText",
             "properties": {
-              "text": "[b]Features[/b] - [i]Box[/i]\r\nBoxes are also very basic, just a simple shape where you can set the colour. Nothing much to explain!\r\n\r\n[b]Features[/b] - [i]Item[/i]\r\nThe item feature allows you to display any minecraft item you desire. On the left hand side while they are selected you can see a list of items. You can scroll up and down this list, or search. If you can\u0027t find the item you want to display, simply put it in your inventory and then reopen the book. You should be able to find it at the bottom of the list. ",
+              "text": "[b]Features[/b] - [i]Box[/i]\r\nBoxes are also very basic, just a simple shape where you can set the colour. If you want to use your own colour, put the hex code in the search bar.\r\n\r\n[b]Features[/b] - [i]Item[/i]\r\nThe item feature allows you to display any minecraft item you desire. On the left hand side while they are selected you can see a list of items. You can scroll up and down this list, or search. If you can\u0027t find the item you want to display, simply put it in your inventory and then reopen the book. You should be able to find it at the bottom of the list. ",
               "size": 1.0
             }
           },
