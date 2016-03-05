@@ -39,6 +39,11 @@ public class ModSupport {
         books.add("writeable", "minecraft:writable_book", false, false);
         books.add("rightclick", "minecraft:written_book", false, false);
         books.add("rightclick", "Thaumcraft:thaumonomicon", false, false);
+        books.add("rightclick", "Botania:lexicon", false, false);
+        books.add("rightclick", "aura:lexicon", false, false);
+        books.add("rightclick", "totemic:totempedia", false, false);
+        books.add("rightclick", "openblocks:infoBook", false, false);
+        books.add("rightclick", "opencomputers:tool 4", true, false);
         books.add("warpbook", "warpbook:warpbook", false, false);
 
         try {

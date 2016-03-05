@@ -29,6 +29,7 @@ import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonHelper;
 import joshie.enchiridion.json.BookIconTemplate;
 import joshie.enchiridion.json.BookIconTemplate.Icons;
+import joshie.enchiridion.lib.EInfo;
 import joshie.lib.helpers.ClientHelper;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -146,7 +147,7 @@ public class BookRegistry implements ItemMeshDefinition {
     	String language = book.getLanguageKey() == null ? "en_US" : book.getLanguageKey();
     	translations.put(language, book);
     	
-    	String id = book.getModID() == null || book.getModID().equals("") ? "enchiridion" : "enchiridion";
+    	String id = book.getModID() == null || book.getModID().equals("") ? EInfo.MODPATH : book.getModID();
         ModelResourceLocation location = new ModelResourceLocation(new ResourceLocation(id, book.getUniqueName()), "inventory");
         ModelBakery.registerItemVariants(ECommonProxy.book, location);
         locations.put(book.getUniqueName(), location);
@@ -154,8 +155,8 @@ public class BookRegistry implements ItemMeshDefinition {
         //Now that the book has been registered, we should go and check if the it has a corresponding json for it's icon,
         //If it does not, then we should create this json ourselves using the default enchiridion icon
        //Create the json for books which don't have the json already
-       if (book.getModID().equals(null) || book.getModID().equals("")) {
-           File iconJson = FileHelper.getIconsDirectory();
+       if (book.getModID() == null || book.getModID().equals("")) {
+           File iconJson = FileHelper.getIconsJSONForBook(book);
            if (!iconJson.exists()) {
         	   try {
         		   BookIconTemplate template = new BookIconTemplate();

@@ -43,7 +43,6 @@ public class GuiBookCreate extends GuiScreen implements ITextEditable {
 			stack.setTagCompound(new NBTTagCompound());
             stack.getTagCompound().setString("identifier", sanitized);
             BookRegistry.INSTANCE.register(book); //Register the book
-            GuiBook.INSTANCE.setBook(book, true); //Set the gui to it ahead of time
             GuiBook.INSTANCE.onGuiClosed(); //Save the data to json
 		}
 	}

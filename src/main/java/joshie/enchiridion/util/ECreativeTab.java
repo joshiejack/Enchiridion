@@ -1,6 +1,7 @@
 package joshie.enchiridion.util;
 
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.lib.EInfo;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -9,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ECreativeTab extends CreativeTabs {
-    public static ECreativeTab enchiridion = new ECreativeTab("enchiridion");
+    public static ECreativeTab enchiridion = new ECreativeTab(EInfo.MODPATH);
     public final Item icon = Items.writable_book;
 
     public ECreativeTab(String label) {

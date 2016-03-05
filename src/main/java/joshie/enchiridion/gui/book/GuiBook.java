@@ -27,16 +27,17 @@ import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonHelper;
 import joshie.enchiridion.helpers.JumpHelper;
+import joshie.enchiridion.util.ELocation;
 import joshie.lib.editables.TextEditor;
 import joshie.lib.helpers.ClientHelper;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiBook extends GuiBase implements IBookHelper {
-    private static final ResourceLocation legacyCoverL = new ResourceLocation("enchiridion", "textures/books/guide_cover_left.png");
-    private static final ResourceLocation legacyCoverR = new ResourceLocation("enchiridion", "textures/books/guide_cover_right.png");
-    private static final ResourceLocation legacyLeft = new ResourceLocation("enchiridion", "textures/books/guide_page_left.png");
-    private static final ResourceLocation legacyRight = new ResourceLocation("enchiridion", "textures/books/guide_page_right.png");
+    private static final ResourceLocation legacyCoverL = new ELocation("guide_cover_left");
+    private static final ResourceLocation legacyCoverR = new ELocation("guide_cover_right");
+    private static final ResourceLocation legacyLeft = new ELocation("guide_page_left");
+    private static final ResourceLocation legacyRight = new ELocation("guide_page_right");
     public static final GuiBook INSTANCE = new GuiBook(); //Instane of this book
 
     //Page Number Cache
