@@ -1,8 +1,7 @@
-package joshie.enchiridion.items;
+package joshie.enchiridion;
 
 import java.util.List;
 
-import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.lib.GuiIDs;
@@ -16,13 +15,17 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class ItemBook extends Item {
-    public ItemBook() {
+public class ItemEnchiridion extends Item {
+    public ItemEnchiridion() {
         setHasSubtypes(true);
     }
     
 	@Override
     public String getItemStackDisplayName(ItemStack stack) {
+	    if (stack.getItemDamage() == 1) {
+	        return Enchiridion.translate("library");
+	    }
+	    
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
             return Enchiridion.translate("new");
         }
@@ -33,12 +36,15 @@ public class ItemBook extends Item {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		player.openGui(Enchiridion.instance, GuiIDs.BOOK, world, 0, 0, 0);
+	    if (stack.getItemDamage() == 1) player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, 0, 0);
+	    else player.openGui(Enchiridion.instance, GuiIDs.BOOK, world, 0, 0, 0);
 		return stack;
 	}
 
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
+	    if (EConfig.libraryAsItem) list.add(new ItemStack(item, 1, 1));
+	    
 		list.add(new ItemStack(item));
 
 		for (String book : BookRegistry.INSTANCE.getUniqueNames()) {

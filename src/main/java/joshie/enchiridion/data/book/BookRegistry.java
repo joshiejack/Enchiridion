@@ -17,6 +17,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Level;
 
+import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
@@ -209,8 +210,11 @@ public class BookRegistry implements ItemMeshDefinition {
 
 	@Override
 	public ModelResourceLocation getModelLocation(ItemStack stack) {
-	    IBook book = getBook(stack);
-		if (book == null) return dflt;
-		else return locations.get(book.getUniqueName());
+	    if (stack.getItemDamage() == 1) return EClientProxy.library;
+	    else {
+    	    IBook book = getBook(stack);
+    		if (book == null) return dflt;
+    		else return locations.get(book.getUniqueName());
+	    }
 	}
 }

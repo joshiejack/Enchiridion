@@ -81,7 +81,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 	
     @Override
     public void draw(int mouseX, int mouseY) {
-    	drawBoxLabel("Select Action", 9);
+    	drawBoxLabel(Enchiridion.translate("select.action"), 9);
     	int xPos = xPosStart;
     	int yPos = 13;
     	for (IButtonAction action: sorted) {
@@ -100,7 +100,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	//Draw the unhovered button selector
     	int colorI = 0x00000000;
     	int colorB = 0xFFB0A483;
-    	drawBoxLabel("Select Unhovered", yPos + 20);
+    	drawBoxLabel(Enchiridion.translate("select.unhover"), yPos + 20);
     	drawImage(arrow_left_off, 4, yPos + 32, 22, yPos + 42);
     	drawImage(arrow_right_off, 24, yPos + 32, 42, yPos + 42);
     	if (button != null && button.deflt.resource.equals(arrow_left_off)) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
@@ -112,13 +112,13 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	}
     		
     	drawBorderedRectangle(45, yPos + 31, 80, yPos + 43, colorI, colorB);
-    	drawSplitScaledString("[b]Custom[/b]", 53, yPos + 35, 0xFFFFFFFF, 0.5F);
+    	drawSplitScaledString("[b]" + Enchiridion.translate("select.custom") + "[/b]", 53, yPos + 35, 0xFFFFFFFF, 0.5F);
     	
     	//Draw the hovered button selector
     	yPos+= 25;
     	colorI = 0x00000000;
     	colorB = 0xFFB0A483;
-    	drawBoxLabel("Select Hovered", yPos + 20);
+    	drawBoxLabel(Enchiridion.translate("select.hover"), yPos + 20);
     	drawImage(arrow_left_on, 4, yPos + 32, 22, yPos + 42);
     	drawImage(arrow_right_on, 24, yPos + 32, 42, yPos + 42);
     	if (button != null && button.hover.resource.equals(arrow_left_on)) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
@@ -130,7 +130,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	}
     		
     	drawBorderedRectangle(45, yPos + 31, 80, yPos + 43, colorI, colorB);
-    	drawSplitScaledString("[b]Custom[/b]", 53, yPos + 35, 0xFFFFFFFF, 0.5F);
+    	drawSplitScaledString("[b]" + Enchiridion.translate("select.custom") + "[/b]", 53, yPos + 35, 0xFFFFFFFF, 0.5F);
     	
     	yPos+= 25;
     	//Draw the extra information for the actions

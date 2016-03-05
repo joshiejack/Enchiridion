@@ -1,26 +1,10 @@
 package joshie.enchiridion.gui.book;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-
 import joshie.enchiridion.EConfig;
-import joshie.enchiridion.Enchiridion;
-import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
-import joshie.enchiridion.gui.book.features.FeatureImage;
-import joshie.enchiridion.helpers.FileCopier;
-import joshie.enchiridion.helpers.FileHelper;
-import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.util.IColorable;
-import joshie.enchiridion.util.ITextEditable;
-import joshie.enchiridion.util.PenguinFont;
-import joshie.enchiridion.util.TextEditor;
 
 public class GuiSimpleEditorColor extends GuiSimpleEditorAbstract {
     public static final GuiSimpleEditorColor INSTANCE = new GuiSimpleEditorColor();
@@ -93,7 +77,7 @@ public class GuiSimpleEditorColor extends GuiSimpleEditorAbstract {
         drawBorderedRectangle(4, 11, 81, 118, 0xFF392F27, 0xFF392F27);
         for (int x = 0; x < 21; x ++) {
             for (int y = 0; y < 15; y++) {
-                drawBorderedRectangle((y * 5) + 5, (x * 5) + 12, (y * 5) + 10, (x * 5) + 17, colorsI[x][y], colorsI[x][y]);
+                drawRectangle((y * 5) + 5, (x * 5) + 12, (y * 5) + 10, (x * 5) + 17, colorsI[x][y]);
             }
         }
     }

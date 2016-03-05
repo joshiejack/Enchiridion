@@ -46,6 +46,7 @@ public class EResourcePack implements IResourcePack {
 	    String path = location.getResourcePath();
 	    if (path.startsWith("textures/books")) return false;
 	    if (path.contains("enchiridion.json")) return false;
+	    if (path.contains("library.json")) return false;
 	    return true;
 	}
 

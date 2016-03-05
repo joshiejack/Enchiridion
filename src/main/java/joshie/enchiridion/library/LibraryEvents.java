@@ -69,6 +69,7 @@ public class LibraryEvents {
     //Opening the key binding
     @SubscribeEvent
     public void onKeyPress(KeyInputEvent event) {
+        if (EClientProxy.libraryKeyBinding == null) return; //If the keybinding was never created, skip this
         if (GameSettings.isKeyDown(EClientProxy.libraryKeyBinding) && Minecraft.getMinecraft().inGameHasFocus && !Keyboard.isKeyDown(Keyboard.KEY_F3)) {
             PacketHandler.sendToServer(new PacketOpenLibrary()); //Let the server know!
             MCClientHelper.getPlayer().openGui(Enchiridion.instance, GuiIDs.LIBRARY, MCClientHelper.getWorld(), 0, 0, 0);

@@ -35,7 +35,7 @@ public class ModSupport {
 
     private static void setDefaults(String serverName) {
         books = new ModdedBooks(); //Create the books
-        books.add("enchiridion", "enchiridion:book", false, false);
+        books.add("enchiridion", "enchiridion:book", true, false);
         books.add("writeable", "minecraft:writable_book", false, false);
         books.add("rightclick", "minecraft:written_book", false, false);
         books.add("rightclick", "Thaumcraft:thaumonomicon", false, false);

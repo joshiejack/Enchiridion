@@ -1,6 +1,11 @@
 enchiridion.creative=Enchiridion
+enchiridion.library=Library
 enchiridion.new=Create NEW Book
 enchiridion.layers=Layers
+enchiridion.custom=Custom
+enchiridion.select.action=Select Action
+enchiridion.select.unhover=Select Unhovered
+enchiridion.select.hover=Select Hovered
 enchiridion.button.text=Insert Text
 enchiridion.button.picture=Insert Image
 enchiridion.button.arrow=Insert Button

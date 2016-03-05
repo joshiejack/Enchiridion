@@ -34,6 +34,7 @@ import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedVanilla;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessOre;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessVanilla;
 import joshie.enchiridion.gui.library.GuiLibrary;
+import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.library.handlers.ComputerCraftHandler;
@@ -42,9 +43,12 @@ import joshie.enchiridion.library.handlers.WriteableBookHandler.GuiScreenWriteab
 import joshie.enchiridion.util.EResourcePack;
 import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.resources.IResourcePack;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -53,6 +57,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class EClientProxy extends ECommonProxy {
     public static KeyBinding libraryKeyBinding;
+    public static ModelResourceLocation library;
     
 	@Override
 	public void onConstruction() {
@@ -64,7 +69,6 @@ public class EClientProxy extends ECommonProxy {
 	
     @Override
     public void setupClient() {
-        PenguinFont.load();
         LibraryHelper.resetClient();
         BookRegistry.INSTANCE.loadBooksFromConfig();
     	ModelLoader.setCustomMeshDefinition(ECommonProxy.book, BookRegistry.INSTANCE);
@@ -106,10 +110,22 @@ public class EClientProxy extends ECommonProxy {
         
         //Register the Enchiridion Book
         EnchiridionAPI.instance.registerModWithBooks("enchiridion");
+        //Setup the models for the library
+        if (EConfig.libraryAsItem) {
+            library = new ModelResourceLocation(new ResourceLocation(EInfo.MODPATH, "library"), "inventory");
+            ModelBakery.registerItemVariants(ECommonProxy.book, library);
+        }
         
         //Register the keybinding
-        libraryKeyBinding = new KeyBinding("enchiridion.key.library", Keyboard.KEY_L, "key.categories.misc");
-        ClientRegistry.registerKeyBinding(libraryKeyBinding);
+        if (EConfig.libraryAsHotkey) {
+            libraryKeyBinding = new KeyBinding("enchiridion.key.library", Keyboard.KEY_L, "key.categories.misc");
+            ClientRegistry.registerKeyBinding(libraryKeyBinding);
+        }
+    }
+    
+    @Override
+    public void setupFont() {
+        PenguinFont.load();
     }
     
     /** GUI HANDLING **/

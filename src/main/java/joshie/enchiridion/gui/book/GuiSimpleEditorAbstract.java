@@ -13,6 +13,10 @@ public abstract class GuiSimpleEditorAbstract extends AbstractGuiOverlay {
 		EnchiridionAPI.draw.drawBorderedRectangle(EConfig.editorXPos + x, EConfig.toolbarYPos + y, EConfig.editorXPos + x2, EConfig.toolbarYPos + y2, colorI, colorB);
 	}
 	
+	public void drawRectangle(int x, int y, int x2, int y2, int colorI) {
+        EnchiridionAPI.draw.drawRectangle(EConfig.editorXPos + x, EConfig.toolbarYPos + y, EConfig.editorXPos + x2, EConfig.toolbarYPos + y2, colorI);
+    }
+	
 	public void drawSplitScaledString(String text, int x, int y, int color, float scale) {
 		EnchiridionAPI.draw.drawSplitScaledString(text, EConfig.editorXPos + x, EConfig.toolbarYPos + y, 155, color, scale);
 	}

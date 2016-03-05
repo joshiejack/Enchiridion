@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Level;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.gui.library.ContainerLibrary;
-import joshie.enchiridion.items.ItemBook;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryEvents;
 import joshie.enchiridion.library.LibraryHelper;
@@ -37,8 +36,10 @@ import net.minecraftforge.fml.relauncher.Side;
 public abstract class ECommonProxy implements IGuiHandler {
     public static Item book;
     
+    public void onConstruction() {}
+    
     public void preInit() {
-        book = new ItemBook().setCreativeTab(ECreativeTab.enchiridion).setHasSubtypes(true).setUnlocalizedName("book");
+        book = new ItemEnchiridion().setCreativeTab(ECreativeTab.enchiridion).setHasSubtypes(true).setUnlocalizedName("book");
         EnchiridionAPI.instance = new EAPIHandler();
         EnchiridionAPI.library = new LibraryRegistry();
         EnchiridionAPI.library.registerBookHandler(new EnchiridionBookHandler()); //Enchiridion
@@ -75,8 +76,7 @@ public abstract class ECommonProxy implements IGuiHandler {
     }
 
     public void setupClient() {}
-
-	public void onConstruction() {}
+	public void setupFont() {}
 	
 	
 	/** GUI HANDLING **/
@@ -88,4 +88,6 @@ public abstract class ECommonProxy implements IGuiHandler {
             return new ContainerLibrary(player.inventory, LibraryHelper.getServerLibraryContents(player));
         } else return null;
     }
+
+    
 }
