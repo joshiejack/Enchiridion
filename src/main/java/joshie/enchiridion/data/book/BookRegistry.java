@@ -90,8 +90,7 @@ public class BookRegistry implements ItemMeshDefinition {
                         String json = IOUtils.toString(zipfile.getInputStream(zipentry));
                         IBook data = register(GsonHelper.getModifiedGson().fromJson(json, Book.class).setModID(modid));
                         Enchiridion.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.getUniqueName() + " for the language: " + data.getLanguageKey());
-                    } catch (Exception e) {
-                    }
+                    } catch (Exception e) {}
                 }
             }
 

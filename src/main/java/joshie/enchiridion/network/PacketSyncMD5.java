@@ -53,12 +53,12 @@ public class PacketSyncMD5 extends PacketSyncStringArray {
     @Override
     public void receivedDataRequest(EntityPlayer player) {
         if (player.worldObj.isRemote && EConfig.allowDataAndImagesFromServers) {
-            Enchiridion.log(Level.INFO, "Client received this request for data");
+            if (EConfig.debugMode) Enchiridion.log(Level.INFO, "Client received this request for data");
             for (int i = 0; i < SyncHelper.md5requests.length; i++) {
                 PacketHandler.sendToServer(new PacketSyncMD5(SEND_DATA, SyncHelper.md5requests[i], i));
             }
         } else if (EConfig.syncDataAndImagesToClients) {
-            Enchiridion.log(Level.INFO, "Server received this request for data");
+            if (EConfig.debugMode) Enchiridion.log(Level.INFO, "Server received this request for data");
             for (int i = 0; i < SyncHelper.servermd5.length; i++) {
                 PacketHandler.sendToClient(new PacketSyncMD5(SEND_DATA, SyncHelper.servermd5[i], i), player);
             }
@@ -72,7 +72,6 @@ public class PacketSyncMD5 extends PacketSyncStringArray {
                 tempClient[integer] = text;
                 //Now check if any parts are null
                 for (String s : tempClient) {
-                    //Enchiridion.log(Level.INFO, "String == " + s);
                     if (s == null) {
                         return;
                     }
