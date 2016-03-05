@@ -32,7 +32,7 @@ public class LibraryCommand implements ICommand {
 
     @Override
     public List getCommandAliases() {
-        return null;
+        return new ArrayList();
     }
 
     @Override

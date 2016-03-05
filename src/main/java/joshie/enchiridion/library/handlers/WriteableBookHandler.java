@@ -24,7 +24,7 @@ public class WriteableBookHandler implements IBookHandler {
     }
 
     @Override
-    public void handle(ItemStack stack, EntityPlayer player, int slotID) {
+    public void handle(ItemStack stack, EntityPlayer player, int slotID, boolean isShiftPressed) {
         player.openGui(Enchiridion.instance, GuiIDs.WRITEABLE, player.worldObj, slotID, 0, 0);
     }
     

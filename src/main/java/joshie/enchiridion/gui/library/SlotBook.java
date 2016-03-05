@@ -5,6 +5,7 @@ import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.network.PacketHandleBook;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.lib.gui.SlotSpecial;
+import joshie.lib.helpers.ClientHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -29,8 +30,12 @@ public class SlotBook extends SlotSpecial {
             ItemStack stack = slot.getStack();
             IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(stack);
             if (handler != null) {
-                if (player.worldObj.isRemote) PacketHandler.sendToServer(new PacketHandleBook(slot.slotNumber));
-                handler.handle(stack, player, slot.slotNumber);
+                if (player.worldObj.isRemote) {
+                    boolean isShiftPressed = ClientHelper.isShiftPressed();
+                    PacketHandler.sendToServer(new PacketHandleBook(slot.slotNumber, isShiftPressed));
+                    handler.handle(stack, player, slot.slotNumber, isShiftPressed);
+                }
+                
                 return null;
             }
         }

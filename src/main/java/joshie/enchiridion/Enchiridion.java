@@ -16,7 +16,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import joshie.enchiridion.helpers.SyncHelper;
+import joshie.enchiridion.library.LibraryCommand;
 import joshie.enchiridion.library.LibraryHelper;
+import net.minecraft.command.ICommand;
+import net.minecraft.command.ICommandManager;
+import net.minecraft.command.ServerCommandManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.common.Mod;
@@ -24,7 +28,6 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
@@ -55,6 +58,13 @@ public class Enchiridion {
     public void onServerStarting(FMLServerStartingEvent event) {
         LibraryHelper.resetServer(MinecraftServer.getServer().worldServers[0]);
         SyncHelper.resetSyncing();
+        //Register commands
+        
+        ICommandManager manager = event.getServer().getCommandManager();
+        if(manager instanceof ServerCommandManager) {
+            ServerCommandManager serverCommandManager = ((ServerCommandManager)manager);
+            serverCommandManager.registerCommand(new LibraryCommand());
+        }
     }
 
     //Universal log helper

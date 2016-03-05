@@ -13,7 +13,8 @@ public interface IBookHandler {
      *  @stack the latest item
      *  @player the player right clicking
      *  @slotID the slot that this item is stored in the library
+     *  @isShiftPressed whether the shift key is being held down on this book while right clicking
      *          you can use #EnchiridionAPI.library.getInventory to grab a the iinventory for the library
      *          which will allow you to get the stacks or set the stacks**/
-    public void handle(ItemStack stack, EntityPlayer player, int slotID);
+    public void handle(ItemStack stack, EntityPlayer player, int slotID, boolean isShiftPressed);
 }

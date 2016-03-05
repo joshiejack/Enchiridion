@@ -15,7 +15,7 @@ public class EnchiridionBookHandler implements IBookHandler {
     }
 
     @Override
-    public void handle(ItemStack stack, EntityPlayer player, int slotID) {
+    public void handle(ItemStack stack, EntityPlayer player, int slotID, boolean isShiftPressed) {
         if (player.worldObj.isRemote) {
             GuiBook.INSTANCE.setBook(BookRegistry.INSTANCE.getBook(stack), false);
         }

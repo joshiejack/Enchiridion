@@ -2,18 +2,22 @@ package joshie.enchiridion;
 
 import static joshie.enchiridion.Enchiridion.instance;
 
+import org.apache.logging.log4j.Level;
+
 import joshie.enchiridion.api.EnchiridionAPI;
+import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.gui.GuiHandler;
 import joshie.enchiridion.items.ItemBook;
 import joshie.enchiridion.library.LibraryEvents;
 import joshie.enchiridion.library.LibraryRegistry;
 import joshie.enchiridion.library.handlers.EnchiridionBookHandler;
 import joshie.enchiridion.library.handlers.RightClickBookHandler;
+import joshie.enchiridion.library.handlers.WarpBookHandler;
 import joshie.enchiridion.library.handlers.WriteableBookHandler;
 import joshie.enchiridion.network.PacketHandleBook;
 import joshie.enchiridion.network.PacketHandler;
-import joshie.enchiridion.network.PacketOpenLibrary;
 import joshie.enchiridion.network.PacketLibraryCommand;
+import joshie.enchiridion.network.PacketOpenLibrary;
 import joshie.enchiridion.network.PacketSetLibraryBook;
 import joshie.enchiridion.network.PacketSyncFile;
 import joshie.enchiridion.network.PacketSyncLibraryAllowed;
@@ -35,10 +39,11 @@ public class ECommonProxy {
         book = new ItemBook().setCreativeTab(ECreativeTab.enchiridion).setHasSubtypes(true).setUnlocalizedName("book");
         EnchiridionAPI.instance = new EAPIHandler();
         EnchiridionAPI.library = new LibraryRegistry();
-        EnchiridionAPI.library.registerBookHandler(new EnchiridionBookHandler());
-        EnchiridionAPI.library.registerBookHandler(new WriteableBookHandler());
-        EnchiridionAPI.library.registerBookHandler(new RightClickBookHandler());
-        EnchiridionAPI.library.registerBookHandlerForStack("enchiridion", new ItemStack(book), false, false);
+        EnchiridionAPI.library.registerBookHandler(new EnchiridionBookHandler()); //Enchiridion
+        EnchiridionAPI.library.registerBookHandler(new WriteableBookHandler()); //Writeable Books
+        EnchiridionAPI.library.registerBookHandler(new RightClickBookHandler()); //Default Handler
+        attemptToRegisterModdedBookHandler(WarpBookHandler.class);
+        
         
         //Register events
         FMLCommonHandler.instance().bus().register(new LibraryEvents());
@@ -56,6 +61,13 @@ public class ECommonProxy {
         
         //Prepare the client for shizz
         setupClient();
+    }
+    
+    public void attemptToRegisterModdedBookHandler(Class clazz) {
+        try {
+            Object o = clazz.newInstance(); //Let's try this!
+            EnchiridionAPI.library.registerBookHandler((IBookHandler) o);
+        } catch (Exception e) { Enchiridion.log(Level.INFO, "Enchiridion could not create an instance of " + clazz.getName() + " as the mods this handler relies on, are not supplied");}
     }
 
     public void setupClient() {}
