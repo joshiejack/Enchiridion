@@ -249,10 +249,11 @@ public class Book implements IBook {
     @Override
     public void addInformation(List<String> tooltip) {
         if (information == null) {
+            if (displayInfo == null) displayInfo = "";
             String[] split = displayInfo.split("/n");
             information = new ArrayList();
             for (String s: split) {
-                information.add(s);
+                if (!s.equals("")) information.add(s);
             }
         }
         
