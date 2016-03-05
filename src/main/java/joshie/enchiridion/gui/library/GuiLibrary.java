@@ -1,7 +1,11 @@
 package joshie.enchiridion.gui.library;
 
+import org.apache.logging.log4j.Level;
+
+import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.util.ELocation;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -13,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiLibrary extends GuiContainer {
     private static final ResourceLocation location = new ELocation("library");
+    private ScaledResolution scaledresolution;
     public final int xSize = 430;
     public final int ySize = 217;
     public IInventory library;
@@ -20,6 +25,7 @@ public class GuiLibrary extends GuiContainer {
 
     public GuiLibrary(InventoryPlayer playerInventory, IInventory library) {
         super(new ContainerLibrary(playerInventory, library));
+        scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
     }
 
     @Override
@@ -31,6 +37,12 @@ public class GuiLibrary extends GuiContainer {
 
     //Helper
     private void drawImage(ResourceLocation resource, int left, int top, int right, int bottom) {
+        //Fix the position in even scale factors
+        if (scaledresolution.getScaleFactor() % 2 == 0) {
+            top--;
+            bottom--;
+        }
+
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         Tessellator tessellator = Tessellator.getInstance();

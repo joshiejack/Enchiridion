@@ -31,8 +31,9 @@ public class ContainerLibrary extends Container {
         
         //Centre Slots
         for (int i = 0; i < 5; i++) {
+            int y = i == 0 ? 1: 0;
             for (int j = 0; j < 7; j++) {
-                addSlotToContainer(new SlotBook(library, 30 + j + (i * 7),  26 + (j * 18), -1 + (i * 23)));
+                addSlotToContainer(new SlotBook(library, 30 + j + (i * 7),  26 + (j * 18), -1 + (i * 23) - y));
             }
         }
         

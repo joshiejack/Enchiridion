@@ -12,7 +12,7 @@ import net.minecraftforge.common.config.Configuration;
 public class EConfig {
     public static boolean allowDataAndImagesFromServers;
     public static boolean syncDataAndImagesToClients;
-    public static boolean debugMode = true;
+    public static boolean debugMode = false;
     public static boolean enableEditing;
     public static boolean resourceReload;
     public static boolean offlineMode;

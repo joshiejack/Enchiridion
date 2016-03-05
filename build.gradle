@@ -1,4 +1,3 @@
-
 // For those who want the bleeding edge
 buildscript {
     repositories {
@@ -13,13 +12,9 @@ buildscript {
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
-
-/*
-// for people who want stable - not yet functional for MC 1.8.8 - we require the forgegradle 2.1 snapshot
 plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
-*/
 
 repositories {
   maven {
@@ -27,15 +22,22 @@ repositories {
   }
 }
 
-version = "3.0"
+ext.buildnumber=""
+if (System.getenv().BUILD_NUMBER) {
+    ext.buildnumber="-" + System.getenv().BUILD_NUMBER
+}
+
+version = "${minecraft_version}-${mod_version}${buildnumber}"
 group= "uk.joshiejack.enchiridion"
 archivesBaseName = "Enchiridion"
 
 minecraft {
-    version = "1.8.9-11.15.1.1764"
+    version = "${minecraft_version}-${forge_version}"
     runDir = "run"
     mappings = "stable_20"
-    useDepAts = true
+    
+    replace "@VERSION@", "${mod_version}"
+    replaceIn "EInfo.java"
 }
 
 dependencies {
@@ -55,5 +57,11 @@ processResources
         
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
+    }
+}
+
+jar {
+    manifest {
+        attributes 'FMLAT': 'enchiridion_at.cfg'
     }
 }
