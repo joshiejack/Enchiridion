@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import joshie.enchiridion.network.PacketHandler;
-import joshie.enchiridion.network.PacketReloadLibrary;
+import joshie.enchiridion.network.PacketLibraryCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -40,7 +40,7 @@ public class LibraryCommand implements ICommand {
         if (parameters == null || parameters.length != 1) return;
         try {
             if (parameters[0].equals("refresh")) {
-                PacketHandler.sendToServer(new PacketReloadLibrary());
+                PacketHandler.sendToServer(new PacketLibraryCommand("refresh"));
             } else if (parameters[0].equals("lang")) {
                 for (ModContainer mod : Loader.instance().getActiveModList()) {
                     LanguageRegistry.instance().loadLanguagesFor(mod, Side.SERVER);
@@ -48,6 +48,10 @@ public class LibraryCommand implements ICommand {
                 }
             } else if (parameters[0].equals("resources")) {
                 Minecraft.getMinecraft().scheduleResourcesRefresh();
+            } else if (parameters[0].equals("reset")) {
+                PacketHandler.sendToServer(new PacketLibraryCommand("reset"));
+            } else if (parameters[0].equals("clear")) {
+                PacketHandler.sendToServer(new PacketLibraryCommand("clear"));
             }
         } catch (NumberFormatException e) {}
     }

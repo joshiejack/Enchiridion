@@ -9,6 +9,7 @@ import joshie.enchiridion.gui.library.ContainerLibrary;
 import joshie.enchiridion.gui.library.GuiLibrary;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryHelper;
+import joshie.enchiridion.library.handlers.WriteableBookHandler.GuiScreenWriteable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -23,8 +24,10 @@ public class GuiHandler implements IGuiHandler {
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        if (ID == GuiIDs.LIBRARY) {
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int integer1, int y, int z) {
+        if (ID == GuiIDs.WRITEABLE) {
+            return new GuiScreenWriteable(player, integer1);
+        }else if (ID == GuiIDs.LIBRARY) {
             return new GuiLibrary(player.inventory, LibraryHelper.getClientLibraryContents());
         } else if (ID == GuiIDs.BOOK_FORCE) {
             return GuiBook.INSTANCE;

@@ -1,5 +1,7 @@
 package joshie.enchiridion.library;
 
+import java.util.Collection;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
@@ -18,6 +20,10 @@ public class LibraryProxyServer extends LibraryProxy {
     @Override
     public LibraryInventory getLibraryInventory(EntityPlayer player) {
         return data.getLibraryContents((EntityPlayerMP) player);
+    }
+    
+    public Collection<LibraryInventory> getAllInventories() {
+        return data.getPlayerData();
     }
     
     public void markDirty() {

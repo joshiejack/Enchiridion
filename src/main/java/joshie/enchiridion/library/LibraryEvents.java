@@ -47,7 +47,9 @@ public class LibraryEvents {
             EntityPlayerMP mp = (EntityPlayerMP) player;
             if (!SyncHelper.playersSynced.contains(mp)) {
                 if (EConfig.debugMode) Enchiridion.log(Level.INFO, "Did you call me?");
-                PacketHandler.sendToClient(new PacketSyncLibraryContents(LibraryHelper.getServerLibraryContents(player)), mp);
+                LibraryInventory inventory = LibraryHelper.getServerLibraryContents(player);
+                inventory.addDefaultBooks();
+                PacketHandler.sendToClient(new PacketSyncLibraryContents(inventory), mp);
                 //Sync what's allowed in the library
                 String serverName = MCServerHelper.getHostName();
                 PacketHandler.sendToClient(new PacketSyncLibraryAllowed(PacketPart.SEND_HASH, serverName, ModSupport.getHashcode(serverName)), mp);

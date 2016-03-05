@@ -2,8 +2,12 @@ package joshie.enchiridion.data.library;
 
 import java.util.ArrayList;
 
+import joshie.lib.helpers.StackHelper;
+import net.minecraft.item.ItemStack;
+
 public class ModdedBooks {
     private ArrayList<ModdedBook> books = new ArrayList();
+    private ArrayList<String> freeBooks = new ArrayList();
 
     public ModdedBooks() {}
     
@@ -44,6 +48,7 @@ public class ModdedBooks {
             result = prime * result + ((item == null) ? 0 : item.hashCode());
             return result;
         }
+        
         @Override
         public boolean equals(Object obj) {
             if (this == obj) return true;
@@ -62,6 +67,16 @@ public class ModdedBooks {
     }
 
     public ArrayList<ModdedBook> getList() {
+        return books;
+    }
+    
+    
+    public ItemStack[] getFreeBooks() {
+        ItemStack[] books = new ItemStack[freeBooks.size()];
+        for (int i = 0; i < freeBooks.size(); i++) {
+            books[i] = StackHelper.getStackFromString(freeBooks.get(i));
+        }
+        
         return books;
     }
 

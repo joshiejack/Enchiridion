@@ -9,10 +9,12 @@ import joshie.enchiridion.library.LibraryEvents;
 import joshie.enchiridion.library.LibraryRegistry;
 import joshie.enchiridion.library.handlers.EnchiridionBookHandler;
 import joshie.enchiridion.library.handlers.RightClickBookHandler;
+import joshie.enchiridion.library.handlers.WriteableBookHandler;
 import joshie.enchiridion.network.PacketHandleBook;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.PacketOpenLibrary;
-import joshie.enchiridion.network.PacketReloadLibrary;
+import joshie.enchiridion.network.PacketLibraryCommand;
+import joshie.enchiridion.network.PacketSetLibraryBook;
 import joshie.enchiridion.network.PacketSyncFile;
 import joshie.enchiridion.network.PacketSyncLibraryAllowed;
 import joshie.enchiridion.network.PacketSyncLibraryContents;
@@ -34,6 +36,7 @@ public class ECommonProxy {
         EnchiridionAPI.instance = new EAPIHandler();
         EnchiridionAPI.library = new LibraryRegistry();
         EnchiridionAPI.library.registerBookHandler(new EnchiridionBookHandler());
+        EnchiridionAPI.library.registerBookHandler(new WriteableBookHandler());
         EnchiridionAPI.library.registerBookHandler(new RightClickBookHandler());
         EnchiridionAPI.library.registerBookHandlerForStack("enchiridion", new ItemStack(book), false, false);
         
@@ -43,12 +46,13 @@ public class ECommonProxy {
         
         //Register packets#
         PacketHandler.registerPacket(PacketSyncLibraryAllowed.class);
-        PacketHandler.registerPacket(PacketReloadLibrary.class);
+        PacketHandler.registerPacket(PacketLibraryCommand.class);
         PacketHandler.registerPacket(PacketSyncMD5.class);
         PacketHandler.registerPacket(PacketSyncFile.class);
         PacketHandler.registerPacket(PacketSyncLibraryContents.class, Side.CLIENT);
         PacketHandler.registerPacket(PacketOpenLibrary.class, Side.SERVER);
         PacketHandler.registerPacket(PacketHandleBook.class, Side.SERVER);
+        PacketHandler.registerPacket(PacketSetLibraryBook.class, Side.SERVER);
         
         //Prepare the client for shizz
         setupClient();

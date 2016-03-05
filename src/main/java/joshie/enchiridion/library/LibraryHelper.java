@@ -1,5 +1,7 @@
 package joshie.enchiridion.library;
 
+import java.util.Collection;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -41,6 +43,10 @@ public class LibraryHelper {
 
     public static LibraryInventory getServerLibraryContents(EntityPlayer player) {
         return theServer.getLibraryInventory(player);
+    }
+    
+    public static Collection<LibraryInventory> getAllInventories() {
+        return theServer.getAllInventories();
     }
 
     public static void markDirty() {

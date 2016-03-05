@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 public class RightClickBookHandler implements IBookHandler {
     @Override
     public String getName() {
-        return "rightClick";
+        return "rightclick";
     }
 
     @Override

@@ -12,6 +12,7 @@ import joshie.enchiridion.data.library.ModdedBooks.ModdedBook;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonHelper;
 import joshie.lib.helpers.StackHelper;
+import net.minecraft.item.ItemStack;
 
 public class ModSupport {
     private static ModdedBooks books;
@@ -30,7 +31,8 @@ public class ModSupport {
     private static void setDefaults(String serverName) {
         books = new ModdedBooks(); //Create the books
         books.add("enchiridion", "enchiridion:book", false, false);
-        books.add("rightClick", "minecraft:writable_book", false, false);
+        books.add("writeable", "minecraft:writable_book", false, false);
+        books.add("rightclick", "minecraft:written_book", false, false);
 
         try {
             //Write the json
@@ -40,6 +42,10 @@ public class ModSupport {
             writer.write(json);
             writer.close();
         } catch (Exception e) {}
+    }
+    
+    public static ItemStack[] getFreeBooks() {
+        return books.getFreeBooks();
     }
     
     private static HashMap<String, ModdedBooks> cache = new HashMap();
