@@ -41,7 +41,7 @@ public class PenguinFont extends FontRenderer {
 		return ret;
 	}
 	
-	private static final char start = '§';
+	private final static String start = "\u00a7";
 	
 	public String replaceFormatting(String text) {
 		String ret = text;
@@ -250,7 +250,7 @@ public class PenguinFont extends FontRenderer {
     }
 	
 	@Override
-	protected void doDraw(float f)
+	public void doDraw(float f)
     {
         {
             {
