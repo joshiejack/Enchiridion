@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemEnchiridion extends Item {
     public ItemEnchiridion() {
@@ -32,6 +33,16 @@ public class ItemEnchiridion extends Item {
 		
 		IBook book = BookRegistry.INSTANCE.getBook(stack);
 		return book == null ? Enchiridion.translate("new") : book.getDisplayName();
+    }
+	
+	@SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+	    if (stack.getItemDamage() != 1) {
+	        IBook book = BookRegistry.INSTANCE.getBook(stack);
+	        if (book != null) {
+	            book.addInformation(tooltip);
+	        }
+	    }
     }
 	
 	@Override

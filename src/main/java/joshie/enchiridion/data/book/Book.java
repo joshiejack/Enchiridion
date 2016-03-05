@@ -18,6 +18,7 @@ public class Book implements IBook {
 	
 	//Display Information
 	private String displayName;
+	private String displayInfo;
 	private String colorHex;
 	private String language;
 	private boolean hasCustomIcon;
@@ -48,6 +49,7 @@ public class Book implements IBook {
 	//Cached information
     private transient ResourceLocation resourceLocation;
     private transient boolean convertedColor;
+    private transient List<String> information;
     
     /** CONSTRUCTOR **/
     public Book(){}
@@ -243,4 +245,17 @@ public class Book implements IBook {
 	public void removePage(IPage page) {
 	    book.remove(page);
 	}
+	
+    @Override
+    public void addInformation(List<String> tooltip) {
+        if (information == null) {
+            String[] split = displayInfo.split("/n");
+            information = new ArrayList();
+            for (String s: split) {
+                information.add(s);
+            }
+        }
+        
+        tooltip.addAll(information);
+    }
 }

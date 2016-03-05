@@ -83,6 +83,9 @@ public interface IBook {
 	/** Set the display name for this book **/
 	public void setDisplayName(String name);
 	
+	/** Adds tooltip info **/
+    public void addInformation(List<String> tooltip);
+	
 	/** Set the color of this book **/
 	public void setColorAsInt(int color);
 	
