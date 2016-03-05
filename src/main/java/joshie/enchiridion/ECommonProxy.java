@@ -12,6 +12,7 @@ import joshie.enchiridion.library.LibraryEvents;
 import joshie.enchiridion.library.LibraryRegistry;
 import joshie.enchiridion.library.handlers.EnchiridionBookHandler;
 import joshie.enchiridion.library.handlers.RightClickBookHandler;
+import joshie.enchiridion.library.handlers.TemporarySwitchHandler;
 import joshie.enchiridion.library.handlers.WarpBookHandler;
 import joshie.enchiridion.library.handlers.WriteableBookHandler;
 import joshie.enchiridion.network.PacketHandleBook;
@@ -25,7 +26,6 @@ import joshie.enchiridion.network.PacketSyncLibraryContents;
 import joshie.enchiridion.network.PacketSyncMD5;
 import joshie.enchiridion.util.ECreativeTab;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -42,6 +42,7 @@ public class ECommonProxy {
         EnchiridionAPI.library.registerBookHandler(new EnchiridionBookHandler()); //Enchiridion
         EnchiridionAPI.library.registerBookHandler(new WriteableBookHandler()); //Writeable Books
         EnchiridionAPI.library.registerBookHandler(new RightClickBookHandler()); //Default Handler
+        EnchiridionAPI.library.registerBookHandler(new TemporarySwitchHandler()); //Switch Click Handler
         attemptToRegisterModdedBookHandler(WarpBookHandler.class);
         
         
