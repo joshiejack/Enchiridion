@@ -40,6 +40,7 @@ import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.library.handlers.ComputerCraftHandler;
 import joshie.enchiridion.library.handlers.WarpBookHandler;
 import joshie.enchiridion.library.handlers.WriteableBookHandler.GuiScreenWriteable;
+import joshie.enchiridion.util.ECreativeTab;
 import joshie.enchiridion.util.EResourcePack;
 import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.resources.IResourcePack;
@@ -48,6 +49,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -121,6 +123,11 @@ public class EClientProxy extends ECommonProxy {
             libraryKeyBinding = new KeyBinding("enchiridion.key.library", Keyboard.KEY_L, "key.categories.misc");
             ClientRegistry.registerKeyBinding(libraryKeyBinding);
         }
+        
+        ItemStack book = new ItemStack(ECommonProxy.book);
+        book.setTagCompound(new NBTTagCompound());
+        book.getTagCompound().setString("identifier", "enchiridion");
+        ECreativeTab.enchiridion.setItemStack(book);
     }
     
     @Override

@@ -33,7 +33,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
-public abstract class ECommonProxy implements IGuiHandler {
+public class ECommonProxy implements IGuiHandler {
     public static Item book;
     
     public void onConstruction() {}
@@ -46,8 +46,8 @@ public abstract class ECommonProxy implements IGuiHandler {
         EnchiridionAPI.library.registerBookHandler(new WriteableBookHandler()); //Writeable Books
         EnchiridionAPI.library.registerBookHandler(new RightClickBookHandler()); //Default Handler
         EnchiridionAPI.library.registerBookHandler(new TemporarySwitchHandler()); //Switch Click Handler
-        attemptToRegisterModdedBookHandler(ComputerCraftHandler.class);
-        attemptToRegisterModdedBookHandler(WarpBookHandler.class);
+        if (EConfig.loadComputercraft) attemptToRegisterModdedBookHandler(ComputerCraftHandler.class);
+        if (EConfig.loadWarpbook) attemptToRegisterModdedBookHandler(WarpBookHandler.class);
         
         
         //Register events
@@ -89,5 +89,8 @@ public abstract class ECommonProxy implements IGuiHandler {
         } else return null;
     }
 
-    
+    @Override
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+        return null;
+    }
 }

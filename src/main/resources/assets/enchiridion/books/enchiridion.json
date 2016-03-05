@@ -1,8 +1,8 @@
 {
   "uniqueName": "enchiridion",
   "saveName": "enchiridion",
-  "displayName": "§l§6Getting Started",
-  "displayInfo": "   §o§fwith Enchiridion",
+  "displayName": "§6Getting Started",
+  "displayInfo": "...§fwith Enchiridion",
   "colorHex": "FFFFFFFF",
   "language": "en_US",
   "hasCustomIcon": true,
