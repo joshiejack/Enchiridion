@@ -12,7 +12,7 @@ public class ButtonInsertBox extends ButtonAbstract {
 	@Override
 	public void performAction() {
 		IPage current = EnchiridionAPI.book.getPage();
-		FeatureBox feature = new FeatureBox("FF000000");
+		FeatureBox feature = new FeatureBox("ff000000");
 		current.addFeature(feature, 0, 0, 50D, 5D, false, false);
 	}
 }

@@ -36,16 +36,17 @@ public class FeatureBox extends FeatureAbstract implements IColorable {
         return false;
     }
 	
-	private void attemptToParseColor() {
+	private boolean attemptToParseColor() {
 	    int previousColor = this.colorI;
 	    if (!attemptToParseString(color)) {
 	        String doubled = color.replaceAll(".", "$0$0");
 	        if (!attemptToParseString(doubled)) {
 	            if(!attemptToParseString(doubled.replace("#", ""))) {
 	                this.colorI = previousColor;
-	            }
-	        }
-	    }
+	                return false;
+	            } else return true;
+	        } else return true;
+	    } else return true;
 	}
 	
 	private boolean attemptToParseString(String string) {
@@ -80,7 +81,10 @@ public class FeatureBox extends FeatureAbstract implements IColorable {
     
     @Override
     public void setColorAsHex(String color) {
+        String previous = this.color;
         this.color = color;
-        attemptToParseColor();
+        if (attemptToParseColor()) {
+            this.color = color;
+        } else this.color = previous;
     }
 }

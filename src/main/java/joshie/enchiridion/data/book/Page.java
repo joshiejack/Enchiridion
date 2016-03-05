@@ -27,7 +27,6 @@ public class Page implements IPage {
 		provider.isHidden = isHidden;
 		provider.feature.update(provider);
 		provider.layerIndex = features.size();
-		//feature.getAndSetEditMode();
 		features.add(provider);
 	}
 	
