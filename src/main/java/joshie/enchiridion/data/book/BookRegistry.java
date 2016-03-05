@@ -85,13 +85,12 @@ public class BookRegistry implements ItemMeshDefinition {
                 Path path1 = Paths.get(fileName);
                 Path path2 = Paths.get("assets", modid, "books");
 
-                if (path1.startsWith(path2)) {
+                if (path1.startsWith(path2) && fileName.endsWith(".json")) {
                     try {
                         String json = IOUtils.toString(zipfile.getInputStream(zipentry));
                         IBook data = register(GsonHelper.getModifiedGson().fromJson(json, Book.class).setModID(modid));
                         Enchiridion.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.getUniqueName() + " for the language: " + data.getLanguageKey());
                     } catch (Exception e) {
-                        e.printStackTrace();
                     }
                 }
             }

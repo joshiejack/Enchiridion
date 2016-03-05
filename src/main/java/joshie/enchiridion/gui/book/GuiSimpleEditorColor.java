@@ -101,7 +101,6 @@ public class GuiSimpleEditorColor extends GuiSimpleEditorAbstract {
     
     @Override
     public void updateSearch(String search) {
-        System.out.println(search);
         try {
             colorable.setColorAsHex(search);
         } catch (Exception e) {}
