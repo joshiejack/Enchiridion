@@ -7,8 +7,8 @@ import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.GuiBook;
+import joshie.enchiridion.helpers.JSONHelper;
 import joshie.enchiridion.helpers.JumpHelper;
-import joshie.lib.helpers.JSONHelper;
 
 public class ActionJumpPage extends AbstractAction {
 	public transient IPage page;

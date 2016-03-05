@@ -7,9 +7,9 @@ import org.lwjgl.input.Keyboard;
 import joshie.enchiridion.data.book.Book;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.buttons.ButtonChangeIcon;
-import joshie.lib.PenguinFontRenderer;
-import joshie.lib.editables.ITextEditable;
-import joshie.lib.editables.TextEditor;
+import joshie.enchiridion.util.ITextEditable;
+import joshie.enchiridion.util.PenguinFont;
+import joshie.enchiridion.util.TextEditor;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -91,6 +91,6 @@ public class GuiBookCreate extends GuiScreen implements ITextEditable {
     }
 
     public void drawSplitString(String text, int left, int top, int wrap, int color) {
-        PenguinFontRenderer.INSTANCE.drawSplitString(text, x + left, y + top, wrap, color);
+        PenguinFont.INSTANCE.drawSplitString(text, x + left, y + top, wrap, color);
     }
 }

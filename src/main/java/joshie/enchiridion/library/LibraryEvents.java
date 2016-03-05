@@ -6,6 +6,8 @@ import org.lwjgl.input.Keyboard;
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.helpers.MCClientHelper;
+import joshie.enchiridion.helpers.MCServerHelper;
 import joshie.enchiridion.helpers.SyncHelper;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.network.PacketHandler;
@@ -13,9 +15,7 @@ import joshie.enchiridion.network.PacketOpenLibrary;
 import joshie.enchiridion.network.PacketSyncLibraryAllowed;
 import joshie.enchiridion.network.PacketSyncLibraryContents;
 import joshie.enchiridion.network.PacketSyncMD5;
-import joshie.lib.helpers.ClientHelper;
-import joshie.lib.helpers.MCServerHelper;
-import joshie.lib.util.PacketPart;
+import joshie.enchiridion.network.core.PacketPart;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiSelectWorld;
@@ -71,7 +71,7 @@ public class LibraryEvents {
     public void onKeyPress(KeyInputEvent event) {
         if (GameSettings.isKeyDown(EClientProxy.libraryKeyBinding) && Minecraft.getMinecraft().inGameHasFocus && !Keyboard.isKeyDown(Keyboard.KEY_F3)) {
             PacketHandler.sendToServer(new PacketOpenLibrary()); //Let the server know!
-            ClientHelper.getPlayer().openGui(Enchiridion.instance, GuiIDs.LIBRARY, ClientHelper.getWorld(), 0, 0, 0);
+            MCClientHelper.getPlayer().openGui(Enchiridion.instance, GuiIDs.LIBRARY, MCClientHelper.getWorld(), 0, 0, 0);
         }
     }
 }

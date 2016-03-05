@@ -4,8 +4,8 @@ import com.google.gson.JsonObject;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IPage;
+import joshie.enchiridion.helpers.JSONHelper;
 import joshie.enchiridion.helpers.JumpHelper;
-import joshie.lib.helpers.JSONHelper;
 
 public class FeatureJump extends FeatureAbstract {
 	public transient IPage page;

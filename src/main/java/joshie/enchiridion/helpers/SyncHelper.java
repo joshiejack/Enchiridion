@@ -1,6 +1,6 @@
 package joshie.enchiridion.helpers;
 
-import static joshie.lib.util.PacketPart.SEND_SIZE;
+import static joshie.enchiridion.network.core.PacketPart.SEND_SIZE;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +18,6 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.PacketSyncFile;
 import joshie.enchiridion.network.PacketSyncFile.ByteWrapper;
-import joshie.lib.helpers.SplitHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 

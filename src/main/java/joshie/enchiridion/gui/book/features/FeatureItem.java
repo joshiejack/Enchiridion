@@ -4,8 +4,8 @@ import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
 import joshie.enchiridion.gui.book.GuiSimpleEditorItem;
-import joshie.lib.editables.IItemSelectable;
-import joshie.lib.helpers.StackHelper;
+import joshie.enchiridion.helpers.StackHelper;
+import joshie.enchiridion.util.IItemSelectable;
 import net.minecraft.item.ItemStack;
 
 public class FeatureItem extends FeatureAbstract implements IItemSelectable {

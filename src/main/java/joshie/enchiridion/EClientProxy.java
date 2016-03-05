@@ -5,8 +5,10 @@ import java.util.List;
 import org.lwjgl.input.Keyboard;
 
 import joshie.enchiridion.api.EnchiridionAPI;
+import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.GuiBook;
+import joshie.enchiridion.gui.book.GuiBookCreate;
 import joshie.enchiridion.gui.book.GuiGrid;
 import joshie.enchiridion.gui.book.GuiLayers;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
@@ -31,10 +33,19 @@ import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedOre;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedVanilla;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessOre;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessVanilla;
+import joshie.enchiridion.gui.library.GuiLibrary;
+import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryHelper;
+import joshie.enchiridion.library.handlers.ComputerCraftHandler;
+import joshie.enchiridion.library.handlers.WarpBookHandler;
+import joshie.enchiridion.library.handlers.WriteableBookHandler.GuiScreenWriteable;
 import joshie.enchiridion.util.EResourcePack;
+import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -53,6 +64,7 @@ public class EClientProxy extends ECommonProxy {
 	
     @Override
     public void setupClient() {
+        PenguinFont.load();
         LibraryHelper.resetClient();
         BookRegistry.INSTANCE.loadBooksFromConfig();
     	ModelLoader.setCustomMeshDefinition(ECommonProxy.book, BookRegistry.INSTANCE);
@@ -98,5 +110,33 @@ public class EClientProxy extends ECommonProxy {
         //Register the keybinding
         libraryKeyBinding = new KeyBinding("enchiridion.key.library", Keyboard.KEY_L, "key.categories.misc");
         ClientRegistry.registerKeyBinding(libraryKeyBinding);
+    }
+    
+    /** GUI HANDLING **/
+    @Override
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int slotID, int y, int z) {
+        if (ID == GuiIDs.COMPUTERCRAFT) {
+            return ComputerCraftHandler.getComputercraftPrintoutGui(player, slotID);
+        } else if (ID == GuiIDs.WARPLIST) {
+            return WarpBookHandler.getWarplistGui(player, slotID);
+        } else if (ID == GuiIDs.WARPBOOK) {
+            return WarpBookHandler.getWarpbookGui(player, slotID);
+        } else if (ID == GuiIDs.WRITEABLE) {
+            return new GuiScreenWriteable(player, slotID);
+        }else if (ID == GuiIDs.LIBRARY) {
+            return new GuiLibrary(player.inventory, LibraryHelper.getClientLibraryContents());
+        } else if (ID == GuiIDs.BOOK_FORCE) {
+            return GuiBook.INSTANCE;
+        } else {
+            ItemStack held = player.getCurrentEquippedItem();
+            if (held != null && held.getItem() == ECommonProxy.book) {
+                IBook book = BookRegistry.INSTANCE.getBook(held);
+                if (book != null) {
+                    return GuiBook.INSTANCE.setBook(book, player.isSneaking());
+                } else return GuiBookCreate.INSTANCE.setStack(player.getCurrentEquippedItem());
+            }
+        }
+
+        return null;
     }
 }

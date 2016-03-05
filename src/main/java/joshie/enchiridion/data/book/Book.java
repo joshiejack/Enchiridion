@@ -6,7 +6,7 @@ import java.util.List;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.helpers.DefaultHelper;
-import joshie.lib.helpers.ClientHelper;
+import joshie.enchiridion.helpers.MCClientHelper;
 import net.minecraft.util.ResourceLocation;
 
 public class Book implements IBook {
@@ -56,7 +56,7 @@ public class Book implements IBook {
     	this.uniqueName = name;
     	this.saveName = name;
     	this.colorHex = "FFFFFFFF";
-    	this.language = ClientHelper.getLang();
+    	this.language = MCClientHelper.getLang();
     	this.hasCustomIcon = true;
     	this.showBackground = true;
     	this.book = new ArrayList();

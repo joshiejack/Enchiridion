@@ -1,12 +1,12 @@
 package joshie.enchiridion.network;
 
-import static joshie.lib.util.PacketPart.REQUEST_SIZE;
+import static joshie.enchiridion.network.core.PacketPart.REQUEST_SIZE;
 
 import io.netty.buffer.ByteBuf;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.library.LibraryInventory;
 import joshie.enchiridion.library.ModSupport;
-import joshie.lib.network.PenguinPacket;
+import joshie.enchiridion.network.core.PenguinPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 

@@ -13,10 +13,10 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiLibrary extends GuiContainer {
     private static final ResourceLocation location = new ELocation("library");
-    protected final int xSize = 430;
-    protected final int ySize = 217;
+    public final int xSize = 430;
+    public final int ySize = 217;
     public IInventory library;
-    int x, y;
+    public int x, y;
 
     public GuiLibrary(InventoryPlayer playerInventory, IInventory library) {
         super(new ContainerLibrary(playerInventory, library));

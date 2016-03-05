@@ -4,8 +4,8 @@ import com.google.gson.JsonObject;
 
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IButtonAction;
+import joshie.enchiridion.helpers.JSONHelper;
 import joshie.enchiridion.util.ELocation;
-import joshie.lib.helpers.JSONHelper;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class AbstractAction implements IButtonAction {

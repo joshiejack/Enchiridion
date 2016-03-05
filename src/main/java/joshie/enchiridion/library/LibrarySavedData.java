@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import joshie.lib.helpers.EntityHelper;
-import joshie.lib.helpers.UUIDHelper;
+import joshie.enchiridion.helpers.UUIDHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -57,7 +56,7 @@ public class LibrarySavedData extends WorldSavedData {
         if (players.containsKey(uuid)) {
             return players.get(uuid);
         } else {
-            EntityPlayer player = EntityHelper.getPlayerFromUUID(uuid);
+            EntityPlayer player = UUIDHelper.getPlayerFromUUID(uuid);
             if (player == null) return null;
             else return getLibraryContents((EntityPlayerMP) player);
         }

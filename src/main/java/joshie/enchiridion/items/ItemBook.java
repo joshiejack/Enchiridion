@@ -6,7 +6,6 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.lib.GuiIDs;
-import joshie.lib.item.ItemCoreMulti;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -14,9 +13,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class ItemBook extends ItemCoreMulti {
+public class ItemBook extends Item {
+    public ItemBook() {
+        setHasSubtypes(true);
+    }
+    
 	@Override
     public String getItemStackDisplayName(ItemStack stack) {
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
@@ -44,4 +48,11 @@ public class ItemBook extends ItemCoreMulti {
 			list.add(stack);
 		}
 	}
+	
+	@Override
+    public Item setUnlocalizedName(String unlocalizedName) {
+        super.setUnlocalizedName(unlocalizedName);
+        GameRegistry.registerItem(this, unlocalizedName);
+        return this;
+    }
 }

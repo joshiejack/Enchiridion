@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.api.library.ILibraryRegistry;
-import joshie.lib.util.SafeStack;
+import joshie.enchiridion.util.SafeStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

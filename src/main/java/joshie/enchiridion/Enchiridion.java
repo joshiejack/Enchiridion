@@ -18,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 import joshie.enchiridion.helpers.SyncHelper;
 import joshie.enchiridion.library.LibraryCommand;
 import joshie.enchiridion.library.LibraryHelper;
-import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.server.MinecraftServer;
@@ -30,6 +29,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @Mod(modid = MODID, name = MODNAME, version = VERSION, dependencies = DEPENDENCIES)
 public class Enchiridion {
@@ -51,6 +51,8 @@ public class Enchiridion {
     public void preInit(FMLPreInitializationEvent event) {
         root = new File(event.getModConfigurationDirectory() + separator + MODPATH);
         EConfig.init();
+        
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         proxy.preInit();
     }
 

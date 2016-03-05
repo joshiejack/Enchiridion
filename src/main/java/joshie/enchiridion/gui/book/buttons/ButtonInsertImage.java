@@ -8,9 +8,9 @@ import javax.imageio.ImageIO;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.gui.book.features.FeatureImage;
+import joshie.enchiridion.helpers.FileCopier;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.lib.EInfo;
-import joshie.lib.helpers.FileCopier;
 
 public class ButtonInsertImage extends ButtonAbstract {
     public ButtonInsertImage() {

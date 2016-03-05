@@ -1,7 +1,7 @@
 package joshie.enchiridion.network;
 
-import static joshie.lib.util.PacketPart.REQUEST_DATA;
-import static joshie.lib.util.PacketPart.SEND_DATA;
+import static joshie.enchiridion.network.core.PacketPart.REQUEST_DATA;
+import static joshie.enchiridion.network.core.PacketPart.SEND_DATA;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,8 +11,8 @@ import org.apache.commons.io.output.ByteArrayOutputStream;
 import io.netty.buffer.ByteBuf;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.SyncHelper;
-import joshie.lib.network.PacketSyncByteArray;
-import joshie.lib.util.PacketPart;
+import joshie.enchiridion.network.core.PacketPart;
+import joshie.enchiridion.network.core.PacketSyncByteArray;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 

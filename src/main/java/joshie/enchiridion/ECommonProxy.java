@@ -1,15 +1,16 @@
 package joshie.enchiridion;
 
-import static joshie.enchiridion.Enchiridion.instance;
-
 import org.apache.logging.log4j.Level;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
-import joshie.enchiridion.gui.GuiHandler;
+import joshie.enchiridion.gui.library.ContainerLibrary;
 import joshie.enchiridion.items.ItemBook;
+import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryEvents;
+import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.library.LibraryRegistry;
+import joshie.enchiridion.library.handlers.ComputerCraftHandler;
 import joshie.enchiridion.library.handlers.EnchiridionBookHandler;
 import joshie.enchiridion.library.handlers.RightClickBookHandler;
 import joshie.enchiridion.library.handlers.TemporarySwitchHandler;
@@ -25,17 +26,18 @@ import joshie.enchiridion.network.PacketSyncLibraryAllowed;
 import joshie.enchiridion.network.PacketSyncLibraryContents;
 import joshie.enchiridion.network.PacketSyncMD5;
 import joshie.enchiridion.util.ECreativeTab;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class ECommonProxy {
+public abstract class ECommonProxy implements IGuiHandler {
     public static Item book;
     
     public void preInit() {
-        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
         book = new ItemBook().setCreativeTab(ECreativeTab.enchiridion).setHasSubtypes(true).setUnlocalizedName("book");
         EnchiridionAPI.instance = new EAPIHandler();
         EnchiridionAPI.library = new LibraryRegistry();
@@ -43,6 +45,7 @@ public class ECommonProxy {
         EnchiridionAPI.library.registerBookHandler(new WriteableBookHandler()); //Writeable Books
         EnchiridionAPI.library.registerBookHandler(new RightClickBookHandler()); //Default Handler
         EnchiridionAPI.library.registerBookHandler(new TemporarySwitchHandler()); //Switch Click Handler
+        attemptToRegisterModdedBookHandler(ComputerCraftHandler.class);
         attemptToRegisterModdedBookHandler(WarpBookHandler.class);
         
         
@@ -74,4 +77,15 @@ public class ECommonProxy {
     public void setupClient() {}
 
 	public void onConstruction() {}
+	
+	
+	/** GUI HANDLING **/
+	@Override
+    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int integer1, int y, int z) {
+        if (ID == GuiIDs.WARPBOOK) {
+            return WarpBookHandler.getWarpbookContainer(player, integer1);
+        } else if (ID == GuiIDs.LIBRARY) {
+            return new ContainerLibrary(player.inventory, LibraryHelper.getServerLibraryContents(player));
+        } else return null;
+    }
 }

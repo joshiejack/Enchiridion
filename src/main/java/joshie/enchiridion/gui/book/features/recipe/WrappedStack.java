@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import joshie.enchiridion.api.recipe.IItemStack;
-import joshie.lib.helpers.ItemListHelper;
+import joshie.enchiridion.helpers.ItemListHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 

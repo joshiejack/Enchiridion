@@ -1,6 +1,6 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import joshie.lib.helpers.ItemListHelper;
+import joshie.enchiridion.helpers.ItemListHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 

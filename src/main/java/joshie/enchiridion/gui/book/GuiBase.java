@@ -8,8 +8,8 @@ import org.lwjgl.input.Mouse;
 
 import joshie.enchiridion.api.gui.IDrawHelper;
 import joshie.enchiridion.api.recipe.IItemStack;
-import joshie.lib.PenguinFontRenderer;
-import joshie.lib.helpers.ClientStackHelper;
+import joshie.enchiridion.helpers.ClientStackHelper;
+import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
@@ -138,7 +138,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
     public void drawSplitScaledString(String text, int xPos, int yPos, int wrap, int color, float scale) {
         GlStateManager.pushMatrix();
         GlStateManager.scale(scale, scale, scale);
-        PenguinFontRenderer.INSTANCE.drawSplitString(text, (int) ((x + xPos) / scale), (int) ((y + yPos) / scale), wrap, color);
+        PenguinFont.INSTANCE.drawSplitString(text, (int) ((x + xPos) / scale), (int) ((y + yPos) / scale), wrap, color);
         GlStateManager.popMatrix();
     }
 
@@ -205,7 +205,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
             int i = 0;
 
             for (String s : textLines) {
-                int j = PenguinFontRenderer.INSTANCE.getStringWidth(s);
+                int j = PenguinFont.INSTANCE.getStringWidth(s);
 
                 if (j > i) {
                     i = j;
@@ -245,7 +245,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
 
             for (int k1 = 0; k1 < textLines.size(); ++k1) {
                 String s1 = (String) textLines.get(k1);
-                PenguinFontRenderer.INSTANCE.drawStringWithShadow(s1, (float) l1, (float) i2, -1);
+                PenguinFont.INSTANCE.drawStringWithShadow(s1, (float) l1, (float) i2, -1);
 
                 if (k1 == 0) {
                     i2 += 2;

@@ -1,7 +1,7 @@
 package joshie.enchiridion.network;
 
 import joshie.enchiridion.lib.EInfo;
-import joshie.lib.network.PenguinNetwork;
+import joshie.enchiridion.network.core.PenguinNetwork;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

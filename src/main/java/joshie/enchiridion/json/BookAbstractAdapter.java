@@ -17,7 +17,7 @@ import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.data.book.Book;
-import joshie.lib.helpers.JSONHelper;
+import joshie.enchiridion.helpers.JSONHelper;
 
 public class BookAbstractAdapter implements JsonDeserializer<Book> {
     @Override

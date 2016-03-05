@@ -6,7 +6,7 @@ import java.util.List;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
-import joshie.lib.helpers.StackHelper;
+import joshie.enchiridion.helpers.StackHelper;
 import net.minecraft.item.ItemStack;
 
 public class FeatureRecipe extends FeatureItem {

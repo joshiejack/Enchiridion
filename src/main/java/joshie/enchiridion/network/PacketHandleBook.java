@@ -3,7 +3,7 @@ package joshie.enchiridion.network;
 import io.netty.buffer.ByteBuf;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
-import joshie.lib.network.PenguinPacket;
+import joshie.enchiridion.network.core.PenguinPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 

@@ -16,13 +16,13 @@ import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.gui.book.features.FeatureButton;
 import joshie.enchiridion.gui.book.features.FeatureImage;
+import joshie.enchiridion.helpers.FileCopier;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.util.ELocation;
-import joshie.lib.PenguinFontRenderer;
-import joshie.lib.editables.ITextEditable;
-import joshie.lib.editables.TextEditor;
-import joshie.lib.helpers.FileCopier;
+import joshie.enchiridion.util.ITextEditable;
+import joshie.enchiridion.util.PenguinFont;
+import joshie.enchiridion.util.TextEditor;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
@@ -157,9 +157,9 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     }
     
     public int getLineCount (String text) {
-    	text = PenguinFontRenderer.INSTANCE.replaceFormatting(text);
-    	text = PenguinFontRenderer.INSTANCE.trimStringNewline(text);
-    	return PenguinFontRenderer.INSTANCE.listFormattedStringToWidth(text, 155).size();
+    	text = PenguinFont.INSTANCE.replaceFormatting(text);
+    	text = PenguinFont.INSTANCE.trimStringNewline(text);
+    	return PenguinFont.INSTANCE.listFormattedStringToWidth(text, 155).size();
     }
     
     @Override

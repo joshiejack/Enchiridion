@@ -6,7 +6,7 @@ import java.net.URI;
 import com.google.gson.JsonObject;
 
 import joshie.enchiridion.api.book.IButtonAction;
-import joshie.lib.helpers.JSONHelper;
+import joshie.enchiridion.helpers.JSONHelper;
 
 public class ActionOpenWebpage extends AbstractAction {
 	public String url;

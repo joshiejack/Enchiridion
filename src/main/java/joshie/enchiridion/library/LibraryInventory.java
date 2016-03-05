@@ -2,11 +2,10 @@ package joshie.enchiridion.library;
 
 import java.util.UUID;
 
+import joshie.enchiridion.helpers.UUIDHelper;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.PacketSyncLibraryContents;
-import joshie.lib.helpers.EntityHelper;
-import joshie.lib.helpers.UUIDHelper;
-import joshie.lib.util.InventoryStorage;
+import joshie.enchiridion.util.InventoryStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -75,7 +74,7 @@ public class LibraryInventory extends InventoryStorage {
 
     public EntityPlayer getAndCreatePlayer() {
         if (player == null) {
-            player = EntityHelper.getPlayerFromUUID(uuid);
+            player = UUIDHelper.getPlayerFromUUID(uuid);
         }
 
         return player;

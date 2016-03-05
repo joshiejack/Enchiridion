@@ -9,9 +9,8 @@ import joshie.enchiridion.api.book.IFeature;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.gui.book.GuiGrid;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
-import joshie.lib.editables.TextEditor;
-import joshie.lib.helpers.ClientHelper;
-import joshie.lib.lib.CharacterCodes;
+import joshie.enchiridion.helpers.MCClientHelper;
+import joshie.enchiridion.util.TextEditor;
 
 public class FeatureProvider implements IFeatureProvider {
     public int xPos;
@@ -114,7 +113,7 @@ public class FeatureProvider implements IFeatureProvider {
     public boolean keyTyped(char character, int key) {
         if (isEditing) {
             feature.keyTyped(character, key);
-        } else if (isSelected && key == CharacterCodes.DELETE_KEY && !TextEditor.INSTANCE.isEditing()) {
+        } else if (isSelected && key == 211 && !TextEditor.INSTANCE.isEditing()) {
             GuiSimpleEditor.INSTANCE.setEditor(null); //Reset the editor
             TextEditor.INSTANCE.clearEditable();
             return true;
@@ -137,7 +136,7 @@ public class FeatureProvider implements IFeatureProvider {
             }
 
             //Perform clicks
-            if (!EnchiridionAPI.book.isEditMode() || (EnchiridionAPI.book.isEditMode() && ClientHelper.isShiftPressed())) {
+            if (!EnchiridionAPI.book.isEditMode() || (EnchiridionAPI.book.isEditMode() && MCClientHelper.isShiftPressed())) {
                 feature.performAction(mouseX, mouseY);
             }
 

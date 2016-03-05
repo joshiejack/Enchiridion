@@ -9,11 +9,11 @@ import org.apache.commons.io.FilenameUtils;
 
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
+import joshie.enchiridion.helpers.FileCopier;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonHelper;
 import joshie.enchiridion.json.BookIconTemplate;
 import joshie.enchiridion.json.BookIconTemplate.Icons;
-import joshie.lib.helpers.FileCopier;
 import net.minecraft.client.Minecraft;
 
 public class ButtonChangeIcon extends ButtonAbstract {

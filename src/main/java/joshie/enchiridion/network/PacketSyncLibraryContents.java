@@ -2,7 +2,7 @@ package joshie.enchiridion.network;
 
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.library.LibraryInventory;
-import joshie.lib.network.PacketNBT;
+import joshie.enchiridion.network.core.PacketNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

@@ -1,6 +1,6 @@
 package joshie.enchiridion.library;
 
-import joshie.lib.helpers.ClientHelper;
+import joshie.enchiridion.helpers.MCClientHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -10,7 +10,7 @@ public class LibraryProxyClient extends LibraryProxy {
     private LibraryInventory contents;
 
     public LibraryProxyClient() {
-        contents = new LibraryInventory(ClientHelper.getPlayer());
+        contents = new LibraryInventory(MCClientHelper.getPlayer());
     }
 
     @Override

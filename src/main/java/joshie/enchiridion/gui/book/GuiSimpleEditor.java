@@ -5,8 +5,8 @@ import java.util.List;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
-import joshie.lib.editables.ITextEditable;
-import joshie.lib.editables.TextEditor;
+import joshie.enchiridion.util.ITextEditable;
+import joshie.enchiridion.util.TextEditor;
 
 public class GuiSimpleEditor extends AbstractGuiOverlay implements ITextEditable {
 	public static final GuiSimpleEditor INSTANCE = new GuiSimpleEditor();

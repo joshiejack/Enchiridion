@@ -10,7 +10,7 @@ import com.google.gson.JsonParseException;
 
 import joshie.enchiridion.api.book.IFeature;
 import joshie.enchiridion.data.book.FeatureProvider;
-import joshie.lib.helpers.JSONHelper;
+import joshie.enchiridion.helpers.JSONHelper;
 
 public class FeatureAbstractAdapter implements JsonDeserializer<FeatureProvider> {
     @Override

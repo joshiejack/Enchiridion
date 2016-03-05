@@ -1,14 +1,14 @@
 package joshie.enchiridion.gui.library;
 
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.lib.gui.ContainerCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerLibrary extends ContainerCore {
+public class ContainerLibrary extends Container {
     public IInventory library;
 
     public ContainerLibrary(InventoryPlayer playerInventory, IInventory library) {
@@ -38,6 +38,23 @@ public class ContainerLibrary extends ContainerCore {
         
        // addSlotToContainer(new SlotBook(library, 0, 8, 15)); //Add one book slot
         bindPlayerInventory(playerInventory, 30);
+    }
+    
+    protected void bindPlayerInventory(InventoryPlayer inventory, int yOffset) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 9; j++) {
+                addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18 + yOffset));
+            }
+        }
+
+        for (int i = 0; i < 9; i++) {
+            addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 142 + yOffset));
+        }
+    }
+    
+    @Override
+    public boolean canInteractWith(EntityPlayer player) {
+        return true;
     }
     
     @Override
@@ -75,5 +92,11 @@ public class ContainerLibrary extends ContainerCore {
         }
 
         return itemstack;
+    }
+    
+    @Override
+    public ItemStack slotClick(int slotID, int mouseButton, int modifier, EntityPlayer player) {
+        Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : (Slot) inventorySlots.get(slotID);
+        return slot instanceof SlotBook && ((SlotBook) slot).handle(player, mouseButton, slot) == null ? null : super.slotClick(slotID, mouseButton, modifier, player);
     }
 }

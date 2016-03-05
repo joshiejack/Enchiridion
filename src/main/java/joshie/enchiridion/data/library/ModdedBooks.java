@@ -2,7 +2,7 @@ package joshie.enchiridion.data.library;
 
 import java.util.ArrayList;
 
-import joshie.lib.helpers.StackHelper;
+import joshie.enchiridion.helpers.StackHelper;
 import net.minecraft.item.ItemStack;
 
 public class ModdedBooks {

@@ -4,7 +4,7 @@ import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
 import joshie.enchiridion.gui.book.GuiSimpleEditorColor;
-import joshie.lib.editables.IColorable;
+import joshie.enchiridion.util.IColorable;
 
 public class FeatureBox extends FeatureAbstract implements IColorable {
     public String color;

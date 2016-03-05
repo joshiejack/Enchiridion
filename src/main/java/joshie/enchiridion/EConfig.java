@@ -3,8 +3,8 @@ package joshie.enchiridion;
 import org.apache.logging.log4j.Level;
 
 import joshie.enchiridion.helpers.FileHelper;
+import joshie.enchiridion.helpers.StackHelper;
 import joshie.enchiridion.lib.EInfo;
-import joshie.lib.helpers.StackHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;

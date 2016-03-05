@@ -9,9 +9,9 @@ import java.nio.file.Paths;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
-import joshie.lib.editables.ITextEditable;
-import joshie.lib.editables.TextEditor;
-import joshie.lib.helpers.ClientHelper;
+import joshie.enchiridion.helpers.MCClientHelper;
+import joshie.enchiridion.util.ITextEditable;
+import joshie.enchiridion.util.TextEditor;
 
 public class FeatureText extends FeatureAbstract implements ITextEditable {
 	private transient boolean oneClick = false;
@@ -51,7 +51,7 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
     
     @Override
     public boolean getAndSetEditMode() {
-    	if (ClientHelper.isShiftPressed()) {
+    	if (MCClientHelper.isShiftPressed()) {
 			readTemp = false;
 	    	try {
 	    		readTemp = true;
@@ -94,7 +94,7 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
     
     @Override
     public void keyTyped(char character, int key) {
-    	if (ClientHelper.isShiftPressed()) {
+    	if (MCClientHelper.isShiftPressed()) {
             if (key == 78) {
                 size = Math.min(15F, Math.max(0.5F, size + 0.1F));
                 wrap = Math.max(50, (int) ((cachedWidth) / size) + 4);

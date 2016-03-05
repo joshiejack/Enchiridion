@@ -27,9 +27,9 @@ import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonHelper;
 import joshie.enchiridion.helpers.JumpHelper;
+import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.util.ELocation;
-import joshie.lib.editables.TextEditor;
-import joshie.lib.helpers.ClientHelper;
+import joshie.enchiridion.util.TextEditor;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
@@ -143,14 +143,14 @@ public class GuiBook extends GuiBase implements IBookHelper {
             }
             
             //Copy to clipboard
-            if (ClientHelper.isCtrlPressed() && Keyboard.isKeyDown(Keyboard.KEY_C)) {
+            if (MCClientHelper.isCtrlPressed() && Keyboard.isKeyDown(Keyboard.KEY_C)) {
                 clipboard.clear();
                 for (IFeatureProvider provider: group) {
                     IFeatureProvider copy = provider.copy();
                     copy.getFeature().update(copy);
                     clipboard.add(copy);
                 }
-            } else if (ClientHelper.isCtrlPressed() && Keyboard.isKeyDown(Keyboard.KEY_V)) { //Paste features
+            } else if (MCClientHelper.isCtrlPressed() && Keyboard.isKeyDown(Keyboard.KEY_V)) { //Paste features
                 for (IFeatureProvider provider: clipboard) {
                     page.addFeature(provider.getFeature().copy(), provider.getX(), provider.getY(), provider.getWidth(), provider.getHeight(), provider.isLocked(), !provider.isVisible());
                 }
@@ -183,7 +183,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
                 if (selected != null) selected.deselect();
                 selected = feature;
                 selected.select(mouseX, mouseY);
-                boolean isCtrlPressedNow = ClientHelper.isCtrlPressed();
+                boolean isCtrlPressedNow = MCClientHelper.isCtrlPressed();
                 //If we didn't have control before and we do now
                 if ((!wasControlPressedBefore && isCtrlPressedNow) || isCtrlPressedNow) {
                     wasControlPressedBefore = true; //It has now been pressed

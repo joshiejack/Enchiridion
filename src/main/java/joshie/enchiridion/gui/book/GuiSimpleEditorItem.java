@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
-import joshie.lib.editables.IItemSelectable;
-import joshie.lib.helpers.ItemListHelper;
+import joshie.enchiridion.helpers.ItemListHelper;
+import joshie.enchiridion.util.IItemSelectable;
 import net.minecraft.item.ItemStack;
 
 public class GuiSimpleEditorItem extends AbstractGuiOverlay {

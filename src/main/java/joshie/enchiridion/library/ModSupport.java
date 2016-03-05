@@ -12,7 +12,7 @@ import joshie.enchiridion.data.library.ModdedBooks;
 import joshie.enchiridion.data.library.ModdedBooks.ModdedBook;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonHelper;
-import joshie.lib.helpers.StackHelper;
+import joshie.enchiridion.helpers.StackHelper;
 import net.minecraft.item.ItemStack;
 
 public class ModSupport {
@@ -44,6 +44,8 @@ public class ModSupport {
         books.add("rightclick", "totemic:totempedia", false, false);
         books.add("rightclick", "openblocks:infoBook", false, false);
         books.add("rightclick", "opencomputers:tool 4", true, false);
+        books.add("computercraft", "computercraft:printout", false, false);
+        books.add("switchclick", "ImmersiveEngineering:tool 3", true, false);
         books.add("warpbook", "warpbook:warpbook", false, false);
 
         try {

@@ -7,4 +7,5 @@ public class GuiIDs {
     public static final int WRITEABLE = 3;
     public static final int WARPBOOK = 4;
     public static final int WARPLIST = 5;
+    public static final int COMPUTERCRAFT = 6;
 }
