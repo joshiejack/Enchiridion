@@ -14,6 +14,8 @@ public interface IButtonAction {
 	public ResourceLocation getHovered();
 	public ResourceLocation getUnhovered();
 	
+	public String getHoverText();
+	public String getUnhoverText();
 	public String getTooltip();
 	public void performAction();
 	public void readFromJson(JsonObject object);

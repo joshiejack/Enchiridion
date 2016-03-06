@@ -85,7 +85,8 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
     public void addRecipes(ItemStack output, List<IRecipeHandler> list) {
         for (IRecipe check : (ArrayList<IRecipe>) CraftingManager.getInstance().getRecipeList()) {
             ItemStack stack = check.getRecipeOutput();
-            if (stack == null || (!check.getClass().equals(getRecipeClass()))) continue;
+            //CHECK -- > EXTENDS the class
+            if (stack == null || (!getRecipeClass().isAssignableFrom(check.getClass()))) continue;
             if (stack.isItemEqual(output)) {
                 try {
                     list.add((IRecipeHandler) Class.forName(getHandlerClass().getName()).getConstructor(IRecipe.class).newInstance(check));

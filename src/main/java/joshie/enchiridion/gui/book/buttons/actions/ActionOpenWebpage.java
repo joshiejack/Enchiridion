@@ -30,7 +30,7 @@ public class ActionOpenWebpage extends AbstractAction {
 	
 	@Override
 	public String[] getFieldNames() {
-		return new String[] { "tooltip", "url" };
+		return new String[] { "tooltip", "hoverText", "unhoveredText", "url" };
 	}
 		
 	@Override
@@ -42,11 +42,13 @@ public class ActionOpenWebpage extends AbstractAction {
 
 	@Override
 	public void readFromJson(JsonObject json) {
+	    super.readFromJson(json);
 		url = JSONHelper.getStringIfExists(json, "url");
 	}
 
 	@Override
 	public void writeToJson(JsonObject object) {
+	    super.writeToJson(object);
 		object.addProperty("url", url);
 	}
 }

@@ -157,6 +157,10 @@ public class GuiBook extends GuiBase implements IBookHelper {
             }
 
             TextEditor.INSTANCE.keyTyped(character, key);
+            for (IFeatureProvider provider: group) {
+                if (provider != null) provider.getFeature().update(provider); //Update itself
+            }
+            
             for (IBookEditorOverlay overlay : overlays) {
                 overlay.keyTyped(character, key);
             }

@@ -51,7 +51,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 	}
 	
 	private boolean isOverAction(int xPos, int yPos, int mouseX, int mouseY) {
-		if (mouseX >= EConfig.editorXPos + xPos && mouseX <= EConfig.editorXPos + xPos + 10) {
+		if (mouseX >= EConfig.editorXPos + xPos && mouseX <= EConfig.editorXPos + xPos + 9) {
 			if (mouseY >= EConfig.toolbarYPos + yPos + 7 && mouseY <= EConfig.toolbarYPos + yPos + 17) {
 				return true;
 			}
@@ -103,12 +103,12 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	drawBoxLabel(Enchiridion.translate("select.unhover"), yPos + 20);
     	drawImage(arrow_left_off, 4, yPos + 32, 22, yPos + 42);
     	drawImage(arrow_right_off, 24, yPos + 32, 42, yPos + 42);
-    	if (button != null && button.deflt.resource.equals(arrow_left_off)) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
-    	else if (button != null && button.deflt.resource.equals(arrow_right_off)) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
+    	if (button != null && button.deflt.getResource().equals(arrow_left_off)) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
+    	else if (button != null && button.deflt.getResource().equals(arrow_right_off)) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
     	else if (button != null) {
     		//colorI = 0xFF312921;
     		colorB = 0xFF191511;
-    		drawImage(button.deflt.resource, 45, yPos + 31, 80, yPos + 43);
+    		drawImage(button.deflt.getResource(), 45, yPos + 31, 80, yPos + 43);
     	}
     		
     	drawBorderedRectangle(45, yPos + 31, 80, yPos + 43, colorI, colorB);
@@ -121,12 +121,12 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	drawBoxLabel(Enchiridion.translate("select.hover"), yPos + 20);
     	drawImage(arrow_left_on, 4, yPos + 32, 22, yPos + 42);
     	drawImage(arrow_right_on, 24, yPos + 32, 42, yPos + 42);
-    	if (button != null && button.hover.resource.equals(arrow_left_on)) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
-    	else if (button != null && button.hover.resource.equals(arrow_right_on)) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
+    	if (button != null && button.hover.getResource().equals(arrow_left_on)) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
+    	else if (button != null && button.hover.getResource().equals(arrow_right_on)) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
     	else if (button != null) {
     		//colorI = 0xFF312921;
     		colorB = 0xFF191511;
-    		drawImage(button.deflt.resource, 45, yPos + 31, 80, yPos + 43);
+    		drawImage(button.deflt.getResource(), 45, yPos + 31, 80, yPos + 43);
     	}
     		
     	drawBorderedRectangle(45, yPos + 31, 80, yPos + 43, colorI, colorB);
@@ -148,6 +148,11 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     		} else editable = fieldCache.get(f);
     		
     		String text = TextEditor.INSTANCE.getText(editable);
+    		if (text == null) {
+    		    TextEditor.INSTANCE.setText("");
+    		    text = TextEditor.INSTANCE.getText(editable);
+    		}
+    		
     		int lines = getLineCount(text) - 1;
 	    	drawSplitScaledString(text, 4, yPos + 39, 0xFF191511, 0.5F);
     		yPos = yPos + 15 + (5 * lines);
@@ -198,10 +203,10 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	
     	//Update the resource for arrows in the unhovered position
     	if (isOverPosition(4, yPos + 32, 22, yPos + 42, mouseX, mouseY)) {
-    		button.deflt.resource = arrow_left_off;
+    		button.deflt.setResource(arrow_left_off);
     		return true;
     	} else if (isOverPosition(24, yPos + 32, 42, yPos + 42, mouseX, mouseY)) {
-    		button.deflt.resource = arrow_right_off;
+    		button.deflt.setResource(arrow_right_off);
     		return true;
     	} else if (isOverPosition(45, yPos + 31, 80, yPos + 43, mouseX, mouseY)) {
     		FeatureImage image = loadResource();
@@ -209,15 +214,17 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     			button.deflt = image;
     			button.deflt.update(EnchiridionAPI.book.getSelected());
     		}
+    		
+    		return true;
     	}
     	
     	//Update the resources for arrows in the hovered position
     	yPos += 25;
     	if (isOverPosition(4, yPos + 32, 22, yPos + 42, mouseX, mouseY)) {
-    		button.hover.resource = arrow_left_on;
+    		button.hover.setResource(arrow_left_on);
     		return true;
     	} else if (isOverPosition(24, yPos + 32, 42, yPos + 42, mouseX, mouseY)) {
-    		button.hover.resource = arrow_right_on;
+    		button.hover.setResource(arrow_right_on);
     		return true;
     	} else if (isOverPosition(45, yPos + 31, 80, yPos + 43, mouseX, mouseY)) {
     		FeatureImage image = loadResource();
@@ -225,6 +232,8 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     			button.hover = image;
     			button.hover.update(EnchiridionAPI.book.getSelected());
     		}
+    		
+    		return true;
     	}
     	
     	yPos+= 25;
@@ -299,9 +308,11 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 		            if (fieldName.equals("pageNumber")) {
 		                temporaryField = "" + (f.getInt(button.action) + 1);
 		            } else temporaryField = "" + f.get(button.action);
-		        } catch (Exception e) {}
+		        } catch (Exception e) { e.printStackTrace(); }
 		    }
 		    
+		    //Fix it up
+		    if (temporaryField == null) temporaryField = "";
 		    return temporaryField;
 		}
 
@@ -321,7 +332,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     		            f.set(button.action, number);
     		        } catch (Exception e) { f.set(button.action, 0); }
 		        } else f.set(button.action, text);
-		    } catch (Exception e) {}
+		    } catch (Exception e) { e.printStackTrace(); }
 		}
 	}
 }

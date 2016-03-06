@@ -5,6 +5,7 @@ import java.io.IOException;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.lib.EInfo;
+import net.minecraft.util.ResourceLocation;
 
 public class FeatureImage extends FeatureResource {
     public transient int left;

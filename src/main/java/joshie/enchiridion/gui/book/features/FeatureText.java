@@ -46,7 +46,9 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
 	
     @Override
     public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
-    	EnchiridionAPI.draw.drawSplitScaledString(TextEditor.INSTANCE.getText(this), xPos, yPos, wrap, 0x555555, size);
+        if (text != null) {
+            EnchiridionAPI.draw.drawSplitScaledString(TextEditor.INSTANCE.getText(this), xPos, yPos, wrap, 0x555555, size);
+        }
     }
     
     @Override

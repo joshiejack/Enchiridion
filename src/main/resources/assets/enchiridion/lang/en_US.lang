@@ -25,3 +25,5 @@ enchiridion.button.action.field.bookID=Book ID
 enchiridion.button.action.field.pageNumber=Page Number
 enchiridion.button.action.field.url=URL
 enchiridion.button.action.field.tooltip=Tooltip
+enchiridion.button.action.field.hoverText=Hovered Text
+enchiridion.button.action.field.unhoveredText=Unhovered Text

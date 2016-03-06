@@ -13,6 +13,8 @@ public abstract class AbstractAction implements IButtonAction {
 	private transient ResourceLocation unhovered;
 	private transient String name;
 	public transient String tooltip = "";
+	public transient String hoverText = "";
+	public transient String unhoveredText = "";
 	
 	public AbstractAction() {}
 	public AbstractAction(String name) {
@@ -23,7 +25,7 @@ public abstract class AbstractAction implements IButtonAction {
 	
 	@Override
 	public String[] getFieldNames() {
-		return new String[] { "tooltip" };
+		return new String[] { "tooltip", "hoverText", "unhoveredText" };
 	}
 	
 	@Override
@@ -34,19 +36,33 @@ public abstract class AbstractAction implements IButtonAction {
 	@Override
 	public void readFromJson(JsonObject object) {
 		tooltip = JSONHelper.getStringIfExists(object, "tooltip");
+		hoverText = JSONHelper.getStringIfExists(object, "hoverText");
+		unhoveredText = JSONHelper.getStringIfExists(object, "unhoveredText");
 	}
 
 	@Override
 	public void writeToJson(JsonObject object) {
-		if (tooltip != null && !tooltip.equals("")) {
-			object.addProperty("tooltip", tooltip);
-		}
+		if (tooltip != null && !tooltip.equals("")) object.addProperty("tooltip", tooltip);
+		if (hoverText != null && !hoverText.equals("")) object.addProperty("hoverText", hoverText);
+		if (unhoveredText != null && !unhoveredText.equals("")) object.addProperty("unhoveredText", unhoveredText);
 	}
 	
 	@Override
 	public String getName() {
 		return Enchiridion.translate("action." + name);
 	}
+	
+	@Override
+	public String getHoverText() {
+	    if (hoverText == null) hoverText = "";
+	    return hoverText;
+	}
+	
+	@Override
+    public String getUnhoverText() {
+        if (unhoveredText == null) unhoveredText = "";
+        return unhoveredText;
+    }
 	
 	@Override
 	public ResourceLocation getHovered() {

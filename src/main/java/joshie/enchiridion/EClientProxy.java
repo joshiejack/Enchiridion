@@ -6,6 +6,7 @@ import org.lwjgl.input.Keyboard;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBook;
+import joshie.enchiridion.api.recipe.IRecipeHandler;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.GuiBook;
 import joshie.enchiridion.gui.book.GuiBookCreate;
@@ -29,6 +30,8 @@ import joshie.enchiridion.gui.book.buttons.actions.ActionNextPage;
 import joshie.enchiridion.gui.book.buttons.actions.ActionOpenWebpage;
 import joshie.enchiridion.gui.book.buttons.actions.ActionPreviousPage;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerFurnace;
+import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerMTAdvancedShaped;
+import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerMTAdvancedShapeless;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedOre;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedVanilla;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessOre;
@@ -109,6 +112,8 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessVanilla());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessOre());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerFurnace());
+        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShaped.class);
+        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShapeless.class);
         
         //Register the Enchiridion Book
         EnchiridionAPI.instance.registerModWithBooks("enchiridion");
@@ -128,6 +133,13 @@ public class EClientProxy extends ECommonProxy {
         book.setTagCompound(new NBTTagCompound());
         book.getTagCompound().setString("identifier", "enchiridion");
         ECreativeTab.enchiridion.setItemStack(book);
+    }
+    
+    private void attemptToRegisterRecipeHandler(Class clazz) {
+        try {
+            IRecipeHandler handler = (IRecipeHandler) clazz.newInstance();
+            if (handler != null) EnchiridionAPI.instance.registerRecipeHandler(handler);
+        } catch (Exception e) {}
     }
     
     @Override

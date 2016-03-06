@@ -16,7 +16,7 @@ import net.minecraft.util.ResourceLocation;
 public class FeatureResource extends FeatureAbstract {
 	public String path;
 		
-	public transient ResourceLocation resource;
+	protected transient ResourceLocation resource;
     public transient int img_width;
     public transient int img_height;
     public transient boolean attempted;
@@ -32,14 +32,22 @@ public class FeatureResource extends FeatureAbstract {
     public void update(IFeatureProvider position) { //Preload the resource
         attempted = loadResource();
     }
+    
+    public void setResource(ResourceLocation resource) {
+        this.resource = new ResourceLocation(resource.getResourceDomain(), resource.getResourcePath());
+        this.path = resource.toString();
+    }
+    
+    public ResourceLocation getResource() {
+       return this.resource;
+    }
 
     @Override
     public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
     	if (resource != null) {
     		draw(xPos, yPos, width, height);
-    	} else if (!attempted) {
-    		attempted = loadResource();
-    	}
+    	} else if (!attempted) attempted = loadResource();
+    	
     }
     
     protected void draw(int xPos, int yPos, double width, double height) {

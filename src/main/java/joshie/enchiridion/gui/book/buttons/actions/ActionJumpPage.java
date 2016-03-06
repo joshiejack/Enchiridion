@@ -45,7 +45,7 @@ public class ActionJumpPage extends AbstractAction {
 	
 	@Override
 	public String[] getFieldNames() {
-		return new String[] { "tooltip", "bookID", "pageNumber" };
+		return new String[] { "tooltip", "hoverText", "unhoveredText", "bookID", "pageNumber" };
 	}
 	
 	@Override

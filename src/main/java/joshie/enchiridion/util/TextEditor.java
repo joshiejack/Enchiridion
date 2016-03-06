@@ -130,4 +130,9 @@ public class TextEditor {
 			else if (count >= 0) cursorRight(count);
 		}
 	}
+	
+	//If it's null
+    public void setText(String string) {
+        if (editable != null) editable.setTextField("");
+    }
 }

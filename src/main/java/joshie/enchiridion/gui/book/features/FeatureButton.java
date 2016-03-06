@@ -11,6 +11,9 @@ public class FeatureButton extends FeatureJump {
 	public FeatureImage deflt;
 	public FeatureImage hover;
 	public IButtonAction action;
+	public transient FeatureText textHover;
+	public transient FeatureText textUnhover;
+	public transient IFeatureProvider provider;
 	
 	public FeatureButton(){}
 	public FeatureButton(String deflt, String hover, IButtonAction action) {
@@ -28,17 +31,25 @@ public class FeatureButton extends FeatureJump {
 	public void update(IFeatureProvider position) {
 		if (deflt == null || hover == null) return;
 		else {
+		    provider = position;
 			deflt.update(position);
 			hover.update(position);
+			textHover = new FeatureText(action.getHoverText());
+			textHover.update(position);
+			textUnhover = new FeatureText(action.getUnhoverText());
+			textUnhover.update(position);
 		}
 	}
 	
 	@Override
     public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
 		if (deflt == null || hover == null) return;
-		if (isMouseHovering) hover.draw(xPos, yPos, width, height, isMouseHovering);
-		else {
+		if (isMouseHovering) {
+		    hover.draw(xPos, yPos, width, height, isMouseHovering);
+		    if (textHover != null) textHover.draw(xPos, yPos, width, height, isMouseHovering);
+		} else {
 			deflt.draw(xPos, yPos, width, height, isMouseHovering);
+			if (textUnhover != null) textUnhover.draw(xPos, yPos, width, height, isMouseHovering);
 		}
 	}
 	
