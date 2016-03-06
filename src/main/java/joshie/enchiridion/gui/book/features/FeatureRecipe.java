@@ -122,7 +122,7 @@ public class FeatureRecipe extends FeatureItem {
 
     @Override
     public void addTooltip(List list, int mouseX, int mouseY) {
-        if (handler != null) {
+        if (!hideTooltip && handler != null) {
         	EnchiridionAPI.draw.setRenderData(provider.getX(), provider.getY(), provider.getWidth(), provider.getHeight(), size);
             handler.addTooltip(list);
         }

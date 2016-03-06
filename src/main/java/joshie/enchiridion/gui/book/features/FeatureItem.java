@@ -1,15 +1,19 @@
 package joshie.enchiridion.gui.book.features;
 
+import java.util.List;
+
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
 import joshie.enchiridion.gui.book.GuiSimpleEditorItem;
+import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.helpers.StackHelper;
 import joshie.enchiridion.util.IItemSelectable;
 import net.minecraft.item.ItemStack;
 
 public class FeatureItem extends FeatureAbstract implements IItemSelectable {
 	public String item;
+	public boolean hideTooltip;
 	public transient float size;
 	
 	public FeatureItem(){}
@@ -50,8 +54,25 @@ public class FeatureItem extends FeatureAbstract implements IItemSelectable {
 	}
 	
 	@Override
+    public void addTooltip(List list, int mouseX, int mouseY) {
+	    if (!hideTooltip && this.stack != null) {
+	        list.addAll(stack.getTooltip(MCClientHelper.getPlayer(), false));
+	    }
+	}
+	
+	@Override
     public boolean getAndSetEditMode() {
 		GuiSimpleEditor.INSTANCE.setEditor(GuiSimpleEditorItem.INSTANCE.setItem(this));
 		return false;
 	}
+	
+    @Override
+    public boolean getTooltipsEnabled() {
+        return !hideTooltip;
+    }
+    
+    @Override
+    public void setTooltips(boolean value) {
+        hideTooltip = !value;
+    }
 }
