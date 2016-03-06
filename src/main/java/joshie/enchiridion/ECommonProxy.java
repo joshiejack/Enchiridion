@@ -29,7 +29,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -51,7 +50,6 @@ public class ECommonProxy implements IGuiHandler {
         
         
         //Register events
-        FMLCommonHandler.instance().bus().register(new LibraryEvents());
         MinecraftForge.EVENT_BUS.register(new LibraryEvents());
         
         //Register packets#
