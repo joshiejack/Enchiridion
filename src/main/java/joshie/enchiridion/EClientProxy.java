@@ -58,6 +58,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class EClientProxy extends ECommonProxy {
@@ -112,8 +113,8 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessVanilla());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessOre());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerFurnace());
-        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShaped.class);
-        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShapeless.class);
+        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShaped.class, "crafttweaker");
+        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShapeless.class, "crafttweaker");
         
         //Register the Enchiridion Book
         EnchiridionAPI.instance.registerModWithBooks("enchiridion");
@@ -135,10 +136,12 @@ public class EClientProxy extends ECommonProxy {
         ECreativeTab.enchiridion.setItemStack(book);
     }
     
-    private void attemptToRegisterRecipeHandler(Class clazz) {
+    private void attemptToRegisterRecipeHandler(Class clazz, String mod) {
         try {
-            IRecipeHandler handler = (IRecipeHandler) clazz.newInstance();
-            if (handler != null) EnchiridionAPI.instance.registerRecipeHandler(handler);
+            if (Loader.isModLoaded(mod)) {
+                IRecipeHandler handler = (IRecipeHandler) clazz.newInstance();
+                if (handler != null) EnchiridionAPI.instance.registerRecipeHandler(handler);
+            }
         } catch (Exception e) {}
     }
     
