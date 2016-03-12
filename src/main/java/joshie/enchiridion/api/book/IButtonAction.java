@@ -18,6 +18,13 @@ public interface IButtonAction {
 	public String getUnhoverText();
 	public String getTooltip();
 	public void performAction();
+	
+	/** Called on the first turn this button tries to render **/
+	public void initAction();
+	
+	/** Called to read data for the button **/
 	public void readFromJson(JsonObject object);
+	
+	/** Called to write data for this button **/
 	public void writeToJson(JsonObject object);
 }

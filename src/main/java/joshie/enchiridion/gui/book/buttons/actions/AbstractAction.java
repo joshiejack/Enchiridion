@@ -24,6 +24,9 @@ public abstract class AbstractAction implements IButtonAction {
 	}
 	
 	@Override
+	public void initAction() {}
+	
+	@Override
 	public String[] getFieldNames() {
 		return new String[] { "tooltip", "hoverText", "unhoveredText" };
 	}
