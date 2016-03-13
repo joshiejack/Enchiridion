@@ -1,20 +1,6 @@
 package joshie.enchiridion;
 
-import static java.io.File.separator;
-import static joshie.enchiridion.lib.EInfo.DEPENDENCIES;
-import static joshie.enchiridion.lib.EInfo.INITIALS;
-import static joshie.enchiridion.lib.EInfo.JAVAPATH;
-import static joshie.enchiridion.lib.EInfo.MODID;
-import static joshie.enchiridion.lib.EInfo.MODNAME;
-import static joshie.enchiridion.lib.EInfo.MODPATH;
-import static joshie.enchiridion.lib.EInfo.VERSION;
-
-import java.io.File;
-
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.SyncHelper;
 import joshie.enchiridion.library.LibraryCommand;
 import joshie.enchiridion.library.LibraryHelper;
@@ -22,6 +8,7 @@ import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -31,8 +18,16 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@Mod(modid = MODID, name = MODNAME, version = VERSION, dependencies = DEPENDENCIES)
+import java.io.File;
+
+import static java.io.File.separator;
+import static joshie.enchiridion.lib.EInfo.*;
+
+@Mod(modid = MODID, name = MODNAME, version = VERSION, dependencies = DEPENDENCIES, guiFactory = GUI_FACTORY_CLASS)
 public class Enchiridion {
     @SidedProxy(clientSide = JAVAPATH + INITIALS + "ClientProxy", serverSide = JAVAPATH + INITIALS + "CommonProxy")
     public static ECommonProxy proxy;
@@ -50,15 +45,16 @@ public class Enchiridion {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        root = new File(event.getModConfigurationDirectory() + separator + MODPATH);
-        EConfig.init();
+        root = new File(event.getModConfigurationDirectory() , separator + MODPATH);
+        EConfig.init(FileHelper.getConfigFile());
+        MinecraftForge.EVENT_BUS.register(new EConfig());
         
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         proxy.preInit();
     }
     
     @EventHandler
-    public void preInit(FMLPostInitializationEvent event) {
+    public void postInit(FMLPostInitializationEvent event) {
         proxy.setupFont();
     }
 
