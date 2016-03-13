@@ -45,7 +45,7 @@ public class Enchiridion {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        root = new File(event.getModConfigurationDirectory() , separator + MODPATH);
+        root = new File(event.getModConfigurationDirectory(), MODPATH);
         EConfig.init(FileHelper.getConfigFile());
         MinecraftForge.EVENT_BUS.register(new EConfig());
         
