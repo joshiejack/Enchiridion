@@ -37,9 +37,11 @@ import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedVanilla;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessOre;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessVanilla;
 import joshie.enchiridion.gui.library.GuiLibrary;
+import joshie.enchiridion.items.SmartLibrary;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryHelper;
+import joshie.enchiridion.library.LibraryRegistry;
 import joshie.enchiridion.library.handlers.ComputerCraftHandler;
 import joshie.enchiridion.library.handlers.WarpBookHandler;
 import joshie.enchiridion.library.handlers.WriteableBookHandler.GuiScreenWriteable;
@@ -56,14 +58,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class EClientProxy extends ECommonProxy {
+    public static final ModelResourceLocation bookResource = new ModelResourceLocation(new ResourceLocation(EInfo.MODPATH, "book"), "inventory");
     public static KeyBinding libraryKeyBinding;
     public static ModelResourceLocation library;
+    public static ModelResourceLocation libraryItem;
     
 	@Override
 	public void onConstruction() {
@@ -77,7 +82,9 @@ public class EClientProxy extends ECommonProxy {
     public void setupClient() {
         LibraryHelper.resetClient();
         BookRegistry.INSTANCE.loadBooksFromConfig();
-    	ModelLoader.setCustomMeshDefinition(ECommonProxy.book, BookRegistry.INSTANCE);
+        ModelBakery.registerItemVariants(ECommonProxy.book, bookResource);
+        MinecraftForge.EVENT_BUS.register(new SmartLibrary());
+        ModelLoader.setCustomMeshDefinition(ECommonProxy.book, BookRegistry.INSTANCE);
     	EnchiridionAPI.book = GuiBook.INSTANCE;
         EnchiridionAPI.draw = GuiBook.INSTANCE;
         //Register editor overlays
@@ -121,7 +128,8 @@ public class EClientProxy extends ECommonProxy {
         //Setup the models for the library
         if (EConfig.libraryAsItem) {
             library = new ModelResourceLocation(new ResourceLocation(EInfo.MODPATH, "library"), "inventory");
-            ModelBakery.registerItemVariants(ECommonProxy.book, library);
+            ModelBakery.registerItemVariants(ECommonProxy.book, library); //Load in the librarytexture
+            libraryItem = new ModelResourceLocation(new ResourceLocation(EInfo.MODPATH, "libraryitem"), "inventory");
         }
         
         //Register the keybinding
@@ -147,6 +155,7 @@ public class EClientProxy extends ECommonProxy {
     
     @Override
     public void setupFont() {
+        LibraryRegistry.getBooksAsItemStack();
         PenguinFont.load();
     }
     

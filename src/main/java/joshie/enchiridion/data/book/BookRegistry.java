@@ -101,6 +101,10 @@ public class BookRegistry implements ItemMeshDefinition {
     private final HashMap<String, HashMap<String, IBook>> books = new HashMap();
     private final HashMap<String, ModelResourceLocation> locations = new HashMap();
     private ModelResourceLocation dflt = new ModelResourceLocation("minecraft:book", "inventory");
+    
+    public Collection<ModelResourceLocation> getModels() {
+        return locations.values();
+    }
 
     public IBook register(IBook book) {
     	if (book == null || book.getUniqueName() == null) return null;
@@ -208,7 +212,7 @@ public class BookRegistry implements ItemMeshDefinition {
 
 	@Override
 	public ModelResourceLocation getModelLocation(ItemStack stack) {
-	    if (stack.getItemDamage() == 1) return EClientProxy.library;
+	    if (stack.getItemDamage() == 1) return EClientProxy.libraryItem;
 	    else {
     	    IBook book = getBook(stack);
     		if (book == null) return dflt;

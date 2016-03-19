@@ -3,6 +3,7 @@ package joshie.enchiridion.network;
 import io.netty.buffer.ByteBuf;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
+import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.network.core.PenguinPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -37,6 +38,8 @@ public class PacketHandleBook extends PenguinPacket {
             if (handler != null) {
                 handler.handle(stack, player, slot, isShiftPressed);
             }
+            
+            LibraryHelper.getServerLibraryContents(player).setCurrentBook(slot);
         }
     }
 }

@@ -17,6 +17,7 @@ public class LibraryInventory extends InventoryStorage {
     private EntityPlayer player; //No Direct calling, it's a cache value
     private UUID uuid; //SHOULD NOT BE CALLED, EXCEPT BY GET AND CREATE PLAYER
     private boolean receivedBooks;
+    private int currentBook;
 
     public LibraryInventory() {
         super(MAX); //Create the inventory
@@ -29,6 +30,19 @@ public class LibraryInventory extends InventoryStorage {
             this.player = player;
             this.uuid = UUIDHelper.getPlayerUUID(player);
         }
+    }
+    
+    public int getCurrentBook() {
+        return currentBook;
+    }
+    
+    public ItemStack getCurrentBookItem() {
+        return getStackInSlot(getCurrentBook());
+    }
+
+    public void setCurrentBook(int slot) {
+        currentBook = slot;
+        markDirty();
     }
     
     private boolean insertIntoNextFreeSlot(ItemStack stack) {
@@ -102,6 +116,7 @@ public class LibraryInventory extends InventoryStorage {
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
+        currentBook = nbt.getInteger("CurrentBook");
         uuid = UUID.fromString(nbt.getString("UUID")); //Read UUID
         super.readFromNBT(nbt); //Read NBT
         nbt.setBoolean("ReceivedBooks", receivedBooks);
@@ -109,6 +124,7 @@ public class LibraryInventory extends InventoryStorage {
 
     @Override
     public void writeToNBT(NBTTagCompound nbt) {
+        nbt.setInteger("CurrentBook", currentBook);
         nbt.setString("UUID", uuid.toString()); //Write UUID
         super.writeToNBT(nbt); //Write Items
         receivedBooks = nbt.getBoolean("ReceivedBooks");

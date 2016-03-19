@@ -29,3 +29,4 @@ enchiridion.button.action.field.hoverText=Hovered Text
 enchiridion.button.action.field.unhoveredText=Unhovered Text
 enchiridion.config.category.settings.tooltip=Change the different settings for Enchiridion
 enchiridion.config.category.modsupport.tooltip=Turn support for certain mods on/off
+enchiridion.key.library=Open Enchiridion Library

@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Level;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.gui.library.ContainerLibrary;
+import joshie.enchiridion.gui.library.LibraryRecipe;
+import joshie.enchiridion.items.ItemEnchiridion;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryEvents;
 import joshie.enchiridion.library.LibraryHelper;
@@ -26,17 +28,22 @@ import joshie.enchiridion.network.PacketSyncLibraryContents;
 import joshie.enchiridion.network.PacketSyncMD5;
 import joshie.enchiridion.util.ECreativeTab;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class ECommonProxy implements IGuiHandler {
     public static Item book;
-    
+
     public void onConstruction() {}
-    
+
     public void preInit() {
         book = new ItemEnchiridion().setCreativeTab(ECreativeTab.enchiridion).setHasSubtypes(true).setUnlocalizedName("book");
         EnchiridionAPI.instance = new EAPIHandler();
@@ -47,11 +54,10 @@ public class ECommonProxy implements IGuiHandler {
         EnchiridionAPI.library.registerBookHandler(new TemporarySwitchHandler()); //Switch Click Handler
         if (EConfig.loadComputercraft) attemptToRegisterModdedBookHandler(ComputerCraftHandler.class);
         if (EConfig.loadWarpbook) attemptToRegisterModdedBookHandler(WarpBookHandler.class);
-        
-        
+
         //Register events
         MinecraftForge.EVENT_BUS.register(new LibraryEvents());
-        
+
         //Register packets#
         PacketHandler.registerPacket(PacketSyncLibraryAllowed.class);
         PacketHandler.registerPacket(PacketLibraryCommand.class);
@@ -61,24 +67,36 @@ public class ECommonProxy implements IGuiHandler {
         PacketHandler.registerPacket(PacketOpenLibrary.class, Side.SERVER);
         PacketHandler.registerPacket(PacketHandleBook.class, Side.SERVER);
         PacketHandler.registerPacket(PacketSetLibraryBook.class, Side.SERVER);
-        
+
         //Prepare the client for shizz
         setupClient();
     }
-    
+
+    //Adds the library recipe
+    public void addRecipe() {
+        if (EConfig.addOreDictionaryRecipeForLibrary) {
+            GameRegistry.addRecipe(new LibraryRecipe());
+        } else if (EConfig.addWrittenBookRecipeForLibrary) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ECommonProxy.book, 1, 1), "WWW", "BBB", "WWW", new ItemStack(Blocks.planks, 1, 1), new ItemStack(Items.writable_book), new ItemStack(Blocks.planks, 1, 1)));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ECommonProxy.book, 1, 1), "WWW", "BBB", "WWW", new ItemStack(Blocks.planks, 1, 1), new ItemStack(Items.writable_book), new ItemStack(Blocks.planks, 1, 5)));
+        }
+    }
+
     public void attemptToRegisterModdedBookHandler(Class clazz) {
         try {
             Object o = clazz.newInstance(); //Let's try this!
             EnchiridionAPI.library.registerBookHandler((IBookHandler) o);
-        } catch (Exception e) { Enchiridion.log(Level.INFO, "Enchiridion could not create an instance of " + clazz.getName() + " as the mods this handler relies on, are not supplied");}
+        } catch (Exception e) {
+            Enchiridion.log(Level.INFO, "Enchiridion could not create an instance of " + clazz.getName() + " as the mods this handler relies on, are not supplied");
+        }
     }
 
     public void setupClient() {}
-	public void setupFont() {}
-	
-	
-	/** GUI HANDLING **/
-	@Override
+
+    public void setupFont() {}
+
+    /** GUI HANDLING **/
+    @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int integer1, int y, int z) {
         if (ID == GuiIDs.WARPBOOK) {
             return WarpBookHandler.getWarpbookContainer(player, integer1);

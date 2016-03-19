@@ -25,6 +25,8 @@ public class EConfig {
     public static boolean libraryAsHotkey;
     public static boolean loadWarpbook;
     public static boolean loadComputercraft;
+    public static boolean addWrittenBookRecipeForLibrary;
+    public static boolean addOreDictionaryRecipeForLibrary;
     public static String defaultText = "";
     private static String defaultItem = "";
 
@@ -54,6 +56,8 @@ public class EConfig {
             syncDataAndImagesToClients = config.getBoolean("Send JSON and Images to clients for Custom Books", CATEGORY_SETTINGS, false, "Enabling this will sync your books and images for them to any clients. Keep in mind this will require clients to have the syncing to true too for it to work. Also beware that if you have a lot of images, it could use up a lot of bandwidth. Syncing sends the hash of all the files that you have for books to clients, then clients will request the files that they are missing. With malicious clients they could potentially keep deleting files and requesting them everytime they join, which could use up further bandwidth. So please only enable this if you are 100% sure all your users can be trusted. You have been warned.");
             libraryAsItem = config.getBoolean("Enable Library as Item", CATEGORY_SETTINGS, true, "The library can be opened with an item if this is true");
             libraryAsHotkey = config.getBoolean("Enable Library as Hotkey", CATEGORY_SETTINGS, true, "The library can be opened with a hotkey if this is true");
+            addWrittenBookRecipeForLibrary = config.getBoolean("Add a Recipe for the Library Item using Written Books", CATEGORY_SETTINGS, false, "Disabling this will not add the default recipe for the library in written book form");
+            addOreDictionaryRecipeForLibrary = config.getBoolean("Add a Recipe for the Library Item using Any Books", CATEGORY_SETTINGS, true, "Disabling this will not add the default recipe for the library, note this overrides the other recipe");
             loadWarpbook = config.getBoolean("Load Warpbook Support", CATEGORY_MOD_SUPPORT, true, "");
             loadComputercraft = config.getBoolean("Load ComputerCraft Support", CATEGORY_MOD_SUPPORT, true, "");
             if (debugMode) {

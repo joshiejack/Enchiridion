@@ -18,7 +18,7 @@ import net.minecraft.item.ItemStack;
 public class ModSupport {
     public static HashSet<String> supported = new HashSet();
     private static ModdedBooks books;
-    
+
     public static void loadDataFromJson(String serverName, String json) {
         if (json == null) {
             setDefaults(serverName);
@@ -28,7 +28,11 @@ public class ModSupport {
         for (ModdedBook book : books.getList()) {
             try {
                 ItemStack stack = StackHelper.getStackFromString(book.getItem());
-                if (stack != null) EnchiridionAPI.library.registerBookHandlerForStack(book.getHandler(), stack, book.shouldMatchDamage(), book.shouldMatchNBT());
+                if (stack != null) {
+                    if (book.getHandler().equals("customwood")) {
+                        EnchiridionAPI.library.registerWood(stack, book.shouldMatchDamage(), book.shouldMatchNBT());
+                    } else EnchiridionAPI.library.registerBookHandlerForStack(book.getHandler(), stack, book.shouldMatchDamage(), book.shouldMatchNBT());
+                }
             } catch (Exception e) {}
         }
     }
@@ -47,6 +51,17 @@ public class ModSupport {
         books.add("computercraft", "computercraft:printout", false, false);
         books.add("switchclick", "ImmersiveEngineering:tool 3", true, false);
         books.add("warpbook", "warpbook:warpbook", false, false);
+        books.add("customwood", "minecraft:planks 1", true, false);
+        books.add("customwood", "minecraft:planks 5", true, false);
+        books.add("customwood", "thaumcraft:plank 0", true, false);
+        books.add("customwood", "chisel:planks-dark-oak", false, false);
+        books.add("customwood", "chisel:planks-spruce", false, false);
+        books.add("customwood", "chisel:livingwood-planks", false, false);
+        books.add("customwood", "chisel:livingwood-raw", false, false);
+        books.add("customwood", "chisel:thinWood-dark", false, false);
+        books.add("customwood", "chisel:thinWood-spruce", false, false);
+        books.add("customwood", "biomesoplenty:planks_0 14", true, false);
+        books.add("customwood", "Botania:livingwood", false, false);
 
         try {
             //Write the json
@@ -57,12 +72,13 @@ public class ModSupport {
             writer.close();
         } catch (Exception e) {}
     }
-    
+
     public static ItemStack[] getFreeBooks() {
         return books.getFreeBooks();
     }
-    
+
     private static HashMap<String, ModdedBooks> cache = new HashMap();
+
     public static void reset() {
         cache.clear();
     }
@@ -71,7 +87,7 @@ public class ModSupport {
         if (cache.containsKey(serverName)) {
             return cache.get(serverName).hashCode();
         }
-        
+
         loadDataFromJson(serverName, FileHelper.getLibraryJson(serverName)); //Load in any existing json files
         cache.put(serverName, books);
         return books.hashCode();

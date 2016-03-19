@@ -1,8 +1,10 @@
 package joshie.enchiridion.gui.library;
 
+import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.helpers.MCClientHelper;
+import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.network.PacketHandleBook;
 import joshie.enchiridion.network.PacketHandler;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,6 +22,7 @@ public class SlotBook extends Slot {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
+        if (stack.getItem() == ECommonProxy.book && stack.getItemDamage() == 1) return false; //FORBID LIBRARIES
         return EnchiridionAPI.library.getBookHandlerForStack(stack) != null;
     }
 
@@ -32,6 +35,7 @@ public class SlotBook extends Slot {
                     boolean isShiftPressed = MCClientHelper.isShiftPressed();
                     PacketHandler.sendToServer(new PacketHandleBook(slot.slotNumber, isShiftPressed));
                     handler.handle(stack, player, slot.slotNumber, isShiftPressed);
+                    LibraryHelper.getClientLibraryContents().setCurrentBook(slot.slotNumber);
                 }
                 
                 return null;

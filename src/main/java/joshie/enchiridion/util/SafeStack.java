@@ -10,11 +10,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class SafeStack {
-    public String item;
+    public ResourceLocation location;
 
     protected SafeStack(ItemStack stack) {
         if (stack != null) {
-            this.item = Item.itemRegistry.getNameForObject(stack.getItem()).getResourcePath();
+            location = Item.itemRegistry.getNameForObject(stack.getItem());
         }
     }
 
@@ -27,10 +27,10 @@ public class SafeStack {
         }
 
         safe.add(new SafeStackMod(stack));
-        safe.add(new SafeStack(stack));
         safe.add(new SafeStackDamage(stack));
         safe.add(new SafeStackNBT(stack));
         safe.add(new SafeStackNBTDamage(stack));
+        safe.add(new SafeStack(stack));
         return safe;
     }
 
@@ -195,7 +195,7 @@ public class SafeStack {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((item == null) ? 0 : item.hashCode());
+        result = prime * result + ((location == null) ? 0 : location.hashCode());
         return result;
     }
 
@@ -205,9 +205,9 @@ public class SafeStack {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         SafeStack other = (SafeStack) obj;
-        if (item == null) {
-            if (other.item != null) return false;
-        } else if (!item.equals(other.item)) return false;
+        if (location == null) {
+            if (other.location != null) return false;
+        } else if (!location.equals(other.location)) return false;
         return true;
     }
 }

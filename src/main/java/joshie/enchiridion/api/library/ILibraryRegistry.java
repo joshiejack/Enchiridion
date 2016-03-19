@@ -22,4 +22,7 @@ public interface ILibraryRegistry {
     
     /** Returns the IInventory for this players libraryy **/
     public IInventory getLibraryInventory(EntityPlayer player);
+    
+    /** Register wood as being able to be used to craft the library **/
+    public void registerWood(ItemStack stack, boolean matchDamage, boolean matchNBT);
 }

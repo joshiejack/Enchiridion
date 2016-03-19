@@ -1,5 +1,6 @@
 package joshie.enchiridion.network;
 
+import io.netty.buffer.ByteBuf;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.library.LibraryInventory;
 import joshie.enchiridion.network.core.PacketNBT;
@@ -10,9 +11,24 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 
 public class PacketSyncLibraryContents extends PacketNBT {
+    private int currentBook;
+    
     public PacketSyncLibraryContents() {}
     public PacketSyncLibraryContents(LibraryInventory contents) {
         super(contents.getInventory());
+        currentBook = contents.getCurrentBook();
+    }
+    
+    @Override
+    public void toBytes(ByteBuf buffer) {
+        buffer.writeInt(currentBook);
+        super.toBytes(buffer);
+    }
+    
+    @Override
+    public void fromBytes(ByteBuf buffer) {
+        currentBook = buffer.readInt();
+        super.fromBytes(buffer);
     }
 
     @Override
@@ -35,6 +51,7 @@ public class PacketSyncLibraryContents extends PacketNBT {
         }
 
         //Set the client library
+        LibraryHelper.getClientLibraryContents().setCurrentBook(currentBook);
         for (int i = 0; i < inventory.length; i++) {
             LibraryHelper.getClientLibraryContents().setInventorySlotContents(i, inventory[i]);
         }
