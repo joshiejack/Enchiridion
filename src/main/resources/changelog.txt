@@ -8,9 +8,12 @@ Enchiridon - 3.0.1
   • Books when right clicked will be marked as last clicked book
   • The Enchiridion library will appear as if it is that book
   • Further right clicks will open this mods book
-  • If you wish to change book you are reading you can hold ctrl + right click
-  • ^ (It's not shift as certain books like warp book have special features for shift)
+  • Hold shift when right clicking a library to open it's gui
 • Added some things to allow for Progression Integration
+• Ingame Config support by Girafi
+• Changed the default gui texture slightly, (old books use old one still)
+• Added a slightly different positioned grid option to match the texture
+• Fixed ItemStack saving
 
 Enchiridion - 3.0.0 
 • Updated to 1.8.9

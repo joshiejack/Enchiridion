@@ -26,7 +26,7 @@ public class Book implements IBook {
     //Background, with default texture
 	private boolean showBackground; //Whether to show any background at all
 	private boolean legacyTexture; //Use the legacy texture for the books instead
-	private String backgroundResource = "enchiridion:textures/books/rustic.png";
+	private String backgroundResource = "enchiridion:textures/books/rustic2.png";
 	private int backgroundStartX = -10;
 	private int backgroundStartY = -10;
 	private int backgroundEndX = 440;

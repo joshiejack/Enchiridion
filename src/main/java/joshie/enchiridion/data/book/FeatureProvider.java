@@ -213,9 +213,9 @@ public class FeatureProvider implements IFeatureProvider {
                 int small = large - 1;
 
                 if (changeX < 0) {
-                    xPos = (xPos - small) / large * large;
+                    xPos = ((xPos - small) / large * large) - (GuiGrid.INSTANCE.isPixelGrid() ? 1: 0);
                 } else if (changeX > 0) {
-                    xPos = (xPos + small) / large * large;
+                    xPos = ((xPos + small) / large * large) - (GuiGrid.INSTANCE.isPixelGrid() ? 1: 0);;
                 }
 
                 if (changeY < 0) {

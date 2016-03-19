@@ -33,7 +33,7 @@ public class StackHelper {
     }
 
     public static String getStringFromStack(ItemStack stack) {
-        String str = Item.itemRegistry.getNameForObject(stack.getItem()).getResourcePath().replace(" ", "%20");
+        String str = Item.itemRegistry.getNameForObject(stack.getItem()).toString().replace(" ", "%20");
         if (stack.getHasSubtypes() || stack.isItemStackDamageable()) {
             str = str + " " + stack.getItemDamage();
         }
