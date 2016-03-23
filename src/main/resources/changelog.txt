@@ -1,3 +1,7 @@
+Enchiridion - 3.1.0
+• Added the ability to save and load templates, as well as setting them as default or not.
+• Because of the above, the arrows are now a template that are defaulted to defaultly be added :P
+
 Enchiridon - 3.0.1
 • Added a recipe for the library (With config to disable)
   • Default recipe is like a bookshelf but using dark wood on the tops, and any books that are supported by the library in the centre
