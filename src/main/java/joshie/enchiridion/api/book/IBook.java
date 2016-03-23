@@ -1,8 +1,9 @@
 package joshie.enchiridion.api.book;
 
-import java.util.List;
-
 import net.minecraft.util.ResourceLocation;
+
+import java.util.Collection;
+import java.util.List;
 
 public interface IBook {
 	/** GETTERS **/
@@ -116,4 +117,10 @@ public interface IBook {
 
 	/** Removes an existing page **/
     public void removePage(IPage page);
+
+	/** Returns a list of default ids **/
+	public List<String> getDefaultFeatures();
+
+    /** Call to set the default features for this book **/
+    public void setDefaultFeatures(Collection<String> features);
 }

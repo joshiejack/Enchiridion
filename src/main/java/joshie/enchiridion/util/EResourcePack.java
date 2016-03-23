@@ -1,16 +1,6 @@
 package joshie.enchiridion.util;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Set;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.Level;
-
 import com.google.common.collect.ImmutableSet;
-
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.FileHelper;
@@ -20,6 +10,14 @@ import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.data.IMetadataSection;
 import net.minecraft.client.resources.data.IMetadataSerializer;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.Level;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Set;
 
 public class EResourcePack implements IResourcePack {
 	public static final EResourcePack INSTANCE = new EResourcePack();
@@ -29,8 +27,8 @@ public class EResourcePack implements IResourcePack {
 	
 	private File getFileLocationFromResource(ResourceLocation location) {
 		String path = location.getResourcePath();
-		String name = path.startsWith("images")? path.substring(7): path.startsWith("textures")? path.substring(14): path.substring(12);
-		File directory = path.startsWith("images") ? FileHelper.getImagesDirectory(): FileHelper.getIconsDirectory();
+		String name = path.startsWith("templates") ? path.substring(10) : path.startsWith("images")? path.substring(7): path.startsWith("textures")? path.substring(14): path.substring(12);
+		File directory = path.startsWith("templates") ? FileHelper.getTemplatesDirectory() : path.startsWith("images") ? FileHelper.getImagesDirectory(): FileHelper.getIconsDirectory();
         return new File(directory, name);
 	}
 		
@@ -54,7 +52,7 @@ public class EResourcePack implements IResourcePack {
 	public boolean resourceExists(ResourceLocation location) {
 		if (!isValidLocation(location)) return false;
 		String path = location.getResourcePath();
-		if (path.startsWith("models") || path.startsWith("textures") || path.startsWith("images")) {
+		if (path.startsWith("models") || path.startsWith("textures") || path.startsWith("images") || path.startsWith("templates")) {
 			File file = getFileLocationFromResource(location);
 			if (EConfig.debugMode && !path.equals("textures/wiki/enchiridion_logo.png")) Enchiridion.log(Level.INFO, "Checking for file at: " + file);
 			if (file.exists() || path.equals("textures/wiki/enchiridion_logo.png")) {

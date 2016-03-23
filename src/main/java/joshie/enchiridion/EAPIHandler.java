@@ -1,22 +1,22 @@
 package joshie.enchiridion;
 
-import java.io.File;
-
-import org.apache.logging.log4j.Level;
-
 import joshie.enchiridion.api.IEnchiridionAPI;
-import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.api.book.IButtonAction;
+import joshie.enchiridion.api.book.ITemplate;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.api.gui.IToolbarButton;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.GuiBook;
 import joshie.enchiridion.gui.book.GuiSimpleEditorButton;
+import joshie.enchiridion.gui.book.GuiSimpleEditorTemplate;
 import joshie.enchiridion.gui.book.GuiToolbar;
 import joshie.enchiridion.gui.book.features.FeatureRecipe;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
+import org.apache.logging.log4j.Level;
+
+import java.io.File;
 
 public class EAPIHandler implements IEnchiridionAPI {
     @Override
@@ -72,4 +72,9 @@ public class EAPIHandler implements IEnchiridionAPI {
 	public void registerButtonAction(IButtonAction action) {
 		GuiSimpleEditorButton.INSTANCE.registerAction(action);
 	}
+
+    @Override
+    public void registerTemplate(ITemplate template) {
+        GuiSimpleEditorTemplate.INSTANCE.registerTemplate(template);
+    }
 }

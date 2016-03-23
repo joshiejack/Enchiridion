@@ -1,13 +1,14 @@
 package joshie.enchiridion.data.book;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.MCClientHelper;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class Book implements IBook {
 	/** VARIABLES **/
@@ -39,6 +40,8 @@ public class Book implements IBook {
     
     //Book itself
 	private List<IPage> book;
+	//Default Features UniqueIDs
+	private List<String> defaultIDs;
 
     //Legacy information
 	private transient int color;
@@ -62,7 +65,9 @@ public class Book implements IBook {
     	this.hasCustomIcon = true;
     	this.showBackground = true;
     	this.book = new ArrayList();
-		this.book.add(DefaultHelper.addDefaults(new Page(0)));
+        this.book.add(DefaultHelper.addDefaults(this, new Page(0)));
+        this.defaultIDs = new ArrayList();
+        this.defaultIDs.add("enchiridion_default_buttons");
     }
     
     /** METHODS **/
@@ -258,5 +263,20 @@ public class Book implements IBook {
         }
         
         tooltip.addAll(information);
+    }
+
+    @Override
+    public List<String> getDefaultFeatures() {
+        if (defaultIDs == null) {
+            defaultIDs = new ArrayList();
+            defaultIDs.add("enchiridion_default_buttons");
+        }
+
+        return defaultIDs;
+    }
+
+    @Override
+    public void setDefaultFeatures(Collection<String> features) {
+        this.defaultIDs = new ArrayList(features);
     }
 }

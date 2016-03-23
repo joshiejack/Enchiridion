@@ -1,42 +1,20 @@
 package joshie.enchiridion;
 
-import java.util.List;
-
-import org.lwjgl.input.Keyboard;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
 import joshie.enchiridion.data.book.BookRegistry;
-import joshie.enchiridion.gui.book.GuiBook;
-import joshie.enchiridion.gui.book.GuiBookCreate;
-import joshie.enchiridion.gui.book.GuiGrid;
-import joshie.enchiridion.gui.book.GuiLayers;
-import joshie.enchiridion.gui.book.GuiSimpleEditor;
-import joshie.enchiridion.gui.book.GuiTimeLine;
-import joshie.enchiridion.gui.book.GuiToolbar;
-import joshie.enchiridion.gui.book.buttons.ButtonChangeBackground;
-import joshie.enchiridion.gui.book.buttons.ButtonChangeIcon;
-import joshie.enchiridion.gui.book.buttons.ButtonDeletePage;
-import joshie.enchiridion.gui.book.buttons.ButtonInsertBox;
-import joshie.enchiridion.gui.book.buttons.ButtonInsertButton;
-import joshie.enchiridion.gui.book.buttons.ButtonInsertImage;
-import joshie.enchiridion.gui.book.buttons.ButtonInsertItem;
-import joshie.enchiridion.gui.book.buttons.ButtonInsertRecipe;
-import joshie.enchiridion.gui.book.buttons.ButtonInsertText;
-import joshie.enchiridion.gui.book.buttons.ButtonToggleGrid;
+import joshie.enchiridion.data.book.Page;
+import joshie.enchiridion.data.book.Template;
+import joshie.enchiridion.gui.book.*;
+import joshie.enchiridion.gui.book.buttons.*;
 import joshie.enchiridion.gui.book.buttons.actions.ActionJumpPage;
 import joshie.enchiridion.gui.book.buttons.actions.ActionNextPage;
 import joshie.enchiridion.gui.book.buttons.actions.ActionOpenWebpage;
 import joshie.enchiridion.gui.book.buttons.actions.ActionPreviousPage;
-import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerFurnace;
-import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerMTAdvancedShaped;
-import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerMTAdvancedShapeless;
-import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedOre;
-import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedVanilla;
-import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessOre;
-import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessVanilla;
+import joshie.enchiridion.gui.book.features.recipe.*;
 import joshie.enchiridion.gui.library.GuiLibrary;
+import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.items.SmartLibrary;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.lib.GuiIDs;
@@ -46,6 +24,7 @@ import joshie.enchiridion.library.handlers.ComputerCraftHandler;
 import joshie.enchiridion.library.handlers.WarpBookHandler;
 import joshie.enchiridion.library.handlers.WriteableBookHandler.GuiScreenWriteable;
 import joshie.enchiridion.util.ECreativeTab;
+import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.EResourcePack;
 import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.resources.IResourcePack;
@@ -63,6 +42,9 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import org.lwjgl.input.Keyboard;
+
+import java.util.List;
 
 public class EClientProxy extends ECommonProxy {
     public static final ModelResourceLocation bookResource = new ModelResourceLocation(new ResourceLocation(EInfo.MODPATH, "book"), "inventory");
@@ -107,6 +89,8 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerToolbarButton(new ButtonChangeBackground());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonChangeIcon());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonToggleGrid());
+        EnchiridionAPI.instance.registerToolbarButton(new ButtonSaveTemplate());
+        EnchiridionAPI.instance.registerToolbarButton(new ButtonInsertTemplate());
         
         //Register button actions
         EnchiridionAPI.instance.registerButtonAction(new ActionJumpPage());
@@ -122,6 +106,10 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerFurnace());
         attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShaped.class, "crafttweaker");
         attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShapeless.class, "crafttweaker");
+
+        //Register Button Template
+        Template template = new Template("enchiridion_default_buttons", "Turn Page Arrows", new ELocation("default_buttons_thumbnail"), DefaultHelper.addArrows(new Page(0)));
+        EnchiridionAPI.instance.registerTemplate(template);
         
         //Register the Enchiridion Book
         EnchiridionAPI.instance.registerModWithBooks("enchiridion");

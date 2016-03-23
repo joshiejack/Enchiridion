@@ -1,20 +1,6 @@
 package joshie.enchiridion.gui.book;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
 import com.google.common.collect.Lists;
-
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBook;
@@ -23,15 +9,19 @@ import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.data.book.Page;
-import joshie.enchiridion.helpers.DefaultHelper;
-import joshie.enchiridion.helpers.FileHelper;
-import joshie.enchiridion.helpers.GsonHelper;
-import joshie.enchiridion.helpers.JumpHelper;
-import joshie.enchiridion.helpers.MCClientHelper;
+import joshie.enchiridion.helpers.*;
 import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.TextEditor;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GuiBook extends GuiBase implements IBookHelper {
     private static final ResourceLocation legacyCoverL = new ELocation("guide_cover_left");
@@ -295,7 +285,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
         if (number == null) number = book.getDefaultPage();
         JumpHelper.jumpToPageByNumber(number);
         if (page == null) { //If we've got a dumb book, without a good page, then let's create a new blank page
-            page = DefaultHelper.addDefaults(new Page(0));
+            page = DefaultHelper.addDefaults(this.book, new Page(0));
             book.addPage(page);
         }
 

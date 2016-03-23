@@ -1,12 +1,12 @@
 package joshie.enchiridion.gui.book;
 
-import java.util.List;
-
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.util.TextEditor;
+
+import java.util.List;
 
 public class GuiSimpleEditor extends AbstractGuiOverlay implements ITextEditable {
 	public static final GuiSimpleEditor INSTANCE = new GuiSimpleEditor();
@@ -29,6 +29,7 @@ public class GuiSimpleEditor extends AbstractGuiOverlay implements ITextEditable
     
     @Override
     public void draw(int mouseX, int mouseY) {
+
     	if (editor != null) {
     		/** Draw the Background **/
     		EnchiridionAPI.draw.drawImage(sidebar, EConfig.editorXPos - 3, EConfig.toolbarYPos - 7, EConfig.editorXPos + 87, EConfig.timelineYPos + 13);

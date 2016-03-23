@@ -1,7 +1,5 @@
 package joshie.enchiridion.util;
 
-import java.util.Locale;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,6 +10,8 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.Locale;
 
 public class PenguinFont extends FontRenderer {
 	public static PenguinFont INSTANCE = null;
@@ -56,6 +56,14 @@ public class PenguinFont extends FontRenderer {
 	public int getStringWidth(String text) {
 		return super.getStringWidth(replaceFormatting(text));
 	}
+
+    @Override
+    public String wrapFormattedStringToWidth(String str, int wrapWidth) {
+        if (str == null || wrapWidth <= 1) {
+            new Exception().printStackTrace();
+            return "";
+        } else return super.wrapFormattedStringToWidth(str, wrapWidth);
+    }
 	
 	@Override
 	public void drawSplitString(String text, int x, int y, int wrapWidth, int textColor) {

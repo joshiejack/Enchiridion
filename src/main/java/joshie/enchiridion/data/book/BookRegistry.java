@@ -1,22 +1,5 @@
 package joshie.enchiridion.data.book;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.Level;
-
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.EConfig;
@@ -24,7 +7,7 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.api.book.IPage;
-import joshie.enchiridion.data.book.Book;
+import joshie.enchiridion.gui.book.GuiSimpleEditorTemplate;
 import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonHelper;
@@ -37,6 +20,22 @@ import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.Level;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class BookRegistry implements ItemMeshDefinition {
 	public static final BookRegistry INSTANCE = new BookRegistry();
@@ -54,10 +53,20 @@ public class BookRegistry implements ItemMeshDefinition {
                 register(GsonHelper.getModifiedGson().fromJson(FileUtils.readFileToString(file), Book.class));
             } catch (Exception e) { e.printStackTrace(); }
         }
+
+        //Load the templates
+        files = FileUtils.listFiles(FileHelper.getTemplatesDirectory(), new String[] { "json" }, false);
+        for (File file : files) { //Grab a list of all the json files in the directory
+            //Read all the json books from this directory
+            try {
+                GuiSimpleEditorTemplate.INSTANCE.registerTemplate(GsonHelper.getModifiedGson().fromJson(FileUtils.readFileToString(file), Template.class));
+            } catch (Exception e) { e.printStackTrace(); }
+        }
     }
     
-    public void registerModInDev(String modid, File source) {
-        File path = FileHelper.getDevAssetsForModPath(source.getParentFile(), modid, "books");
+    public void registerModInDev(String modid, File source) {                                                             //Fix for intellij, although it needs to be in a folder called Enchiridion
+        File path = new File(FileHelper.getDevAssetsForModPath(source.getParentFile(), modid, "books").toString().replace("\\out\\production", "\\Enchiridion"));
+        System.out.println(path);
         if (!path.exists()) {
             path.mkdir();
         }

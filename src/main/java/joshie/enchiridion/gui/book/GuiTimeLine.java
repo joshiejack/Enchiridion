@@ -107,7 +107,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
 				if (placing) {
 					JumpHelper.insertPage(thisNumber, dragged);
 				} else if (!JumpHelper.jumpToPageByNumber(thisNumber)) {
-					IPage page = DefaultHelper.addDefaults(new Page(thisNumber));
+					IPage page = DefaultHelper.addDefaults(GuiBook.INSTANCE.getBook(), new Page(thisNumber));
 					EnchiridionAPI.book.getBook().addPage(page);
 					JumpHelper.jumpToPageByNumber(thisNumber);
 				}

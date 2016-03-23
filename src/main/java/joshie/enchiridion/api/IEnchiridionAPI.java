@@ -1,11 +1,10 @@
 package joshie.enchiridion.api;
 
-import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.api.book.IButtonAction;
+import joshie.enchiridion.api.book.ITemplate;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.api.gui.IToolbarButton;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
-import net.minecraft.item.ItemStack;
 
 public interface IEnchiridionAPI {      
     /** Registering your mod, will have the mod search your assets folder
@@ -35,4 +34,7 @@ public interface IEnchiridionAPI {
     
     /** Register a button action, Client Side only **/
     public void registerButtonAction(IButtonAction action);
+
+    /** Register a custom template **/
+    public void registerTemplate(ITemplate template);
 }

@@ -1,13 +1,12 @@
 package joshie.enchiridion.helpers;
 
-import java.io.File;
-
-import org.apache.commons.io.FileUtils;
-
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.lib.EInfo;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
 
 public class FileHelper {
     public static File getConfigFile() {
@@ -82,6 +81,15 @@ public class FileHelper {
             throw new IllegalStateException("Couldn't create dir: " + directory);
         }
         
+        return directory;
+    }
+
+    public static File getTemplatesDirectory() {
+        File directory = new File(getBooksDirectory(), "templates");
+        if (!directory.exists() && !directory.mkdirs()) {
+            throw new IllegalStateException("Couldn't create dir: " + directory);
+        }
+
         return directory;
     }
     

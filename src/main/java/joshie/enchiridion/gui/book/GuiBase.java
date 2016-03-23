@@ -1,11 +1,5 @@
 package joshie.enchiridion.gui.book;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.lwjgl.input.Mouse;
-
 import joshie.enchiridion.api.gui.IDrawHelper;
 import joshie.enchiridion.api.recipe.IItemStack;
 import joshie.enchiridion.helpers.ClientStackHelper;
@@ -20,6 +14,11 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.input.Mouse;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuiBase extends GuiScreen implements IDrawHelper {
     public static final GuiBase INSTANCE = new GuiBase();
