@@ -1,18 +1,16 @@
 package joshie.enchiridion.data.book;
 
-import java.util.List;
-
-import org.lwjgl.input.Keyboard;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeature;
 import joshie.enchiridion.api.book.IFeatureProvider;
-import joshie.enchiridion.api.event.FeatureVisibleEvent;
 import joshie.enchiridion.gui.book.GuiGrid;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
 import joshie.enchiridion.helpers.EventHelper;
 import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.util.TextEditor;
+import org.lwjgl.input.Keyboard;
+
+import java.util.List;
 
 public class FeatureProvider implements IFeatureProvider {
     public int xPos;
@@ -92,7 +90,7 @@ public class FeatureProvider implements IFeatureProvider {
         right = (int) (xPos + width);
         top = yPos;
         bottom = (int) (yPos + height);
-        if (isVisible()) {
+        if (isVisible() && EventHelper.isFeatureVisible(layerIndex)) {
             feature.draw(xPos, yPos, width, height, isOverFeature(mouseX, mouseY));
             if (isSelected) {
                 int color = isEditing ? 0xCCFFFF00 : 0xCC007FFF;
@@ -131,7 +129,7 @@ public class FeatureProvider implements IFeatureProvider {
             TextEditor.INSTANCE.clearEditable();
         }
 
-        if (!isVisible()) return false;
+        if (!isVisible() ||  !EventHelper.isFeatureVisible(layerIndex)) return false;
         if (isOverFeature(mouseX, mouseY)) {
             if (EnchiridionAPI.book.isEditMode()) {
                 isEditing = feature.getAndSetEditMode();
@@ -308,7 +306,7 @@ public class FeatureProvider implements IFeatureProvider {
 
     @Override
     public boolean isVisible() {
-        return !isHidden && EventHelper.isFeatureVisible(layerIndex);
+        return !isHidden;
     }
 
     @Override
