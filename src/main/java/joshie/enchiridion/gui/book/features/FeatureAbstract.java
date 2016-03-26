@@ -7,7 +7,7 @@ import joshie.enchiridion.api.book.IFeatureProvider;
 import java.util.List;
 
 public abstract class FeatureAbstract implements IFeature {
-	protected IFeatureProvider position;
+	protected transient IFeatureProvider position;
 
 	@Override
 	public void update(IFeatureProvider position) {
