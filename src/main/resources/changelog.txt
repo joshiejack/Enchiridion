@@ -1,6 +1,13 @@
 Enchiridion - 3.1.0
 • Added the ability to save and load templates, as well as setting them as default or not.
+• Added Preview windows and the option to make pages scrollable (which looks stupid normally), However these are intended to be used in the preview windows. So you can have a scrollable section within the books.
 • Because of the above, the arrows are now a template that are defaulted to defaultly be added :P
+• You can now resize the hover/unhover text with buttons like they were text
+• Selecting a layer will now act as if you had selected the layer directly (You can't select locked layers) (allowing the use of ctrl click on layers etc)
+• Fix button copying, not copying the text label fields
+• Fix item and recipe copying not copying the tooltip field
+• Updated the enchiridion book
+• Added Ctrl + X support to copying features aka cut.
 
 Enchiridon - 3.0.1
 • Added a recipe for the library (With config to disable)

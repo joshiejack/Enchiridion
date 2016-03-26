@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IPage;
+import joshie.enchiridion.gui.book.GuiBook;
 import joshie.enchiridion.helpers.JSONHelper;
 import joshie.enchiridion.helpers.JumpHelper;
 
@@ -32,18 +33,18 @@ public class FeatureJump extends FeatureAbstract {
 				page = JumpHelper.getPageByName(jumpTo);
 				if (page == null) {
 					try {
-						page = JumpHelper.getPageByNumber(Integer.parseInt(jumpTo));
+						page = JumpHelper.getPageByNumber(GuiBook.INSTANCE.getBook(), Integer.parseInt(jumpTo));
 					} catch (Exception e) {}
 				}
 			} else {
-				page = JumpHelper.getPageByNumber(number);
+				page = JumpHelper.getPageByNumber(GuiBook.INSTANCE.getBook(), number);
 				if (page == null) page = JumpHelper.getPageByName(name);
 			}
 		}
 	}
 	
 	@Override
-	public void performAction (int mouseX, int mouseY) {
+	public void performClick(int mouseX, int mouseY) {
 		EnchiridionAPI.book.setPage(page);
 	}
 	

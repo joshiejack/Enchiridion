@@ -7,6 +7,7 @@ import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -24,12 +25,13 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
     public static final GuiBase INSTANCE = new GuiBase();
     protected final int xSize = 430;
     protected final int ySize = 217;
-    
-    protected List<String> tooltip = new ArrayList();
-    protected int mouseX = 0;
-    protected int mouseY = 0;
-    protected int x;
-    protected int y;
+    protected ScaledResolution res;
+
+    public List<String> tooltip = new ArrayList();
+    public int mouseX = 0;
+    public int mouseY = 0;
+    public int x;
+    public int y;
     private int renderX;
     private int renderY;
     private double renderWidth;
@@ -42,7 +44,12 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
     public void drawScreen(int x2, int y2, float partialTicks) {
         x = (width - xSize) / 2;
         y = (height - ySize) / 2;
+        res = new ScaledResolution(mc);
         tooltip.clear();
+    }
+
+    public ScaledResolution getRes() {
+        return res;
     }
     
     @Override
@@ -179,6 +186,10 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
 
     @Override
     public void drawImage(ResourceLocation resource, int left, int top, int right, int bottom) {
+        if (resource == null) {
+            return; //DON'T YOU DARE RENDER BROKEN STUFF!!!
+        }
+
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         Tessellator tessellator = Tessellator.getInstance();

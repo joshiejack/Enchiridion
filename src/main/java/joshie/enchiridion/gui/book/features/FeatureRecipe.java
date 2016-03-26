@@ -1,13 +1,13 @@
 package joshie.enchiridion.gui.book.features;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
 import joshie.enchiridion.helpers.StackHelper;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FeatureRecipe extends FeatureItem {
     public transient static final ArrayList<IRecipeHandler> handlers = new ArrayList();
@@ -29,6 +29,7 @@ public class FeatureRecipe extends FeatureItem {
         recipe.ingredients = ingredients;
         recipe.recipeType = recipeType;
         recipe.item = item;
+        recipe.hideTooltip = hideTooltip;
         return recipe;
     }
 

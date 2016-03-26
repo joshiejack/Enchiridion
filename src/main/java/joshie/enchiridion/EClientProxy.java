@@ -83,15 +83,17 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerToolbarButton(new ButtonInsertBox());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonInsertItem());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonInsertRecipe());
+        EnchiridionAPI.instance.registerToolbarButton(new ButtonInsertPreviewWindow());
         
         //Right aligned
         EnchiridionAPI.instance.registerToolbarButton(new ButtonDeletePage());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonChangeBackground());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonChangeIcon());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonToggleGrid());
+        EnchiridionAPI.instance.registerToolbarButton(new ButtonToggleScrollable());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonSaveTemplate());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonInsertTemplate());
-        
+
         //Register button actions
         EnchiridionAPI.instance.registerButtonAction(new ActionJumpPage());
         EnchiridionAPI.instance.registerButtonAction(new ActionNextPage());

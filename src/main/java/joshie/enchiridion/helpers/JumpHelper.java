@@ -1,6 +1,7 @@
 package joshie.enchiridion.helpers;
 
 import joshie.enchiridion.api.EnchiridionAPI;
+import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IPage;
 
 public class JumpHelper {
@@ -37,8 +38,8 @@ public class JumpHelper {
 		return false;
 	}
 	
-	public static IPage getPageByNumber(int number) {
-		for (IPage page: EnchiridionAPI.book.getBook().getPages()) {
+	public static IPage getPageByNumber(IBook book, int number) {
+		for (IPage page: book.getPages()) {
 			if (page.getPageNumber() == number) {
 				return page;
 			}
@@ -47,11 +48,11 @@ public class JumpHelper {
 		return null;
 	}
 
-	public static void insertPage(int pageNumber, IPage dragged) {
+	public static void insertPage(IBook book, int pageNumber, IPage dragged) {
 		if (dragged.getPageNumber() != pageNumber) {
-			if (getPageByNumber(pageNumber) != null) {
+			if (getPageByNumber(book, pageNumber) != null) {
 				dragged.setPageNumber(pageNumber);
-				for (IPage page: EnchiridionAPI.book.getBook().getPages()) {
+				for (IPage page: book.getPages()) {
 					if (page == dragged) continue;
 					else {
 						//Increase any pagenumbers to come after the new insertion to their new value

@@ -24,6 +24,7 @@ public interface IFeatureProvider {
 	public void setLayerIndex(int  i);
 
 	//Rendering and functions
+    public void update(IPage page);
 	public void draw(int mouseX, int mouseY);
 	public void addTooltip(List<String> tooltip, int mouseX, int mouseY);
 	public boolean mouseClicked(int mouseX, int mouseY);
@@ -32,7 +33,10 @@ public interface IFeatureProvider {
 	public void deselect();
 	public void follow(int mouseX, int mouseY, boolean force);
 	public boolean keyTyped(char character, int key);
+	public void scroll(int mouseX, int mouseY, boolean down);
 	
 	// Returns a new copy of this provider
     public IFeatureProvider copy();
+    // Returns the page this feature is in
+    public IPage getPage();
 }

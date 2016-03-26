@@ -1,31 +1,95 @@
  package joshie.enchiridion.data.book;
 
+import joshie.enchiridion.api.book.IBook;
+import joshie.enchiridion.api.book.IFeature;
+import joshie.enchiridion.api.book.IFeatureProvider;
+import joshie.enchiridion.api.book.IPage;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import joshie.enchiridion.api.book.IFeature;
-import joshie.enchiridion.api.book.IFeatureProvider;
-import joshie.enchiridion.api.book.IPage;
-
 public class Page implements IPage {
     public List<IFeatureProvider> features = new ArrayList();
     public String pageName;
 	public int pageNumber;
+	public boolean isScrollable;
+	public transient int scrollAmount;
+	public transient int maximumScroll;
+	public transient IBook book;
 	
 	public Page() {}
 	public Page(int number) {
 		this.pageName = "" + number;
 		this.pageNumber = number;
 	}
-	
+
+	@Override
+	public IBook getBook() {
+		return book;
+	}
+
+	@Override
+	public IPage setBook(IBook book) {
+		this.book = book;
+		return this;
+	}
+
+    @Override
+    public boolean isScrollingEnabled() {
+        return isScrollable;
+    }
+
+	@Override
+	public void toggleScroll() {
+		this.isScrollable = !isScrollable;
+	}
+
+    private void validateScrollPosition() {
+        if (this.scrollAmount < 0) {
+            this.scrollAmount = 0;
+        }
+
+        if (this.scrollAmount > maximumScroll) {
+            this.scrollAmount = maximumScroll;
+        }
+
+        for (IFeatureProvider provider: getFeatures()) {
+            provider.update(this);
+        }
+    }
+
+    @Override
+    public void setScrollPosition(int position) {
+        if (isScrollable) {
+            this.scrollAmount = position;
+            validateScrollPosition();
+        }
+    }
+
+	@Override
+	public void scroll(boolean down, int amount) {
+		if (isScrollable) {
+			if (down) {
+				this.scrollAmount += amount;
+			} else this.scrollAmount -= amount;
+
+            validateScrollPosition();
+		}
+	}
+
+	@Override
+	public int getScroll() {
+		return isScrollable ? scrollAmount : 0;
+	}
+
 	@Override
 	public void addFeature(IFeature feature, int x, int y, double width, double height, boolean isLocked, boolean isHidden) {
 		FeatureProvider provider = new FeatureProvider(feature, x, y, width, height);
 		provider.isLocked = isLocked;
 		provider.isHidden = isHidden;
-		provider.feature.update(provider);
+		provider.update(this);
 		provider.layerIndex = features.size();
 		features.add(provider);
 	}
@@ -65,6 +129,24 @@ public class Page implements IPage {
         		return provider1.getTimeChanged() >= provider2.getTimeChanged() ? 1: -1;
         	} else return provider1.getLayerIndex() > provider2.getLayerIndex() ? 1 : -1;
         }
+    }
+
+    @Override
+    public int getScrollbarMax(int screenTop) {
+        updateMaximumScroll(screenTop);
+        return maximumScroll;
+    }
+
+    @Override
+    public void updateMaximumScroll(int screenTop) {
+        int maxY = 0;
+        for (IFeatureProvider provider: features) {
+            if (provider.getY() + provider.getHeight() > maxY){
+                maxY = (int) (provider.getY() + provider.getHeight());
+            }
+        }
+
+        maximumScroll = maxY - screenTop;
     }
 	
 	@Override

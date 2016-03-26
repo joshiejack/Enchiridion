@@ -1,10 +1,10 @@
 package joshie.enchiridion.gui.book.buttons.actions;
 
-import java.util.List;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.book.IPage;
+
+import java.util.List;
 
 public class ActionNextPage extends AbstractAction {
 	public ActionNextPage() {
@@ -13,7 +13,11 @@ public class ActionNextPage extends AbstractAction {
 	
 	@Override
     public ActionNextPage copy() {
-        return new ActionNextPage();
+		ActionNextPage action = new ActionNextPage();
+		action.tooltip = tooltip;
+		action.hoverText = hoverText;
+		action.unhoveredText = unhoveredText;
+        return action;
     }
 
 	@Override

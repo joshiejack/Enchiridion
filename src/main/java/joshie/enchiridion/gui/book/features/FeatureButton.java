@@ -1,16 +1,17 @@
 package joshie.enchiridion.gui.book.features;
 
-import java.util.List;
-
 import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
 import joshie.enchiridion.gui.book.GuiSimpleEditorButton;
 
+import java.util.List;
+
 public class FeatureButton extends FeatureJump {
 	public FeatureImage deflt;
 	public FeatureImage hover;
 	public IButtonAction action;
+	public float size = 1F;
 	public transient FeatureText textHover;
 	public transient FeatureText textUnhover;
 	public transient IFeatureProvider provider;
@@ -25,7 +26,11 @@ public class FeatureButton extends FeatureJump {
 	
 	@Override
 	public FeatureButton copy() {
-	    return new FeatureButton(deflt.path, hover.path, action.copy());
+	    FeatureButton button = new FeatureButton(deflt.path, hover.path, action.copy());
+        button.size = size;
+        button.textHover = textHover == null ? null : textHover.copy();
+        button.textUnhover = textUnhover == null ? null : textUnhover.copy();
+        return button;
 	}
 	
 	@Override
@@ -37,11 +42,26 @@ public class FeatureButton extends FeatureJump {
 			deflt.update(position);
 			hover.update(position);
 			textHover = new FeatureText(action.getHoverText());
+			textHover.size = this.size;
 			textHover.update(position);
 			textUnhover = new FeatureText(action.getUnhoverText());
 			textUnhover.update(position);
+			textHover.size = this.size;
 		}
 	}
+
+    @Override
+    public void keyTyped(char character, int key) {
+        if (textHover != null) {
+            textHover.keyTyped(character, key);
+            this.size = textHover.size;
+        }
+
+        if (textUnhover != null){
+            textUnhover.keyTyped(character, key);
+            this.size = textHover.size;
+        }
+    }
 	
 	@Override
     public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
@@ -68,7 +88,7 @@ public class FeatureButton extends FeatureJump {
 	}
 	
 	@Override
-	public void performAction(int mouseX, int mouseY) {
+	public void performClick(int mouseX, int mouseY) {
 		if (action != null) action.performAction();
 	}
 	

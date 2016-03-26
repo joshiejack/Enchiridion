@@ -1,11 +1,10 @@
 package joshie.enchiridion.gui.book.features;
 
-import java.util.List;
-
 import com.google.gson.JsonObject;
-
 import joshie.enchiridion.api.book.IFeature;
 import joshie.enchiridion.api.book.IFeatureProvider;
+
+import java.util.List;
 
 public abstract class FeatureAbstract implements IFeature {
 	@Override
@@ -26,13 +25,16 @@ public abstract class FeatureAbstract implements IFeature {
 	}
 
 	@Override
-	public void performAction(int mouseX, int mouseY) {}
+	public void performClick(int mouseX, int mouseY) {}
+
+	@Override
+	public void performRelease(int mouseX, int mouseY) {}
 
 	@Override
 	public void follow(int mouseX, int mouseY) {}
 
 	@Override
-	public void scroll(boolean down) {}
+	public void scroll(boolean down, int amount) {}
 
 	@Override
 	public void onDeselected() {}

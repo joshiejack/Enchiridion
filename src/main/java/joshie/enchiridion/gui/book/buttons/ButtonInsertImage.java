@@ -1,16 +1,15 @@
 package joshie.enchiridion.gui.book.buttons;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.gui.book.features.FeatureImage;
 import joshie.enchiridion.helpers.FileCopier;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.lib.EInfo;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class ButtonInsertImage extends ButtonAbstract {
     public ButtonInsertImage() {
@@ -34,7 +33,7 @@ public class ButtonInsertImage extends ButtonAbstract {
                 BufferedImage buffered = ImageIO.read(file);
                 int width = buffered.getWidth();
                 int height = buffered.getHeight();
-                EnchiridionAPI.book.getPage().addFeature(feature, 0, 0, width, height, false, false);
+                EnchiridionAPI.book.getPage().addFeature(feature, 0, current.getScroll(), width, height, false, false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

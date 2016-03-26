@@ -15,7 +15,6 @@ public class ButtonSaveTemplate extends ButtonAbstract {
 
     @Override
     public void performAction() {
-        System.out.println("SET EDITOR");
         GuiSimpleEditor.INSTANCE.setEditor(GuiSimpleEditorTemplateSave.INSTANCE);
     }
 }

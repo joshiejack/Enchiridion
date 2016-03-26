@@ -6,14 +6,16 @@ import joshie.enchiridion.lib.EInfo;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class ButtonAbstract implements IToolbarButton {
-	private ResourceLocation dflt;
-	private ResourceLocation hover;
-	private String translate;
+	protected ResourceLocation dflt;
+	protected ResourceLocation hover;
+	protected String translate;
+	protected String name;
 	
 	public ButtonAbstract(String name) {
 		dflt = new ResourceLocation(EInfo.TEXPATH + name + "_dftl.png");
 		hover = new ResourceLocation(EInfo.TEXPATH + name + "_hover.png");
 		translate = "button." + name;
+		this.name = name;
 	}
 	
 	@Override

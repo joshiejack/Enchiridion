@@ -51,7 +51,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
 		
 		for (int j = 0; j < 110; j++) {
 			int thisNumber = startPage + j;
-			IPage page = JumpHelper.getPageByNumber(thisNumber);
+			IPage page = JumpHelper.getPageByNumber(GuiBook.INSTANCE.getBook(), thisNumber);
 			int positionX = -5 + (j * 4);
 			int fill = 0xFFE6D4A7;
 			boolean exists = page != null;
@@ -86,7 +86,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
 			if (isOverTimeLine(positionX, mouseX, mouseY)) {
 				//If we don't succeed at jumping to the page because it doesn't exist
 				//Then we should create it, and then jump to it;
-				dragged = JumpHelper.getPageByNumber(startPage + i);
+				dragged = JumpHelper.getPageByNumber(GuiBook.INSTANCE.getBook(), startPage + i);
 				return true;
 			}
 		}
@@ -105,9 +105,9 @@ public class GuiTimeLine extends AbstractGuiOverlay {
 				//Then we should create it, and then jump to it;
 				int thisNumber = startPage + i;
 				if (placing) {
-					JumpHelper.insertPage(thisNumber, dragged);
+					JumpHelper.insertPage(GuiBook.INSTANCE.getBook(), thisNumber, dragged);
 				} else if (!JumpHelper.jumpToPageByNumber(thisNumber)) {
-					IPage page = DefaultHelper.addDefaults(GuiBook.INSTANCE.getBook(), new Page(thisNumber));
+					IPage page = DefaultHelper.addDefaults(GuiBook.INSTANCE.getBook(), new Page(thisNumber).setBook(GuiBook.INSTANCE.getBook()));
 					EnchiridionAPI.book.getBook().addPage(page);
 					JumpHelper.jumpToPageByNumber(thisNumber);
 				}

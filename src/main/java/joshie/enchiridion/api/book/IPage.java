@@ -32,4 +32,31 @@ public interface IPage {
 
 	/** Removes all the features **/ 
     public void clear();
+
+	/** Returns the book this page is in **/
+	public IBook getBook();
+
+	/** Set the book this page is attached to **/
+	public IPage setBook(IBook book);
+
+	/** Sets the page to be scrollable type or not **/
+	public void toggleScroll();
+
+	/** Called to scroll this page if applicable **/
+	public void scroll(boolean down, int amount);
+
+	/** How far down this page is scrolled **/
+	public int getScroll();
+
+	/** Whether scrolling is enabled for this page **/
+	public boolean isScrollingEnabled();
+
+	/** Adjust the maximum scroll for this page **/
+	public void updateMaximumScroll(int screenTop);
+
+	/** Gets the maximum height of a scrollbar **/
+	public int getScrollbarMax(int screenTop);
+
+    /** Force a scroll position **/
+    public void setScrollPosition(int scrollPosition);
 }

@@ -1,7 +1,5 @@
 package joshie.enchiridion.gui.book.features;
 
-import java.util.List;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
@@ -10,6 +8,8 @@ import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.helpers.StackHelper;
 import joshie.enchiridion.util.IItemSelectable;
 import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 public class FeatureItem extends FeatureAbstract implements IItemSelectable {
 	public String item;
@@ -25,7 +25,9 @@ public class FeatureItem extends FeatureAbstract implements IItemSelectable {
 	
 	@Override
 	public FeatureItem copy() {
-	    return new FeatureItem(stack);
+		FeatureItem item = new FeatureItem(stack);
+		item.hideTooltip = hideTooltip;
+		return item;
 	}
 	
 	@Override

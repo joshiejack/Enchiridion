@@ -9,6 +9,7 @@ import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.data.book.Page;
+import joshie.enchiridion.gui.book.features.FeaturePreviewWindow;
 import joshie.enchiridion.helpers.*;
 import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.TextEditor;
@@ -32,6 +33,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
 
     //Page Number Cache
     public HashMap<String, Integer> pageCache = new HashMap();
+    public HashMap<String, FeaturePreviewWindow> scrollFeatures = new HashMap();
     private Set<IBookEditorOverlay> overlays = new HashSet();
     private boolean isEditMode = false; // Whether we are in edit mode or not
     private IBook book; // The current book being displayed
@@ -74,8 +76,17 @@ public class GuiBook extends GuiBase implements IBookHelper {
 
         // Draw all the features, In reverse
         for (IFeatureProvider feature : Lists.reverse(page.getFeatures())) {
+            int y = this.y;
+            if (page.getScroll() > 0) {
+                this.y -= page.getScroll();
+            }
+
+            int prevMouseY = mouseY;
+            mouseY = mouseY + page.getScroll();
             feature.draw(mouseX, mouseY);
             feature.addTooltip(tooltip, mouseX, mouseY);
+            this.mouseY = prevMouseY;
+            this.y = y;
             GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
         }
 
@@ -133,12 +144,18 @@ public class GuiBook extends GuiBase implements IBookHelper {
             }
             
             //Copy to clipboard
-            if (MCClientHelper.isCtrlPressed() && Keyboard.isKeyDown(Keyboard.KEY_C)) {
+            if (MCClientHelper.isCtrlPressed() && (Keyboard.isKeyDown(Keyboard.KEY_C) || Keyboard.isKeyDown(Keyboard.KEY_X))) {
                 clipboard.clear();
                 for (IFeatureProvider provider: group) {
                     IFeatureProvider copy = provider.copy();
-                    copy.getFeature().update(copy);
+                    copy.update(getPage());
                     clipboard.add(copy);
+                }
+
+                if(Keyboard.isKeyDown(Keyboard.KEY_X)) {
+                    for (IFeatureProvider provider: group) {
+                        page.removeFeature(provider);
+                    }
                 }
             } else if (MCClientHelper.isCtrlPressed() && Keyboard.isKeyDown(Keyboard.KEY_V)) { //Paste features
                 for (IFeatureProvider provider: clipboard) {
@@ -148,7 +165,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
 
             TextEditor.INSTANCE.keyTyped(character, key);
             for (IFeatureProvider provider: group) {
-                if (provider != null) provider.getFeature().update(provider); //Update itself
+                if (provider != null) provider.update(getPage()); //Update itself
             }
             
             for (IBookEditorOverlay overlay : overlays) {
@@ -158,6 +175,29 @@ public class GuiBook extends GuiBase implements IBookHelper {
     }
 
     private transient boolean wasControlPressedBefore = false;
+
+    public void selectLayer(IFeatureProvider feature) {
+        if (selected != null) selected.deselect();
+        selected = feature;
+        selected.select(mouseX, mouseY + page.getScroll());
+        boolean isCtrlPressedNow = MCClientHelper.isCtrlPressed();
+        //If we didn't have control before and we do now
+        if ((!wasControlPressedBefore && isCtrlPressedNow) || isCtrlPressedNow) {
+            wasControlPressedBefore = true; //It has now been pressed
+            isGroupMoveMode = false;
+        } else if (wasControlPressedBefore && !isCtrlPressedNow) { //Now if it was pressed before but isn't now
+            wasControlPressedBefore = false; //Reset the info
+            isGroupMoveMode = true;
+        } else if (!group.contains(selected)) { //If the control wasn't pressed before trying to move this item, then clear the group
+            group = new HashSet();
+            isGroupMoveMode = false;
+        }
+
+        group.add(selected); //Add it to the group
+        for (IFeatureProvider provider : group) { //Refresh the x position
+            provider.select(mouseX, mouseY + page.getScroll());
+        }
+    }
 
     @Override
     protected void mouseClicked(int x, int y, int mouseButton) throws IOException {
@@ -173,28 +213,8 @@ public class GuiBook extends GuiBase implements IBookHelper {
 
         //Perform clicks for the features
         for (IFeatureProvider feature : page.getFeatures()) {
-            if (feature.mouseClicked(mouseX, mouseY) && isEditMode) {
-                if (selected != null) selected.deselect();
-                selected = feature;
-                selected.select(mouseX, mouseY);
-                boolean isCtrlPressedNow = MCClientHelper.isCtrlPressed();
-                //If we didn't have control before and we do now
-                if ((!wasControlPressedBefore && isCtrlPressedNow) || isCtrlPressedNow) {
-                    wasControlPressedBefore = true; //It has now been pressed
-                    isGroupMoveMode = false;
-                } else if (wasControlPressedBefore && !isCtrlPressedNow) { //Now if it was pressed before but isn't now
-                    wasControlPressedBefore = false; //Reset the info
-                    isGroupMoveMode = true;
-                } else if (!group.contains(selected)) { //If the control wasn't pressed before trying to move this item, then clear the group
-                    group = new HashSet();
-                    isGroupMoveMode = false;
-                }
-
-                group.add(selected); //Add it to the group
-                for (IFeatureProvider provider : group) { //Refresh the x position
-                    provider.select(mouseX, mouseY);
-                }
-
+            if (feature.mouseClicked(mouseX, mouseY + page.getScroll()) && isEditMode) {
+                selectLayer(feature);
                 return;
             }
         }
@@ -214,8 +234,8 @@ public class GuiBook extends GuiBase implements IBookHelper {
         super.mouseReleased(x, y, state);
 
         isGroupMoveMode = false;
-        for (IFeatureProvider provider : group) {
-            provider.mouseReleased(mouseX, mouseY);
+        for (IFeatureProvider provider : page.getFeatures()) {
+            provider.mouseReleased(mouseX, mouseY + page.getScroll());
         }
 
         //Perform releases for the overlays
@@ -229,10 +249,6 @@ public class GuiBook extends GuiBase implements IBookHelper {
     @Override
     public void handleMouseInput() throws IOException {
         super.handleMouseInput();
-        for (IFeatureProvider provider : group) {
-            provider.follow(mouseX, mouseY, isGroupMoveMode);
-        }
-
         int wheel = Mouse.getDWheel();
         if (wheel != 0) {
             boolean down = wheel < 0;
@@ -240,6 +256,19 @@ public class GuiBook extends GuiBase implements IBookHelper {
                 for (IBookEditorOverlay overlay : overlays) {
                     overlay.scroll(down, mouseX, mouseY);
                 }
+            }
+
+            for (IFeatureProvider provider: page.getFeatures()) {
+                provider.scroll(mouseX, mouseY, down);
+            }
+
+            page.updateMaximumScroll(0); //Called constantly
+            page.scroll(down, 10);
+        }
+
+        if (!GuiLayers.INSTANCE.isDragging()) {
+            for (IFeatureProvider provider : group) {
+                provider.follow(mouseX, mouseY + page.getScroll(), isGroupMoveMode);
             }
         }
     }
@@ -265,6 +294,11 @@ public class GuiBook extends GuiBase implements IBookHelper {
         return selected;
     }
 
+    @Override
+    public boolean isGroupSelected(IFeatureProvider provider) {
+        return group.contains(provider);
+    }
+
     //Setters
     @Override
     public IBookHelper setBook(IBook book, boolean playerSneaked) {
@@ -285,7 +319,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
         if (number == null) number = book.getDefaultPage();
         JumpHelper.jumpToPageByNumber(number);
         if (page == null) { //If we've got a dumb book, without a good page, then let's create a new blank page
-            page = DefaultHelper.addDefaults(this.book, new Page(0));
+            page = DefaultHelper.addDefaults(this.book, new Page(0).setBook(this.book));
             book.addPage(page);
         }
 

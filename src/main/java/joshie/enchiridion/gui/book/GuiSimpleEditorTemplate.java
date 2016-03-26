@@ -4,6 +4,7 @@ import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.api.book.ITemplate;
+import joshie.enchiridion.data.book.Page;
 import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.util.ELocation;
 import net.minecraft.util.ResourceLocation;
@@ -31,7 +32,7 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
         templates.put(template.getUniqueName(), template);
 
         for (IFeatureProvider provider: template.getFeatures()) {
-            provider.getFeature().update(provider);
+            provider.update(new Page(0));
         }
     }
 

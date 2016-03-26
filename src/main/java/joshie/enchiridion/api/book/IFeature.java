@@ -1,8 +1,8 @@
 package joshie.enchiridion.api.book;
 
-import java.util.List;
-
 import com.google.gson.JsonObject;
+
+import java.util.List;
 
 public interface IFeature {
     /** Return a duplicate of this feature **/
@@ -18,9 +18,10 @@ public interface IFeature {
     public boolean getAndSetEditMode();
     
     /** Called when not in edit mode, or shift is clicked, on mouseClick **/
-    public void performAction(int mouseX, int mouseY);
+    public void performClick(int mouseX, int mouseY);
+    public void performRelease(int mouseX, int mouseY);
     public void follow(int mouseX, int mouseY);
-    public void scroll(boolean down);
+    public void scroll(boolean down, int amount);
 	public void onDeselected();
 	public void readFromJson(JsonObject json);
 	public void writeToJson(JsonObject json);

@@ -13,6 +13,9 @@ public interface IBookHelper {
 	
 	/** Returns the current feature that is selected **/
 	public IFeatureProvider getSelected();
+
+	/** Whether this feature is selected in a group **/
+	public boolean isGroupSelected(IFeatureProvider provider);
 	
 	/** SETTERS **/
 	/** Set the current book **/

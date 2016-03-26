@@ -1,17 +1,17 @@
 package joshie.enchiridion.gui.book.features;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.util.TextEditor;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class FeatureText extends FeatureAbstract implements ITextEditable {
 	private transient boolean oneClick = false;
@@ -54,7 +54,6 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
     @Override
     public boolean getAndSetEditMode() {
     	if (MCClientHelper.isShiftPressed()) {
-			readTemp = false;
 	    	try {
 	    		readTemp = true;
 	    		

@@ -26,6 +26,9 @@ public class ActionJumpPage extends AbstractAction {
 	    action.bookID = bookID;
 	    action.name = name;
 	    action.pageNumber = pageNumber;
+		action.tooltip = tooltip;
+		action.hoverText = hoverText;
+		action.unhoveredText = unhoveredText;
 	    return action;
 	}
 	
@@ -55,7 +58,7 @@ public class ActionJumpPage extends AbstractAction {
 		}
 		
 		if (page == null || page.getPageNumber() != pageNumber) {
-			page = JumpHelper.getPageByNumber(pageNumber);
+			page = JumpHelper.getPageByNumber(GuiBook.INSTANCE.getBook(), pageNumber);
 			if (page == null) page = JumpHelper.getPageByName(name);
 		}
 				

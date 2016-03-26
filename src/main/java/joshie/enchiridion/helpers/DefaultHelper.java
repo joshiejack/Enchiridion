@@ -32,7 +32,7 @@ public class DefaultHelper {
 		
 		//Initialise everything
 		for (IFeatureProvider feature: page.getFeatures()) {
-			feature.getFeature().update(feature);
+			feature.update(page);
 		}
 		
 		return page;

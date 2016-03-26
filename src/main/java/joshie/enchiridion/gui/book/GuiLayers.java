@@ -21,6 +21,10 @@ public class GuiLayers extends AbstractGuiOverlay {
     private int layerPosition = 0;
     
     private GuiLayers() {}
+
+    public boolean isDragging() {
+        return held != 0;
+    }
     
     private boolean isOverLayer(int layerY, int mouseX, int mouseY) {
     	if (mouseX > EConfig.layersXPos + 20 && mouseX <= EConfig.layersXPos + 83) {
@@ -80,7 +84,7 @@ public class GuiLayers extends AbstractGuiOverlay {
         	/** Layer itself **/
         	EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 20, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 83, EConfig.toolbarYPos + 7 + layerY, 0xFFE4D6AE, 0x5579725A);
         	
-        	if (isOverLayer(layerY, mouseX, mouseY) || feature == EnchiridionAPI.book.getSelected()) {
+        	if (isOverLayer(layerY, mouseX, mouseY) || EnchiridionAPI.book.isGroupSelected(feature)) {
             	hoverY = layerY;
             	EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 20, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 83, EConfig.toolbarYPos + 7 + layerY, 0xFFB0A483, 0xFF48453C);
             }
@@ -110,10 +114,12 @@ public class GuiLayers extends AbstractGuiOverlay {
     	int layerY = 0;
     	ArrayList<IFeatureProvider> features = EnchiridionAPI.book.getPage().getFeatures();
     	for (int i = layerPosition; i < Math.min(features.size(), layerPosition + 20); i++) {
+            IFeatureProvider provider = features.get(i);
             layerY += 12;
-            if (isOverLayer(layerY, mouseX, mouseY)) {
+            if (!provider.isLocked() && isOverLayer(layerY, mouseX, mouseY)) {
             	yStart = mouseY;
             	dragged = features.get(i);
+				GuiBook.INSTANCE.selectLayer(dragged);
             	return true;
             }
     	}

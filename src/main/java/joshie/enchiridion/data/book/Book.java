@@ -65,7 +65,7 @@ public class Book implements IBook {
     	this.hasCustomIcon = true;
     	this.showBackground = true;
     	this.book = new ArrayList();
-        this.book.add(DefaultHelper.addDefaults(this, new Page(0)));
+        this.book.add(DefaultHelper.addDefaults(this, new Page(0).setBook(this)));
         this.defaultIDs = new ArrayList();
         this.defaultIDs.add("enchiridion_default_buttons");
     }

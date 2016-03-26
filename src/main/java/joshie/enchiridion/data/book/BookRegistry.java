@@ -66,7 +66,6 @@ public class BookRegistry implements ItemMeshDefinition {
     
     public void registerModInDev(String modid, File source) {                                                             //Fix for intellij, although it needs to be in a folder called Enchiridion
         File path = new File(FileHelper.getDevAssetsForModPath(source.getParentFile(), modid, "books").toString().replace("\\out\\production", "\\Enchiridion"));
-        System.out.println(path);
         if (!path.exists()) {
             path.mkdir();
         }
@@ -133,6 +132,7 @@ public class BookRegistry implements ItemMeshDefinition {
     		List<IPage> pages = book.getPages();
     		for (int i = 0; i < pages.size(); i++) {
     			IPage page = pages.get(i);
+                page.setBook(book);
     			//Add the arrow features
 	    		if (book.isLegacyBook()) {
 	    			if (book.wereArrowsVisible()) {
@@ -147,7 +147,7 @@ public class BookRegistry implements ItemMeshDefinition {
 	    		
 	    		//Initialise everything
 	    		for (IFeatureProvider feature: page.getFeatures()) {
-	    			feature.getFeature().update(feature);
+	    			feature.update(page);
 	    		}
 	    		
 	    		//Sort the pages

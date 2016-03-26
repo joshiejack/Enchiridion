@@ -3,6 +3,7 @@ package joshie.enchiridion.data.book;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeature;
 import joshie.enchiridion.api.book.IFeatureProvider;
+import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.gui.book.GuiGrid;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
 import joshie.enchiridion.helpers.EventHelper;
@@ -32,15 +33,13 @@ public class FeatureProvider implements IFeatureProvider {
     private transient boolean isHeld;
     private transient int prevX;
     private transient int prevY;
-    private transient int originalX;
-    private transient int originalY;
     private transient boolean isDragging;
     private transient boolean dragTopLeft;
     private transient boolean dragTopRight;
     private transient boolean dragBottomLeft;
     private transient boolean dragBottomRight;
-    private transient double ratio;
     private transient long timestamp;
+    private transient IPage pageContainer;
 
     public FeatureProvider() {}
 
@@ -53,7 +52,18 @@ public class FeatureProvider implements IFeatureProvider {
         this.isLocked = true;
         this.isHidden = false;
     }
-    
+
+    @Override
+    public IPage getPage() {
+        return pageContainer;
+    }
+
+    @Override
+    public void update(IPage page) {
+        this.pageContainer = page;
+        this.pageContainer.sort();
+        feature.update(this);
+    }
 
     @Override
     public IFeatureProvider copy() {
@@ -137,7 +147,8 @@ public class FeatureProvider implements IFeatureProvider {
 
             //Perform clicks
             if (!EnchiridionAPI.book.isEditMode() || (EnchiridionAPI.book.isEditMode() && MCClientHelper.isShiftPressed())) {
-                feature.performAction(mouseX, mouseY);
+                feature.performClick(mouseX, mouseY);
+                return false;
             }
 
             if (!isLocked) {
@@ -156,6 +167,9 @@ public class FeatureProvider implements IFeatureProvider {
         dragTopRight = false;
         dragBottomLeft = false;
         dragBottomRight = false;
+
+        if (!isVisible() ||  !EventHelper.isFeatureVisible(layerIndex)) return;
+        feature.performRelease(mouseX, mouseY);
     }
     
     @Override
@@ -163,8 +177,6 @@ public class FeatureProvider implements IFeatureProvider {
         isSelected = true;
         prevX = mouseX;
         prevY = mouseY;
-        originalX = mouseX;
-        originalY = mouseY;
 
         if (isOverTopLeftCorner(mouseX, mouseY)) {
             isDragging = true;
@@ -195,12 +207,19 @@ public class FeatureProvider implements IFeatureProvider {
     }
 
     @Override
+    public void scroll(int mouseX, int mouseY, boolean down) {
+        if (isOverFeature(mouseX, mouseY)) {
+            feature.scroll(down, 10);
+        }
+    }
+
+    @Override
     public void follow(int mouseX, int mouseY, boolean force) {
         if (isHeld || force) {
             if (force) {
                 isSelected = true;
             }
-            
+
             int changeX = (mouseX - prevX);
             int changeY = (mouseY - prevY);
             xPos += changeX;
@@ -261,7 +280,7 @@ public class FeatureProvider implements IFeatureProvider {
         if (isHeld || isDragging || force) {
             prevX = mouseX;
             prevY = mouseY;
-            feature.update(this);
+            update(pageContainer);
         }
     }
 
