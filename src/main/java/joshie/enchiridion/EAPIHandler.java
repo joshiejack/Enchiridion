@@ -1,6 +1,7 @@
 package joshie.enchiridion;
 
 import joshie.enchiridion.api.IEnchiridionAPI;
+import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.book.ITemplate;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
@@ -12,6 +13,11 @@ import joshie.enchiridion.gui.book.GuiSimpleEditorButton;
 import joshie.enchiridion.gui.book.GuiSimpleEditorTemplate;
 import joshie.enchiridion.gui.book.GuiToolbar;
 import joshie.enchiridion.gui.book.features.FeatureRecipe;
+import joshie.enchiridion.helpers.JumpHelper;
+import joshie.enchiridion.lib.GuiIDs;
+import joshie.enchiridion.network.PacketHandler;
+import joshie.enchiridion.network.PacketOpenBook;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import org.apache.logging.log4j.Level;
@@ -76,5 +82,17 @@ public class EAPIHandler implements IEnchiridionAPI {
     @Override
     public void registerTemplate(ITemplate template) {
         GuiSimpleEditorTemplate.INSTANCE.registerTemplate(template);
+    }
+
+    @Override
+    public void openBook(EntityPlayer player, String bookid, int page) {
+        if (player.worldObj.isRemote) {
+            IBook book = BookRegistry.INSTANCE.getBookByName(bookid);
+            if (book != null) {
+                GuiBook.INSTANCE.setBook(book, false);
+                JumpHelper.jumpToPageByNumber(page - 1);
+                player.openGui(Enchiridion.instance, GuiIDs.BOOK_FORCE, player.worldObj, 0, 0, 0);
+            }
+        } else PacketHandler.sendToClient(new PacketOpenBook(bookid, page), player);
     }
 }

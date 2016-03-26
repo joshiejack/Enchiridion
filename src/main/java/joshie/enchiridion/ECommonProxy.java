@@ -1,5 +1,6 @@
 package joshie.enchiridion;
 
+import joshie.enchiridion.network.*;
 import org.apache.logging.log4j.Level;
 
 import joshie.enchiridion.api.EnchiridionAPI;
@@ -17,15 +18,6 @@ import joshie.enchiridion.library.handlers.RightClickBookHandler;
 import joshie.enchiridion.library.handlers.TemporarySwitchHandler;
 import joshie.enchiridion.library.handlers.WarpBookHandler;
 import joshie.enchiridion.library.handlers.WriteableBookHandler;
-import joshie.enchiridion.network.PacketHandleBook;
-import joshie.enchiridion.network.PacketHandler;
-import joshie.enchiridion.network.PacketLibraryCommand;
-import joshie.enchiridion.network.PacketOpenLibrary;
-import joshie.enchiridion.network.PacketSetLibraryBook;
-import joshie.enchiridion.network.PacketSyncFile;
-import joshie.enchiridion.network.PacketSyncLibraryAllowed;
-import joshie.enchiridion.network.PacketSyncLibraryContents;
-import joshie.enchiridion.network.PacketSyncMD5;
 import joshie.enchiridion.util.ECreativeTab;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -63,6 +55,7 @@ public class ECommonProxy implements IGuiHandler {
         PacketHandler.registerPacket(PacketLibraryCommand.class);
         PacketHandler.registerPacket(PacketSyncMD5.class);
         PacketHandler.registerPacket(PacketSyncFile.class);
+        PacketHandler.registerPacket(PacketOpenBook.class, Side.CLIENT);
         PacketHandler.registerPacket(PacketSyncLibraryContents.class, Side.CLIENT);
         PacketHandler.registerPacket(PacketOpenLibrary.class, Side.SERVER);
         PacketHandler.registerPacket(PacketHandleBook.class, Side.SERVER);

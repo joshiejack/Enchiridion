@@ -5,6 +5,7 @@ import joshie.enchiridion.api.book.ITemplate;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.api.gui.IToolbarButton;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
+import net.minecraft.entity.player.EntityPlayer;
 
 public interface IEnchiridionAPI {      
     /** Registering your mod, will have the mod search your assets folder
@@ -37,4 +38,7 @@ public interface IEnchiridionAPI {
 
     /** Register a custom template **/
     public void registerTemplate(ITemplate template);
+
+    /** Call this to open a books gui **/
+    public void openBook(EntityPlayer player, String bookid, int page);
 }
