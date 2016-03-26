@@ -108,19 +108,18 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
     		EnchiridionAPI.draw.drawBorderedRectangle(left, top, right, bottom, 0x00000000, 0xFF48453C);
 		}
 
-        int scrollMax = page.getScrollbarMax(bottom - 5);
-        if (isDragging) {
-            if (startY != GuiBook.INSTANCE.mouseY) {
-                int scrollPosition = (int) (((GuiBook.INSTANCE.mouseY - top) * (scrollMax)) / this.height);
-                page.updateMaximumScroll(bottom -5); //Update the max
-                page.setScrollPosition(scrollPosition);
+        if (page != null && page != thisPage) {
+            int scrollMax = page.getScrollbarMax(bottom - 5);
+            if (isDragging) {
+                if (startY != GuiBook.INSTANCE.mouseY) {
+                    int scrollPosition = (int) (((GuiBook.INSTANCE.mouseY - top) * (scrollMax)) / this.height);
+                    page.updateMaximumScroll(bottom -5); //Update the max
+                    page.setScrollPosition(scrollPosition);
+                }
+
+                startY = GuiBook.INSTANCE.mouseY;
             }
 
-            startY = GuiBook.INSTANCE.mouseY;
-        }
-
-
-        if (page != null && page != thisPage) {
             GlStateManager.pushMatrix();
             int scale = GuiBook.INSTANCE.getRes().getScaleFactor();
             GL11.glEnable(GL_SCISSOR_TEST);
@@ -154,15 +153,14 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
 
             glDisable(GL_SCISSOR_TEST);
             GlStateManager.popMatrix();
-        }
 
-        GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
-        if (height < scrollMax) {
-            EnchiridionAPI.draw.drawBorderedRectangle(right - 10, top, right, bottom, 0xFFB0A483, 0xFF362C24);
-            int position = (int)((page.getScroll() * (height - 10)) / scrollMax);
-            EnchiridionAPI.draw.drawBorderedRectangle(right - 10, top + position, right, top + position + 10, 0xFF2F271F, 0xFF191511);
+            GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
+            if (height < scrollMax) {
+                EnchiridionAPI.draw.drawBorderedRectangle(right - 10, top, right, bottom, 0xFFB0A483, 0xFF362C24);
+                int position = (int)((page.getScroll() * (height - 10)) / scrollMax);
+                EnchiridionAPI.draw.drawBorderedRectangle(right - 10, top + position, right, top + position + 10, 0xFF2F271F, 0xFF191511);
+            }
         }
-
     }
 
     @Override
