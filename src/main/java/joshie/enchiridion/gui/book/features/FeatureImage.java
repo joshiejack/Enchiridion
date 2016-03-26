@@ -1,17 +1,12 @@
 package joshie.enchiridion.gui.book.features;
 
-import java.io.IOException;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.lib.EInfo;
-import net.minecraft.util.ResourceLocation;
+
+import java.io.IOException;
 
 public class FeatureImage extends FeatureResource {
-    public transient int left;
-	public transient int right;
-	public transient int top;
-	public transient int bottom;
 	public transient String name;
 	
 	public FeatureImage() {}
@@ -32,14 +27,6 @@ public class FeatureImage extends FeatureResource {
 	@Override
 	public void update(IFeatureProvider position) {
 		super.update(position);
-		
-		int xPos = position.getX();
-		int yPos = position.getY();
-		
-		left = xPos;
-	    right = (int) (xPos + position.getWidth());
-	    top = yPos;
-	    bottom = (int) (yPos + position.getHeight());
 	    name = path.replace(EInfo.MODID + ":images/", "").replace(".png", "").split("/")[1];
 	}
 	
@@ -55,7 +42,7 @@ public class FeatureImage extends FeatureResource {
 	
 	@Override
 	protected void draw(int xPos, int yPos, double width, double height) {
-    	EnchiridionAPI.draw.drawImage(resource, left, top, right, bottom);
+    	EnchiridionAPI.draw.drawImage(resource, position.getLeft(), position.getTop(), position.getRight(), position.getBottom());
     }
 	
 	@Override

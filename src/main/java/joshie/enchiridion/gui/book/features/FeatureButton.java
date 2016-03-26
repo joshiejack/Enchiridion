@@ -15,7 +15,6 @@ public class FeatureButton extends FeatureJump {
 	public float size = 1F;
 	public transient FeatureText textHover;
 	public transient FeatureText textUnhover;
-	public transient IFeatureProvider provider;
 	private transient boolean isInit = false;
 	
 	public FeatureButton(){}
@@ -36,10 +35,10 @@ public class FeatureButton extends FeatureJump {
 	
 	@Override
 	public void update(IFeatureProvider position) {
+		super.update(position);
 		if (deflt == null || hover == null) return;
 		else {
 		    isInit = false; //Reset the init when something changes
-		    provider = position;
 			deflt.update(position);
 			hover.update(position);
 			textHover = new FeatureText(action.getHoverText());
@@ -64,26 +63,26 @@ public class FeatureButton extends FeatureJump {
             }
 
             if (changed) {
-                textHover.update(provider);
-                textUnhover.update(provider);
+                textHover.update(position);
+                textUnhover.update(position);
             }
         }
     }
 	
 	@Override
-    public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
+    public void draw(int mouseX, int mouseY) {
 		if (deflt == null || hover == null) return;
 		if (!isInit && action != null) { //Called here because action needs everything to be loaded, where as update doesn't
 		    action.initAction();
 		    isInit = true;
 		}
 		
-		if (isMouseHovering) {
-		    hover.draw(xPos, yPos, width, height, isMouseHovering);
-		    if (textHover != null) textHover.draw(xPos, yPos, width, height, isMouseHovering);
+		if (position.isOverFeature(mouseX, mouseY)) {
+		    hover.draw(mouseX, mouseY);
+		    if (textHover != null) textHover.draw(mouseX, mouseY);
 		} else {
-			deflt.draw(xPos, yPos, width, height, isMouseHovering);
-			if (textUnhover != null) textUnhover.draw(xPos, yPos, width, height, isMouseHovering);
+			deflt.draw(mouseX, mouseY);
+			if (textUnhover != null) textUnhover.draw(mouseX, mouseY);
 		}
 	}
 	

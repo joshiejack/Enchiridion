@@ -45,6 +45,13 @@ public class ActionJumpPage extends AbstractAction {
 		this.pageNumber = page.getPageNumber();
 		this.page = page;
 	}
+
+    public ActionJumpPage(int pageNumber) {
+        this();
+        this.name = "" + pageNumber;
+        this.pageNumber = pageNumber;
+        this.page = null;
+    }
 	
 	@Override
 	public String[] getFieldNames() {

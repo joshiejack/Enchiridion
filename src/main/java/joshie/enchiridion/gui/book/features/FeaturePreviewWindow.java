@@ -21,12 +21,6 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
     public transient IPage page;
     public transient IBook book;
     public transient IPage thisPage;
-	public transient int left;
-	public transient int right;
-	public transient int top;
-	public transient int bottom;
-    public transient double height;
-    public transient double width;
     public transient boolean isDragging;
     public transient int startY;
 
@@ -52,15 +46,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
 
 	@Override
 	public void update(IFeatureProvider position) {
-		int xPos = position.getX();
-		int yPos = position.getY();
-		
-		left = xPos;
-	    right = (int) (xPos + position.getWidth());
-	    top = yPos;
-	    bottom = (int) (yPos + position.getHeight());
-        height = position.getHeight();
-        width = position.getWidth();
+		super.update(position);
         thisPage = position.getPage();
         book = position.getPage().getBook();
         page = JumpHelper.getPageByNumber(book, pageNumber);
@@ -73,7 +59,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
     }
 
     private boolean isOverScrollY(int yCheck, int x, int y) {
-        return x >= right - 10 && x <= right && y >= top + yCheck && y <= top + yCheck + 10;
+        return x >= position.getRight() - 10 && x <= position.getRight() && y >= position.getTop() + yCheck && y <= position.getTop() + yCheck + 10;
     }
 
     @Override
@@ -86,9 +72,9 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
             }
 
 
-            int scrollMax = page.getScrollbarMax(bottom - 5);
-            int position = (int)((page.getScroll() * (height - 10)) / scrollMax);
-            if (isOverScrollY(position, mouseX, GuiBook.INSTANCE.mouseY)) {
+            int scrollMax = page.getScrollbarMax(position.getBottom() - 5);
+            int pos = (int)((page.getScroll() * (position.getHeight() - 10)) / scrollMax);
+            if (isOverScrollY(pos, mouseX, GuiBook.INSTANCE.mouseY)) {
                 isDragging = true;
                 startY = GuiBook.INSTANCE.mouseY;
             }
@@ -103,17 +89,17 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
     }
 
     @Override
-    public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
+    public void draw(int xMouse, int yMouse) {
 		if (GuiBook.INSTANCE.isEditMode()) {
-    		EnchiridionAPI.draw.drawBorderedRectangle(left, top, right, bottom, 0x00000000, 0xFF48453C);
+    		EnchiridionAPI.draw.drawBorderedRectangle(position.getLeft(), position.getTop(), position.getRight(), position.getBottom(), 0x00000000, 0xFF48453C);
 		}
 
         if (page != null && page != thisPage) {
-            int scrollMax = page.getScrollbarMax(bottom - 5);
+            int scrollMax = page.getScrollbarMax(position.getBottom() - 5);
             if (isDragging) {
                 if (startY != GuiBook.INSTANCE.mouseY) {
-                    int scrollPosition = (int) (((GuiBook.INSTANCE.mouseY - top) * (scrollMax)) / this.height);
-                    page.updateMaximumScroll(bottom -5); //Update the max
+                    int scrollPosition = (int) (((GuiBook.INSTANCE.mouseY - position.getTop()) * (scrollMax)) / position.getHeight());
+                    page.updateMaximumScroll(position.getBottom() -5); //Update the max
                     page.setScrollPosition(scrollPosition);
                 }
 
@@ -124,7 +110,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
             int scale = GuiBook.INSTANCE.getRes().getScaleFactor();
             GL11.glEnable(GL_SCISSOR_TEST);
             GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
-            GL11.glScissor((GuiBook.INSTANCE.x + left) * scale, (int)(GuiBook.INSTANCE.y + 217 - top - height) * scale, (int)width * scale, (int)height * scale);
+            GL11.glScissor((GuiBook.INSTANCE.x + position.getLeft()) * scale, (int)(GuiBook.INSTANCE.y + 217 - position.getTop() - position.getHeight()) * scale, (int)position.getWidth() * scale, (int)position.getHeight() * scale);
 
             for (IFeatureProvider feature : Lists.reverse(page.getFeatures())) {
                 if (feature instanceof FeaturePreviewWindow) continue; //No Cascading
@@ -133,6 +119,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
                     GuiBook.INSTANCE.y -= page.getScroll();
                 }
 
+                boolean isMouseHovering = position.isOverFeature(xMouse, yMouse);
                 int mouseX = isMouseHovering ? GuiBook.INSTANCE.mouseX: Short.MAX_VALUE;
                 int mouseY = isMouseHovering ? GuiBook.INSTANCE.mouseY + page.getScroll() : Short.MAX_VALUE;
                 int originalY = GuiBook.INSTANCE.mouseY;
@@ -155,10 +142,10 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
             GlStateManager.popMatrix();
 
             GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
-            if (height < scrollMax) {
-                EnchiridionAPI.draw.drawBorderedRectangle(right - 10, top, right, bottom, 0xFFB0A483, 0xFF362C24);
-                int position = (int)((page.getScroll() * (height - 10)) / scrollMax);
-                EnchiridionAPI.draw.drawBorderedRectangle(right - 10, top + position, right, top + position + 10, 0xFF2F271F, 0xFF191511);
+            if (position.getHeight() < scrollMax) {
+                EnchiridionAPI.draw.drawBorderedRectangle(position.getRight() - 10, position.getTop(), position.getRight(), position.getBottom(), 0xFFB0A483, 0xFF362C24);
+                int pos = (int)((page.getScroll() * (position.getHeight() - 10)) / scrollMax);
+                EnchiridionAPI.draw.drawBorderedRectangle(position.getRight() - 10, position.getTop() + pos, position.getRight(), position.getTop() + pos + 10, 0xFF2F271F, 0xFF191511);
             }
         }
     }
@@ -166,7 +153,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
     @Override
     public void scroll(boolean down, int amount) {
         if (page != null && page != thisPage) {
-            page.updateMaximumScroll(bottom -5); //Called constantly
+            page.updateMaximumScroll(position.getBottom() -5); //Called constantly
             page.scroll(down, amount);
         }
     }

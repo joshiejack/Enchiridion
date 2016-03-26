@@ -17,7 +17,7 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
 	private transient boolean oneClick = false;
     private transient boolean readTemp = false;
     private transient double cachedWidth = 0;
-	public transient int wrap = 0;
+	public transient int wrap = 100; //Default wrap to 100 to avoid errors
 	public String text = ""; 
 	public float size = 1F;
 	
@@ -40,14 +40,15 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
 	
 	@Override
 	public void update(IFeatureProvider position) {
+		super.update(position);
 		cachedWidth = position.getWidth();
 		wrap = Math.max(50, (int) (cachedWidth / size) + 4);
 	}
 	
     @Override
-    public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
+    public void draw(int mouseX, int mouseY) {
         if (text != null) {
-            EnchiridionAPI.draw.drawSplitScaledString(TextEditor.INSTANCE.getText(this), xPos, yPos, wrap, 0x555555, size);
+            EnchiridionAPI.draw.drawSplitScaledString(TextEditor.INSTANCE.getText(this), position.getLeft(), position.getTop(), wrap, 0x555555, size);
         }
     }
     

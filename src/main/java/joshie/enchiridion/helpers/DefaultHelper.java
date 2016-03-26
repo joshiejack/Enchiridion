@@ -25,7 +25,7 @@ public class DefaultHelper {
 			for (String unique: book.getDefaultFeatures()) {
 				List<IFeatureProvider> providers = GuiSimpleEditorTemplate.INSTANCE.getFeaturesFromString(unique);
 				for (IFeatureProvider provider: providers) {
-					page.addFeature(provider.getFeature(), provider.getX(), provider.getY(), provider.getWidth(), provider.getHeight(), provider.isLocked(), !provider.isVisible());
+					page.addFeature(provider.getFeature(), provider.getLeft(), provider.getTop(), provider.getWidth(), provider.getHeight(), provider.isLocked(), !provider.isVisible());
 				}
 			}
 		} else addArrows(page);

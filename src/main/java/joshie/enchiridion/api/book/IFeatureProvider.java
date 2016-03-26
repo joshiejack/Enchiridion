@@ -5,8 +5,10 @@ import java.util.List;
 public interface IFeatureProvider {
     //Getters
 	public IFeature getFeature();
-	public int getX();
-	public int getY();
+	public int getLeft();
+	public int getRight();
+	public int getTop();
+	public int getBottom();
 	public double getWidth();
 	public double getHeight();
 	public boolean isVisible();
@@ -34,6 +36,7 @@ public interface IFeatureProvider {
 	public void follow(int mouseX, int mouseY, boolean force);
 	public boolean keyTyped(char character, int key);
 	public void scroll(int mouseX, int mouseY, boolean down);
+	public boolean isOverFeature(int mouseX, int mouseY);
 	
 	// Returns a new copy of this provider
     public IFeatureProvider copy();

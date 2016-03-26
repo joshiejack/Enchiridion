@@ -27,7 +27,7 @@ public class FeatureJump extends FeatureAbstract {
 	}
 	
 	@Override
-	public void draw(int posX, int posY, double width, double height, boolean isMouseHovering) {
+	public void draw(int mouseX, int mouseY) {
 		if (page == null) {
 			if (jumpTo != null && !jumpTo.equals("#LEGACY#")) {
 				page = JumpHelper.getPageByName(jumpTo);

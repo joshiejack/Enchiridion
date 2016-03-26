@@ -7,11 +7,15 @@ import joshie.enchiridion.api.book.IFeatureProvider;
 import java.util.List;
 
 public abstract class FeatureAbstract implements IFeature {
+	protected IFeatureProvider position;
+
 	@Override
-	public void update(IFeatureProvider position) {}
+	public void update(IFeatureProvider position) {
+		this.position = position;
+	}
 	
 	@Override
-	public void draw(int posX, int posY, double width, double height, boolean isMouseHovering) {}
+	public void draw(int mouseX, int mouseY) {}
 
 	@Override
 	public void addTooltip(List<String> tooltip, int mouseX, int mouseY) {}

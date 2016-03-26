@@ -9,7 +9,7 @@ public interface IFeature {
     public IFeature copy();
     
 	public void update(IFeatureProvider position);
-	public void draw(int posX, int posY, double width, double height, boolean isMouseHovering);
+	public void draw(int mouseX, int mouseY);
     public void addTooltip(List<String> tooltip, int mouseX, int mouseY);
     public void keyTyped(char character, int key);
     

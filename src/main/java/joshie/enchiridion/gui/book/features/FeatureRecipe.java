@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ibm.icu.impl.CurrencyData.provider;
+
 public class FeatureRecipe extends FeatureItem {
     public transient static final ArrayList<IRecipeHandler> handlers = new ArrayList();
 
@@ -16,7 +18,6 @@ public class FeatureRecipe extends FeatureItem {
     private String recipeType = "ShapedOreRecipe";
     private transient int index = 0;
     private transient IRecipeHandler handler;
-    private transient IFeatureProvider provider;
 
     public FeatureRecipe() {}
     public FeatureRecipe(ItemStack item) {
@@ -91,16 +92,16 @@ public class FeatureRecipe extends FeatureItem {
         }
         
         //Update the provider
-        if (provider != null) {
-        	update(provider);
+        if (position != null) {
+        	update(position);
         }
     }
 
     @Override
 	public void update(IFeatureProvider position) {
-    	provider = position;
-    	int xPos = position.getX();
-		int yPos = position.getY();
+    	super.update(position);
+    	int xPos = position.getLeft();
+		int yPos = position.getTop();
 		
         if (handler != null) {
         	double width = position.getWidth();
@@ -110,21 +111,21 @@ public class FeatureRecipe extends FeatureItem {
     }
 
     @Override
-    public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
+    public void draw(int mouseX, int mouseY) {
     	if (stack == null && item != null) stack = StackHelper.getStackFromString(item);
         if (handler != null) {
-        	EnchiridionAPI.draw.setRenderData(provider.getX(), provider.getY(), provider.getWidth(), provider.getHeight(), size);
+        	EnchiridionAPI.draw.setRenderData(position.getLeft(), position.getTop(), position.getWidth(), position.getHeight(), size);
             handler.draw();
         } else {
         	buildRecipe(true);
-        	update(provider); //Initiate the provider
+        	update(position); //Initiate the provider
         }
     }
 
     @Override
     public void addTooltip(List list, int mouseX, int mouseY) {
         if (!hideTooltip && handler != null) {
-        	EnchiridionAPI.draw.setRenderData(provider.getX(), provider.getY(), provider.getWidth(), provider.getHeight(), size);
+        	EnchiridionAPI.draw.setRenderData(position.getLeft(), position.getTop(), position.getWidth(), position.getHeight(), size);
             handler.addTooltip(list);
         }
     }

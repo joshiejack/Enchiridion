@@ -159,7 +159,7 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
                     switchDefaulthood(template);
                 } else {
                     for (IFeatureProvider provider: template.getFeatures()) {
-                        GuiBook.INSTANCE.getPage().addFeature(provider.getFeature(), provider.getX(), provider.getY(), provider.getWidth(), provider.getHeight(), provider.isLocked(), !provider.isVisible());
+                        GuiBook.INSTANCE.getPage().addFeature(provider.getFeature(), provider.getLeft(), provider.getTop(), provider.getWidth(), provider.getHeight(), provider.isLocked(), !provider.isVisible());
                     }
                 }
 

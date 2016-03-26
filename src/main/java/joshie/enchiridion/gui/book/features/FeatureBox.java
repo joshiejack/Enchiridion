@@ -9,12 +9,7 @@ import joshie.enchiridion.util.IColorable;
 public class FeatureBox extends FeatureAbstract implements IColorable {
     public String color;
     public transient int colorI;
-    
-	public transient int left;
-	public transient int right;
-	public transient int top;
-	public transient int bottom;
-	
+
 	public FeatureBox() {}
 	public FeatureBox(String color) {
 		this.color = color;
@@ -58,20 +53,13 @@ public class FeatureBox extends FeatureAbstract implements IColorable {
 	
 	@Override
 	public void update(IFeatureProvider position) {
+		super.update(position);
 	    attemptToParseColor();
-		
-		int xPos = position.getX();
-		int yPos = position.getY();
-		
-		left = xPos;
-	    right = (int) (xPos + position.getWidth());
-	    top = yPos;
-	    bottom = (int) (yPos + position.getHeight());
 	}
 
     @Override
-    public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
-    	EnchiridionAPI.draw.drawRectangle(left, top, right, bottom, colorI);
+    public void draw(int mouseX, int mouseY) {
+    	EnchiridionAPI.draw.drawRectangle(position.getLeft(), position.getTop(), position.getRight(), position.getBottom(), colorI);
     }
     
     @Override

@@ -1,17 +1,15 @@
 package joshie.enchiridion.gui.book.features;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import org.apache.logging.log4j.Level;
-
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
+import org.apache.logging.log4j.Level;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class FeatureResource extends FeatureAbstract {
 	public String path;
@@ -30,6 +28,7 @@ public class FeatureResource extends FeatureAbstract {
     
     @Override
     public void update(IFeatureProvider position) { //Preload the resource
+        super.update(position);
         attempted = loadResource();
     }
     
@@ -43,9 +42,9 @@ public class FeatureResource extends FeatureAbstract {
     }
 
     @Override
-    public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
+    public void draw(int mouseX, int mouseY) {
     	if (resource != null) {
-    		draw(xPos, yPos, width, height);
+    		draw(position.getLeft(), position.getTop(), position.getWidth(), position.getHeight());
     	} else if (!attempted) attempted = loadResource();
     	
     }

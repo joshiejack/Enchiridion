@@ -37,16 +37,17 @@ public class FeatureItem extends FeatureAbstract implements IItemSelectable {
 	
 	@Override
 	public void update(IFeatureProvider position) {
+		super.update(position);
 		double width = position.getWidth();
 		position.setHeight(width);
         size = (float) (width / 16D);
 	}
 	
 	@Override
-    public void draw(int xPos, int yPos, double width, double height, boolean isMouseHovering) {
+    public void draw(int mouseX, int mouseY) {
 		if (stack == null && item != null) {
 			stack = StackHelper.getStackFromString(item);
-		} else EnchiridionAPI.draw.drawStack(stack, xPos, yPos, size);
+		} else EnchiridionAPI.draw.drawStack(stack, position.getLeft(), position.getTop(), size);
 	}
 	
 	@Override

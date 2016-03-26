@@ -15,6 +15,7 @@ import joshie.enchiridion.gui.book.buttons.actions.ActionPreviousPage;
 import joshie.enchiridion.gui.book.features.recipe.*;
 import joshie.enchiridion.gui.library.GuiLibrary;
 import joshie.enchiridion.helpers.DefaultHelper;
+import joshie.enchiridion.helpers.EditHelper;
 import joshie.enchiridion.items.SmartLibrary;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.lib.GuiIDs;
@@ -69,6 +70,7 @@ public class EClientProxy extends ECommonProxy {
         ModelLoader.setCustomMeshDefinition(ECommonProxy.book, BookRegistry.INSTANCE);
     	EnchiridionAPI.book = GuiBook.INSTANCE;
         EnchiridionAPI.draw = GuiBook.INSTANCE;
+        EnchiridionAPI.editor = new EditHelper();
         //Register editor overlays
         EnchiridionAPI.instance.registerEditorOverlay(GuiGrid.INSTANCE);
         EnchiridionAPI.instance.registerEditorOverlay(GuiTimeLine.INSTANCE);

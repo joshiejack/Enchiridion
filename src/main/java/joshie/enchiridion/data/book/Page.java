@@ -141,8 +141,8 @@ public class Page implements IPage {
     public void updateMaximumScroll(int screenTop) {
         int maxY = 0;
         for (IFeatureProvider provider: features) {
-            if (provider.getY() + provider.getHeight() > maxY){
-                maxY = (int) (provider.getY() + provider.getHeight());
+            if (provider.getTop() + provider.getHeight() > maxY){
+                maxY = (int) (provider.getTop() + provider.getHeight());
             }
         }
 

@@ -72,8 +72,9 @@ public class FeatureProvider implements IFeatureProvider {
         copy.setLayerIndex(layerIndex);
         return copy;
     }
-    
-    private boolean isOverFeature(int x, int y) {
+
+    @Override
+    public boolean isOverFeature(int x, int y) {
         return x >= left && x <= right && y >= top && y <= bottom;
     }
 
@@ -100,7 +101,7 @@ public class FeatureProvider implements IFeatureProvider {
         top = yPos;
         bottom = (int) (yPos + height);
         if (isVisible() && EventHelper.isFeatureVisible(layerIndex)) {
-            feature.draw(xPos, yPos, width, height, isOverFeature(mouseX, mouseY));
+            feature.draw(mouseX, mouseY);
             if (isSelected) {
                 int color = isEditing ? 0xCCFFFF00 : 0xCC007FFF;
                 EnchiridionAPI.draw.drawRectangle(right - 2, top, right, top + 2, color);
@@ -305,13 +306,23 @@ public class FeatureProvider implements IFeatureProvider {
     }
 
     @Override
-    public int getX() {
-        return xPos;
+    public int getLeft() {
+        return left;
     }
 
     @Override
-    public int getY() {
-        return yPos;
+    public int getRight() {
+        return right;
+    }
+
+    @Override
+    public int getTop() {
+        return top;
+    }
+
+    @Override
+    public int getBottom() {
+        return bottom;
     }
 
     @Override
