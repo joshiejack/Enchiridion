@@ -8,6 +8,7 @@ Enchiridion - 3.1.0
 • Fix item and recipe copying not copying the tooltip field
 • Updated the enchiridion book
 • Added Ctrl + X support to copying features aka cut.
+• Instead of shift clicking buttons in edit mode, you now simply right or middle click them (Less chance of conflict with shift resizing)
 
 Enchiridon - 3.0.1
 • Added a recipe for the library (With config to disable)

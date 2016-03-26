@@ -27,7 +27,7 @@ public interface IFeatureProvider {
     public void update(IPage page);
 	public void draw(int mouseX, int mouseY);
 	public void addTooltip(List<String> tooltip, int mouseX, int mouseY);
-	public boolean mouseClicked(int mouseX, int mouseY);
+	public boolean mouseClicked(int mouseX, int mouseY, int button);
 	public void mouseReleased(int mouseX, int mouseY);
 	public void select(int mouseX, int mouseY);
 	public void deselect();

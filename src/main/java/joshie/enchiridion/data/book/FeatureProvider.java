@@ -7,7 +7,6 @@ import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.gui.book.GuiGrid;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
 import joshie.enchiridion.helpers.EventHelper;
-import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.util.TextEditor;
 import org.lwjgl.input.Keyboard;
 
@@ -133,7 +132,7 @@ public class FeatureProvider implements IFeatureProvider {
     }
 
     @Override
-    public boolean mouseClicked(int mouseX, int mouseY) {
+    public boolean mouseClicked(int mouseX, int mouseY, int button) {
         if (EnchiridionAPI.book.isEditMode()) {
             GuiSimpleEditor.INSTANCE.setEditor(null); //Reset the editor
             TextEditor.INSTANCE.clearEditable();
@@ -141,12 +140,14 @@ public class FeatureProvider implements IFeatureProvider {
 
         if (!isVisible() ||  !EventHelper.isFeatureVisible(layerIndex)) return false;
         if (isOverFeature(mouseX, mouseY)) {
-            if (EnchiridionAPI.book.isEditMode()) {
-                isEditing = feature.getAndSetEditMode();
+            if (button == 0) {
+                if (EnchiridionAPI.book.isEditMode()) {
+                    isEditing = feature.getAndSetEditMode();
+                }
             }
 
             //Perform clicks
-            if (!EnchiridionAPI.book.isEditMode() || (EnchiridionAPI.book.isEditMode() && MCClientHelper.isShiftPressed())) {
+            if (!EnchiridionAPI.book.isEditMode() || (EnchiridionAPI.book.isEditMode() && button != 0)) {
                 feature.performClick(mouseX, mouseY);
                 return false;
             }

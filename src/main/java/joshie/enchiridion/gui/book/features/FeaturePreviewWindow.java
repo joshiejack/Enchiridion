@@ -82,7 +82,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
             for (IFeatureProvider feature : Lists.reverse(page.getFeatures())) {
                 if (feature instanceof FeaturePreviewWindow) continue; //No Cascading
                 mouseY = GuiBook.INSTANCE.mouseY + page.getScroll();
-                feature.mouseClicked(mouseX, mouseY);
+                feature.mouseClicked(mouseX, mouseY, 0);
             }
 
 
