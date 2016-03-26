@@ -22,9 +22,7 @@ public class FeatureProvider implements IFeatureProvider {
     public boolean isHidden;
     public int layerIndex;
 
-    public transient int left;
     public transient int right;
-    public transient int top;
     public transient int bottom;
 
     private transient boolean isSelected;
@@ -75,15 +73,15 @@ public class FeatureProvider implements IFeatureProvider {
 
     @Override
     public boolean isOverFeature(int x, int y) {
-        return x >= left && x <= right && y >= top && y <= bottom;
+        return x >= xPos && x <= right && y >= yPos && y <= bottom;
     }
 
     private boolean isOverTopLeftCorner(int x, int y) {
-        return x >= left && x <= left + 2 && y >= top && y <= top + 2;
+        return x >= xPos && x <= xPos + 2 && y >= yPos && y <= yPos + 2;
     }
 
     private boolean isOverTopRightCorner(int x, int y) {
-        return x >= right - 2 && x <= right && y >= top && y <= top + 2;
+        return x >= right - 2 && x <= right && y >= yPos && y <= yPos + 2;
     }
 
     private boolean isOverBottomRightCorner(int x, int y) {
@@ -91,23 +89,21 @@ public class FeatureProvider implements IFeatureProvider {
     }
 
     private boolean isOverBottomLeftCorner(int x, int y) {
-        return x >= left && x <= left + 2 && y >= bottom - 2 && y <= bottom;
+        return x >= xPos && x <= xPos + 2 && y >= bottom - 2 && y <= bottom;
     }
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        left = xPos;
         right = (int) (xPos + width);
-        top = yPos;
         bottom = (int) (yPos + height);
         if (isVisible() && EventHelper.isFeatureVisible(layerIndex)) {
             feature.draw(mouseX, mouseY);
             if (isSelected) {
                 int color = isEditing ? 0xCCFFFF00 : 0xCC007FFF;
-                EnchiridionAPI.draw.drawRectangle(right - 2, top, right, top + 2, color);
-                EnchiridionAPI.draw.drawRectangle(left, top, left + 2, top + 2, color);
+                EnchiridionAPI.draw.drawRectangle(right - 2, yPos, right, yPos + 2, color);
+                EnchiridionAPI.draw.drawRectangle(xPos, yPos, xPos + 2, yPos + 2, color);
                 EnchiridionAPI.draw.drawRectangle(right - 2, bottom - 2, right, bottom, color);
-                EnchiridionAPI.draw.drawRectangle(left, bottom - 2, left + 2, bottom, color);
+                EnchiridionAPI.draw.drawRectangle(xPos, bottom - 2, xPos + 2, bottom, color);
             }
         }
     }
@@ -307,7 +303,7 @@ public class FeatureProvider implements IFeatureProvider {
 
     @Override
     public int getLeft() {
-        return left;
+        return xPos;
     }
 
     @Override
@@ -317,7 +313,7 @@ public class FeatureProvider implements IFeatureProvider {
 
     @Override
     public int getTop() {
-        return top;
+        return yPos;
     }
 
     @Override
