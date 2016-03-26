@@ -4,6 +4,7 @@ import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
 import joshie.enchiridion.gui.book.GuiSimpleEditorButton;
+import joshie.enchiridion.helpers.MCClientHelper;
 
 import java.util.List;
 
@@ -46,20 +47,26 @@ public class FeatureButton extends FeatureJump {
 			textHover.update(position);
 			textUnhover = new FeatureText(action.getUnhoverText());
 			textUnhover.update(position);
-			textHover.size = this.size;
+            textUnhover.size = this.size;
 		}
 	}
 
     @Override
     public void keyTyped(char character, int key) {
-        if (textHover != null) {
-            textHover.keyTyped(character, key);
-            this.size = textHover.size;
-        }
+        if (MCClientHelper.isShiftPressed()) {
+            boolean changed = false;
+            if (key == 78) {
+                size = Math.min(15F, Math.max(0.5F, size + 0.1F));
+                changed = true;
+            } else if (key == 74) {
+                size = Math.min(15F, Math.max(0.5F, size - 0.1F));
+                changed = true;
+            }
 
-        if (textUnhover != null){
-            textUnhover.keyTyped(character, key);
-            this.size = textHover.size;
+            if (changed) {
+                textHover.update(provider);
+                textUnhover.update(provider);
+            }
         }
     }
 	
@@ -84,7 +91,7 @@ public class FeatureButton extends FeatureJump {
 	public boolean getAndSetEditMode() {
 		if (deflt == null || hover == null) return false;
 		GuiSimpleEditor.INSTANCE.setEditor(GuiSimpleEditorButton.INSTANCE.setButton(this));		
-		return false;
+		return true;
 	}
 	
 	@Override
