@@ -24,7 +24,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-import static java.io.File.separator;
 import static joshie.enchiridion.lib.EInfo.*;
 
 @Mod(modid = MODID, name = MODNAME, version = VERSION, dependencies = DEPENDENCIES, guiFactory = GUI_FACTORY_CLASS)
