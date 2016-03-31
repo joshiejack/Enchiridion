@@ -1,5 +1,6 @@
 package joshie.enchiridion.api;
 
+import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.book.ITemplate;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
@@ -38,6 +39,9 @@ public interface IEnchiridionAPI {
 
     /** Register a custom template **/
     public void registerTemplate(ITemplate template);
+
+    /** Call this to get a book from it's id **/
+    public IBook getBook(String bookid);
 
     /** Call this to open a books gui **/
     public void openBook(EntityPlayer player, String bookid, int page);

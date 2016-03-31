@@ -95,4 +95,9 @@ public class EAPIHandler implements IEnchiridionAPI {
             }
         } else PacketHandler.sendToClient(new PacketOpenBook(bookid, page), player);
     }
+
+    @Override
+    public IBook getBook(String bookid) {
+        return BookRegistry.INSTANCE.getBookByName(bookid);
+    }
 }
