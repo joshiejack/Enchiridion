@@ -1,12 +1,5 @@
 package joshie.enchiridion.library;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.HashMap;
-import java.util.HashSet;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.data.library.ModdedBooks;
 import joshie.enchiridion.data.library.ModdedBooks.ModdedBook;
@@ -14,6 +7,13 @@ import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonHelper;
 import joshie.enchiridion.helpers.StackHelper;
 import net.minecraft.item.ItemStack;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class ModSupport {
     public static HashSet<String> supported = new HashSet();
@@ -48,6 +48,8 @@ public class ModSupport {
         books.add("rightclick", "totemic:totempedia", false, false);
         books.add("rightclick", "openblocks:infoBook", false, false);
         books.add("rightclick", "opencomputers:tool 4", true, false);
+        books.add("rightclick", "rftools:rfToolsManualItem", false, false);
+        books.add("rightclick", "deepresonance:dr_manual", false, false);
         books.add("computercraft", "computercraft:printout", false, false);
         books.add("switchclick", "ImmersiveEngineering:tool 3", true, false);
         books.add("warpbook", "warpbook:warpbook", false, false);
