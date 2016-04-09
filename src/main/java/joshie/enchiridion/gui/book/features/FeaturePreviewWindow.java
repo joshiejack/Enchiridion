@@ -142,7 +142,14 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
             GlStateManager.popMatrix();
 
             GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
-            if (position.getHeight() < scrollMax) {
+            int minY = Short.MAX_VALUE;
+            for (IFeatureProvider provider: page.getFeatures()) {
+                if (provider.getTop() < minY) {
+                    minY = provider.getTop();
+                }
+            }
+
+            if (position.getHeight() < (scrollMax + position.getBottom() - 5 - minY)) {
                 EnchiridionAPI.draw.drawBorderedRectangle(position.getRight() - 10, position.getTop(), position.getRight(), position.getBottom(), 0xFFB0A483, 0xFF362C24);
                 int pos = (int)((page.getScroll() * (position.getHeight() - 10)) / scrollMax);
                 EnchiridionAPI.draw.drawBorderedRectangle(position.getRight() - 10, position.getTop() + pos, position.getRight(), position.getTop() + pos + 10, 0xFF2F271F, 0xFF191511);
