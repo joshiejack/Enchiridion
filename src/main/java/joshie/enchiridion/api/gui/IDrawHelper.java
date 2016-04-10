@@ -12,6 +12,7 @@ public interface IDrawHelper {
 	public void drawStack(ItemStack stack, int left, int top, float size);
 	public void drawResource(ResourceLocation resource, int left, int top, int width, int height, float scaleX, float scaleY);
 	public void drawImage(ResourceLocation resource, int left, int top, int right, int bottom);
+	public void drawLine(int left, int top, int right, int bottom, int thickness, int color);
 	
 	/** For use with RecipeHandlers **/
 	public void setRenderData(int xPos, int yPos, double width, double height, float size); //Called internally to update the internal sizes
