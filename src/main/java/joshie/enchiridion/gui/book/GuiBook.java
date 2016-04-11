@@ -3,10 +3,7 @@ package joshie.enchiridion.gui.book;
 import com.google.common.collect.Lists;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.api.book.IBook;
-import joshie.enchiridion.api.book.IBookHelper;
-import joshie.enchiridion.api.book.IFeatureProvider;
-import joshie.enchiridion.api.book.IPage;
+import joshie.enchiridion.api.book.*;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.data.book.Page;
 import joshie.enchiridion.gui.book.features.FeaturePreviewWindow;
@@ -336,5 +333,20 @@ public class GuiBook extends GuiBase implements IBookHelper {
     @Override
     public void setSelected(IFeatureProvider provider) {
         this.selected = provider;
+    }
+
+    @Override
+    public void jumpToPageIfExists(int number) {
+        JumpHelper.jumpToPageByNumber(number);
+    }
+
+    @Override
+    public IPage getPageIfNotExists(int number) {
+        IPage page = JumpHelper.getPageByNumber(book, number);
+        if (page == null) {
+            page = new Page(number).setBook(book);
+            book.addPage(page);
+            return page;
+        } else return null;
     }
 }
