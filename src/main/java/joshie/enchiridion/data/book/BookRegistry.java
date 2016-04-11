@@ -8,6 +8,7 @@ import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.gui.book.GuiSimpleEditorTemplate;
+import joshie.enchiridion.gui.book.features.FeatureError;
 import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonHelper;
@@ -30,10 +31,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -184,6 +182,16 @@ public class BookRegistry implements ItemMeshDefinition {
         	   } catch (Exception e) { e.printStackTrace(); }
         	}
        }
+
+        //Now that all that is done, let's go through and remove all the errored features
+        for (IPage page: book.getPages()) {
+            Iterator<IFeatureProvider> feature = page.getFeatures().iterator();
+            while (feature.hasNext()) {
+                if (feature.next().getFeature() instanceof FeatureError) {
+                    feature.remove();
+                }
+            }
+        }
         
         return book;
     }

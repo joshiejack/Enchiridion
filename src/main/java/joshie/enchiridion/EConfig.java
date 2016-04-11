@@ -47,7 +47,7 @@ public class EConfig {
             enableEditing = config.getBoolean("Enable Editing", CATEGORY_SETTINGS, true, "Enables editing of books that aren't locked");
             resourceReload = config.getBoolean("Reload Resources", CATEGORY_SETTINGS, false, "Reloads resources whenever you change a books icon, causes long delays, the more mods you have the longer");
             offlineMode = config.getBoolean("Library Offline Mode", CATEGORY_SETTINGS, false, "Uses the offline player to load library data");
-            defaultText = config.getString("Default Text", CATEGORY_SETTINGS, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id orci sed lectus interdum eleifend quis non dui. Nunc vehicula urna ac elit convallis, at auctor mi sollicitudin. Sed id est nec mauris facilisis hendrerit. Morbi ut imperdiet ligula. Aenean egestas velit quis tellus elementum, vitae viverra est ullamcorper. Class.", "Sets the default text when creating a text feature");
+            defaultText = config.getString("Default Text", CATEGORY_SETTINGS, "Lorem ipsum dolor sit amet.", "Sets the default text when creating a text feature");
             defaultItem = config.getString("Default Item", CATEGORY_SETTINGS, "minecraft:iron_sword", "Sets the default item when creating an item feature");
             toolbarYPos = config.getInt("Toolbar Y Pos", CATEGORY_SETTINGS, -30, -1000, 1000, "This is the y position at which to render the toolbar (top bar)");
             timelineYPos = config.getInt("Timeline Y Pos", CATEGORY_SETTINGS, 255, -1000, 1000, "This is the y position at which to render the timeline (bottom bar)");

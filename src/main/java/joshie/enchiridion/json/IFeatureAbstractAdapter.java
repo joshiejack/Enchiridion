@@ -1,18 +1,11 @@
 package joshie.enchiridion.json;
 
-import java.lang.reflect.Type;
-
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-
+import com.google.gson.*;
 import joshie.enchiridion.api.book.IFeature;
+import joshie.enchiridion.gui.book.features.FeatureError;
 import joshie.enchiridion.lib.EInfo;
+
+import java.lang.reflect.Type;
 
 public class IFeatureAbstractAdapter implements JsonSerializer<IFeature>, JsonDeserializer<IFeature> {
     @Override
@@ -48,7 +41,8 @@ public class IFeatureAbstractAdapter implements JsonSerializer<IFeature>, JsonDe
         	feature.readFromJson(element.getAsJsonObject());
             return feature;
         } catch (ClassNotFoundException cnfe) {
-            throw new JsonParseException("Unknown element type: " + clazz, cnfe);
+            return new FeatureError(); //Return an error feature
+            //We're doing this so that the whole book doesn't become broken just because one part did
         }
     }
 }
