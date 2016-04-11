@@ -59,7 +59,7 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
 
             WrappedEditable editable = null;
             if (!fieldCache.containsKey(f)) {
-                editable = new WrappedEditable(f);
+                editable = new WrappedEditable(provider, f);
                 fieldCache.put(f, editable);
             } else editable = fieldCache.get(f);
 
@@ -117,41 +117,49 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
             if(isTransient(f)) continue;
             WrappedEditable editable = null;
             if (!fieldCache.containsKey(f)) {
-                editable = new WrappedEditable(f);
+                editable = new WrappedEditable(provider, f);
                 fieldCache.put(f, editable);
             } else editable = fieldCache.get(f);
-            String text = TextEditor.INSTANCE.getText(editable);
-            int lines = getLineCount(text) - 1;
 
-            if (isOverPosition(2, yPos + 37, 83, yPos + 44 + (5 * lines), mouseX, mouseY)) {
+            String text = TextEditor.INSTANCE.getText(editable);
+            if (text == null) {
+                TextEditor.INSTANCE.setText("");
+                text = TextEditor.INSTANCE.getText(editable);
+            }
+
+            int lines = getLineCount(text) - 1;
+            if (isOverPosition(2, yPos + 37, 83, yPos + 44 + lines, mouseX, mouseY)) {
                 editable.click();
                 return true;
             }
 
-            yPos = yPos + 15 + (5 * lines);
+            yPos = yPos + 6 + lines;
         }
 
         return false;
     }
 
     //Helper Editable
-    private static class WrappedEditable implements ITextEditable {
+    public static class WrappedEditable implements ITextEditable {
         private String temporaryField;
         private String fieldName;
+        private Object object;
 
-        public WrappedEditable(String fieldName) {
+        public WrappedEditable(Object object, String fieldName) {
+            this.object = object;
             this.fieldName = fieldName;
         }
 
         public boolean click() {
             try {
-                Field f = provider.getClass().getField(fieldName);
+                Field f = object.getClass().getField(fieldName);
                 if (f.getType() == boolean.class) {
-                    boolean bool = f.getBoolean(provider);
-                    f.setBoolean(provider, !bool);
+                    boolean bool = f.getBoolean(object);
+                    f.setBoolean(object, !bool);
+                    temporaryField = "" + !bool;
                     return true;
                 }
-            } catch (Exception e){}
+            } catch (Exception e){ e.printStackTrace(); }
 
             TextEditor.INSTANCE.setEditable(this);
             return true;
@@ -161,10 +169,10 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
         public String getTextField() {
             if (temporaryField == null) {
                 try {
-                    Field f = provider.getClass().getField(fieldName);
+                    Field f = object.getClass().getField(fieldName);
                     if (fieldName.equals("pageNumber")) {
-                        temporaryField = "" + (f.getInt(provider) + 1);
-                    } else temporaryField = "" + f.get(provider);
+                        temporaryField = "" + (f.getInt(object) + 1);
+                    } else temporaryField = "" + f.get(object);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -180,7 +188,7 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
             temporaryField = text;
 
             try {
-                Field f = provider.getClass().getField(fieldName);
+                Field f = object.getClass().getField(fieldName);
                 if (f.getType() == int.class) {
                     try {
                         Integer number = Integer.parseInt(temporaryField);
@@ -188,17 +196,19 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
                             number -= 1;
                         }
 
-                        f.set(provider, number);
+                        f.set(object, number);
                     } catch (Exception e) {
-                        f.set(provider, 0);
+                        f.set(object, 0);
                     }
-                } else f.set(provider, text);
+                } else f.set(object, text);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             
-            //After all is done update the provider
-            provider.onFieldsSet();
+            //After all is done update the
+            if (object instanceof ISimpleEditorFieldProvider) {
+                ((ISimpleEditorFieldProvider)object).onFieldsSet();
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ public class ActionOpenWebpage extends AbstractAction {
 	
 	public ActionOpenWebpage() {
 		super("web");
-		this.url = "http://www.joshiejack.uk/enchiridion";
+		this.url = "http://www.joshiejack.uk/";
 	}
 	
 	@Override

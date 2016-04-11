@@ -7,8 +7,12 @@ import joshie.enchiridion.data.book.BookEvents;
 import joshie.enchiridion.helpers.JSONHelper;
 import joshie.enchiridion.util.ELocation;
 
+import java.util.regex.Pattern;
+
 public class ActionToggleLayer extends AbstractAction {
-	public transient int layer = 1;
+	public transient String layer = "1";
+    public transient boolean comma = true;
+    public transient boolean regex = false;
 
 	public ActionToggleLayer() {
 		super("toggle");
@@ -19,6 +23,8 @@ public class ActionToggleLayer extends AbstractAction {
 	@Override
 	public ActionToggleLayer copy() {
 	    ActionToggleLayer action = new ActionToggleLayer();
+        action.comma = comma;
+        action.regex = regex;
 	    action.layer = layer;
 	    return action;
 	}
@@ -26,29 +32,47 @@ public class ActionToggleLayer extends AbstractAction {
 	@Override
 	public IButtonAction create() {
 		ActionToggleLayer action = new ActionToggleLayer();
-		action.layer = 0;
+        action.comma = true;
+        action.regex = false;
+		action.layer = "1";
 		return action;
 	}
 
 	@Override
 	public String[] getFieldNames() {
-		return new String[] { "layer" };
+		return new String[] { "layer", "comma", "regex" };
 	}
 	
 	@Override
 	public void performAction() {
-        BookEvents.invert(EnchiridionAPI.book.getBook(), EnchiridionAPI.book.getPage(), layer - 1);
-	}
+        try {
+            if (regex) {
+                Pattern p = Pattern.compile(layer);
+                if (p != null) {
+                    BookEvents.invert(EnchiridionAPI.book.getBook(), EnchiridionAPI.book.getPage(), p);
+                }
+            } else if (comma) {
+                String[] ss = layer.replace(" ", "").split(",");
+                for (String s: ss) {
+                    BookEvents.invert(EnchiridionAPI.book.getBook(), EnchiridionAPI.book.getPage(), Pattern.compile(s));
+                }
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+ 	}
 
 	@Override
 	public void readFromJson(JsonObject json) {
 		super.readFromJson(json);
-        layer = JSONHelper.getIntegerIfExists(json, "layer");
+        layer = JSONHelper.getStringIfExists(json, "layer");
+        comma = JSONHelper.getBooleanIfExists(json, "comma");
+        regex = JSONHelper.getBooleanIfExists(json, "regex");
 	}
 
 	@Override
 	public void writeToJson(JsonObject object) {
 		super.writeToJson(object);
 		object.addProperty("layer", layer);
+        object.addProperty("comma", comma);
+        object.addProperty("regex", regex);
 	}
 }

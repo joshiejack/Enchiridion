@@ -8,41 +8,35 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BookEvents {
-    public static HashMap<String, HashMultimap<Integer, Integer>> inverted = new HashMap();
+    public static HashMap<String, HashMultimap<Integer, Pattern>> inverted = new HashMap();
 
     @SubscribeEvent
     public void onAttemptToRender(FeatureVisibleEvent event) {
-
         if (inverted.containsKey(event.bookid)) {
-
-            HashMultimap<Integer, Integer> map = inverted.get(event.bookid);
-            for (Integer i: map.keySet()) {
-                //System.out.println("CONTAINER KEY: " + i);
-            }
-
-            //System.out.println("PASSING PAGE " + event.page);
+            HashMultimap<Integer, Pattern> map = inverted.get(event.bookid);
             if (map.containsKey(event.page)) {
-
-
-                //System.out.println("MAP FOUND");
-                if (map.get(event.page).contains(event.layer)) {
-                    //System.out.println("CHANGE");
-                    event.isVisible = !event.isVisible; //Inverted
+                for (Pattern pattern: map.get(event.page)) {
+                    Matcher m = pattern.matcher("" + (event.layer + 1));
+                    if (m.matches()) {
+                        event.isVisible = !event.isVisible; //Inverted
+                    }
                 }
             }
         }
     }
 
-    public static boolean invert(IBook book, IPage page, int layer) {
+    public static boolean invert(IBook book, IPage page, Pattern pattern) {
         //If we already had everything, then we shall remove it from the map
         if (inverted.containsKey(book.getUniqueName())) {
             HashMultimap map = inverted.get(book.getUniqueName());
             if (map.containsKey(page.getPageNumber())) {
-                Collection<Integer> layers = map.get(page.getPageNumber());
-                if (layers.contains(layer)) {
-                    return layers.remove(layer);
+                Collection<Pattern> layers = map.get(page.getPageNumber());
+                if (layers.contains(pattern)) {
+                    return layers.remove(pattern);
                 }
             }
         }
@@ -50,7 +44,7 @@ public class BookEvents {
         //Otherwise
         HashMultimap map = inverted.get(book.getUniqueName());
         if (map == null) map = HashMultimap.create();
-        map.get(page.getPageNumber()).add(layer);
+        map.get(page.getPageNumber()).add(pattern);
         inverted.put(book.getUniqueName(), map);
         return true;
     }
