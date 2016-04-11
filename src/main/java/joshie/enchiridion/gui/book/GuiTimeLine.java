@@ -11,7 +11,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
 	public static final GuiTimeLine INSTANCE = new GuiTimeLine();
 	private IPage dragged = null;
 	private int held = 0;
-	private int startPage = 0;
+	public int startPage = 0;
 	
 	private GuiTimeLine() {}
 	

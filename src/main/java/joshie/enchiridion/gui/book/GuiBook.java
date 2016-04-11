@@ -3,7 +3,10 @@ package joshie.enchiridion.gui.book;
 import com.google.common.collect.Lists;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.api.book.*;
+import joshie.enchiridion.api.book.IBook;
+import joshie.enchiridion.api.book.IBookHelper;
+import joshie.enchiridion.api.book.IFeatureProvider;
+import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.data.book.Page;
 import joshie.enchiridion.gui.book.features.FeaturePreviewWindow;
@@ -337,6 +340,12 @@ public class GuiBook extends GuiBase implements IBookHelper {
 
     @Override
     public void jumpToPageIfExists(int number) {
+        int closest = 5*(Math.round(number/5));
+        int difference = closest - page.getPageNumber();
+        if (difference > 50 || difference < 50) {
+            GuiTimeLine.INSTANCE.startPage = closest + 50;
+        }
+
         JumpHelper.jumpToPageByNumber(number);
     }
 
