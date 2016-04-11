@@ -9,9 +9,9 @@ import joshie.enchiridion.util.ELocation;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class AbstractAction implements IButtonAction {
-	private transient ResourceLocation hovered;
-	private transient ResourceLocation unhovered;
-	private transient String name;
+	protected transient ResourceLocation hovered;
+	protected transient ResourceLocation unhovered;
+	protected transient String name;
 	public transient String tooltip = "";
 	public transient String hoverText = "";
 	public transient String unhoveredText = "";

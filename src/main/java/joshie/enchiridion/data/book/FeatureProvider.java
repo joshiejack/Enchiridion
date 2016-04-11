@@ -96,7 +96,7 @@ public class FeatureProvider implements IFeatureProvider {
     public void draw(int mouseX, int mouseY) {
         right = (int) (xPos + width);
         bottom = (int) (yPos + height);
-        if (isVisible() && EventHelper.isFeatureVisible(layerIndex)) {
+        if (EventHelper.isFeatureVisible(getPage(), isVisible(), layerIndex)) {
             feature.draw(mouseX, mouseY);
             if (isSelected) {
                 int color = isEditing ? 0xCCFFFF00 : 0xCC007FFF;
@@ -135,7 +135,7 @@ public class FeatureProvider implements IFeatureProvider {
             TextEditor.INSTANCE.clearEditable();
         }
 
-        if (!isVisible() ||  !EventHelper.isFeatureVisible(layerIndex)) return false;
+        if (!EventHelper.isFeatureVisible(getPage(), isVisible(), layerIndex)) return false;
         if (isOverFeature(mouseX, mouseY)) {
             if (button == 0) {
                 if (EnchiridionAPI.book.isEditMode()) {
@@ -166,7 +166,7 @@ public class FeatureProvider implements IFeatureProvider {
         dragBottomLeft = false;
         dragBottomRight = false;
 
-        if (!isVisible() ||  !EventHelper.isFeatureVisible(layerIndex)) return;
+        if (!EventHelper.isFeatureVisible(getPage(), isVisible(), layerIndex)) return;
         feature.performRelease(mouseX, mouseY);
     }
     

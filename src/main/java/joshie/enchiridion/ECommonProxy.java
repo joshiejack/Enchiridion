@@ -1,5 +1,6 @@
 package joshie.enchiridion;
 
+import joshie.enchiridion.data.book.BookEvents;
 import joshie.enchiridion.network.*;
 import org.apache.logging.log4j.Level;
 
@@ -48,6 +49,7 @@ public class ECommonProxy implements IGuiHandler {
         if (EConfig.loadWarpbook) attemptToRegisterModdedBookHandler(WarpBookHandler.class);
 
         //Register events
+        MinecraftForge.EVENT_BUS.register(new BookEvents());
         MinecraftForge.EVENT_BUS.register(new LibraryEvents());
 
         //Register packets#

@@ -8,10 +8,7 @@ import joshie.enchiridion.data.book.Page;
 import joshie.enchiridion.data.book.Template;
 import joshie.enchiridion.gui.book.*;
 import joshie.enchiridion.gui.book.buttons.*;
-import joshie.enchiridion.gui.book.buttons.actions.ActionJumpPage;
-import joshie.enchiridion.gui.book.buttons.actions.ActionNextPage;
-import joshie.enchiridion.gui.book.buttons.actions.ActionOpenWebpage;
-import joshie.enchiridion.gui.book.buttons.actions.ActionPreviousPage;
+import joshie.enchiridion.gui.book.buttons.actions.*;
 import joshie.enchiridion.gui.book.features.recipe.*;
 import joshie.enchiridion.gui.library.GuiLibrary;
 import joshie.enchiridion.helpers.DefaultHelper;
@@ -101,6 +98,7 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerButtonAction(new ActionNextPage());
         EnchiridionAPI.instance.registerButtonAction(new ActionPreviousPage());
         EnchiridionAPI.instance.registerButtonAction(new ActionOpenWebpage());
+        EnchiridionAPI.instance.registerButtonAction(new ActionToggleLayer());
         
         //Register Recipe Handlers
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapedVanilla());

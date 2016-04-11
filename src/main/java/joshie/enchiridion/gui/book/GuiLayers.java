@@ -4,7 +4,6 @@ import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
-import joshie.enchiridion.helpers.EventHelper;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -78,7 +77,7 @@ public class GuiLayers extends AbstractGuiOverlay {
         	}
         	
         	EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 11, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 20, EConfig.toolbarYPos + 7 + layerY, color1, color2);
-        	if (feature.isVisible() && EventHelper.isFeatureVisible(feature.getLayerIndex())) EnchiridionAPI.draw.drawImage(resource, EConfig.layersXPos + 12, EConfig.toolbarYPos - 1 + layerY, EConfig.layersXPos + 19, EConfig.toolbarYPos + layerY + 5);
+        	if (feature.isVisible()) EnchiridionAPI.draw.drawImage(resource, EConfig.layersXPos + 12, EConfig.toolbarYPos - 1 + layerY, EConfig.layersXPos + 19, EConfig.toolbarYPos + layerY + 5);
         	/** END VISIBILITY ICON **/
         	
         	/** Layer itself **/
