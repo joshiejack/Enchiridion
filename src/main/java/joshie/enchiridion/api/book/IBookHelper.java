@@ -27,8 +27,8 @@ public interface IBookHelper {
 	/** Set the currently selected feature **/
 	public void setSelected(IFeatureProvider provider);
 
-	/** Jumps to the page number if it exists **/
-	public void jumpToPageIfExists(int number);
+	/** Jumps to the page number if it exists, returns true if we jumped **/
+	public boolean jumpToPageIfExists(int number);
 
 	/** Creates the page if it doesn't exist
      *  @number the page number

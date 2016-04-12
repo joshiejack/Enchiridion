@@ -317,7 +317,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
 
         Integer number = pageCache.get(book.getUniqueName());
         if (number == null) number = book.getDefaultPage();
-        JumpHelper.jumpToPageByNumber(number);
+        jumpToPageIfExists(number);
         if (page == null) { //If we've got a dumb book, without a good page, then let's create a new blank page
             page = DefaultHelper.addDefaults(this.book, new Page(0).setBook(this.book));
             book.addPage(page);
@@ -330,6 +330,15 @@ public class GuiBook extends GuiBase implements IBookHelper {
     public void setPage(IPage page) {
         GuiSimpleEditor.INSTANCE.setEditor(null); //Reset the editor
         TextEditor.INSTANCE.clearEditable();
+
+        if (this.page != null) {
+            int closest = 5 * (Math.round(page.getPageNumber()/5));
+            int difference = closest - this.page.getPageNumber();
+            if (difference > 50 || difference < 50) {
+                GuiTimeLine.INSTANCE.startPage = Math.max(0, closest - 50);
+            }
+        }
+
         this.page = page;
     }
 
@@ -339,14 +348,8 @@ public class GuiBook extends GuiBase implements IBookHelper {
     }
 
     @Override
-    public void jumpToPageIfExists(int number) {
-        int closest = 5*(Math.round(number/5));
-        int difference = closest - page.getPageNumber();
-        if (difference > 50 || difference < 50) {
-            GuiTimeLine.INSTANCE.startPage = closest + 50;
-        }
-
-        JumpHelper.jumpToPageByNumber(number);
+    public boolean jumpToPageIfExists(int number) {
+        return JumpHelper.jumpToPageByNumber(number);
     }
 
     @Override

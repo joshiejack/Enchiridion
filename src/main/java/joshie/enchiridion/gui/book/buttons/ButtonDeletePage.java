@@ -1,10 +1,9 @@
 package joshie.enchiridion.gui.book.buttons;
 
-import java.util.List;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IPage;
-import joshie.enchiridion.helpers.JumpHelper;
+
+import java.util.List;
 
 public class ButtonDeletePage extends ButtonAbstract {
     public ButtonDeletePage() {
@@ -18,7 +17,7 @@ public class ButtonDeletePage extends ButtonAbstract {
         int pageNumber = 1;
         if (numberOfPages > 1) {
             pageNumber = getPreviousPage();
-            JumpHelper.jumpToPageByNumber(pageNumber); //Jump to the previous page
+            EnchiridionAPI.book.jumpToPageIfExists(pageNumber); //Jump to the previous page
             //Delete the older page
             EnchiridionAPI.book.getBook().removePage(currentPage);
         } else {

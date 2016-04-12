@@ -106,10 +106,10 @@ public class GuiTimeLine extends AbstractGuiOverlay {
 				int thisNumber = startPage + i;
 				if (placing) {
 					JumpHelper.insertPage(GuiBook.INSTANCE.getBook(), thisNumber, dragged);
-				} else if (!JumpHelper.jumpToPageByNumber(thisNumber)) {
+				} else if (!EnchiridionAPI.book.jumpToPageIfExists(thisNumber)) {
 					IPage page = DefaultHelper.addDefaults(GuiBook.INSTANCE.getBook(), new Page(thisNumber).setBook(GuiBook.INSTANCE.getBook()));
 					EnchiridionAPI.book.getBook().addPage(page);
-					JumpHelper.jumpToPageByNumber(thisNumber);
+					EnchiridionAPI.book.jumpToPageIfExists(thisNumber);
 				}
 			}
 		}

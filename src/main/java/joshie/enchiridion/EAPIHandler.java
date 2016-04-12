@@ -1,5 +1,6 @@
 package joshie.enchiridion;
 
+import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.IEnchiridionAPI;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IButtonAction;
@@ -13,7 +14,6 @@ import joshie.enchiridion.gui.book.GuiSimpleEditorButton;
 import joshie.enchiridion.gui.book.GuiSimpleEditorTemplate;
 import joshie.enchiridion.gui.book.GuiToolbar;
 import joshie.enchiridion.gui.book.features.FeatureRecipe;
-import joshie.enchiridion.helpers.JumpHelper;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.PacketOpenBook;
@@ -90,7 +90,7 @@ public class EAPIHandler implements IEnchiridionAPI {
             IBook book = BookRegistry.INSTANCE.getBookByName(bookid);
             if (book != null) {
                 GuiBook.INSTANCE.setBook(book, false);
-                JumpHelper.jumpToPageByNumber(page - 1);
+                EnchiridionAPI.book.jumpToPageIfExists(page - 1);
                 player.openGui(Enchiridion.instance, GuiIDs.BOOK_FORCE, player.worldObj, 0, 0, 0);
             }
         } else PacketHandler.sendToClient(new PacketOpenBook(bookid, page), player);
