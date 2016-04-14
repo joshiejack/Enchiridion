@@ -7,11 +7,11 @@ import net.minecraft.util.ResourceLocation;
 public interface IButtonAction extends ISimpleEditorFieldProvider {
     /** Create a copy of this action **/
     public IButtonAction copy();
-	public IButtonAction create();
-	public String getName();
+    public IButtonAction create();
+    public String getName();
 
     /** Reduce this stuff **/
-	public ResourceLocation getResource(boolean isHovered);
+    public ResourceLocation getResource(boolean isHovered);
     public String getText(boolean isHovered);
 
     /** Return the tooltip **/
@@ -23,11 +23,11 @@ public interface IButtonAction extends ISimpleEditorFieldProvider {
     public IButtonAction setTooltip(String tooltip);
 
     /** Perform the action **/
-	public void performAction();
+    public void performAction();
 
-	/** Called to read data for the button **/
-	public void readFromJson(JsonObject object);
-	
-	/** Called to write data for this button **/
-	public void writeToJson(JsonObject object);
+    /** Called to read data for the button **/
+    public void readFromJson(JsonObject object);
+
+    /** Called to write data for this button **/
+    public void writeToJson(JsonObject object);
 }

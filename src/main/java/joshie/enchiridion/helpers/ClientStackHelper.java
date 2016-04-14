@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 
 public class ClientStackHelper {
-	public static void drawStack(ItemStack stack, int x, int y, float size) {
+    public static void drawStack(ItemStack stack, int x, int y, float size) {
         GlStateManager.pushMatrix();
         GlStateManager.scale(size, size, size);
         GlStateManager.disableLighting();
@@ -22,5 +22,5 @@ public class ClientStackHelper {
         GlStateManager.disableLighting();
         GlStateManager.enableAlpha();
         GlStateManager.popMatrix();
-	}
+    }
 }

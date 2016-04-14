@@ -8,36 +8,36 @@ import joshie.enchiridion.util.ELocation;
 import java.util.regex.Pattern;
 
 public class ActionToggleLayer extends AbstractAction {
-	public String layer = "1";
+    public String layer = "1";
     public boolean comma = true;
     public boolean regex = false;
 
-	public ActionToggleLayer() {
-		super("toggle");
+    public ActionToggleLayer() {
+        super("toggle");
         hovered = new ELocation("layer_hover");
         unhovered = new ELocation("layer_dftl");
-	}
+    }
 
-	@Override
-	public ActionToggleLayer copy() {
-	    ActionToggleLayer action = new ActionToggleLayer();
+    @Override
+    public ActionToggleLayer copy() {
+        ActionToggleLayer action = new ActionToggleLayer();
         action.comma = comma;
         action.regex = regex;
-	    action.layer = layer;
-	    return action;
-	}
+        action.layer = layer;
+        return action;
+    }
 
-	@Override
-	public IButtonAction create() {
-		ActionToggleLayer action = new ActionToggleLayer();
+    @Override
+    public IButtonAction create() {
+        ActionToggleLayer action = new ActionToggleLayer();
         action.comma = true;
         action.regex = false;
-		action.layer = "1";
-		return action;
-	}
+        action.layer = "1";
+        return action;
+    }
 
-	@Override
-	public void performAction() {
+    @Override
+    public void performAction() {
         try {
             if (regex) {
                 Pattern p = Pattern.compile(layer);
@@ -51,5 +51,5 @@ public class ActionToggleLayer extends AbstractAction {
                 }
             }
         } catch (Exception e) { e.printStackTrace(); }
- 	}
+     }
 }

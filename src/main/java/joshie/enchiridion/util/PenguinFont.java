@@ -14,48 +14,48 @@ import net.minecraft.util.ResourceLocation;
 import java.util.Locale;
 
 public class PenguinFont extends FontRenderer {
-	public static PenguinFont INSTANCE = null;
-	private boolean resetColor = false;
-	
-	public static void load() {
-		Minecraft mc = Minecraft.getMinecraft();
-		INSTANCE = new PenguinFont(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine, false);
+    public static PenguinFont INSTANCE = null;
+    private boolean resetColor = false;
+
+    public static void load() {
+        Minecraft mc = Minecraft.getMinecraft();
+        INSTANCE = new PenguinFont(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine, false);
         if (mc.getLanguageManager() != null) {
-        	INSTANCE.setUnicodeFlag(mc.fontRendererObj.getUnicodeFlag());
-        	INSTANCE.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
+            INSTANCE.setUnicodeFlag(mc.fontRendererObj.getUnicodeFlag());
+            INSTANCE.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
         }
 
         ((IReloadableResourceManager) mc.getResourceManager()).registerReloadListener(INSTANCE);
-	}
+    }
 
-	private PenguinFont(GameSettings gameSettingsIn, ResourceLocation location, TextureManager textureManagerIn, boolean unicode) {
-		super(gameSettingsIn, location, textureManagerIn, unicode);
-	}
-	
-	public String stripFormatting(String text) {
-		String ret = text;
-		for (CharReplace c: CharReplace.values()) {
-			ret = ret.replace(c.search, "");
-		}
-		
-		return ret;
-	}
-	
-	private final static String start = "\u00a7";
-	
-	public String replaceFormatting(String text) {
-		String ret = text;
-		for (CharReplace c: CharReplace.values()) {
-			ret = ret.replace(c.search, "" + start + c.character);
-		}
-		
-		return ret.replace("\r", " ").replace("\t", "    ");
-	}
+    private PenguinFont(GameSettings gameSettingsIn, ResourceLocation location, TextureManager textureManagerIn, boolean unicode) {
+        super(gameSettingsIn, location, textureManagerIn, unicode);
+    }
 
-	@Override
-	public int getStringWidth(String text) {
-		return super.getStringWidth(replaceFormatting(text));
-	}
+    public String stripFormatting(String text) {
+        String ret = text;
+        for (CharReplace c: CharReplace.values()) {
+            ret = ret.replace(c.search, "");
+        }
+
+        return ret;
+    }
+
+    private final static String start = "\u00a7";
+
+    public String replaceFormatting(String text) {
+        String ret = text;
+        for (CharReplace c: CharReplace.values()) {
+            ret = ret.replace(c.search, "" + start + c.character);
+        }
+
+        return ret.replace("\r", " ").replace("\t", "    ");
+    }
+
+    @Override
+    public int getStringWidth(String text) {
+        return super.getStringWidth(replaceFormatting(text));
+    }
 
     @Override
     public String wrapFormattedStringToWidth(String str, int wrapWidth) {
@@ -64,19 +64,19 @@ public class PenguinFont extends FontRenderer {
             return "";
         } else return super.wrapFormattedStringToWidth(str, wrapWidth);
     }
-	
-	@Override
-	public void drawSplitString(String text, int x, int y, int wrapWidth, int textColor) {
-		originalColor = textColor;
-		super.drawSplitString(replaceFormatting(text), x, y, wrapWidth, textColor);
+
+    @Override
+    public void drawSplitString(String text, int x, int y, int wrapWidth, int textColor) {
+        originalColor = textColor;
+        super.drawSplitString(replaceFormatting(text), x, y, wrapWidth, textColor);
     }
-	
-	@Override
-	public int drawStringWithShadow(String text, float x, float y, int color) {
-		return super.drawStringWithShadow(replaceFormatting(text), x, y, color);
+
+    @Override
+    public int drawStringWithShadow(String text, float x, float y, int color) {
+        return super.drawStringWithShadow(replaceFormatting(text), x, y, color);
     }
-	
-	private static enum CharReplace {
+
+    private static enum CharReplace {
         BOLD_S("[b]", 'l'), BOLD_F("[/b]", 'r'), 
         ITALIC_S("[i]", 'o'), ITALIC_F("[/i]", 'r'), 
         STRIKE_S("[s]", 'm'), STRIKE_F("[/s]", 'r'), 
@@ -105,20 +105,20 @@ public class PenguinFont extends FontRenderer {
             return character == char2;
         }
     }
-	
-	private boolean cursor = false;
-	private boolean white = false;
-	private int originalColor;
-	
-	@Override
-	public void resetStyles() {
-		super.resetStyles();
-		this.cursor = false;
-		this.resetColor = false;
+
+    private boolean cursor = false;
+    private boolean white = false;
+    private int originalColor;
+
+    @Override
+    public void resetStyles() {
+        super.resetStyles();
+        this.cursor = false;
+        this.resetColor = false;
     }
-	
-	@Override
-	public void renderStringAtPos(String text, boolean shadow)
+
+    @Override
+    public void renderStringAtPos(String text, boolean shadow)
     {
         for (int i = 0; i < text.length(); ++i)
         {
@@ -173,12 +173,12 @@ public class PenguinFont extends FontRenderer {
                     this.italicStyle = true;
                 }
                 else if (i1 == 22 || i1 == 23) {
-                	this.cursor = true;
-                	this.white = i1 == 22;
+                    this.cursor = true;
+                    this.white = i1 == 22;
                 }
                 else if (i1 == 21)
                 {
-                	this.cursor = false;
+                    this.cursor = false;
                     this.randomStyle = false;
                     this.boldStyle = false;
                     this.strikethroughStyle = false;
@@ -256,16 +256,16 @@ public class PenguinFont extends FontRenderer {
             }
         }
     }
-	
-	@Override
-	public void doDraw(float f)
+
+    @Override
+    public void doDraw(float f)
     {
         {
             {
 
                 if (this.cursor && this.white)
                 {
-                	GlStateManager.pushMatrix();
+                    GlStateManager.pushMatrix();
                     Tessellator tessellator = Tessellator.getInstance();
                     WorldRenderer worldrenderer = tessellator.getWorldRenderer();
                     GlStateManager.disableTexture2D();

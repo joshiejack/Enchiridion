@@ -50,14 +50,14 @@ public class EClientProxy extends ECommonProxy {
     public static ModelResourceLocation library;
     public static ModelResourceLocation libraryItem;
     
-	@Override
-	public void onConstruction() {
-		try {
-    		List<IResourcePack> defaultResourcePacks = ObfuscationReflectionHelper.getPrivateValue(FMLClientHandler.class, FMLClientHandler.instance(), "resourcePackList");
-        	defaultResourcePacks.add(EResourcePack.INSTANCE);
-    	} catch (Exception e) {}
-	}
-	
+    @Override
+    public void onConstruction() {
+        try {
+            List<IResourcePack> defaultResourcePacks = ObfuscationReflectionHelper.getPrivateValue(FMLClientHandler.class, FMLClientHandler.instance(), "resourcePackList");
+            defaultResourcePacks.add(EResourcePack.INSTANCE);
+        } catch (Exception e) {}
+    }
+
     @Override
     public void setupClient() {
         LibraryHelper.resetClient();
@@ -65,7 +65,7 @@ public class EClientProxy extends ECommonProxy {
         ModelBakery.registerItemVariants(ECommonProxy.book, bookResource);
         MinecraftForge.EVENT_BUS.register(new SmartLibrary());
         ModelLoader.setCustomMeshDefinition(ECommonProxy.book, BookRegistry.INSTANCE);
-    	EnchiridionAPI.book = GuiBook.INSTANCE;
+        EnchiridionAPI.book = GuiBook.INSTANCE;
         EnchiridionAPI.draw = GuiBook.INSTANCE;
         EnchiridionAPI.editor = new EditHelper();
         //Register editor overlays

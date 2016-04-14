@@ -15,8 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class GuiBookCreate extends GuiScreen implements ITextEditable {
-	public static final GuiBookCreate INSTANCE = new GuiBookCreate();
-	
+    public static final GuiBookCreate INSTANCE = new GuiBookCreate();
+
     private String text;
     private ItemStack stack;
 
@@ -27,26 +27,26 @@ public class GuiBookCreate extends GuiScreen implements ITextEditable {
         return this;
     }
     
-	@Override
-	public String getTextField() {
-		return text;
-	}
+    @Override
+    public String getTextField() {
+        return text;
+    }
 
-	@Override
-	public void setTextField(String text) {
-		this.text = text;
-		
-		if (this.text.contains("\n")) { //If we pressed enter, clear out the return
-			text = text.replace("\n", "");
-			String sanitized = text.replaceAll("[^A-Za-z0-9]", "_");
-			Book book = new Book(sanitized, text); //Create the book
-			stack.setTagCompound(new NBTTagCompound());
+    @Override
+    public void setTextField(String text) {
+        this.text = text;
+
+        if (this.text.contains("\n")) { //If we pressed enter, clear out the return
+            text = text.replace("\n", "");
+            String sanitized = text.replaceAll("[^A-Za-z0-9]", "_");
+            Book book = new Book(sanitized, text); //Create the book
+            stack.setTagCompound(new NBTTagCompound());
             stack.getTagCompound().setString("identifier", sanitized);
             BookRegistry.INSTANCE.register(book); //Register the book
             GuiBook.INSTANCE.setBook(book, true);
             GuiBook.INSTANCE.onGuiClosed(); //Save the data to json
-		}
-	}
+        }
+    }
 
     @Override
     public void initGui() {
@@ -67,7 +67,7 @@ public class GuiBookCreate extends GuiScreen implements ITextEditable {
         super.keyTyped(character, key);
         TextEditor.INSTANCE.keyTyped(character, key);
         if (key == 28 || key == 156) {
-        	mc.thePlayer.closeScreen();
+            mc.thePlayer.closeScreen();
         }
     }
     

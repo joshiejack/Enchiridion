@@ -8,8 +8,8 @@ public interface IFeature {
     /** Return a duplicate of this feature **/
     public IFeature copy();
     
-	public void update(IFeatureProvider position);
-	public void draw(int mouseX, int mouseY);
+    public void update(IFeatureProvider position);
+    public void draw(int mouseX, int mouseY);
     public void addTooltip(List<String> tooltip, int mouseX, int mouseY);
     public void keyTyped(char character, int key);
     
@@ -22,10 +22,10 @@ public interface IFeature {
     public void performRelease(int mouseX, int mouseY);
     public void follow(int mouseX, int mouseY);
     public void scroll(boolean down, int amount);
-	public void onDeselected();
-	public void readFromJson(JsonObject json);
-	public void writeToJson(JsonObject json);
-	
-	/** Return the name of this feature **/
-	public String getName();
+    public void onDeselected();
+    public void readFromJson(JsonObject json);
+    public void writeToJson(JsonObject json);
+
+    /** Return the name of this feature **/
+    public String getName();
 }

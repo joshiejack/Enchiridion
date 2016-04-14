@@ -13,25 +13,25 @@ import java.util.List;
 
 public class FeatureButton extends FeatureJump implements IButtonActionProvider {
     protected transient boolean isInit = false;
-	public IButtonAction action;
-	public float size = 1F;
+    public IButtonAction action;
+    public float size = 1F;
 
-	public FeatureButton(){}
-	public FeatureButton(IButtonAction action) {
-		this.action = action;
-	}
+    public FeatureButton(){}
+    public FeatureButton(IButtonAction action) {
+        this.action = action;
+    }
 
     @Override
     public IButtonAction getAction() {
         return action;
     }
-	
-	@Override
-	public FeatureButton copy() {
-	    FeatureButton button = new FeatureButton(action.copy());
+
+    @Override
+    public FeatureButton copy() {
+        FeatureButton button = new FeatureButton(action.copy());
         button.size = size;
         return button;
-	}
+    }
 
     @Override
     public void keyTyped(char character, int key) {
@@ -43,14 +43,14 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
             }
         }
     }
-	
-	@Override
+
+    @Override
     public void draw(int mouseX, int mouseY) {
         if (action == null) return;
-		if (!isInit && action != null) { //Called here because action needs everything to be loaded, where as update doesn't
-		    action.onFieldsSet("");
-		    isInit = true;
-		}
+        if (!isInit && action != null) { //Called here because action needs everything to be loaded, where as update doesn't
+            action.onFieldsSet("");
+            isInit = true;
+        }
 
         boolean isHovered = position.isOverFeature(mouseX, mouseY);
         ResourceLocation location = action.getResource(isHovered);
@@ -59,33 +59,33 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
         }
 
         EnchiridionAPI.draw.drawSplitScaledString(action.getText(isHovered), position.getLeft(), position.getTop(), 200, 0x555555, size);
-	}
-	
-	@Override
-	public boolean getAndSetEditMode() {
-		GuiSimpleEditor.INSTANCE.setEditor(GuiSimpleEditorButton.INSTANCE.setButton(this));
-		return true;
-	}
-	
-	@Override
-	public void performClick(int mouseX, int mouseY) {
-		if (action != null) action.performAction();
-	}
-	
-	@Override
-	public void addTooltip(List<String> tooltip, int mouseX, int mouseY) {
-		if (action != null) {
-			String[] title = action.getTooltip().split("\n");
-			if (title != null) {
-				boolean first = false;
-				for (String t: title) {
-					if (first || !t.equals("")) {
-						tooltip.add(t);
-					} else first = true;
-				}
-			}
-		}
-	}
+    }
+
+    @Override
+    public boolean getAndSetEditMode() {
+        GuiSimpleEditor.INSTANCE.setEditor(GuiSimpleEditorButton.INSTANCE.setButton(this));
+        return true;
+    }
+
+    @Override
+    public void performClick(int mouseX, int mouseY) {
+        if (action != null) action.performAction();
+    }
+
+    @Override
+    public void addTooltip(List<String> tooltip, int mouseX, int mouseY) {
+        if (action != null) {
+            String[] title = action.getTooltip().split("\n");
+            if (title != null) {
+                boolean first = false;
+                for (String t: title) {
+                    if (first || !t.equals("")) {
+                        tooltip.add(t);
+                    } else first = true;
+                }
+            }
+        }
+    }
 
     //Let's fix the broken json
     public FeatureButton fix(JsonObject json) {

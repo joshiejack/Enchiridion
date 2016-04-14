@@ -94,7 +94,7 @@ public class FileHelper {
     }
     
     public static File getImageSaveDirectory() {
-    	File directory = new File(getImagesDirectory(), EnchiridionAPI.book.getBook().getSaveName());
+        File directory = new File(getImagesDirectory(), EnchiridionAPI.book.getBook().getSaveName());
         if (!directory.exists() && !directory.mkdirs()) {
             throw new IllegalStateException("Couldn't create dir: " + directory);
         }

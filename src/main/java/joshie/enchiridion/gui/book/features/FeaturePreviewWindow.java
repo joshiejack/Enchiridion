@@ -24,33 +24,33 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
     public transient boolean isDragging;
     public transient int startY;
 
-	public FeaturePreviewWindow() {}
-	public FeaturePreviewWindow(int page) {
-		this.pageNumber = page;
-	}
+    public FeaturePreviewWindow() {}
+    public FeaturePreviewWindow(int page) {
+        this.pageNumber = page;
+    }
 
     @Override
     public void onFieldsSet(String field) {
         page = JumpHelper.getPageByNumber(book, pageNumber - 1);
     }
 
-	@Override
-	public FeaturePreviewWindow copy() {
-	    return new FeaturePreviewWindow(pageNumber);
-	}
-	
-	@Override
-	public String getName() {
-		return "Scroll: " + page;
-	}
+    @Override
+    public FeaturePreviewWindow copy() {
+        return new FeaturePreviewWindow(pageNumber);
+    }
 
-	@Override
-	public void update(IFeatureProvider position) {
-		super.update(position);
+    @Override
+    public String getName() {
+        return "Scroll: " + page;
+    }
+
+    @Override
+    public void update(IFeatureProvider position) {
+        super.update(position);
         thisPage = position.getPage();
         book = position.getPage().getBook();
         page = JumpHelper.getPageByNumber(book, pageNumber);
-	}
+    }
 
     @Override
     public boolean getAndSetEditMode() {
@@ -90,9 +90,9 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
 
     @Override
     public void draw(int xMouse, int yMouse) {
-		if (GuiBook.INSTANCE.isEditMode()) {
-    		EnchiridionAPI.draw.drawBorderedRectangle(position.getLeft(), position.getTop(), position.getRight(), position.getBottom(), 0x00000000, 0xFF48453C);
-		}
+        if (GuiBook.INSTANCE.isEditMode()) {
+            EnchiridionAPI.draw.drawBorderedRectangle(position.getLeft(), position.getTop(), position.getRight(), position.getBottom(), 0x00000000, 0xFF48453C);
+        }
 
         if (page != null && page != thisPage) {
             int scrollMax = page.getScrollbarMax(position.getBottom() - 5);

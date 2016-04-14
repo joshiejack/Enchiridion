@@ -21,8 +21,8 @@ public class FeatureRecipe extends FeatureItem {
 
     public FeatureRecipe() {}
     public FeatureRecipe(ItemStack item) {
-		setItemStack(item);
-	}
+        setItemStack(item);
+    }
     
     @Override
     public FeatureRecipe copy() {
@@ -78,7 +78,7 @@ public class FeatureRecipe extends FeatureItem {
     }
 
     @Override
-	public void setItemStack(ItemStack stack) {
+    public void setItemStack(ItemStack stack) {
         if (stack.isItemEqual(this.stack)) {
             index++;
         } else index = 0;
@@ -93,18 +93,18 @@ public class FeatureRecipe extends FeatureItem {
         
         //Update the provider
         if (position != null) {
-        	update(position);
+            update(position);
         }
     }
 
     @Override
-	public void update(IFeatureProvider position) {
-    	super.update(position);
-    	int xPos = position.getLeft();
-		int yPos = position.getTop();
-		
+    public void update(IFeatureProvider position) {
+        super.update(position);
+        int xPos = position.getLeft();
+        int yPos = position.getTop();
+
         if (handler != null) {
-        	double width = position.getWidth();
+            double width = position.getWidth();
             position.setHeight(handler.getHeight(width));
             size = handler.getSize(width);
         }
@@ -112,20 +112,20 @@ public class FeatureRecipe extends FeatureItem {
 
     @Override
     public void draw(int mouseX, int mouseY) {
-    	if (stack == null && item != null) stack = StackHelper.getStackFromString(item);
+        if (stack == null && item != null) stack = StackHelper.getStackFromString(item);
         if (handler != null) {
-        	EnchiridionAPI.draw.setRenderData(position.getLeft(), position.getTop(), position.getWidth(), position.getHeight(), size);
+            EnchiridionAPI.draw.setRenderData(position.getLeft(), position.getTop(), position.getWidth(), position.getHeight(), size);
             handler.draw();
         } else {
-        	buildRecipe(true);
-        	update(position); //Initiate the provider
+            buildRecipe(true);
+            update(position); //Initiate the provider
         }
     }
 
     @Override
     public void addTooltip(List list, int mouseX, int mouseY) {
         if (!hideTooltip && handler != null) {
-        	EnchiridionAPI.draw.setRenderData(position.getLeft(), position.getTop(), position.getWidth(), position.getHeight(), size);
+            EnchiridionAPI.draw.setRenderData(position.getLeft(), position.getTop(), position.getWidth(), position.getHeight(), size);
             handler.addTooltip(list);
         }
     }

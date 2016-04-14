@@ -5,14 +5,14 @@ import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.gui.book.features.FeatureBox;
 
 public class ButtonInsertBox extends ButtonAbstract {
-	public ButtonInsertBox() {
-		super("box");
-	}
+    public ButtonInsertBox() {
+        super("box");
+    }
 
-	@Override
-	public void performAction() {
-		IPage current = EnchiridionAPI.book.getPage();
-		FeatureBox feature = new FeatureBox("ff000000");
-		current.addFeature(feature, 0, current.getScroll(), 50D, 5D, false, false);
-	}
+    @Override
+    public void performAction() {
+        IPage current = EnchiridionAPI.book.getPage();
+        FeatureBox feature = new FeatureBox("ff000000");
+        current.addFeature(feature, 0, current.getScroll(), 50D, 5D, false, false);
+    }
 }

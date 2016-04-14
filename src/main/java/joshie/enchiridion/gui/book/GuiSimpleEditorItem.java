@@ -13,19 +13,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiSimpleEditorItem extends AbstractGuiOverlay {
-	public static final GuiSimpleEditorItem INSTANCE = new GuiSimpleEditorItem();
-	private static final ResourceLocation checked = new ELocation("check_selected");
-	private static final ResourceLocation unchecked = new ELocation("check_unselected");
-	public IItemSelectable selectable = null;
-	private ArrayList<ItemStack> sorted;
+    public static final GuiSimpleEditorItem INSTANCE = new GuiSimpleEditorItem();
+    private static final ResourceLocation checked = new ELocation("check_selected");
+    private static final ResourceLocation unchecked = new ELocation("check_unselected");
+    public IItemSelectable selectable = null;
+    private ArrayList<ItemStack> sorted;
     private int position;
     
-	protected GuiSimpleEditorItem() {}
+    protected GuiSimpleEditorItem() {}
 
-	public IBookEditorOverlay setItem(IItemSelectable item) {
-		selectable = item;
-		return this;
-	}
+    public IBookEditorOverlay setItem(IItemSelectable item) {
+        selectable = item;
+        return this;
+    }
     
     @Override
     public void draw(int mouseX, int mouseY) {
@@ -41,7 +41,7 @@ public class GuiSimpleEditorItem extends AbstractGuiOverlay {
         EnchiridionAPI.draw.drawBorderedRectangle(EConfig.editorXPos + 2, EConfig.toolbarYPos + 9, EConfig.editorXPos + 83, EConfig.toolbarYPos + 23, backgroundColor, 0xCE48433D);
         EnchiridionAPI.draw.drawSplitScaledString("[b]" + Enchiridion.translate("tooltips") + ": [/b]", EConfig.editorXPos + 4, EConfig.toolbarYPos + 14, 200, fontColor, 0.5F);
         EnchiridionAPI.draw.drawSplitScaledString("[b]" + selectable.getTooltipsEnabled() + "[/b]", EConfig.editorXPos + 4 + 55, EConfig.toolbarYPos + 14, 200, fontColor, 0.5F);
-    	if (sorted != null) {
+        if (sorted != null) {
             int j = 0;
             int k = 0;
             for (int i = position; i < position + 132; i++) {
@@ -60,59 +60,59 @@ public class GuiSimpleEditorItem extends AbstractGuiOverlay {
         } else updateSearch(GuiSimpleEditor.INSTANCE.getTextField());
     }
 
-	@Override
-	public boolean mouseClicked(int mouseX, int mouseY) {
-	    if (mouseX >= EConfig.editorXPos + 2 && mouseX <= EConfig.editorXPos + 83) {
-	        if (mouseY >= EConfig.toolbarYPos + 9 && mouseY <= EConfig.toolbarYPos + 23) {
-	            selectable.setTooltips(!selectable.getTooltipsEnabled());
-	            
-	            return true;
-	        }
-	    }
-	    
-		if (sorted != null) {
-			int j = 0;
-	        int k = 0;
-			for (int i = position; i < position + 132; i++) {
-	            if (i >= 0 && i < sorted.size()) {
-	            	if (mouseX >= (j * 12) + EConfig.editorXPos + 7 && mouseX <= (j * 12) + EConfig.editorXPos + 19) {
-	            		if (mouseY >= (k * 12) + EConfig.toolbarYPos + 26 && mouseY <= (k * 12) + EConfig.toolbarYPos + 38) {
-	            			if (selectable != null) { 
-		                		selectable.setItemStack(sorted.get(i));
-		                		
-		                		return true;
-		                	}
-	            		}
-	            	}
-	
-	                j++;
-	
-	                if (j > 5) {
-	                    j = 0;
-	                    k++;
-	                }
-	            }
-	        }
-		}
-		
-		return false;
-	}
-	
-	@Override
-	public void scroll(boolean down, int mouseX, int mouseY) {
-		if (mouseX >= EConfig.editorXPos + 7 && mouseX <= EConfig.editorXPos + 91) {
-    		if (mouseY >= EConfig.toolbarYPos + 14 && mouseY <= EConfig.toolbarYPos + 302) {
-    			if (down) {
+    @Override
+    public boolean mouseClicked(int mouseX, int mouseY) {
+        if (mouseX >= EConfig.editorXPos + 2 && mouseX <= EConfig.editorXPos + 83) {
+            if (mouseY >= EConfig.toolbarYPos + 9 && mouseY <= EConfig.toolbarYPos + 23) {
+                selectable.setTooltips(!selectable.getTooltipsEnabled());
+
+                return true;
+            }
+        }
+
+        if (sorted != null) {
+            int j = 0;
+            int k = 0;
+            for (int i = position; i < position + 132; i++) {
+                if (i >= 0 && i < sorted.size()) {
+                    if (mouseX >= (j * 12) + EConfig.editorXPos + 7 && mouseX <= (j * 12) + EConfig.editorXPos + 19) {
+                        if (mouseY >= (k * 12) + EConfig.toolbarYPos + 26 && mouseY <= (k * 12) + EConfig.toolbarYPos + 38) {
+                            if (selectable != null) {
+                                selectable.setItemStack(sorted.get(i));
+
+                                return true;
+                            }
+                        }
+                    }
+
+                    j++;
+
+                    if (j > 5) {
+                        j = 0;
+                        k++;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public void scroll(boolean down, int mouseX, int mouseY) {
+        if (mouseX >= EConfig.editorXPos + 7 && mouseX <= EConfig.editorXPos + 91) {
+            if (mouseY >= EConfig.toolbarYPos + 14 && mouseY <= EConfig.toolbarYPos + 302) {
+                if (down) {
                     position = Math.min(sorted.size() - 200, position + 6);
                 } else {
                     position = Math.max(0, position - 6);
                 }
-    		}
-		}
-	}
-	
-	@Override
-	public void updateSearch(String search) {
+            }
+        }
+    }
+
+    @Override
+    public void updateSearch(String search) {
         ItemListHelper.addInventory();
 
         if (search == null || search.equals("")) {

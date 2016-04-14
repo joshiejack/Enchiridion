@@ -8,58 +8,58 @@ import joshie.enchiridion.util.ELocation;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class AbstractAction implements IButtonAction {
-	protected transient ResourceLocation hovered;
-	protected transient ResourceLocation unhovered;
-	protected transient String name;
-	public String tooltip = "";
-	public String hoverText = "";
-	public String unhoveredText = "";
+    protected transient ResourceLocation hovered;
+    protected transient ResourceLocation unhovered;
+    protected transient String name;
+    public String tooltip = "";
+    public String hoverText = "";
+    public String unhoveredText = "";
 
-	public AbstractAction() {}
-	public AbstractAction(String name) {
-		this.hovered = new ELocation(name + "_hover");
-		this.unhovered = new ELocation(name + "_dftl");
-		this.name = name;
-	}
-	
-	@Override
-	public void onFieldsSet(String field) {
+    public AbstractAction() {}
+    public AbstractAction(String name) {
+        this.hovered = new ELocation(name + "_hover");
+        this.unhovered = new ELocation(name + "_dftl");
+        this.name = name;
+    }
+
+    @Override
+    public void onFieldsSet(String field) {
         if (field.equals("")) initAction();
     }
 
     public void initAction() {}
 
-	@Override
-	public String getTooltip() {
-		return tooltip;
-	}
-	
-	@Override
-	public void readFromJson(JsonObject object) {
+    @Override
+    public String getTooltip() {
+        return tooltip;
+    }
+
+    @Override
+    public void readFromJson(JsonObject object) {
         hovered = new ResourceLocation(JSONHelper.getStringIfExists(object, "hoveredResource"));
         unhovered = new ResourceLocation(JSONHelper.getStringIfExists(object, "unhoveredResource"));
-	}
+    }
 
-	@Override
-	public void writeToJson(JsonObject object) {
+    @Override
+    public void writeToJson(JsonObject object) {
         if (hovered != null) object.addProperty("hoveredResource", hovered.toString());
         if (unhovered != null) object.addProperty("unhoveredResource", unhovered.toString());
-	}
-	
-	@Override
-	public String getName() {
-		return Enchiridion.translate("action." + name);
-	}
+    }
+
+    @Override
+    public String getName() {
+        return Enchiridion.translate("action." + name);
+    }
 
     @Override
     public String getText(boolean isHovered) {
         return isHovered ? hoverText : unhoveredText;
     }
-	
-	@Override
-	public ResourceLocation getResource(boolean isHovered) {
+
+    @Override
+    public ResourceLocation getResource(boolean isHovered) {
         return isHovered ? hovered : unhovered;
-	}
+    }
 
     @Override
     public IButtonAction setResourceLocation(boolean isHovered, ResourceLocation resource) {

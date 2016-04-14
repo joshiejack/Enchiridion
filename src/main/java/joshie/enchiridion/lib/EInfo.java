@@ -10,5 +10,5 @@ public class EInfo {
     public static final String DEPENDENCIES = "after:PenguinCore";
     public static final String GUI_FACTORY_CLASS = "joshie.enchiridion.gui.config.GuiFactory";
     public static final String TEXPATH = "enchiridion:textures/books/";
-	public static final String RECIPEPATH = "joshie.enchiridion.gui.book.features.recipe.";
+    public static final String RECIPEPATH = "joshie.enchiridion.gui.book.features.recipe.";
 }

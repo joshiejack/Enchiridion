@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 public class IFeatureAbstractAdapter implements JsonSerializer<IFeature>, JsonDeserializer<IFeature> {
     @Override
     public JsonElement serialize(IFeature src, Type typeOfSrc, JsonSerializationContext context) {
-    	JsonObject result = new JsonObject();
+        JsonObject result = new JsonObject();
         result.add("class", new JsonPrimitive(src.getClass().getCanonicalName()));
         result.add("properties", context.serialize(src, src.getClass()));
         JsonObject element = result.get("properties").getAsJsonObject();
@@ -21,14 +21,14 @@ public class IFeatureAbstractAdapter implements JsonSerializer<IFeature>, JsonDe
 
     @Override
     public IFeature deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-    	JsonObject jsonObject = json.getAsJsonObject();
+        JsonObject jsonObject = json.getAsJsonObject();
         JsonElement type = jsonObject.get("type"); //Compatiblity with previous books
         
         String clazz = "";
         if (type != null) {
             clazz = EInfo.JAVAPATH + "books.features." + type.getAsString();
         } else {
-        	clazz = jsonObject.get("class").getAsString();
+            clazz = jsonObject.get("class").getAsString();
         }
         
         //For no reason except i changed the name during development
@@ -38,8 +38,8 @@ public class IFeatureAbstractAdapter implements JsonSerializer<IFeature>, JsonDe
         
         JsonElement element = jsonObject.get("properties");
         try {
-        	IFeature feature = context.deserialize(element, Class.forName(clazz));
-        	feature.readFromJson(element.getAsJsonObject());
+            IFeature feature = context.deserialize(element, Class.forName(clazz));
+            feature.readFromJson(element.getAsJsonObject());
 
             //Legacy Button Adapter
             if (feature instanceof FeatureButton) {

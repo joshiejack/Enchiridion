@@ -6,14 +6,14 @@ import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.gui.book.features.FeatureItem;
 
 public class ButtonInsertItem extends ButtonAbstract {
-	public ButtonInsertItem() {
-		super("item");
-	}
+    public ButtonInsertItem() {
+        super("item");
+    }
 
-	@Override
-	public void performAction() {
-		IPage current = EnchiridionAPI.book.getPage();
-		FeatureItem feature = new FeatureItem(EConfig.getDefaultItem());
-		current.addFeature(feature, 0, current.getScroll(), 16D, 16D, false, false);
-	}
+    @Override
+    public void performAction() {
+        IPage current = EnchiridionAPI.book.getPage();
+        FeatureItem feature = new FeatureItem(EConfig.getDefaultItem());
+        current.addFeature(feature, 0, current.getScroll(), 16D, 16D, false, false);
+    }
 }
