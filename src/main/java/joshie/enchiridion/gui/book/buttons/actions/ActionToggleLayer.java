@@ -19,7 +19,7 @@ public class ActionToggleLayer extends AbstractAction {
     }
 
     @Override
-    public ActionToggleLayer copy() {
+    public IButtonAction copy() {
         ActionToggleLayer action = new ActionToggleLayer();
         action.comma = comma;
         action.regex = regex;

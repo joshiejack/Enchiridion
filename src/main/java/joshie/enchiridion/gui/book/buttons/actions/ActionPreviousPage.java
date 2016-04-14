@@ -12,8 +12,8 @@ public class ActionPreviousPage extends AbstractAction {
     }
 
     @Override
-    public ActionPreviousPage copy() {
-        return (ActionPreviousPage) copyAbstract(new ActionPreviousPage());
+    public IButtonAction copy() {
+        return copyAbstract(new ActionPreviousPage());
     }
 
     @Override

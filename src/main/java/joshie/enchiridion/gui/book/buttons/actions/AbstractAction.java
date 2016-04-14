@@ -22,7 +22,7 @@ public abstract class AbstractAction implements IButtonAction {
         this.name = name;
     }
 
-    public AbstractAction copyAbstract(AbstractAction action) {
+    public IButtonAction copyAbstract(AbstractAction action) {
         action.hovered = hovered;
         action.unhovered = unhovered;
         action.name = name;

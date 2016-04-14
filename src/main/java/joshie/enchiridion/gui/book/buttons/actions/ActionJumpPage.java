@@ -14,7 +14,7 @@ public class ActionJumpPage extends AbstractAction {
     }
 
     @Override
-    public ActionJumpPage copy() {
+    public IButtonAction copy() {
         ActionJumpPage action = new ActionJumpPage();
         action.bookID = bookID;
         action.pageNumber = pageNumber;
