@@ -1,13 +1,12 @@
 package joshie.enchiridion.api.book;
 
 import com.google.gson.JsonObject;
+import joshie.enchiridion.api.gui.ISimpleEditorFieldProvider;
 import net.minecraft.util.ResourceLocation;
 
-public interface IButtonAction {
+public interface IButtonAction extends ISimpleEditorFieldProvider {
     /** Create a copy of this action **/
     public IButtonAction copy();
-	/** Return the name of all the fields that should be edited **/
-	public String[] getFieldNames();
 	public IButtonAction create();
 	public String getName();
 
@@ -15,16 +14,17 @@ public interface IButtonAction {
 	public ResourceLocation getResource(boolean isHovered);
     public String getText(boolean isHovered);
 
-    /** Setters **/
-    public IButtonAction setResourceLocation(String type, ResourceLocation resource);
-    public IButtonAction setText(String type, String text);
+    /** Return the tooltip **/
+    public String getTooltip();
 
-	public String getTooltip();
+    /** Setters **/
+    public IButtonAction setResourceLocation(boolean isHovered, ResourceLocation resource);
+    public IButtonAction setText(boolean isHovered, String text);
+    public IButtonAction setTooltip(String tooltip);
+
+    /** Perform the action **/
 	public void performAction();
-	
-	/** Called on the first turn this button tries to render **/
-	public void initAction();
-	
+
 	/** Called to read data for the button **/
 	public void readFromJson(JsonObject object);
 	

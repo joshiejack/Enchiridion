@@ -11,9 +11,9 @@ public abstract class AbstractAction implements IButtonAction {
 	protected transient ResourceLocation hovered;
 	protected transient ResourceLocation unhovered;
 	protected transient String name;
-	public transient String tooltip = "";
-	public transient String hoverText = "";
-	public transient String unhoveredText = "";
+	public String tooltip = "";
+	public String hoverText = "";
+	public String unhoveredText = "";
 
 	public AbstractAction() {}
 	public AbstractAction(String name) {
@@ -23,13 +23,12 @@ public abstract class AbstractAction implements IButtonAction {
 	}
 	
 	@Override
-	public void initAction() {}
-	
-	@Override
-	public String[] getFieldNames() {
-		return new String[] { "tooltip", "hoverText", "unhoveredText" };
-	}
-	
+	public void onFieldsSet(String field) {
+        if (field.equals("")) initAction();
+    }
+
+    public void initAction() {}
+
 	@Override
 	public String getTooltip() {
 		return tooltip;
@@ -37,18 +36,12 @@ public abstract class AbstractAction implements IButtonAction {
 	
 	@Override
 	public void readFromJson(JsonObject object) {
-		tooltip = JSONHelper.getStringIfExists(object, "tooltip");
-		hoverText = JSONHelper.getStringIfExists(object, "hoverText");
-		unhoveredText = JSONHelper.getStringIfExists(object, "unhoveredText");
         hovered = new ResourceLocation(JSONHelper.getStringIfExists(object, "hoveredResource"));
         unhovered = new ResourceLocation(JSONHelper.getStringIfExists(object, "unhoveredResource"));
 	}
 
 	@Override
 	public void writeToJson(JsonObject object) {
-		if (tooltip != null && !tooltip.equals("")) object.addProperty("tooltip", tooltip);
-		if (hoverText != null && !hoverText.equals("")) object.addProperty("hoverText", hoverText);
-		if (unhoveredText != null && !unhoveredText.equals("")) object.addProperty("unhoveredText", unhoveredText);
         if (hovered != null) object.addProperty("hoveredResource", hovered.toString());
         if (unhovered != null) object.addProperty("unhoveredResource", unhovered.toString());
 	}
@@ -69,16 +62,22 @@ public abstract class AbstractAction implements IButtonAction {
 	}
 
     @Override
-    public IButtonAction setResourceLocation(String type, ResourceLocation resource) {
-        if (type.equals("hovered")) hovered = resource;
-        else if (type.equals("unhovered")) unhovered = resource;
+    public IButtonAction setResourceLocation(boolean isHovered, ResourceLocation resource) {
+        if (isHovered) hovered = resource;
+        else unhovered = resource;
         return this;
     }
 
     @Override
-    public IButtonAction setText(String type, String text) {
-        if (type.equals("hovered")) hoverText = text;
-        else if (type.equals("unhovered")) unhoveredText = text;
+    public IButtonAction setText(boolean isHovered, String text) {
+        if (isHovered) hoverText = text;
+        else unhoveredText = text;
+        return this;
+    }
+
+    @Override
+    public IButtonAction setTooltip(String tooltip) {
+        this.tooltip = tooltip;
         return this;
     }
 }

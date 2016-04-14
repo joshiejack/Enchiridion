@@ -12,7 +12,6 @@ import java.util.List;
 
 public class Page implements IPage {
     public List<IFeatureProvider> features = new ArrayList();
-    public String pageName;
 	public int pageNumber;
 	public boolean isScrollable;
 	public transient int scrollAmount;
@@ -21,7 +20,6 @@ public class Page implements IPage {
 	
 	public Page() {}
 	public Page(int number) {
-		this.pageName = "" + number;
 		this.pageNumber = number;
 	}
 
@@ -98,12 +96,7 @@ public class Page implements IPage {
 	public void removeFeature(IFeatureProvider selected) {
 		features.remove(selected);
 	}
-	
-	@Override
-	public String getPageName() {
-		return pageName;
-	}
-	
+
 	@Override
 	public int getPageNumber() {
 		return pageNumber;

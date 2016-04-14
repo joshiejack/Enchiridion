@@ -2,7 +2,6 @@ package joshie.enchiridion.gui.book;
 
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
-import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.api.gui.ISimpleEditorFieldProvider;
 import joshie.enchiridion.util.ITextEditable;
@@ -154,11 +153,7 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
         public void onFieldsSet() {
             //After all is done update the
             if (object instanceof ISimpleEditorFieldProvider) {
-                ((ISimpleEditorFieldProvider)object).onFieldsSet();
-            }
-
-            if (object instanceof IButtonAction) {
-                ((IButtonAction)object).initAction();
+                ((ISimpleEditorFieldProvider)object).onFieldsSet(fieldName);
             }
         }
 

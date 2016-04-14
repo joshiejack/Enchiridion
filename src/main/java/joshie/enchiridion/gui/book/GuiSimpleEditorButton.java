@@ -18,6 +18,8 @@ import net.minecraft.util.ResourceLocation;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,8 +33,9 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 	
 	private final ArrayList<IButtonAction> actions = new ArrayList();
 	private ArrayList<IButtonAction> sorted = new ArrayList();
-	private HashMap<String, WrappedEditable> fieldCache = new HashMap();
-	private static FeatureButton button = null;
+    private HashMap<String, WrappedEditable> fieldCache = new HashMap();
+	private FeatureButton button = null;
+    private String[] fieldNameCache;
 	
 	
 	protected GuiSimpleEditorButton() {}
@@ -44,6 +47,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 	public IBookEditorOverlay setButton(FeatureButton button) {
 		this.button = button;
 		this.fieldCache = new HashMap();
+        this.fieldNameCache = null;
 		return this;
 	}
 	
@@ -75,6 +79,27 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 		drawBorderedRectangle(xPosStart - 2, yPos, 83, yPos + 10, 0xFFB0A483, 0xFF48453C);
 		drawSplitScaledString("[b]" + name + "[/b]", xPosStart, yPos + 3, 0xFF48453C, 0.5F);
 	}
+
+    public boolean isTransient(String fieldName) {
+        try {
+            Field f = button.action.getClass().getField(fieldName);
+            return (Modifier.isTransient(f.getModifiers()));
+        } catch (Exception e) {}
+
+        return false;
+    }
+
+    public String[] getFieldNames() {
+        if (fieldNameCache != null) return fieldNameCache;
+        fieldNameCache = new String[button.action.getClass().getFields().length];
+        int i = 0;
+        for (Field field : button.action.getClass().getFields()) {
+            fieldNameCache[i] = field.getName();
+            i++;
+        }
+
+        return fieldNameCache;
+    }
 	
     @Override
     public void draw(int mouseX, int mouseY) {
@@ -133,8 +158,8 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	yPos+= 25;
     	//Draw the extra information for the actions
     	drawBoxLabel("Extra Fields", yPos + 20);
-    	String[] fields = button.action.getFieldNames();
-    	for (String f: fields) {
+    	for (String f: getFieldNames()) {
+            if (isTransient(f)) continue;
     		drawBorderedRectangle(2, yPos + 30, 83, yPos + 37, 0xFF312921, 0xFF191511);
     		String name = Enchiridion.translate("button.action.field." + f);
     		drawSplitScaledString("[b]" + name + "[/b]", 4, yPos + 32, 0xFFFFFFFF, 0.5F);
@@ -193,7 +218,15 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 		int yPos = 13;
     	for (IButtonAction action: sorted) {
     		if (isOverAction(xPos, yPos, mouseX, mouseY)) {
-    			button.action = action.create();
+                IButtonAction old = button.action;
+    			button.action = action.copy();
+                button.action.setTooltip(old.getTooltip());
+                button.action.setText(true, old.getText(true));
+                button.action.setText(false, old.getText(false));
+                button.action.setResourceLocation(true, old.getResource(true));
+                button.action.setResourceLocation(false, old.getResource(false));
+                button.action.onFieldsSet(""); //CREATE!
+                setButton(button);
     			return true;
     		}
     		
@@ -206,15 +239,15 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	
     	//Update the resource for arrows in the unhovered position
     	if (isOverPosition(4, yPos + 32, 22, yPos + 42, mouseX, mouseY)) {
-    		button.action.setResourceLocation("unhovered", arrow_left_off);
+    		button.action.setResourceLocation(false, arrow_left_off);
     		return true;
     	} else if (isOverPosition(24, yPos + 32, 42, yPos + 42, mouseX, mouseY)) {
-    		button.action.setResourceLocation("unhovered", arrow_right_off);
+    		button.action.setResourceLocation(false, arrow_right_off);
     		return true;
     	} else if (isOverPosition(45, yPos + 31, 80, yPos + 43, mouseX, mouseY)) {
             ResourceLocation resource = loadResource();
     		if (resource != null) {
-				button.action.setResourceLocation("unhovered", resource);
+				button.action.setResourceLocation(false, resource);
     		}
     		
     		return true;
@@ -223,15 +256,15 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	//Update the resources for arrows in the hovered position
     	yPos += 25;
     	if (isOverPosition(4, yPos + 32, 22, yPos + 42, mouseX, mouseY)) {
-    		button.action.setResourceLocation("hovered", arrow_left_on);
+    		button.action.setResourceLocation(true, arrow_left_on);
     		return true;
     	} else if (isOverPosition(24, yPos + 32, 42, yPos + 42, mouseX, mouseY)) {
-    		button.action.setResourceLocation("hovered", arrow_right_on);
+    		button.action.setResourceLocation(true, arrow_right_on);
     		return true;
     	} else if (isOverPosition(45, yPos + 31, 80, yPos + 43, mouseX, mouseY)) {
             ResourceLocation resource = loadResource();
     		if (resource != null) {
-                button.action.setResourceLocation("hovered", resource);
+                button.action.setResourceLocation(true, resource);
     		}
     		
     		return true;
@@ -240,8 +273,8 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	yPos+= 25;
     	//Draw the extra information for the actions
     	drawBoxLabel("Extra Fields", yPos + 20);
-    	String[] fields = button.action.getFieldNames();
-    	for (String f: fields) {
+    	for (String f: getFieldNames()) {
+            if (isTransient(f)) continue;
 			WrappedEditable editable = null;
     		if (!fieldCache.containsKey(f)) {
     			editable = new WrappedEditable(button.action, f);

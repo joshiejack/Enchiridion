@@ -1,7 +1,6 @@
 package joshie.enchiridion.gui.book.features;
 
 import com.google.gson.JsonObject;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.gui.book.GuiBook;
@@ -10,27 +9,24 @@ import joshie.enchiridion.helpers.JumpHelper;
 
 public class FeatureJump extends FeatureAbstract {
 	public transient IPage page;
-	private transient String name;
 	private transient int number;
 	private transient String jumpTo;
 	
 	public FeatureJump(){}
-	public FeatureJump(String name, int number, String jumpTo) {
-	    this.name = name;
+	public FeatureJump(int number, String jumpTo) {
 	    this.number = number;
 	    this.jumpTo = jumpTo;
 	}
 	
 	@Override
 	public FeatureJump copy() {
-	    return new FeatureJump(name, number, jumpTo);
+	    return new FeatureJump(number, jumpTo);
 	}
 	
 	@Override
 	public void draw(int mouseX, int mouseY) {
 		if (page == null) {
 			if (jumpTo != null && !jumpTo.equals("#LEGACY#")) {
-				page = JumpHelper.getPageByName(jumpTo);
 				if (page == null) {
 					try {
 						page = JumpHelper.getPageByNumber(GuiBook.INSTANCE.getBook(), Integer.parseInt(jumpTo));
@@ -38,7 +34,6 @@ public class FeatureJump extends FeatureAbstract {
 				}
 			} else {
 				page = JumpHelper.getPageByNumber(GuiBook.INSTANCE.getBook(), number);
-				if (page == null) page = JumpHelper.getPageByName(name);
 			}
 		}
 	}
@@ -51,7 +46,6 @@ public class FeatureJump extends FeatureAbstract {
 	@Override
 	public void readFromJson(JsonObject json) {
 		number = JSONHelper.getIntegerIfExists(json, "number");
-		name = JSONHelper.getStringIfExists(json, "name");
 		if (json.get("jumpTo") != null) {
 			jumpTo = JSONHelper.getStringIfExists(json, "jumpTo");
 		} else jumpTo = "#LEGACY#";
@@ -61,7 +55,6 @@ public class FeatureJump extends FeatureAbstract {
 	public void writeToJson(JsonObject object) {
 		if (page != null) {
 			object.addProperty("number", page.getPageNumber());
-			object.addProperty("name", page.getPageName());
 		}
 	}
 }

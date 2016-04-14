@@ -5,28 +5,6 @@ import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IPage;
 
 public class JumpHelper {
-
-	public static boolean jumpToPageByName(String name) {
-		for (IPage page: EnchiridionAPI.book.getBook().getPages()) {
-			if (page.getPageName().equals(name)) {
-				EnchiridionAPI.book.setPage(page);
-				return true;
-			}
-		}
-		
-		return false;
-	}
-
-	public static IPage getPageByName(String name) {
-		for (IPage page: EnchiridionAPI.book.getBook().getPages()) {
-			if (page.getPageName().equals(name)) {
-				return page;
-			}
-		}
-		
-		return null;
-	}
-
 	public static boolean jumpToPageByNumber(int number) {
 		for (IPage page: EnchiridionAPI.book.getBook().getPages()) {
 			if (page.getPageNumber() == number) {

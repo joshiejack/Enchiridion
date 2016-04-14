@@ -8,9 +8,6 @@ import java.util.ArrayList;
  *
  */
 public interface IPage {
-	/** Returns the name of this page **/
-	public String getPageName();
-
 	/** Returns the number of this page **/
 	public int getPageNumber();
 	

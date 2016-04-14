@@ -48,7 +48,7 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
     public void draw(int mouseX, int mouseY) {
         if (action == null) return;
 		if (!isInit && action != null) { //Called here because action needs everything to be loaded, where as update doesn't
-		    action.initAction();
+		    action.onFieldsSet("");
 		    isInit = true;
 		}
 
@@ -87,26 +87,16 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
 		}
 	}
 
-    @Override
-    public void readFromJson(JsonObject json) {
-        super.readFromJson(json);
-    }
-
-    @Override
-    public void writeToJson(JsonObject object) {
-        super.writeToJson(object);
-    }
-
     //Let's fix the broken json
     public FeatureButton fix(JsonObject json) {
         if (json.get("deflt") != null) {
             String dflt = json.get("deflt").getAsJsonObject().get("path").getAsString();
-            if (action != null) action.setResourceLocation("unhovered", new ResourceLocation(dflt));
+            if (action != null) action.setResourceLocation(false, new ResourceLocation(dflt));
         }
 
         if (json.get("hover") != null) {
             String hover = json.get("hover").getAsJsonObject().get("path").getAsString();
-            if (action != null) action.setResourceLocation("hovered", new ResourceLocation(hover));
+            if (action != null) action.setResourceLocation(true, new ResourceLocation(hover));
         }
 
         return this;

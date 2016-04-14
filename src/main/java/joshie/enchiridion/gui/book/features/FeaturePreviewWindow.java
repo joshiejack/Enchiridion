@@ -30,7 +30,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
 	}
 
     @Override
-    public void onFieldsSet() {
+    public void onFieldsSet(String field) {
         page = JumpHelper.getPageByNumber(book, pageNumber - 1);
     }
 
