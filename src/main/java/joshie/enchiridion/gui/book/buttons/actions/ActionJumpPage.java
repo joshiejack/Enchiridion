@@ -43,9 +43,7 @@ public class ActionJumpPage extends AbstractAction {
     @Override
     public void performAction() {
         IBook book = EnchiridionAPI.instance.getBook(bookID);
-        if (book != null) {
-            EnchiridionAPI.book.setBook(book, EnchiridionAPI.book.isEditMode());
-            EnchiridionAPI.book.jumpToPageIfExists(pageNumber);
-        }
+        if (book != null) EnchiridionAPI.book.setBook(book, EnchiridionAPI.book.isEditMode());
+        EnchiridionAPI.book.jumpToPageIfExists(pageNumber);
     }
 }
