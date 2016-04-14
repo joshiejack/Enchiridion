@@ -178,7 +178,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     		}
     		
     		xPos += 10;
-    		if (xPos > 60) {
+    		if (xPos > 70) {
     			xPos = xPosStart;
     			yPos += 10;
     		}
