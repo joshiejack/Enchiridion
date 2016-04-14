@@ -1,21 +1,9 @@
 package joshie.enchiridion.helpers;
 
-import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IPage;
 
 public class JumpHelper {
-    public static boolean jumpToPageByNumber(int number) {
-        for (IPage page: EnchiridionAPI.book.getBook().getPages()) {
-            if (page.getPageNumber() == number) {
-                EnchiridionAPI.book.setPage(page);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public static IPage getPageByNumber(IBook book, int number) {
         for (IPage page: book.getPages()) {
             if (page.getPageNumber() == number) {

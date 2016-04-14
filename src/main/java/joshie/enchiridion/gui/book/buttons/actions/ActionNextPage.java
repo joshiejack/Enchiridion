@@ -13,11 +13,7 @@ public class ActionNextPage extends AbstractAction {
 
     @Override
     public ActionNextPage copy() {
-        ActionNextPage action = new ActionNextPage();
-        action.tooltip = tooltip;
-        action.hoverText = hoverText;
-        action.unhoveredText = unhoveredText;
-        return action;
+        return (ActionNextPage) copyAbstract(new ActionNextPage());
     }
 
     @Override
@@ -43,7 +39,7 @@ public class ActionNextPage extends AbstractAction {
             while (number <= maxPage.getPageNumber()) {
                 for (IPage page : pages) {
                     if (page.getPageNumber() == number) {
-                        EnchiridionAPI.book.setPage(page);
+                        EnchiridionAPI.book.jumpToPageIfExists(number);
                         success = true;
                         break topLoop;
                     }
@@ -54,7 +50,7 @@ public class ActionNextPage extends AbstractAction {
 
             //If we failed to find the next available page, reset the book to page 1
             if (!success) {
-                EnchiridionAPI.book.setPage(EnchiridionAPI.book.getBook().getPages().get(0));
+                EnchiridionAPI.book.jumpToPageIfExists(EnchiridionAPI.book.getBook().getPages().get(0).getPageNumber());
             }
         } catch (Exception e) {
         }

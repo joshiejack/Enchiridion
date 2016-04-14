@@ -21,9 +21,6 @@ public interface IBookHelper {
     /** Set the current book **/
     public IBookHelper setBook(IBook book, boolean isEditing);
 
-    /** Set the current page **/
-    public void setPage(IPage page);
-
     /** Set the currently selected feature **/
     public void setSelected(IFeatureProvider provider);
 

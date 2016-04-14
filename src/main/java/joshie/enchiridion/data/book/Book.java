@@ -8,6 +8,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 public class Book implements IBook {
@@ -248,7 +249,12 @@ public class Book implements IBook {
 
     @Override
     public void removePage(IPage page) {
-        book.remove(page);
+        Iterator<IPage> it = book.iterator();
+        while (it.hasNext()) {
+            if (it.next().getPageNumber() == page.getPageNumber()) {
+                it.remove();
+            }
+        }
     }
 
     @Override

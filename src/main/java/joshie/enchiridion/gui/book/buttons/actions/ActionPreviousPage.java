@@ -10,14 +10,10 @@ public class ActionPreviousPage extends AbstractAction {
     public ActionPreviousPage() {
         super("previous");
     }
-    
+
     @Override
     public ActionPreviousPage copy() {
-        ActionPreviousPage action = new ActionPreviousPage();
-        action.tooltip = tooltip;
-        action.hoverText = hoverText;
-        action.unhoveredText = unhoveredText;
-        return action;
+        return (ActionPreviousPage) copyAbstract(new ActionPreviousPage());
     }
 
     @Override
@@ -33,7 +29,7 @@ public class ActionPreviousPage extends AbstractAction {
             while (number >= 0) {
                 for (IPage page : pages) {
                     if (page.getPageNumber() == number) {
-                        EnchiridionAPI.book.setPage(page);
+                        EnchiridionAPI.book.jumpToPageIfExists(number);
                         return; //Cancel further operations
                     }
                 }
@@ -50,7 +46,7 @@ public class ActionPreviousPage extends AbstractAction {
                 }
             }
 
-            EnchiridionAPI.book.setPage(maxPage);
+            if (maxPage != null) EnchiridionAPI.book.jumpToPageIfExists(maxPage.getPageNumber());
         } catch (Exception e) {}
     }
 }

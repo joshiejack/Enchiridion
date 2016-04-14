@@ -24,6 +24,7 @@ public class ActionToggleLayer extends AbstractAction {
         action.comma = comma;
         action.regex = regex;
         action.layer = layer;
+        copyAbstract(action);
         return action;
     }
 

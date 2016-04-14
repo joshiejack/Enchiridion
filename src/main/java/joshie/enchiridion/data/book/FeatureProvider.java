@@ -137,10 +137,8 @@ public class FeatureProvider implements IFeatureProvider {
 
         if (!EventHelper.isFeatureVisible(getPage(), isVisible(), layerIndex)) return false;
         if (isOverFeature(mouseX, mouseY)) {
-            if (button == 0) {
-                if (EnchiridionAPI.book.isEditMode()) {
-                    isEditing = feature.getAndSetEditMode();
-                }
+            if (button == 0 && EnchiridionAPI.book.isEditMode() && !isLocked()) {
+                isEditing = feature.getAndSetEditMode();
             }
 
             //Perform clicks

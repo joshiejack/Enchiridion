@@ -22,6 +22,16 @@ public abstract class AbstractAction implements IButtonAction {
         this.name = name;
     }
 
+    public AbstractAction copyAbstract(AbstractAction action) {
+        action.hovered = hovered;
+        action.unhovered = unhovered;
+        action.name = name;
+        action.tooltip = tooltip;
+        action.hoverText = hoverText;
+        action.unhoveredText = unhoveredText;
+        return this;
+    }
+
     @Override
     public void onFieldsSet(String field) {
         if (field.equals("")) initAction();

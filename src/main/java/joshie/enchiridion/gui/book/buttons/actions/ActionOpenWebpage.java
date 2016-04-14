@@ -17,9 +17,7 @@ public class ActionOpenWebpage extends AbstractAction {
     public ActionOpenWebpage copy() {
         ActionOpenWebpage action = new ActionOpenWebpage();
         action.url = url;
-        action.tooltip = tooltip;
-        action.hoverText = hoverText;
-        action.unhoveredText = unhoveredText;
+        copyAbstract(action);
         return action;
     }
 

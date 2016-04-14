@@ -327,29 +327,31 @@ public class GuiBook extends GuiBase implements IBookHelper {
     }
 
     @Override
-    public void setPage(IPage page) {
-        GuiSimpleEditor.INSTANCE.setEditor(null); //Reset the editor
-        TextEditor.INSTANCE.clearEditable();
-
-        if (this.page != null) {
-            int closest = 5 * (Math.round(page.getPageNumber()/5));
-            int difference = closest - this.page.getPageNumber();
-            if (difference > 50 || difference < 50) {
-                GuiTimeLine.INSTANCE.startPage = Math.max(0, closest - 50);
-            }
-        }
-
-        this.page = page;
-    }
-
-    @Override
     public void setSelected(IFeatureProvider provider) {
         this.selected = provider;
     }
 
     @Override
     public boolean jumpToPageIfExists(int number) {
-        return JumpHelper.jumpToPageByNumber(number);
+        for (IPage page: EnchiridionAPI.book.getBook().getPages()) {
+            if (page.getPageNumber() == number) {
+                GuiSimpleEditor.INSTANCE.setEditor(null); //Reset the editor
+                TextEditor.INSTANCE.clearEditable();
+
+                if (this.page != null) {
+                    int closest = 5 * (Math.round(page.getPageNumber()/5));
+                    int difference = closest - this.page.getPageNumber();
+                    if (difference > 50 || difference < 50) {
+                        GuiTimeLine.INSTANCE.startPage = Math.max(0, closest - 50);
+                    }
+                }
+
+                this.page = page;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
