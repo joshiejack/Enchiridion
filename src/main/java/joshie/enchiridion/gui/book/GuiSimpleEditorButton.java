@@ -7,7 +7,6 @@ import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.gui.book.GuiSimpleEditorGeneric.WrappedEditable;
 import joshie.enchiridion.gui.book.features.FeatureButton;
-import joshie.enchiridion.gui.book.features.FeatureImage;
 import joshie.enchiridion.helpers.FileCopier;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.lib.EInfo;
@@ -79,17 +78,18 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 	
     @Override
     public void draw(int mouseX, int mouseY) {
+        if (button == null || button.action == null) return;; //NO WORK!!!
     	drawBoxLabel(Enchiridion.translate("select.action"), 9);
     	int xPos = xPosStart;
     	int yPos = 13;
     	for (IButtonAction action: sorted) {
-    		drawImage(action.getUnhovered(), xPos + 1, yPos + 8, xPos + 9, yPos + 16);
+    		drawImage(action.getResource(false), xPos + 1, yPos + 8, xPos + 9, yPos + 16);
     		if (action.getName().equals(button.action.getName())) {
     			drawBorderedRectangle(xPos, yPos + 7, xPos + 10, yPos + 17, 0x00000000, 0xFF48453C);
     		}
     		
     		xPos += 10;
-    		if (xPos > 60) {
+    		if (xPos > 70) {
     			xPos = xPosStart;
     			yPos += 10;
     		}
@@ -101,12 +101,12 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	drawBoxLabel(Enchiridion.translate("select.unhover"), yPos + 20);
     	drawImage(arrow_left_off, 4, yPos + 32, 22, yPos + 42);
     	drawImage(arrow_right_off, 24, yPos + 32, 42, yPos + 42);
-    	if (button != null && button.deflt.getResource().equals(arrow_left_off)) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
-    	else if (button != null && button.deflt.getResource().equals(arrow_right_off)) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
-    	else if (button != null) {
+    	if (arrow_left_off.equals(button.action.getResource(false))) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
+    	else if (arrow_right_off.equals(button.action.getResource(false))) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
+    	else {
     		//colorI = 0xFF312921;
     		colorB = 0xFF191511;
-    		drawImage(button.deflt.getResource(), 45, yPos + 31, 80, yPos + 43);
+    		drawImage(button.action.getResource(false), 45, yPos + 31, 80, yPos + 43);
     	}
     		
     	drawBorderedRectangle(45, yPos + 31, 80, yPos + 43, colorI, colorB);
@@ -119,12 +119,12 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	drawBoxLabel(Enchiridion.translate("select.hover"), yPos + 20);
     	drawImage(arrow_left_on, 4, yPos + 32, 22, yPos + 42);
     	drawImage(arrow_right_on, 24, yPos + 32, 42, yPos + 42);
-    	if (button != null && button.hover.getResource().equals(arrow_left_on)) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
-    	else if (button != null && button.hover.getResource().equals(arrow_right_on)) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
-    	else if (button != null) {
+    	if (arrow_left_on.equals(button.action.getResource(true))) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
+    	else if(arrow_right_on.equals(button.action.getResource(true))) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
+    	else {
     		//colorI = 0xFF312921;
     		colorB = 0xFF191511;
-    		drawImage(button.deflt.getResource(), 45, yPos + 31, 80, yPos + 43);
+    		drawImage(button.action.getResource(true), 45, yPos + 31, 80, yPos + 43);
     	}
     		
     	drawBorderedRectangle(45, yPos + 31, 80, yPos + 43, colorI, colorB);
@@ -187,6 +187,8 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
 	@Override
 	public boolean mouseClicked(int mouseX, int mouseY) {
+        if (button == null || button.action == null) return false;; //NO WORK!!!
+
 		int xPos = xPosStart;
 		int yPos = 13;
     	for (IButtonAction action: sorted) {
@@ -196,7 +198,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     		}
     		
     		xPos += 10;
-    		if (xPos > 60) {
+    		if (xPos > 70) {
     			xPos = xPosStart;
     			yPos += 10;
     		}
@@ -204,16 +206,15 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	
     	//Update the resource for arrows in the unhovered position
     	if (isOverPosition(4, yPos + 32, 22, yPos + 42, mouseX, mouseY)) {
-    		button.deflt.setResource(arrow_left_off);
+    		button.action.setResourceLocation("unhovered", arrow_left_off);
     		return true;
     	} else if (isOverPosition(24, yPos + 32, 42, yPos + 42, mouseX, mouseY)) {
-    		button.deflt.setResource(arrow_right_off);
+    		button.action.setResourceLocation("unhovered", arrow_right_off);
     		return true;
     	} else if (isOverPosition(45, yPos + 31, 80, yPos + 43, mouseX, mouseY)) {
-    		FeatureImage image = loadResource();
-    		if (image != null) {
-    			button.deflt = image;
-    			button.deflt.update(EnchiridionAPI.book.getSelected());
+            ResourceLocation resource = loadResource();
+    		if (resource != null) {
+				button.action.setResourceLocation("unhovered", resource);
     		}
     		
     		return true;
@@ -222,16 +223,15 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	//Update the resources for arrows in the hovered position
     	yPos += 25;
     	if (isOverPosition(4, yPos + 32, 22, yPos + 42, mouseX, mouseY)) {
-    		button.hover.setResource(arrow_left_on);
+    		button.action.setResourceLocation("hovered", arrow_left_on);
     		return true;
     	} else if (isOverPosition(24, yPos + 32, 42, yPos + 42, mouseX, mouseY)) {
-    		button.hover.setResource(arrow_right_on);
+    		button.action.setResourceLocation("hovered", arrow_right_on);
     		return true;
     	} else if (isOverPosition(45, yPos + 31, 80, yPos + 43, mouseX, mouseY)) {
-    		FeatureImage image = loadResource();
-    		if (image != null) {
-    			button.hover = image;
-    			button.hover.update(EnchiridionAPI.book.getSelected());
+            ResourceLocation resource = loadResource();
+    		if (resource != null) {
+                button.action.setResourceLocation("hovered", resource);
     		}
     		
     		return true;
@@ -263,15 +263,15 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     	return false;
 	}
 	
-	private FeatureImage loadResource() {
+	private ResourceLocation loadResource() {
 		File file = FileCopier.copyFileFromUser(FileHelper.getImageSaveDirectory());
 		if (file != null) {
 			try {
 				BufferedImage buffered = ImageIO.read(file);
-				FeatureImage feature = new FeatureImage(EInfo.MODID + ":images/" + EnchiridionAPI.book.getBook().getSaveName() + "/" + file.getName());
+                ResourceLocation location = new ResourceLocation(EInfo.MODID + ":images/" + EnchiridionAPI.book.getBook().getSaveName() + "/" + file.getName());
 				EnchiridionAPI.book.getSelected().setWidth(buffered.getWidth());
 				EnchiridionAPI.book.getSelected().setHeight(buffered.getHeight());
-				return feature;
+				return location;
 			} catch (Exception e) {}
 		}
 		
@@ -282,7 +282,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 	public void updateSearch(String search) {
 		sorted = new ArrayList();
 		if (search == null || search.equals("")) {
-			 sorted.addAll(actions);
+            sorted.addAll(actions);
 		} else {
 			for (IButtonAction action: actions) {
 				if (action.getName().toLowerCase().contains(search.toLowerCase())) {

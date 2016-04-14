@@ -7,15 +7,14 @@ import joshie.enchiridion.gui.book.GuiSimpleEditorTemplate;
 import joshie.enchiridion.gui.book.buttons.actions.ActionNextPage;
 import joshie.enchiridion.gui.book.buttons.actions.ActionPreviousPage;
 import joshie.enchiridion.gui.book.features.FeatureButton;
-import joshie.enchiridion.lib.EInfo;
 
 import java.util.List;
 
 public class DefaultHelper {
 	public static IPage addArrows(IPage page) {
-		FeatureButton left = new FeatureButton(EInfo.TEXPATH + "arrow_left_off.png", EInfo.TEXPATH + "arrow_left_on.png", new ActionPreviousPage());
+		FeatureButton left = new FeatureButton(new ActionPreviousPage());
 		page.addFeature(left, 21, 200, 18, 10, true, false);
-		FeatureButton right = new FeatureButton(EInfo.TEXPATH + "arrow_right_off.png", EInfo.TEXPATH + "arrow_right_on.png", new ActionNextPage());
+		FeatureButton right = new FeatureButton(new ActionNextPage());
 		page.addFeature(right, 387, 200, 18, 10, true, false);
 		return page;
 	}

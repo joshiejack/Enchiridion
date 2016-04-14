@@ -1,7 +1,6 @@
 package joshie.enchiridion.gui.book.buttons.actions;
 
 import com.google.gson.JsonObject;
-
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.helpers.JSONHelper;
@@ -15,7 +14,7 @@ public abstract class AbstractAction implements IButtonAction {
 	public transient String tooltip = "";
 	public transient String hoverText = "";
 	public transient String unhoveredText = "";
-	
+
 	public AbstractAction() {}
 	public AbstractAction(String name) {
 		this.hovered = new ELocation(name + "_hover");
@@ -41,6 +40,8 @@ public abstract class AbstractAction implements IButtonAction {
 		tooltip = JSONHelper.getStringIfExists(object, "tooltip");
 		hoverText = JSONHelper.getStringIfExists(object, "hoverText");
 		unhoveredText = JSONHelper.getStringIfExists(object, "unhoveredText");
+        hovered = new ResourceLocation(JSONHelper.getStringIfExists(object, "hoveredResource"));
+        unhovered = new ResourceLocation(JSONHelper.getStringIfExists(object, "unhoveredResource"));
 	}
 
 	@Override
@@ -48,32 +49,36 @@ public abstract class AbstractAction implements IButtonAction {
 		if (tooltip != null && !tooltip.equals("")) object.addProperty("tooltip", tooltip);
 		if (hoverText != null && !hoverText.equals("")) object.addProperty("hoverText", hoverText);
 		if (unhoveredText != null && !unhoveredText.equals("")) object.addProperty("unhoveredText", unhoveredText);
+        if (hovered != null) object.addProperty("hoveredResource", hovered.toString());
+        if (unhovered != null) object.addProperty("unhoveredResource", unhovered.toString());
 	}
 	
 	@Override
 	public String getName() {
 		return Enchiridion.translate("action." + name);
 	}
-	
-	@Override
-	public String getHoverText() {
-	    if (hoverText == null) hoverText = "";
-	    return hoverText;
-	}
-	
-	@Override
-    public String getUnhoverText() {
-        if (unhoveredText == null) unhoveredText = "";
-        return unhoveredText;
+
+    @Override
+    public String getText(boolean isHovered) {
+        return isHovered ? hoverText : unhoveredText;
     }
 	
 	@Override
-	public ResourceLocation getHovered() {
-		return hovered;
+	public ResourceLocation getResource(boolean isHovered) {
+        return isHovered ? hovered : unhovered;
 	}
-	
-	@Override
-	public ResourceLocation getUnhovered() {
-		return unhovered;
-	}
+
+    @Override
+    public IButtonAction setResourceLocation(String type, ResourceLocation resource) {
+        if (type.equals("hovered")) hovered = resource;
+        else if (type.equals("unhovered")) unhovered = resource;
+        return this;
+    }
+
+    @Override
+    public IButtonAction setText(String type, String text) {
+        if (type.equals("hovered")) hoverText = text;
+        else if (type.equals("unhovered")) unhoveredText = text;
+        return this;
+    }
 }

@@ -35,16 +35,16 @@ public class EAPIHandler implements IEnchiridionAPI {
             modid = split[0];
             assetspath = split[1].toLowerCase();
         }
-        
+
         /** Find this mods container **/
         ModContainer mod = null;
-        for (ModContainer container: Loader.instance().getActiveModList()) {
+        for (ModContainer container : Loader.instance().getActiveModList()) {
             if (container.getModId().equals(modid)) {
                 mod = container;
                 break;
             }
         }
-        
+
         /** Attempt to register in dev or in jar **/
         if (mod == null) {
             Enchiridion.log(Level.ERROR, "When attempting to register books with Enchiridion a mod with the modid " + modid + " could not be found");
@@ -57,16 +57,16 @@ public class EAPIHandler implements IEnchiridionAPI {
             }
         }
     }
-	
-	@Override
-	public void registerEditorOverlay(IBookEditorOverlay overlay) {
-		GuiBook.INSTANCE.registerOverlay(overlay);
-	}
 
-	@Override
-	public void registerToolbarButton(IToolbarButton button) {
-		GuiToolbar.INSTANCE.registerButton(button);
-	}
+    @Override
+    public void registerEditorOverlay(IBookEditorOverlay overlay) {
+        GuiBook.INSTANCE.registerOverlay(overlay);
+    }
+
+    @Override
+    public void registerToolbarButton(IToolbarButton button) {
+        GuiToolbar.INSTANCE.registerButton(button);
+    }
 
     @Override
     public void registerRecipeHandler(IRecipeHandler handler) {
@@ -74,10 +74,10 @@ public class EAPIHandler implements IEnchiridionAPI {
         Enchiridion.log(Level.INFO, "Registered a new recipe handler: " + handler.getRecipeName());
     }
 
-	@Override
-	public void registerButtonAction(IButtonAction action) {
-		GuiSimpleEditorButton.INSTANCE.registerAction(action);
-	}
+    @Override
+    public void registerButtonAction(IButtonAction action) {
+        GuiSimpleEditorButton.INSTANCE.registerAction(action);
+    }
 
     @Override
     public void registerTemplate(ITemplate template) {

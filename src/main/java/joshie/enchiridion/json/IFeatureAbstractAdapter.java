@@ -2,6 +2,7 @@ package joshie.enchiridion.json;
 
 import com.google.gson.*;
 import joshie.enchiridion.api.book.IFeature;
+import joshie.enchiridion.gui.book.features.FeatureButton;
 import joshie.enchiridion.gui.book.features.FeatureError;
 import joshie.enchiridion.lib.EInfo;
 
@@ -39,6 +40,12 @@ public class IFeatureAbstractAdapter implements JsonSerializer<IFeature>, JsonDe
         try {
         	IFeature feature = context.deserialize(element, Class.forName(clazz));
         	feature.readFromJson(element.getAsJsonObject());
+
+            //Legacy Button Adapter
+            if (feature instanceof FeatureButton) {
+                return ((FeatureButton)feature).fix(element.getAsJsonObject());
+            }
+
             return feature;
         } catch (ClassNotFoundException cnfe) {
             return new FeatureError(); //Return an error feature

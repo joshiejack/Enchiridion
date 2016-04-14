@@ -1,7 +1,6 @@
 package joshie.enchiridion.api.book;
 
 import com.google.gson.JsonObject;
-
 import net.minecraft.util.ResourceLocation;
 
 public interface IButtonAction {
@@ -11,11 +10,15 @@ public interface IButtonAction {
 	public String[] getFieldNames();
 	public IButtonAction create();
 	public String getName();
-	public ResourceLocation getHovered();
-	public ResourceLocation getUnhovered();
-	
-	public String getHoverText();
-	public String getUnhoverText();
+
+    /** Reduce this stuff **/
+	public ResourceLocation getResource(boolean isHovered);
+    public String getText(boolean isHovered);
+
+    /** Setters **/
+    public IButtonAction setResourceLocation(String type, ResourceLocation resource);
+    public IButtonAction setText(String type, String text);
+
 	public String getTooltip();
 	public void performAction();
 	

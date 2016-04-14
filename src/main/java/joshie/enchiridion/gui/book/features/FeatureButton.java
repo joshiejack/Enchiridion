@@ -1,95 +1,69 @@
 package joshie.enchiridion.gui.book.features;
 
+import com.google.gson.JsonObject;
+import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IButtonAction;
-import joshie.enchiridion.api.book.IFeatureProvider;
+import joshie.enchiridion.api.book.IButtonActionProvider;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
 import joshie.enchiridion.gui.book.GuiSimpleEditorButton;
 import joshie.enchiridion.helpers.MCClientHelper;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
 
-public class FeatureButton extends FeatureJump {
-	public FeatureImage deflt;
-	public FeatureImage hover;
+public class FeatureButton extends FeatureJump implements IButtonActionProvider {
+    protected transient boolean isInit = false;
 	public IButtonAction action;
 	public float size = 1F;
-	public transient FeatureText textHover;
-	public transient FeatureText textUnhover;
-	private transient boolean isInit = false;
-	
+
 	public FeatureButton(){}
-	public FeatureButton(String deflt, String hover, IButtonAction action) {
-		this.deflt = new FeatureImage(deflt);
-		this.hover = new FeatureImage(hover);
+	public FeatureButton(IButtonAction action) {
 		this.action = action;
 	}
+
+    @Override
+    public IButtonAction getAction() {
+        return action;
+    }
 	
 	@Override
 	public FeatureButton copy() {
-	    FeatureButton button = new FeatureButton(deflt.path, hover.path, action.copy());
+	    FeatureButton button = new FeatureButton(action.copy());
         button.size = size;
-        button.textHover = textHover == null ? null : textHover.copy();
-        button.textUnhover = textUnhover == null ? null : textUnhover.copy();
         return button;
-	}
-	
-	@Override
-	public void update(IFeatureProvider position) {
-		super.update(position);
-		if (deflt == null || hover == null) return;
-		else {
-		    isInit = false; //Reset the init when something changes
-			deflt.update(position);
-			hover.update(position);
-			textHover = new FeatureText(action.getHoverText());
-			textHover.size = this.size;
-			textHover.update(position);
-			textUnhover = new FeatureText(action.getUnhoverText());
-			textUnhover.update(position);
-            textUnhover.size = this.size;
-		}
 	}
 
     @Override
     public void keyTyped(char character, int key) {
         if (MCClientHelper.isShiftPressed()) {
-            boolean changed = false;
             if (key == 78) {
                 size = Math.min(15F, Math.max(0.5F, size + 0.1F));
-                changed = true;
             } else if (key == 74) {
                 size = Math.min(15F, Math.max(0.5F, size - 0.1F));
-                changed = true;
-            }
-
-            if (changed) {
-                textHover.update(position);
-                textUnhover.update(position);
             }
         }
     }
 	
 	@Override
     public void draw(int mouseX, int mouseY) {
-		if (deflt == null || hover == null) return;
+        if (action == null) return;
 		if (!isInit && action != null) { //Called here because action needs everything to be loaded, where as update doesn't
 		    action.initAction();
 		    isInit = true;
 		}
-		
-		if (position.isOverFeature(mouseX, mouseY)) {
-		    hover.draw(mouseX, mouseY);
-		    if (textHover != null) textHover.draw(mouseX, mouseY);
-		} else {
-			deflt.draw(mouseX, mouseY);
-			if (textUnhover != null) textUnhover.draw(mouseX, mouseY);
-		}
+
+        boolean isHovered = position.isOverFeature(mouseX, mouseY);
+        ResourceLocation location = action.getResource(isHovered);
+        if (location != null) {
+            EnchiridionAPI.draw.drawImage(location, position.getLeft(), position.getTop(), position.getRight(), position.getBottom());
+        }
+
+        EnchiridionAPI.draw.drawSplitScaledString(action.getText(isHovered), position.getLeft(), position.getTop(), 200, 0x555555, size);
 	}
 	
 	@Override
 	public boolean getAndSetEditMode() {
-		if (deflt == null || hover == null) return false;
-		GuiSimpleEditor.INSTANCE.setEditor(GuiSimpleEditorButton.INSTANCE.setButton(this));		
+		GuiSimpleEditor.INSTANCE.setEditor(GuiSimpleEditorButton.INSTANCE.setButton(this));
 		return true;
 	}
 	
@@ -112,4 +86,29 @@ public class FeatureButton extends FeatureJump {
 			}
 		}
 	}
+
+    @Override
+    public void readFromJson(JsonObject json) {
+        super.readFromJson(json);
+    }
+
+    @Override
+    public void writeToJson(JsonObject object) {
+        super.writeToJson(object);
+    }
+
+    //Let's fix the broken json
+    public FeatureButton fix(JsonObject json) {
+        if (json.get("deflt") != null) {
+            String dflt = json.get("deflt").getAsJsonObject().get("path").getAsString();
+            if (action != null) action.setResourceLocation("unhovered", new ResourceLocation(dflt));
+        }
+
+        if (json.get("hover") != null) {
+            String hover = json.get("hover").getAsJsonObject().get("path").getAsString();
+            if (action != null) action.setResourceLocation("hovered", new ResourceLocation(hover));
+        }
+
+        return this;
+    }
 }
