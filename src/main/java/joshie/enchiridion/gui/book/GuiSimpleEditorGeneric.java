@@ -2,6 +2,7 @@ package joshie.enchiridion.gui.book;
 
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.api.gui.ISimpleEditorFieldProvider;
 import joshie.enchiridion.util.ITextEditable;
@@ -150,6 +151,17 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
             this.fieldName = fieldName;
         }
 
+        public void onFieldsSet() {
+            //After all is done update the
+            if (object instanceof ISimpleEditorFieldProvider) {
+                ((ISimpleEditorFieldProvider)object).onFieldsSet();
+            }
+
+            if (object instanceof IButtonAction) {
+                ((IButtonAction)object).initAction();
+            }
+        }
+
         public boolean click() {
             try {
                 Field f = object.getClass().getField(fieldName);
@@ -157,6 +169,8 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
                     boolean bool = f.getBoolean(object);
                     f.setBoolean(object, !bool);
                     temporaryField = "" + !bool;
+
+                    onFieldsSet();
                     return true;
                 }
             } catch (Exception e){ e.printStackTrace(); }
@@ -206,9 +220,7 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
             }
             
             //After all is done update the
-            if (object instanceof ISimpleEditorFieldProvider) {
-                ((ISimpleEditorFieldProvider)object).onFieldsSet();
-            }
+            onFieldsSet();
         }
     }
 }
