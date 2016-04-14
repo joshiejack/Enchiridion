@@ -219,7 +219,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         for (IButtonAction action: sorted) {
             if (isOverAction(xPos, yPos, mouseX, mouseY)) {
                 IButtonAction old = button.action;
-                button.action = action.copy();
+                button.action = action.create();
                 button.action.setTooltip(old.getTooltip());
                 button.action.setText(true, old.getText(true));
                 button.action.setText(false, old.getText(false));
