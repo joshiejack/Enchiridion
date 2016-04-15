@@ -49,7 +49,9 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
         super.update(position);
         thisPage = position.getPage();
         book = position.getPage().getBook();
-        page = JumpHelper.getPageByNumber(book, pageNumber);
+        if (book != null && book.getPages() != null) {
+            page = JumpHelper.getPageByNumber(book, pageNumber);
+        }
     }
 
     @Override
