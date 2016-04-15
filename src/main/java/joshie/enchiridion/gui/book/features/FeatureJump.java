@@ -9,8 +9,8 @@ import joshie.enchiridion.helpers.JumpHelper;
 
 public class FeatureJump extends FeatureAbstract {
     public transient IPage page;
-    private transient int number;
-    private transient String jumpTo;
+    protected transient int number;
+    protected transient String jumpTo;
 
     public FeatureJump(){}
     public FeatureJump(int number, String jumpTo) {

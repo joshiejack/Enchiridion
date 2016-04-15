@@ -9,15 +9,13 @@ import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ibm.icu.impl.CurrencyData.provider;
-
 public class FeatureRecipe extends FeatureItem {
     public transient static final ArrayList<IRecipeHandler> handlers = new ArrayList();
 
-    private String ingredients = "plankWood:plankWood:plankWood:cobblestone:ingotAluminum:cobblestone:cobblestone:dustRedstone:cobblestone";
-    private String recipeType = "ShapedOreRecipe";
-    private transient int index = 0;
-    private transient IRecipeHandler handler;
+    protected String ingredients = "plankWood:plankWood:plankWood:cobblestone:ingotAluminum:cobblestone:cobblestone:dustRedstone:cobblestone";
+    protected String recipeType = "ShapedOreRecipe";
+    protected transient int index = 0;
+    protected transient IRecipeHandler handler;
 
     public FeatureRecipe() {}
     public FeatureRecipe(ItemStack item) {

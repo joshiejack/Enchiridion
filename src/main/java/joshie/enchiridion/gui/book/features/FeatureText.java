@@ -14,9 +14,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class FeatureText extends FeatureAbstract implements ITextEditable {
-    private transient boolean oneClick = false;
-    private transient boolean readTemp = false;
-    private transient double cachedWidth = 0;
+    protected transient boolean oneClick = false;
+    protected transient boolean readTemp = false;
+    protected transient double cachedWidth = 0;
     public transient int wrap = 100; //Default wrap to 100 to avoid errors
     public String text = "";
     public float size = 1F;
