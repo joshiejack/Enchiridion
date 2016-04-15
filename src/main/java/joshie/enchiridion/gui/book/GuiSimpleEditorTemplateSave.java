@@ -69,7 +69,7 @@ public class GuiSimpleEditorTemplateSave extends GuiSimpleEditorAbstract impleme
         }
 
         try {
-            ImageIO.write(resizeImage(image, BufferedImage.TYPE_INT_RGB, 140, 79), format, file);
+            ImageIO.write(resizeImage(image, BufferedImage.TYPE_INT_RGB, 280, 158), format, file);
         } catch (IOException e) { e.printStackTrace(); }
     }
 

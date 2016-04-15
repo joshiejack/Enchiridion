@@ -85,7 +85,7 @@ public class FileHelper {
     }
 
     public static File getTemplatesDirectory() {
-        File directory = new File(getBooksDirectory(), "templates");
+        File directory = new File(Enchiridion.root, "templates");
         if (!directory.exists() && !directory.mkdirs()) {
             throw new IllegalStateException("Couldn't create dir: " + directory);
         }
