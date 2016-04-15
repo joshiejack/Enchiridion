@@ -7,6 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class EventHelper {
     public static boolean isFeatureVisible(IPage ipage, boolean isVisible, int layer) {
+        if (ipage.getBook() == null) return isVisible;
         EntityPlayer player = MCClientHelper.getPlayer();
         String bookid = ipage.getBook().getUniqueName();
         int page = ipage.getPageNumber();

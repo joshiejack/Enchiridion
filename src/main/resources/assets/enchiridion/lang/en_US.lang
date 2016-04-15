@@ -1,6 +1,6 @@
 enchiridion.creative=Enchiridion
 enchiridion.library=Library
-enchiridion.new=Create NEW Book
+enchiridion.new=Create %sNEW%s Book
 enchiridion.layers=Layers
 enchiridion.tooltips=Tooltips Enabled
 enchiridion.select.custom=Custom

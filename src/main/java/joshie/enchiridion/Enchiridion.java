@@ -80,4 +80,8 @@ public class Enchiridion {
     public static String translate(String string) {
         return StatCollector.translateToLocal("enchiridion." + string);
     }
+
+    public static String format(String string, Object... format) {
+        return StatCollector.translateToLocalFormatted("enchiridion." + string, format);
+    }
 }

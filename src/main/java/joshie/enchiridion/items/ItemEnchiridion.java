@@ -1,7 +1,5 @@
 package joshie.enchiridion.items;
 
-import java.util.List;
-
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
@@ -22,6 +20,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
+
+import static net.minecraft.util.EnumChatFormatting.DARK_GREEN;
+import static net.minecraft.util.EnumChatFormatting.RESET;
+
 public class ItemEnchiridion extends Item {
     public ItemEnchiridion() {
         setHasSubtypes(true);
@@ -39,11 +42,11 @@ public class ItemEnchiridion extends Item {
         }
 
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
-            return Enchiridion.translate("new");
+            return Enchiridion.format("new", DARK_GREEN, RESET);
         }
 
         IBook book = BookRegistry.INSTANCE.getBook(stack);
-        return book == null ? Enchiridion.translate("new") : book.getDisplayName();
+        return book == null ? Enchiridion.format("new", DARK_GREEN, RESET) : book.getDisplayName();
     }
 
     @SideOnly(Side.CLIENT)
