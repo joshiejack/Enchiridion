@@ -220,11 +220,15 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
             if (isOverAction(xPos, yPos, mouseX, mouseY)) {
                 IButtonAction old = button.action;
                 button.action = action.create();
+                for (int i = 0; i <= 1; i++) {
+                    boolean value = i == 0;
+                    button.action.setText(value, old.getText(value));
+                    button.action.setTextOffsetX(value, old.getTextOffsetX(value));
+                    button.action.setTextOffsetY(value, old.getTextOffsetY(value));
+                    button.action.setResourceLocation(value, old.getResource(value));
+                }
+
                 button.action.setTooltip(old.getTooltip());
-                button.action.setText(true, old.getText(true));
-                button.action.setText(false, old.getText(false));
-                button.action.setResourceLocation(true, old.getResource(true));
-                button.action.setResourceLocation(false, old.getResource(false));
                 button.action.onFieldsSet(""); //CREATE!
                 setButton(button);
                 return true;

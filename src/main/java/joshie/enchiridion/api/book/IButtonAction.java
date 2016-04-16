@@ -13,11 +13,15 @@ public interface IButtonAction extends ISimpleEditorFieldProvider {
     /** Reduce this stuff **/
     public ResourceLocation getResource(boolean isHovered);
     public String getText(boolean isHovered);
+    public int getTextOffsetX(boolean isHovered);
+    public int getTextOffsetY(boolean isHovered);
 
     /** Return the tooltip **/
     public String getTooltip();
 
     /** Setters **/
+    public IButtonAction setTextOffsetX(boolean isHovered, int x);
+    public IButtonAction setTextOffsetY(boolean isHovered, int y);
     public IButtonAction setResourceLocation(boolean isHovered, ResourceLocation resource);
     public IButtonAction setText(boolean isHovered, String text);
     public IButtonAction setTooltip(String tooltip);

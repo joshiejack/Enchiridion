@@ -13,7 +13,11 @@ public abstract class AbstractAction implements IButtonAction {
     protected transient String name;
     public String tooltip = "";
     public String hoverText = "";
+    public int hoverXOffset = 0;
+    public int hoverYOffset = 0;
     public String unhoveredText = "";
+    public int unhoveredXOffset;
+    public int unhoveredYOffset;
 
     public AbstractAction() {}
     public AbstractAction(String name) {
@@ -29,6 +33,10 @@ public abstract class AbstractAction implements IButtonAction {
         action.tooltip = tooltip;
         action.hoverText = hoverText;
         action.unhoveredText = unhoveredText;
+        action.hoverXOffset = hoverXOffset;
+        action.hoverYOffset = hoverYOffset;
+        action.unhoveredXOffset = unhoveredXOffset;
+        action.unhoveredYOffset = unhoveredYOffset;
         return this;
     }
 
@@ -67,6 +75,16 @@ public abstract class AbstractAction implements IButtonAction {
     }
 
     @Override
+    public int getTextOffsetX(boolean isHovered) {
+        return isHovered ? hoverXOffset: unhoveredXOffset;
+    }
+
+    @Override
+    public int getTextOffsetY(boolean isHovered) {
+        return isHovered ? hoverYOffset : unhoveredYOffset;
+    }
+
+    @Override
     public ResourceLocation getResource(boolean isHovered) {
         return isHovered ? hovered : unhovered;
     }
@@ -88,6 +106,20 @@ public abstract class AbstractAction implements IButtonAction {
     @Override
     public IButtonAction setTooltip(String tooltip) {
         this.tooltip = tooltip;
+        return this;
+    }
+
+    @Override
+    public IButtonAction setTextOffsetX(boolean isHovered, int x) {
+        if (isHovered) hoverXOffset = x;
+        else unhoveredXOffset = x;
+        return this;
+    }
+
+    @Override
+    public IButtonAction setTextOffsetY(boolean isHovered, int y) {
+        if (isHovered) hoverYOffset = y;
+        else unhoveredYOffset = y;
         return this;
     }
 }

@@ -58,7 +58,7 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
             EnchiridionAPI.draw.drawImage(location, position.getLeft(), position.getTop(), position.getRight(), position.getBottom());
         }
 
-        EnchiridionAPI.draw.drawSplitScaledString(action.getText(isHovered), position.getLeft(), position.getTop(), 200, 0x555555, size);
+        EnchiridionAPI.draw.drawSplitScaledString(action.getText(isHovered), position.getLeft() + action.getTextOffsetX(isHovered), position.getTop() + action.getTextOffsetY(isHovered), 200, 0x555555, size);
     }
 
     @Override
