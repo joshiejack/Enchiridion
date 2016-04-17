@@ -48,6 +48,14 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
         this.action = action;
     }
 
+    public float getSize() {
+        return size;
+    }
+
+    public void setSize(float size) {
+        this.size = size;
+    }
+
     @Override
     public FeatureButton copy() {
         FeatureButton button = new FeatureButton(action.copy());
