@@ -142,15 +142,44 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
         }
 
         //Fix some more
-        if (json.get("action") != null) {
-            if (json.get("action").getAsJsonObject().get("hoveredResource") != null) {
-                String hover = json.get("action").getAsJsonObject().get("hoveredResource").getAsString();
+        if (json.get("action") != null && json.get("action").getAsJsonObject().get("properties") != null) {
+            JsonObject properties = json.get("action").getAsJsonObject().get("properties").getAsJsonObject();
+            if (properties.get("hoveredResource") != null) {
+                String hover = properties.get("hoveredResource").getAsString();
                 setResourceLocation(true, new ResourceLocation(hover));
             }
 
-            if (json.get("action").getAsJsonObject().get("unhoveredResource") != null) {
-                String hover = json.get("action").getAsJsonObject().get("unhoveredResource").getAsString();
+            if (properties.get("unhoveredResource") != null) {
+                String hover = properties.get("unhoveredResource").getAsString();
                 setResourceLocation(false, new ResourceLocation(hover));
+            }
+
+            if (properties.get("tooltip") != null) {
+                setTooltip(properties.get("tooltip").getAsString());
+            }
+
+            if (properties.get("hoverText") != null) {
+                setText(true, properties.get("hoverText").getAsString());
+            }
+
+            if (properties.get("unhoveredText") != null) {
+                setText(true, properties.get("unhoveredText").getAsString());
+            }
+
+            if (properties.get("hoverXOffset") != null) {
+                setTextOffsetX(true, properties.get("hoverXOffset").getAsInt());
+            }
+
+            if (properties.get("hoverYOffset") != null) {
+                setTextOffsetY(true, properties.get("hoverYOffset").getAsInt());
+            }
+
+            if (properties.get("unhoveredXOffset") != null) {
+                setTextOffsetX(false, properties.get("unhoveredXOffset").getAsInt());
+            }
+
+            if (properties.get("unhoveredYOffset") != null) {
+                setTextOffsetY(false, properties.get("unhoveredYOffset").getAsInt());
             }
         }
 
