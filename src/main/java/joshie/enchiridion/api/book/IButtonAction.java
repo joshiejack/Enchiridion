@@ -13,6 +13,9 @@ public interface IButtonAction extends ISimpleEditorFieldProvider {
     /** Perform the action **/
     public void performAction();
 
+    /** Whether the button this action is attached to, should be visible **/
+    public boolean isVisible();
+
     /** Called to read data for the button **/
     public void readFromJson(JsonObject object);
 

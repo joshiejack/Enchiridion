@@ -80,7 +80,7 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        if (action == null) return;
+        if (action == null || !action.isVisible()) return;
         if (!isInit && action != null) { //Called here because action needs everything to be loaded, where as update doesn't
             action.onFieldsSet("");
             isInit = true;
@@ -103,12 +103,12 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
 
     @Override
     public void performClick(int mouseX, int mouseY, int button) {
-        if (action != null && processesClick(button)) action.performAction();
+        if (action != null && action.isVisible() && processesClick(button)) action.performAction();
     }
 
     @Override
     public void addTooltip(List<String> tooltip, int mouseX, int mouseY) {
-        if (action != null) {
+        if (action != null && action.isVisible()) {
             String[] title = getTooltip().split("\n");
             if (title != null) {
                 boolean first = false;
