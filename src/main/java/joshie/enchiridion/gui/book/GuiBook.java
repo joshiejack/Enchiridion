@@ -213,8 +213,8 @@ public class GuiBook extends GuiBase implements IBookHelper {
 
         //Perform clicks for the features
         for (IFeatureProvider feature : page.getFeatures()) {
-            if (feature.mouseClicked(mouseX, mouseY + page.getScroll(), mouseButton) && isEditMode) {
-                selectLayer(feature);
+            if (feature.mouseClicked(mouseX, mouseY + page.getScroll(), mouseButton)) {
+                if (isEditMode) selectLayer(feature);
                 return;
             }
         }
@@ -342,7 +342,6 @@ public class GuiBook extends GuiBase implements IBookHelper {
                     int closest = 5 * (Math.round(page.getPageNumber()/5));
                     int difference = closest - this.page.getPageNumber();
                     if (difference > 50 || difference < -50) {
-                        System.out.println(difference);
                         GuiTimeLine.INSTANCE.startPage = closest;
                     }
                 }

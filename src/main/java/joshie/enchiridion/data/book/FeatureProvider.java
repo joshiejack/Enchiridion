@@ -144,7 +144,7 @@ public class FeatureProvider implements IFeatureProvider {
             //Perform clicks
             if (!EnchiridionAPI.book.isEditMode() || (EnchiridionAPI.book.isEditMode() && button != 0)) {
                 feature.performClick(mouseX, mouseY, button);
-                return false;
+                return true;
             }
 
             if (!isLocked) {
