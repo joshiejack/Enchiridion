@@ -34,6 +34,11 @@ public abstract class AbstractAction implements IButtonAction {
     }
 
     @Override
+    public boolean isVisible() {
+        return true;
+    }
+
+    @Override
     public ResourceLocation getResource() {
         return resource;
     }
