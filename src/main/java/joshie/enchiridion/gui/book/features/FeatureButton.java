@@ -22,7 +22,7 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
 
     //Readables
     public boolean leftClick = true;
-    public boolean rightClick = false;
+    public boolean rightClick = true;
     public boolean otherClick = false;
     public String tooltip = "";
     public String hoverText = "";
