@@ -163,7 +163,7 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
             }
 
             if (properties.get("unhoveredText") != null) {
-                setText(true, properties.get("unhoveredText").getAsString());
+                setText(false, properties.get("unhoveredText").getAsString());
             }
 
             if (properties.get("hoverXOffset") != null) {
