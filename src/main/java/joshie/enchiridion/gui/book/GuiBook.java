@@ -230,12 +230,12 @@ public class GuiBook extends GuiBase implements IBookHelper {
     }
 
     @Override
-    public void mouseReleased(int x, int y, int state) {
-        super.mouseReleased(x, y, state);
+    public void mouseReleased(int x, int y, int button) {
+        super.mouseReleased(x, y, button);
 
         isGroupMoveMode = false;
         for (IFeatureProvider provider : page.getFeatures()) {
-            provider.mouseReleased(mouseX, mouseY + page.getScroll());
+            provider.mouseReleased(mouseX, mouseY + page.getScroll(), button);
         }
 
         //Perform releases for the overlays
@@ -341,7 +341,8 @@ public class GuiBook extends GuiBase implements IBookHelper {
                 if (this.page != null) {
                     int closest = 5 * (Math.round(page.getPageNumber()/5));
                     int difference = closest - this.page.getPageNumber();
-                    if (difference > 50 || difference < 50) {
+                    if (difference > 50 || difference < -50) {
+                        System.out.println(difference);
                         GuiTimeLine.INSTANCE.startPage = closest;
                     }
                 }

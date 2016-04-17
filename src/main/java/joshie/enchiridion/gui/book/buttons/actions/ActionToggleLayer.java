@@ -14,8 +14,7 @@ public class ActionToggleLayer extends AbstractAction {
 
     public ActionToggleLayer() {
         super("toggle");
-        hovered = new ELocation("layer_hover");
-        unhovered = new ELocation("layer_dftl");
+        resource = new ELocation("layer_dftl");
     }
 
     @Override

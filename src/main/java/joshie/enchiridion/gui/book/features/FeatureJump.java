@@ -39,7 +39,7 @@ public class FeatureJump extends FeatureAbstract {
     }
 
     @Override
-    public void performClick(int mouseX, int mouseY) {
+    public void performClick(int mouseX, int mouseY, int button) {
         EnchiridionAPI.book.jumpToPageIfExists(page.getPageNumber());
     }
 

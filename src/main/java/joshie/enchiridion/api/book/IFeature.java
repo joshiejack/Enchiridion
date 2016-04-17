@@ -18,8 +18,8 @@ public interface IFeature {
     public boolean getAndSetEditMode();
     
     /** Called when not in edit mode, or shift is clicked, on mouseClick **/
-    public void performClick(int mouseX, int mouseY);
-    public void performRelease(int mouseX, int mouseY);
+    public void performClick(int mouseX, int mouseY, int button);
+    public void performRelease(int mouseX, int mouseY, int button);
     public void follow(int mouseX, int mouseY);
     public void scroll(boolean down, int amount);
     public void onDeselected();

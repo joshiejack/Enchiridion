@@ -34,9 +34,8 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     private final ArrayList<IButtonAction> actions = new ArrayList();
     private ArrayList<IButtonAction> sorted = new ArrayList();
     private HashMap<String, WrappedEditable> fieldCache = new HashMap();
+    private HashMap<Object, String[]> fieldNameCache = new HashMap();
     private FeatureButton button = null;
-    private String[] fieldNameCache;
-
 
     protected GuiSimpleEditorButton() {}
 
@@ -47,7 +46,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     public IBookEditorOverlay setButton(FeatureButton button) {
         this.button = button;
         this.fieldCache = new HashMap();
-        this.fieldNameCache = null;
+        this.fieldNameCache = new HashMap();
         return this;
     }
 
@@ -80,36 +79,37 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         drawSplitScaledString("[b]" + name + "[/b]", xPosStart, yPos + 3, 0xFF48453C, 0.5F);
     }
 
-    public boolean isTransient(String fieldName) {
+    public boolean isTransient(Object object, String fieldName) {
         try {
-            Field f = button.action.getClass().getField(fieldName);
+            Field f = object.getClass().getField(fieldName);
             return (Modifier.isTransient(f.getModifiers()));
         } catch (Exception e) {}
 
         return false;
     }
 
-    public String[] getFieldNames() {
-        if (fieldNameCache != null) return fieldNameCache;
-        fieldNameCache = new String[button.action.getClass().getFields().length];
+    public String[] getFieldNames(Object object) {
+        if (fieldNameCache.get(object) != null) return fieldNameCache.get(object);
+        String[] fieldNameCache = new String[object.getClass().getFields().length];
         int i = 0;
-        for (Field field : button.action.getClass().getFields()) {
+        for (Field field : object.getClass().getFields()) {
             fieldNameCache[i] = field.getName();
             i++;
         }
 
+        this.fieldNameCache.put(object, fieldNameCache);
         return fieldNameCache;
     }
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        if (button == null || button.action == null) return;; //NO WORK!!!
+        if (button == null || button.getAction() == null) return;; //NO WORK!!!
         drawBoxLabel(Enchiridion.translate("select.action"), 9);
         int xPos = xPosStart;
         int yPos = 13;
         for (IButtonAction action: sorted) {
-            drawImage(action.getResource(false), xPos + 1, yPos + 8, xPos + 9, yPos + 16);
-            if (action.getName().equals(button.action.getName())) {
+            drawImage(action.getResource(), xPos + 1, yPos + 8, xPos + 9, yPos + 16);
+            if (action.getName().equals(button.getAction().getName())) {
                 drawBorderedRectangle(xPos, yPos + 7, xPos + 10, yPos + 17, 0x00000000, 0xFF48453C);
             }
 
@@ -126,12 +126,12 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         drawBoxLabel(Enchiridion.translate("select.unhover"), yPos + 20);
         drawImage(arrow_left_off, 4, yPos + 32, 22, yPos + 42);
         drawImage(arrow_right_off, 24, yPos + 32, 42, yPos + 42);
-        if (arrow_left_off.equals(button.action.getResource(false))) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
-        else if (arrow_right_off.equals(button.action.getResource(false))) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
+        if (arrow_left_off.equals(button.getResource(false))) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
+        else if (arrow_right_off.equals(button.getResource(false))) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
         else {
             //colorI = 0xFF312921;
             colorB = 0xFF191511;
-            drawImage(button.action.getResource(false), 45, yPos + 31, 80, yPos + 43);
+            drawImage(button.getResource(false), 45, yPos + 31, 80, yPos + 43);
         }
 
         drawBorderedRectangle(45, yPos + 31, 80, yPos + 43, colorI, colorB);
@@ -144,12 +144,12 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         drawBoxLabel(Enchiridion.translate("select.hover"), yPos + 20);
         drawImage(arrow_left_on, 4, yPos + 32, 22, yPos + 42);
         drawImage(arrow_right_on, 24, yPos + 32, 42, yPos + 42);
-        if (arrow_left_on.equals(button.action.getResource(true))) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
-        else if(arrow_right_on.equals(button.action.getResource(true))) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
+        if (arrow_left_on.equals(button.getResource(true))) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
+        else if(arrow_right_on.equals(button.getResource(true))) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
         else {
             //colorI = 0xFF312921;
             colorB = 0xFF191511;
-            drawImage(button.action.getResource(true), 45, yPos + 31, 80, yPos + 43);
+            drawImage(button.getResource(true), 45, yPos + 31, 80, yPos + 43);
         }
 
         drawBorderedRectangle(45, yPos + 31, 80, yPos + 43, colorI, colorB);
@@ -157,16 +157,29 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
         yPos+= 25;
         //Draw the extra information for the actions
-        drawBoxLabel("Extra Fields", yPos + 20);
-        for (String f: getFieldNames()) {
-            if (isTransient(f)) continue;
+        drawBoxLabel("Button Fields", yPos + 20);
+        yPos = drawFields(button, yPos, mouseX, mouseY);
+        yPos+= 10;
+
+        int change = drawFields(button.getAction(), yPos, mouseX, mouseY);
+        if (change != yPos) {
+            drawBoxLabel("Action Fields", yPos + 20);
+            yPos = change;
+        } else yPos -= 10;
+
+        drawBorderedRectangle(2, yPos + 30, 83, yPos + 31, 0xFF312921, 0xFF191511);
+    }
+
+    private int drawFields(Object object, int yPos, int mouseX, int mouseY) {
+        for (String f: getFieldNames(object)) {
+            if (isTransient(object, f)) continue;
             drawBorderedRectangle(2, yPos + 30, 83, yPos + 37, 0xFF312921, 0xFF191511);
             String name = Enchiridion.translate("button.action.field." + f);
             drawSplitScaledString("[b]" + name + "[/b]", 4, yPos + 32, 0xFFFFFFFF, 0.5F);
 
             WrappedEditable editable = null;
             if (!fieldCache.containsKey(f)) {
-                editable = new WrappedEditable(button.action, f);
+                editable = new WrappedEditable(object, f);
                 fieldCache.put(f, editable);
             } else editable = fieldCache.get(f);
 
@@ -181,7 +194,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
             yPos = yPos + 6 + lines;
         }
 
-        drawBorderedRectangle(2, yPos + 30, 83, yPos + 31, 0xFF312921, 0xFF191511);
+        return yPos;
     }
     
     public int getLineCount (String text) {
@@ -212,24 +225,15 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY) {
-        if (button == null || button.action == null) return false;; //NO WORK!!!
+        if (button == null || button.getAction() == null) return false;; //NO WORK!!!
 
         int xPos = xPosStart;
         int yPos = 13;
         for (IButtonAction action: sorted) {
             if (isOverAction(xPos, yPos, mouseX, mouseY)) {
-                IButtonAction old = button.action;
-                button.action = action.create();
-                for (int i = 0; i <= 1; i++) {
-                    boolean value = i == 0;
-                    button.action.setText(value, old.getText(value));
-                    button.action.setTextOffsetX(value, old.getTextOffsetX(value));
-                    button.action.setTextOffsetY(value, old.getTextOffsetY(value));
-                    button.action.setResourceLocation(value, old.getResource(value));
-                }
-
-                button.action.setTooltip(old.getTooltip());
-                button.action.onFieldsSet(""); //CREATE!
+                IButtonAction old = button.getAction();
+                button.setAction(action.create());
+                button.getAction().onFieldsSet(""); //CREATE!
                 setButton(button);
                 return true;
             }
@@ -243,15 +247,15 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
         //Update the resource for arrows in the unhovered position
         if (isOverPosition(4, yPos + 32, 22, yPos + 42, mouseX, mouseY)) {
-            button.action.setResourceLocation(false, arrow_left_off);
+            button.setResourceLocation(false, arrow_left_off);
             return true;
         } else if (isOverPosition(24, yPos + 32, 42, yPos + 42, mouseX, mouseY)) {
-            button.action.setResourceLocation(false, arrow_right_off);
+            button.setResourceLocation(false, arrow_right_off);
             return true;
         } else if (isOverPosition(45, yPos + 31, 80, yPos + 43, mouseX, mouseY)) {
             ResourceLocation resource = loadResource();
             if (resource != null) {
-                button.action.setResourceLocation(false, resource);
+                button.setResourceLocation(false, resource);
             }
 
             return true;
@@ -260,28 +264,42 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         //Update the resources for arrows in the hovered position
         yPos += 25;
         if (isOverPosition(4, yPos + 32, 22, yPos + 42, mouseX, mouseY)) {
-            button.action.setResourceLocation(true, arrow_left_on);
+            button.setResourceLocation(true, arrow_left_on);
             return true;
         } else if (isOverPosition(24, yPos + 32, 42, yPos + 42, mouseX, mouseY)) {
-            button.action.setResourceLocation(true, arrow_right_on);
+            button.setResourceLocation(true, arrow_right_on);
             return true;
         } else if (isOverPosition(45, yPos + 31, 80, yPos + 43, mouseX, mouseY)) {
             ResourceLocation resource = loadResource();
             if (resource != null) {
-                button.action.setResourceLocation(true, resource);
+                button.setResourceLocation(true, resource);
             }
 
             return true;
         }
 
         yPos+= 25;
-        //Draw the extra information for the actions
-        drawBoxLabel("Extra Fields", yPos + 20);
-        for (String f: getFieldNames()) {
-            if (isTransient(f)) continue;
+
+        int ret = clickFields(button, yPos, mouseX, mouseY);
+        if (ret < 0) return true;
+        else yPos = ret;
+
+        yPos+= 10;
+        ret = clickFields(button.getAction(), yPos, mouseX, mouseY);
+        if (ret < 0) return true;
+        else yPos = ret;
+
+
+
+        return false;
+    }
+
+    private int clickFields(Object object, int yPos, int mouseX, int mouseY) {
+        for (String f: getFieldNames(object)) {
+            if (isTransient(object, f)) continue;
             WrappedEditable editable = null;
             if (!fieldCache.containsKey(f)) {
-                editable = new WrappedEditable(button.action, f);
+                editable = new WrappedEditable(object, f);
                 fieldCache.put(f, editable);
             } else editable = fieldCache.get(f);
             String text = TextEditor.INSTANCE.getText(editable);
@@ -290,14 +308,14 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
             if (isOverPosition(2, yPos + 37, 83, yPos + 44 + lines, mouseX, mouseY)) {
                 editable.click();
-                return true;
+                return -1;
             }
 
 
             yPos = yPos + 6 + lines;
         }
 
-        return false;
+        return yPos;
     }
 
     private ResourceLocation loadResource() {

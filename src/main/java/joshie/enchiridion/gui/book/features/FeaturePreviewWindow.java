@@ -65,9 +65,8 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
     }
 
     @Override
-    public void performClick(int mouseX, int mouseY) {
+    public void performClick(int mouseX, int mouseY, int button) {
         if (page != null && page != thisPage) {
-            int button = EnchiridionAPI.book.isEditMode() ? 1: 0;
             for (IFeatureProvider feature : Lists.reverse(page.getFeatures())) {
                 if (feature instanceof FeaturePreviewWindow) continue; //No Cascading
                 mouseY = GuiBook.INSTANCE.mouseY + page.getScroll();
@@ -85,7 +84,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
     }
 
     @Override
-    public void performRelease(int mouseX, int mouseY) {
+    public void performRelease(int mouseX, int mouseY, int button) {
         if (isDragging) {
             isDragging = false;
         }

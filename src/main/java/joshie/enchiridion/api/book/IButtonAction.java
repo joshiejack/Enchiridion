@@ -10,22 +10,6 @@ public interface IButtonAction extends ISimpleEditorFieldProvider {
     public IButtonAction create();
     public String getName();
 
-    /** Reduce this stuff **/
-    public ResourceLocation getResource(boolean isHovered);
-    public String getText(boolean isHovered);
-    public int getTextOffsetX(boolean isHovered);
-    public int getTextOffsetY(boolean isHovered);
-
-    /** Return the tooltip **/
-    public String getTooltip();
-
-    /** Setters **/
-    public IButtonAction setTextOffsetX(boolean isHovered, int x);
-    public IButtonAction setTextOffsetY(boolean isHovered, int y);
-    public IButtonAction setResourceLocation(boolean isHovered, ResourceLocation resource);
-    public IButtonAction setText(boolean isHovered, String text);
-    public IButtonAction setTooltip(String tooltip);
-
     /** Perform the action **/
     public void performAction();
 
@@ -34,4 +18,7 @@ public interface IButtonAction extends ISimpleEditorFieldProvider {
 
     /** Called to write data for this button **/
     public void writeToJson(JsonObject object);
+
+    /** Return the resource location to display for this action **/
+    public ResourceLocation getResource();
 }

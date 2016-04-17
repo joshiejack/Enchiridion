@@ -157,7 +157,7 @@ public class GuiLayers extends AbstractGuiOverlay {
                     selected = EnchiridionAPI.book.getSelected();
                     selected.select(mouseX, mouseY);
                     selected.select(mouseX, mouseY);
-                    selected.mouseReleased(mouseX, mouseY);
+                    selected.mouseReleased(mouseX, mouseY, 0);
                 }
             }
             

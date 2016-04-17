@@ -29,10 +29,10 @@ public abstract class FeatureAbstract implements IFeature {
     }
 
     @Override
-    public void performClick(int mouseX, int mouseY) {}
+    public void performClick(int mouseX, int mouseY, int button) {}
 
     @Override
-    public void performRelease(int mouseX, int mouseY) {}
+    public void performRelease(int mouseX, int mouseY, int button) {}
 
     @Override
     public void follow(int mouseX, int mouseY) {}

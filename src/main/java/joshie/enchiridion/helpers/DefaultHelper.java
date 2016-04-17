@@ -14,10 +14,10 @@ import java.util.List;
 public class DefaultHelper {
     public static IPage addArrows(IPage page) {
         FeatureButton left = new FeatureButton(new ActionPreviousPage());
-        left.getAction().setResourceLocation(true, new ELocation("arrow_left_on")).setResourceLocation(false, new ELocation("arrow_left_off"));
+        left.setResourceLocation(true, new ELocation("arrow_left_on")).setResourceLocation(false, new ELocation("arrow_left_off"));
         page.addFeature(left, 21, 200, 18, 10, true, false);
         FeatureButton right = new FeatureButton(new ActionNextPage());
-        right.getAction().setResourceLocation(true, new ELocation("arrow_right_on")).setResourceLocation(false, new ELocation("arrow_right_off"));
+        right.setResourceLocation(true, new ELocation("arrow_right_on")).setResourceLocation(false, new ELocation("arrow_right_off"));
         page.addFeature(right, 387, 200, 18, 10, true, false);
         return page;
     }

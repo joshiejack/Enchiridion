@@ -143,7 +143,7 @@ public class FeatureProvider implements IFeatureProvider {
 
             //Perform clicks
             if (!EnchiridionAPI.book.isEditMode() || (EnchiridionAPI.book.isEditMode() && button != 0)) {
-                feature.performClick(mouseX, mouseY);
+                feature.performClick(mouseX, mouseY, button);
                 return false;
             }
 
@@ -156,7 +156,7 @@ public class FeatureProvider implements IFeatureProvider {
     }
 
     @Override
-    public void mouseReleased(int mouseX, int mouseY) {
+    public void mouseReleased(int mouseX, int mouseY, int button) {
         isHeld = false;
         isDragging = false;
         dragTopLeft = false;
@@ -165,7 +165,7 @@ public class FeatureProvider implements IFeatureProvider {
         dragBottomRight = false;
 
         if (!EventHelper.isFeatureVisible(getPage(), isVisible(), layerIndex)) return;
-        feature.performRelease(mouseX, mouseY);
+        feature.performRelease(mouseX, mouseY, button);
     }
     
     @Override
