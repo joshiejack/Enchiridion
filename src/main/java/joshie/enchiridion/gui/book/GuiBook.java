@@ -214,7 +214,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
         //Perform clicks for the features
         for (IFeatureProvider feature : page.getFeatures()) {
             if (feature.mouseClicked(mouseX, mouseY + page.getScroll(), mouseButton)) {
-                if (isEditMode) selectLayer(feature);
+                if (isEditMode && mouseButton == 0) selectLayer(feature);
                 return;
             }
         }
