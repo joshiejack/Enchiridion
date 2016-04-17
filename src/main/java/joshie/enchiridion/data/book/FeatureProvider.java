@@ -135,16 +135,18 @@ public class FeatureProvider implements IFeatureProvider {
             TextEditor.INSTANCE.clearEditable();
         }
 
+        System.out.println("CLICK" + " " + isOverFeature(mouseX, mouseY));
+
         if (!EventHelper.isFeatureVisible(getPage(), isVisible(), layerIndex)) return false;
         if (isOverFeature(mouseX, mouseY)) {
+            System.out.println("was over with the postion " + xPos + " " + yPos);
             if (button == 0 && EnchiridionAPI.book.isEditMode() && !isLocked()) {
                 isEditing = feature.getAndSetEditMode();
             }
 
             //Perform clicks
             if (!EnchiridionAPI.book.isEditMode() || (EnchiridionAPI.book.isEditMode() && button != 0)) {
-                feature.performClick(mouseX, mouseY, button);
-                return true;
+                if(feature.performClick(mouseX, mouseY, button)) return true;
             }
 
             if (!isLocked) {

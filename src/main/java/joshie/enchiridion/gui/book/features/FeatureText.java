@@ -5,16 +5,19 @@ import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.util.TextEditor;
+import org.apache.commons.compress.utils.IOUtils;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static joshie.enchiridion.util.ECreativeTab.enchiridion;
+
 public class FeatureText extends FeatureAbstract implements ITextEditable {
-    protected transient boolean oneClick = false;
     protected transient boolean readTemp = false;
     protected transient double cachedWidth = 0;
     public transient int wrap = 100; //Default wrap to 100 to avoid errors
@@ -63,7 +66,7 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
                     file.createNewFile();
                 }
 
-                Files.write(Paths.get("enchiridion.temp.txt"), text.getBytes());
+                IOUtils.readFully(new FileInputStream("enchiridion.temp.txt"), text.getBytes());
                 Desktop.getDesktop().open(file);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -81,7 +84,7 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
         if (readTemp) {
             byte[] encoded;
             try {
-                encoded = Files.readAllBytes(Paths.get("enchiridion.temp.txt"));
+                encoded = IOUtils.toByteArray(new FileInputStream("enchiridion.temp.txt"));
                 text = (new String(encoded, Charset.defaultCharset()));
                 File file = new File("enchiridion.temp.txt");
                 //file.delete();

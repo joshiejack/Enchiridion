@@ -65,12 +65,12 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
     }
 
     @Override
-    public void performClick(int mouseX, int mouseY, int button) {
+    public boolean performClick(int mouseX, int mouseY, int button) {
         if (page != null && page != thisPage) {
             for (IFeatureProvider feature : Lists.reverse(page.getFeatures())) {
                 if (feature instanceof FeaturePreviewWindow) continue; //No Cascading
                 mouseY = GuiBook.INSTANCE.mouseY + page.getScroll();
-                feature.mouseClicked(mouseX, mouseY, button);
+                if(feature.mouseClicked(mouseX, mouseY, button)) return true;
             }
 
 
@@ -79,8 +79,11 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
             if (isOverScrollY(pos, mouseX, GuiBook.INSTANCE.mouseY)) {
                 isDragging = true;
                 startY = GuiBook.INSTANCE.mouseY;
+                return true;
             }
         }
+
+        return false;
     }
 
     @Override

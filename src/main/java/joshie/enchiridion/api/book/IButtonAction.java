@@ -10,8 +10,8 @@ public interface IButtonAction extends ISimpleEditorFieldProvider {
     public IButtonAction create();
     public String getName();
 
-    /** Perform the action **/
-    public void performAction();
+    /** Perform the action, Return true if it was successful **/
+    public boolean performAction();
 
     /** Whether the button this action is attached to, should be visible **/
     public boolean isVisible();

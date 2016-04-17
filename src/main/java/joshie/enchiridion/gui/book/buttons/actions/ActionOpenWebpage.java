@@ -27,9 +27,12 @@ public class ActionOpenWebpage extends AbstractAction {
     }
 
     @Override
-    public void performAction() {
+    public boolean performAction() {
         try {
             Desktop.getDesktop().browse(new URI(url));
+            return true;
         } catch (Exception e) {}
+
+        return false;
     }
 }

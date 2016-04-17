@@ -6,6 +6,8 @@ import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.util.ELocation;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.Comparator;
+
 public abstract class AbstractAction implements IButtonAction {
     protected transient ResourceLocation resource;
     protected transient String name;
@@ -48,4 +50,11 @@ public abstract class AbstractAction implements IButtonAction {
 
     @Override
     public void writeToJson(JsonObject object) {}
+
+    protected static class SortNumerical implements Comparator {
+        @Override
+        public int compare(Object o1, Object o2) {
+            return ((Integer)o1).compareTo((Integer)o2);
+        }
+    }
 }

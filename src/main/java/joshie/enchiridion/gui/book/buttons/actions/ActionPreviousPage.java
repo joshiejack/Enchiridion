@@ -1,9 +1,12 @@
 package joshie.enchiridion.gui.book.buttons.actions;
 
+import com.google.common.collect.Lists;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.book.IPage;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ActionPreviousPage extends AbstractAction {
@@ -22,31 +25,26 @@ public class ActionPreviousPage extends AbstractAction {
     }
 
     @Override
-    public void performAction() {
+    public boolean performAction() {
         try {
             List<IPage> pages = EnchiridionAPI.book.getBook().getPages();
-            int number = EnchiridionAPI.book.getPage().getPageNumber() - 1;
-            while (number >= 0) {
-                for (IPage page : pages) {
-                    if (page.getPageNumber() == number) {
-                        EnchiridionAPI.book.jumpToPageIfExists(number);
-                        return; //Cancel further operations
-                    }
-                }
-
-                number--;
+            List<Integer> numbersTemp = new ArrayList<Integer>();
+            for (IPage page: pages) {
+                numbersTemp.add(page.getPageNumber());
             }
 
-            //If we failed to find the next available page, reset the book to page 1
+            Collections.sort(numbersTemp, new SortNumerical());
+            List<Integer> numbers = Lists.reverse(numbersTemp);
 
-            IPage maxPage = null;
-            for (IPage page : pages) {
-                if (maxPage == null || page.getPageNumber() > maxPage.getPageNumber()) {
-                    maxPage = page;
+            int number = EnchiridionAPI.book.getPage().getPageNumber();
+            for (Integer integer: numbers) {
+                if (integer < number) {
+                    return EnchiridionAPI.book.jumpToPageIfExists(integer);
                 }
             }
 
-            if (maxPage != null) EnchiridionAPI.book.jumpToPageIfExists(maxPage.getPageNumber());
+            return EnchiridionAPI.book.jumpToPageIfExists(numbers.get(0));
         } catch (Exception e) {}
+        return false;
     }
 }

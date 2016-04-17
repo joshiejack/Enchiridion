@@ -29,7 +29,9 @@ public abstract class FeatureAbstract implements IFeature {
     }
 
     @Override
-    public void performClick(int mouseX, int mouseY, int button) {}
+    public boolean performClick(int mouseX, int mouseY, int button) {
+        return false;
+    }
 
     @Override
     public void performRelease(int mouseX, int mouseY, int button) {}

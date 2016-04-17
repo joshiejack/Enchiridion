@@ -110,8 +110,10 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
     }
 
     @Override
-    public void performClick(int mouseX, int mouseY, int button) {
-        if (action != null && action.isVisible() && processesClick(button)) action.performAction();
+    public boolean performClick(int mouseX, int mouseY, int button) {
+        if (action != null && action.isVisible() && processesClick(button)) {
+            return action.performAction();
+        } else return false;
     }
 
     @Override
