@@ -36,7 +36,6 @@ public class ActionNextPage extends AbstractAction {
 
             int number = EnchiridionAPI.book.getPage().getPageNumber();
             for (Integer integer: numbers) {
-                System.out.println(integer);
                 if (integer > number) {
                     return EnchiridionAPI.book.jumpToPageIfExists(integer);
                 }
