@@ -126,9 +126,6 @@ public class GuiTimeLine extends AbstractGuiOverlay {
                 startPage += 5;
             } else {
                 startPage -= 5;
-                if (startPage <= 0) {
-                    startPage = 0;
-                }
             }
         }
     }
