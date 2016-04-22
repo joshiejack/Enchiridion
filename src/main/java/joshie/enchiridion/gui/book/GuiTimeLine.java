@@ -15,8 +15,11 @@ public class GuiTimeLine extends AbstractGuiOverlay {
 
     private GuiTimeLine() {}
 
-    private boolean isValid(int i) {
-        return i == 0 || (i + 1) % 5 == 0;
+    private boolean isValid(int index, int real) {
+        if ((real < 10000 && real >= 0) || (real > -1000 && real <= 0)) return index == 0 || (index + 1) % 5 == 0;
+        else {
+            return (index + 1) % 10 == 0;
+        }
     }
 
     private int getOffsetX(int index, int real) {
@@ -32,6 +35,10 @@ public class GuiTimeLine extends AbstractGuiOverlay {
             if (real >= 1000) return -4;
             if (real >= 100) return -2;
             if (real >= 10) return -1;
+            if (real <= -10000) return -10;
+            if (real <= -10000) return -8;
+            if (real <= -1000) return -6;
+            if (real <= -100) return -3;
         }
 
         return 0;
@@ -57,7 +64,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
             boolean exists = page != null;
             if (exists) fill = 0xFFFFFFFF;
 
-            if (isValid(j)) {
+            if (isValid(j, thisNumber + 1)) {
                 EnchiridionAPI.draw.drawSplitScaledString("" + (thisNumber + 1), positionX + getOffsetX(j, thisNumber + 1), EConfig.timelineYPos - 5, 199, 0xFFDDDDDD, 0.5F);
                 fill = exists ? 0xFFEEEEEE: 0xFFB0A483;
             }

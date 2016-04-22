@@ -4,6 +4,8 @@ import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IButtonAction;
 import joshie.enchiridion.api.book.IPage;
+import joshie.enchiridion.data.book.Page;
+import joshie.enchiridion.helpers.DefaultHelper;
 
 public class ActionJumpPage extends AbstractAction {
     public String bookID;
@@ -47,6 +49,16 @@ public class ActionJumpPage extends AbstractAction {
             if (book != null) EnchiridionAPI.book.setBook(book, EnchiridionAPI.book.isEditMode());
         }
 
-        return EnchiridionAPI.book.jumpToPageIfExists(pageNumber);
+        if (EnchiridionAPI.book.getBook() != null) {
+            IBook book = EnchiridionAPI.book.getBook();
+            if (!EnchiridionAPI.book.jumpToPageIfExists(pageNumber)) {
+                IPage page = DefaultHelper.addDefaults(book, new Page(pageNumber).setBook(book));
+                EnchiridionAPI.book.getBook().addPage(page);
+            }
+
+            return EnchiridionAPI.book.jumpToPageIfExists(pageNumber);
+        }
+
+        return false;
     }
 }
