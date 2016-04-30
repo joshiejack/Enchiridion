@@ -2,6 +2,8 @@ package joshie.enchiridion;
 
 import joshie.enchiridion.data.book.BookEvents;
 import joshie.enchiridion.network.*;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.RecipeSorter.Category;
 import org.apache.logging.log4j.Level;
 
 import joshie.enchiridion.api.EnchiridionAPI;
@@ -70,6 +72,7 @@ public class ECommonProxy implements IGuiHandler {
     //Adds the library recipe
     public void addRecipe() {
         if (EConfig.addOreDictionaryRecipeForLibrary) {
+            RecipeSorter.register("enchiridion:library", LibraryRecipe.class, Category.SHAPED, "after:minecraft:shaped before:minecraft:shapeless");
             GameRegistry.addRecipe(new LibraryRecipe());
         } else if (EConfig.addWrittenBookRecipeForLibrary) {
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ECommonProxy.book, 1, 1), "WWW", "BBB", "WWW", new ItemStack(Blocks.planks, 1, 1), new ItemStack(Items.writable_book), new ItemStack(Blocks.planks, 1, 1)));
