@@ -1,6 +1,14 @@
 package joshie.enchiridion.helpers;
 
-import static joshie.enchiridion.network.core.PacketPart.SEND_SIZE;
+import joshie.enchiridion.EConfig;
+import joshie.enchiridion.Enchiridion;
+import joshie.enchiridion.network.PacketHandler;
+import joshie.enchiridion.network.PacketSyncFile;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.Level;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,17 +17,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.Level;
-
-import joshie.enchiridion.EConfig;
-import joshie.enchiridion.Enchiridion;
-import joshie.enchiridion.network.PacketHandler;
-import joshie.enchiridion.network.PacketSyncFile;
-import joshie.enchiridion.network.PacketSyncFile.ByteWrapper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import static joshie.enchiridion.network.core.PacketPart.SEND_SIZE;
 
 public class SyncHelper {
     public volatile static HashSet<EntityPlayerMP> playersSynced = new HashSet();

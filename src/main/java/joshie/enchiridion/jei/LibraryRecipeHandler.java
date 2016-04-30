@@ -1,11 +1,11 @@
 package joshie.enchiridion.jei;
 
-import javax.annotation.Nonnull;
-
 import joshie.enchiridion.gui.library.LibraryRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
+
+import javax.annotation.Nonnull;
 
 public class LibraryRecipeHandler implements IRecipeHandler<LibraryRecipe> {
     @Override

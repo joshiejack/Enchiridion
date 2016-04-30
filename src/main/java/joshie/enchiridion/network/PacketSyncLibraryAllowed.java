@@ -1,10 +1,5 @@
 package joshie.enchiridion.network;
 
-import static joshie.enchiridion.network.core.PacketPart.REQUEST_DATA;
-import static joshie.enchiridion.network.core.PacketPart.REQUEST_SIZE;
-import static joshie.enchiridion.network.core.PacketPart.SEND_DATA;
-import static joshie.enchiridion.network.core.PacketPart.SEND_SIZE;
-
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.MCServerHelper;
 import joshie.enchiridion.helpers.SplitHelper;
@@ -12,6 +7,8 @@ import joshie.enchiridion.library.ModSupport;
 import joshie.enchiridion.network.core.PacketPart;
 import joshie.enchiridion.network.core.PacketSyncStringArray;
 import net.minecraft.entity.player.EntityPlayer;
+
+import static joshie.enchiridion.network.core.PacketPart.*;
 
 public class PacketSyncLibraryAllowed extends PacketSyncStringArray {
     private static String[] client;

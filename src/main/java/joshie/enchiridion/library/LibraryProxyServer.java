@@ -1,10 +1,10 @@
 package joshie.enchiridion.library;
 
-import java.util.Collection;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
+
+import java.util.Collection;
 
 public class LibraryProxyServer extends LibraryProxy {
     private LibrarySavedData data;

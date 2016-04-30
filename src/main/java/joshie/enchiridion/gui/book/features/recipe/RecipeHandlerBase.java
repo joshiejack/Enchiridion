@@ -1,9 +1,5 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IItemStack;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
@@ -12,6 +8,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public abstract class RecipeHandlerBase implements IRecipeHandler {
     protected static final ResourceLocation location = new ELocation("guide_elements");

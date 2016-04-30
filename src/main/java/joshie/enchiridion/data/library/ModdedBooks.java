@@ -1,9 +1,9 @@
 package joshie.enchiridion.data.library;
 
-import java.util.ArrayList;
-
 import joshie.enchiridion.helpers.StackHelper;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
 
 public class ModdedBooks {
     private ArrayList<ModdedBook> books = new ArrayList();

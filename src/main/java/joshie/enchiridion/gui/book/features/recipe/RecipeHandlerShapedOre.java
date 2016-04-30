@@ -1,11 +1,11 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class RecipeHandlerShapedOre extends RecipeHandlerRecipeBase {
     public RecipeHandlerShapedOre() {}

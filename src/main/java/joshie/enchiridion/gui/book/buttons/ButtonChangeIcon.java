@@ -1,12 +1,5 @@
 package joshie.enchiridion.gui.book.buttons;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-
-import org.apache.commons.io.FilenameUtils;
-
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.helpers.FileCopier;
@@ -15,6 +8,12 @@ import joshie.enchiridion.helpers.GsonHelper;
 import joshie.enchiridion.json.BookIconTemplate;
 import joshie.enchiridion.json.BookIconTemplate.Icons;
 import net.minecraft.client.Minecraft;
+import org.apache.commons.io.FilenameUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 public class ButtonChangeIcon extends ButtonAbstract {
     public ButtonChangeIcon() {

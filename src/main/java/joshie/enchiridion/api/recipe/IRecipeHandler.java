@@ -1,8 +1,8 @@
 package joshie.enchiridion.api.recipe;
 
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 public interface IRecipeHandler {
     /** Add recipes that are valid for this output item **/

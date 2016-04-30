@@ -1,11 +1,11 @@
 package joshie.enchiridion.gui.book;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.gui.IToolbarButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuiToolbar extends AbstractGuiOverlay {
     public static final GuiToolbar INSTANCE = new GuiToolbar();

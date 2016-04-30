@@ -1,7 +1,5 @@
 package joshie.enchiridion.library;
 
-import java.util.UUID;
-
 import joshie.enchiridion.helpers.UUIDHelper;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.PacketSyncLibraryContents;
@@ -11,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+
+import java.util.UUID;
 
 public class LibraryInventory extends InventoryStorage {
     public static final int MAX = 65;

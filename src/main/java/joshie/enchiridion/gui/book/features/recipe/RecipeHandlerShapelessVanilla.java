@@ -1,9 +1,9 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import java.util.ArrayList;
-
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapelessRecipes;
+
+import java.util.ArrayList;
 
 public class RecipeHandlerShapelessVanilla extends RecipeHandlerRecipeBase {
     public RecipeHandlerShapelessVanilla() {}

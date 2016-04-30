@@ -1,23 +1,16 @@
 package joshie.enchiridion.json;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
-
-import org.apache.logging.log4j.Level;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-
+import com.google.gson.*;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.data.book.Book;
 import joshie.enchiridion.helpers.JSONHelper;
+import org.apache.logging.log4j.Level;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
 
 public class BookAbstractAdapter implements JsonDeserializer<Book> {
     @Override

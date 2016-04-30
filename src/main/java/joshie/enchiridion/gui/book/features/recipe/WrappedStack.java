@@ -1,13 +1,13 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import joshie.enchiridion.api.recipe.IItemStack;
 import joshie.enchiridion.helpers.ItemListHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class WrappedStack implements IItemStack {
     protected static final Random rand = new Random();

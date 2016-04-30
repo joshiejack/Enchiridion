@@ -1,7 +1,5 @@
 package joshie.enchiridion.gui.book;
 
-import java.util.ArrayList;
-
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
@@ -11,6 +9,8 @@ import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.IItemSelectable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.ArrayList;
 
 public class GuiSimpleEditorItem extends AbstractGuiOverlay {
     public static final GuiSimpleEditorItem INSTANCE = new GuiSimpleEditorItem();

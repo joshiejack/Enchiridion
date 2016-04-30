@@ -1,16 +1,10 @@
 package joshie.enchiridion.json;
 
-import java.lang.reflect.Type;
-
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-
+import com.google.gson.*;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.data.book.Page;
+
+import java.lang.reflect.Type;
 
 public class IPageAbstractAdapter implements JsonSerializer<IPage>, JsonDeserializer<IPage> {
     @Override

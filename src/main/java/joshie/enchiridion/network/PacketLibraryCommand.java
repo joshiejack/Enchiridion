@@ -1,7 +1,5 @@
 package joshie.enchiridion.network;
 
-import static joshie.enchiridion.network.core.PacketPart.REQUEST_SIZE;
-
 import io.netty.buffer.ByteBuf;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.library.LibraryInventory;
@@ -9,6 +7,8 @@ import joshie.enchiridion.library.ModSupport;
 import joshie.enchiridion.network.core.PenguinPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
+
+import static joshie.enchiridion.network.core.PacketPart.REQUEST_SIZE;
 
 public class PacketLibraryCommand extends PenguinPacket {
     private String command;

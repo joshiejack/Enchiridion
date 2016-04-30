@@ -1,13 +1,5 @@
 package joshie.enchiridion.network;
 
-import static joshie.enchiridion.network.core.PacketPart.REQUEST_DATA;
-import static joshie.enchiridion.network.core.PacketPart.SEND_DATA;
-
-import java.io.File;
-import java.io.FileOutputStream;
-
-import org.apache.commons.io.output.ByteArrayOutputStream;
-
 import io.netty.buffer.ByteBuf;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.SyncHelper;
@@ -15,6 +7,13 @@ import joshie.enchiridion.network.core.PacketPart;
 import joshie.enchiridion.network.core.PacketSyncByteArray;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
+import org.apache.commons.io.output.ByteArrayOutputStream;
+
+import java.io.File;
+import java.io.FileOutputStream;
+
+import static joshie.enchiridion.network.core.PacketPart.REQUEST_DATA;
+import static joshie.enchiridion.network.core.PacketPart.SEND_DATA;
 
 public class PacketSyncFile extends PacketSyncByteArray {
     public static class ByteWrapper {

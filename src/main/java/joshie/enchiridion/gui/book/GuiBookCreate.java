@@ -1,9 +1,5 @@
 package joshie.enchiridion.gui.book;
 
-import java.io.IOException;
-
-import org.lwjgl.input.Keyboard;
-
 import joshie.enchiridion.data.book.Book;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.buttons.ButtonChangeIcon;
@@ -13,6 +9,9 @@ import joshie.enchiridion.util.TextEditor;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import org.lwjgl.input.Keyboard;
+
+import java.io.IOException;
 
 public class GuiBookCreate extends GuiScreen implements ITextEditable {
     public static final GuiBookCreate INSTANCE = new GuiBookCreate();

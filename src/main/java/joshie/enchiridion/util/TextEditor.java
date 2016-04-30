@@ -1,9 +1,9 @@
 package joshie.enchiridion.util;
 
-import java.util.HashMap;
-
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ChatAllowedCharacters;
+
+import java.util.HashMap;
 
 public class TextEditor {
     public static final TextEditor INSTANCE = new TextEditor();

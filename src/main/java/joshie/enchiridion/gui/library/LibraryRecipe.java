@@ -1,8 +1,5 @@
 package joshie.enchiridion.gui.library;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.util.SafeStack;
@@ -10,6 +7,9 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class LibraryRecipe implements IRecipe {
     public static Set<SafeStack> validWoods = new HashSet();

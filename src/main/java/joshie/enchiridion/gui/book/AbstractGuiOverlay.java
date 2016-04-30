@@ -1,10 +1,10 @@
 package joshie.enchiridion.gui.book;
 
-import java.util.List;
-
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.util.ELocation;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.List;
 
 public abstract class AbstractGuiOverlay implements IBookEditorOverlay {
     protected static final ResourceLocation toolbar = new ELocation("toolbar");

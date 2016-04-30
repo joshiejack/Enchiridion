@@ -1,10 +1,9 @@
 package joshie.enchiridion.network.core;
 
-import static joshie.enchiridion.network.core.PacketPart.*;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
+
+import static joshie.enchiridion.network.core.PacketPart.*;
 
 public abstract class PacketSyncByteArray extends PenguinPacket {
     protected PacketPart part;

@@ -1,11 +1,11 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RecipeHandlerShapedVanilla extends RecipeHandlerRecipeBase {
     public RecipeHandlerShapedVanilla() {}

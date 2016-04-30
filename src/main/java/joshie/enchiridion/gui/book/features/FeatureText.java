@@ -12,10 +12,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import static joshie.enchiridion.util.ECreativeTab.enchiridion;
 
 public class FeatureText extends FeatureAbstract implements ITextEditable {
     protected transient boolean readTemp = false;

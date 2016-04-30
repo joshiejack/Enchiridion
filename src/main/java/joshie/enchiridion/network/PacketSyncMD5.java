@@ -1,19 +1,17 @@
 package joshie.enchiridion.network;
 
-import static joshie.enchiridion.network.core.PacketPart.REQUEST_DATA;
-import static joshie.enchiridion.network.core.PacketPart.SEND_DATA;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.apache.logging.log4j.Level;
-
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.SyncHelper;
 import joshie.enchiridion.network.core.PacketPart;
 import joshie.enchiridion.network.core.PacketSyncStringArray;
 import net.minecraft.entity.player.EntityPlayer;
+import org.apache.logging.log4j.Level;
+
+import java.util.HashMap;
+
+import static joshie.enchiridion.network.core.PacketPart.REQUEST_DATA;
+import static joshie.enchiridion.network.core.PacketPart.SEND_DATA;
 
 public class PacketSyncMD5 extends PacketSyncStringArray {
     private volatile static String[] tempClient;

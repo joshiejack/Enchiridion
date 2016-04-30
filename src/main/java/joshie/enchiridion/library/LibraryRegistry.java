@@ -1,9 +1,5 @@
 package joshie.enchiridion.library;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.api.library.ILibraryRegistry;
@@ -13,6 +9,10 @@ import joshie.enchiridion.util.SafeStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class LibraryRegistry implements ILibraryRegistry {
     private HashMap<String, IBookHandler> handlers = new HashMap();

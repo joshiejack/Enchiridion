@@ -1,10 +1,10 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class RecipeHandlerShapelessOre extends RecipeHandlerRecipeBase {
     public RecipeHandlerShapelessOre() {}

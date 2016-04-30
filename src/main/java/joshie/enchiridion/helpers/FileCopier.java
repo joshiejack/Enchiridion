@@ -1,14 +1,11 @@
 package joshie.enchiridion.helpers;
 
-import java.awt.Component;
-import java.awt.HeadlessException;
-import java.io.File;
-
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.apache.commons.io.FileUtils;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.io.File;
 
 public class FileCopier {
     private static File last_directory = null;

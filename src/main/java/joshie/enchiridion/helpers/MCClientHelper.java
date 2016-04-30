@@ -1,11 +1,10 @@
 package joshie.enchiridion.helpers;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import org.lwjgl.input.Keyboard;
 
 public class MCClientHelper {
     public static boolean isShiftPressed() {

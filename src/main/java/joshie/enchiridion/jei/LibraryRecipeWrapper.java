@@ -1,17 +1,16 @@
 package joshie.enchiridion.jei;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.gui.library.LibraryRecipe;
 import joshie.enchiridion.library.LibraryRegistry;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import mezz.jei.plugins.vanilla.VanillaRecipeWrapper;
 import net.minecraft.item.ItemStack;
+
+import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class LibraryRecipeWrapper extends VanillaRecipeWrapper implements IShapedCraftingRecipeWrapper {
     private final int width = 3;
