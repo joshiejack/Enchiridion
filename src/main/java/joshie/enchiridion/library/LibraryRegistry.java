@@ -16,10 +16,15 @@ import java.util.List;
 
 public class LibraryRegistry implements ILibraryRegistry {
     private HashMap<String, IBookHandler> handlers = new HashMap();
-    private HashMap<SafeStack, IBookHandler> bookRegistry = new HashMap();
-    public static List<ItemStack> cache = new ArrayList();
+    private HashMap<SafeStack, IBookHandler> bookHandlerRegistry = new HashMap();
+    private HashMap<SafeStack, IBookHandler> allowedBookRegistry = new HashMap();
+    public List<ItemStack> cache = new ArrayList();
 
-    public static List<ItemStack> getBooksAsItemStack() {
+    public static final LibraryRegistry INSTANCE = new LibraryRegistry();
+
+    private LibraryRegistry() {}
+
+    public List<ItemStack> getBooksAsItemStack() {
         if (cache == null || cache.size() == 0) {
             cache = new ArrayList();
             for (ItemStack stack : ItemListHelper.allItems()) {
@@ -32,9 +37,17 @@ public class LibraryRegistry implements ILibraryRegistry {
         return cache;
     }
 
+    public void registerBookHandlerForStackFromJSON(String handlerName, ItemStack itemStack, boolean matchDamage, boolean matchNBT) {
+        SafeStack safeStack = SafeStack.newInstance("IGNORE", itemStack, "IGNORE", matchDamage, matchNBT);
+        allowedBookRegistry.put(safeStack, handlers.get(handlerName));
+    }
+
     @Override
     public void resetStacksAllowedInLibrary() {
-        bookRegistry = new HashMap();
+        allowedBookRegistry = new HashMap();
+        for (SafeStack stack: bookHandlerRegistry.keySet()) {
+            allowedBookRegistry.put(stack, bookHandlerRegistry.get(stack));
+        }
     }
 
     @Override
@@ -50,7 +63,7 @@ public class LibraryRegistry implements ILibraryRegistry {
     @Override
     public void registerBookHandlerForStack(String handlerName, ItemStack itemStack, boolean matchDamage, boolean matchNBT) {
         SafeStack safeStack = SafeStack.newInstance("IGNORE", itemStack, "IGNORE", matchDamage, matchNBT);
-        bookRegistry.put(safeStack, handlers.get(handlerName));
+        bookHandlerRegistry.put(safeStack, handlers.get(handlerName));
     }
 
     @Override
@@ -58,7 +71,7 @@ public class LibraryRegistry implements ILibraryRegistry {
         if (stack == null) return null; //Oi back away!
 
         for (SafeStack safeStack : SafeStack.allInstances(stack)) {
-            IBookHandler handler = bookRegistry.get(safeStack);
+            IBookHandler handler = allowedBookRegistry.get(safeStack);
             if (handler != null) return handler;
         }
 

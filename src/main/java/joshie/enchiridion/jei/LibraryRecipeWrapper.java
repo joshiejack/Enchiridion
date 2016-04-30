@@ -22,7 +22,7 @@ public class LibraryRecipeWrapper extends VanillaRecipeWrapper implements IShape
     @Override
     public List getInputs() {
         return Arrays.asList(LibraryRecipe.validWoods, LibraryRecipe.validWoods, LibraryRecipe.validWoods,
-                LibraryRegistry.getBooksAsItemStack(), LibraryRegistry.getBooksAsItemStack(), LibraryRegistry.getBooksAsItemStack(),
+                LibraryRegistry.INSTANCE.getBooksAsItemStack(), LibraryRegistry.INSTANCE.getBooksAsItemStack(), LibraryRegistry.INSTANCE.getBooksAsItemStack(),
                 LibraryRecipe.validWoods, LibraryRecipe.validWoods, LibraryRecipe.validWoods);
     }
 

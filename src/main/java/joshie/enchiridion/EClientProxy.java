@@ -144,7 +144,7 @@ public class EClientProxy extends ECommonProxy {
     
     @Override
     public void setupFont() {
-        LibraryRegistry.getBooksAsItemStack();
+        LibraryRegistry.INSTANCE.getBooksAsItemStack();
         PenguinFont.load();
     }
     
