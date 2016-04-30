@@ -6,7 +6,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.WorldSavedData;
-import net.minecraftforge.common.UsernameCache;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,15 +29,6 @@ public class LibrarySavedData extends WorldSavedData {
         if (players.containsKey(uuid)) {
             return players.get(uuid);
         } else {
-            //If this UUID was not found, Search the username cache for this players username
-            String name = player.getGameProfile().getName();
-            for (Map.Entry<UUID, String> entry : UsernameCache.getMap().entrySet()) {
-                if (entry.getValue().equals(name)) {
-                    uuid = entry.getKey();
-                    break;
-                }
-            }
-
             if (players.containsKey(uuid)) {
                 return players.get(uuid);
             } else {
