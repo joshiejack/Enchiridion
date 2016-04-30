@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.IReloadableResourceManager;
@@ -223,7 +223,7 @@ public class PenguinFont extends FontRenderer {
                     this.posY -= f1;
                 }
 
-                float f = this.func_181559_a(c0, this.italicStyle);
+                float f = this.renderChar(c0, this.italicStyle);
 
                 if (flag)
                 {
@@ -241,7 +241,7 @@ public class PenguinFont extends FontRenderer {
                         this.posY -= f1;
                     }
 
-                    this.func_181559_a(c0, this.italicStyle);
+                    this.renderChar(c0, this.italicStyle);
                     this.posX -= f1;
 
                     if (flag)
@@ -267,7 +267,7 @@ public class PenguinFont extends FontRenderer {
                 {
                     GlStateManager.pushMatrix();
                     Tessellator tessellator = Tessellator.getInstance();
-                    WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+                    VertexBuffer worldrenderer = tessellator.getBuffer();
                     GlStateManager.disableTexture2D();
                     worldrenderer.begin(7, DefaultVertexFormats.POSITION);
                     worldrenderer.pos((double)this.posX - 0.75F, (double)(this.posY + (float)(this.FONT_HEIGHT)), 0.0D).endVertex();
@@ -283,7 +283,7 @@ public class PenguinFont extends FontRenderer {
                 if (this.strikethroughStyle)
                 {
                     Tessellator tessellator = Tessellator.getInstance();
-                    WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+                    VertexBuffer worldrenderer = tessellator.getBuffer();
                     GlStateManager.disableTexture2D();
                     worldrenderer.begin(7, DefaultVertexFormats.POSITION);
                     worldrenderer.pos((double)this.posX, (double)(this.posY + (float)(this.FONT_HEIGHT / 2)), 0.0D).endVertex();
@@ -297,7 +297,7 @@ public class PenguinFont extends FontRenderer {
                 if (this.underlineStyle)
                 {
                     Tessellator tessellator1 = Tessellator.getInstance();
-                    WorldRenderer worldrenderer1 = tessellator1.getWorldRenderer();
+                    VertexBuffer worldrenderer1 = tessellator1.getBuffer();
                     GlStateManager.disableTexture2D();
                     worldrenderer1.begin(7, DefaultVertexFormats.POSITION);
                     int l = this.underlineStyle ? -1 : 0;

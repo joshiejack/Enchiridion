@@ -1,16 +1,16 @@
 package joshie.enchiridion.helpers;
 
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+
+import java.util.List;
 
 public class StackHelper {
     public static ItemStack getStackFromString(String str) {
@@ -33,7 +33,7 @@ public class StackHelper {
     }
 
     public static String getStringFromStack(ItemStack stack) {
-        String str = Item.itemRegistry.getNameForObject(stack.getItem()).toString().replace(" ", "%20");
+        String str = Item.REGISTRY.getNameForObject(stack.getItem()).toString().replace(" ", "%20");
         if (stack.getHasSubtypes() || stack.isItemStackDamageable()) {
             str = str + " " + stack.getItemDamage();
         }
@@ -97,7 +97,7 @@ public class StackHelper {
 
     private static Item getItemByText(String str) {
         str = str.replace("%20", " ");
-        Item item = (Item) Item.itemRegistry.getObject(new ResourceLocation(str));
+        Item item = (Item) Item.REGISTRY.getObject(new ResourceLocation(str));
         if (item == null) {
             try {
                 Item item1 = Item.getItemById(Integer.parseInt(str));
@@ -110,16 +110,16 @@ public class StackHelper {
         return item;
     }
 
-    private static IChatComponent formatNBT(String[] str, int start) {
-        ChatComponentText chatcomponenttext = new ChatComponentText("");
+    private static ITextComponent formatNBT(String[] str, int start) {
+        TextComponentString chatcomponenttext = new TextComponentString("");
 
         for (int j = start; j < str.length; ++j) {
             if (j > start) {
                 chatcomponenttext.appendText(" ");
             }
 
-            Object object = new ChatComponentText(str[j]);
-            chatcomponenttext.appendSibling((IChatComponent) object);
+            Object object = new TextComponentString(str[j]);
+            chatcomponenttext.appendSibling((ITextComponent) object);
         }
 
         return chatcomponenttext;

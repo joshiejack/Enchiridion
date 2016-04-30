@@ -1,20 +1,20 @@
 package joshie.enchiridion.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SafeStack {
     public ResourceLocation location;
 
     protected SafeStack(ItemStack stack) {
         if (stack != null) {
-            location = Item.itemRegistry.getNameForObject(stack.getItem());
+            location = Item.REGISTRY.getNameForObject(stack.getItem());
         }
     }
 
@@ -83,7 +83,7 @@ public class SafeStack {
         protected SafeStackMod(ItemStack stack) {
             super(stack);
 
-            ResourceLocation key = Item.itemRegistry.getNameForObject(stack.getItem());
+            ResourceLocation key = Item.REGISTRY.getNameForObject(stack.getItem());
             modid = key.getResourceDomain();
         }
 

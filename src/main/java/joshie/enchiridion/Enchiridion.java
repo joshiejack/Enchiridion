@@ -6,9 +6,9 @@ import joshie.enchiridion.library.LibraryCommand;
 import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -60,7 +60,7 @@ public class Enchiridion {
 
     @EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
-        LibraryHelper.resetServer(MinecraftServer.getServer().worldServers[0]);
+        LibraryHelper.resetServer(FMLCommonHandler.instance().getMinecraftServerInstance().worldServers[0]);
         SyncHelper.resetSyncing();
         //Register commands
         
@@ -78,10 +78,10 @@ public class Enchiridion {
 
     //Universal helper translation
     public static String translate(String string) {
-        return StatCollector.translateToLocal("enchiridion." + string);
+        return I18n.translateToLocal("enchiridion." + string);
     }
 
     public static String format(String string, Object... format) {
-        return StatCollector.translateToLocalFormatted("enchiridion." + string, format);
+        return I18n.translateToLocalFormatted("enchiridion." + string, format);
     }
 }

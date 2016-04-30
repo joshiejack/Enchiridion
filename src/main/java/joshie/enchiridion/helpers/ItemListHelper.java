@@ -1,16 +1,15 @@
 package joshie.enchiridion.helpers;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.apache.logging.log4j.Level;
-
 import joshie.enchiridion.Enchiridion;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import org.apache.logging.log4j.Level;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class ItemListHelper {
     private static ArrayList<ItemStack> items = null;
@@ -20,7 +19,7 @@ public class ItemListHelper {
         items = new ArrayList();
         allItems = new ArrayList();
         
-        Iterator iterator = Item.itemRegistry.iterator();
+        Iterator iterator = Item.REGISTRY.iterator();
         while (iterator.hasNext()) {
             Item item = (Item) iterator.next();
 

@@ -3,29 +3,31 @@ package joshie.enchiridion.gui.library;
 import joshie.enchiridion.api.EnchiridionAPI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 
 public class ContainerLibrary extends Container {
     public IInventory library;
 
-    public ContainerLibrary(InventoryPlayer playerInventory, IInventory library) {
+    public ContainerLibrary(InventoryPlayer playerInventory, IInventory library, EnumHand hand) {
         //Set the library
         this.library = library;
         
         //Left hand side slots
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 3; j++) {
-                addSlotToContainer(new SlotBook(library, j + (i * 3),  -51 + (j * 18), 22 + (i * 23)));
+                addSlotToContainer(new SlotBook(library, hand, j + (i * 3),  -51 + (j * 18), 22 + (i * 23)));
             }
         }
         
         //Right hand side slots
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 3; j++) {
-                addSlotToContainer(new SlotBook(library, 15 + j + (i * 3),  175 + (j * 18), 22 + (i * 23)));
+                addSlotToContainer(new SlotBook(library, hand, 15 + j + (i * 3),  175 + (j * 18), 22 + (i * 23)));
             }
         }
         
@@ -33,7 +35,7 @@ public class ContainerLibrary extends Container {
         for (int i = 0; i < 5; i++) {
             int y = i == 0 ? 1: 0;
             for (int j = 0; j < 7; j++) {
-                addSlotToContainer(new SlotBook(library, 30 + j + (i * 7),  26 + (j * 18), -1 + (i * 23) - y));
+                addSlotToContainer(new SlotBook(library, hand, 30 + j + (i * 7),  26 + (j * 18), -1 + (i * 23) - y));
             }
         }
         
@@ -94,10 +96,9 @@ public class ContainerLibrary extends Container {
 
         return itemstack;
     }
-    
-    @Override
-    public ItemStack slotClick(int slotID, int mouseButton, int modifier, EntityPlayer player) {
+
+    public ItemStack func_184996_a(int slotID, int mouseButton, ClickType type, EntityPlayer player) {
         Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : (Slot) inventorySlots.get(slotID);
-        return slot instanceof SlotBook && ((SlotBook) slot).handle(player, mouseButton, slot) == null ? null : super.slotClick(slotID, mouseButton, modifier, player);
+        return slot instanceof SlotBook && ((SlotBook) slot).handle(player, mouseButton, slot) == null ? null : super.slotClick(slotID, mouseButton, type, player);
     }
 }

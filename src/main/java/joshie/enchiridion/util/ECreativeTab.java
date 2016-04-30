@@ -6,13 +6,12 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ECreativeTab extends CreativeTabs {
     public static ECreativeTab enchiridion = new ECreativeTab(EInfo.MODPATH);
-    public final Item icon = Items.writable_book;
+    public final Item icon = Items.WRITABLE_BOOK;
     public ItemStack itemstack;
 
     public ECreativeTab(String label) {

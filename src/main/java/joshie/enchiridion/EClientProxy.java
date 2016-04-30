@@ -13,21 +13,20 @@ import joshie.enchiridion.gui.book.features.recipe.*;
 import joshie.enchiridion.gui.library.GuiLibrary;
 import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.EditHelper;
+import joshie.enchiridion.helpers.HeldHelper;
 import joshie.enchiridion.items.SmartLibrary;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.library.LibraryRegistry;
-import joshie.enchiridion.library.handlers.ComputerCraftHandler;
-import joshie.enchiridion.library.handlers.WarpBookHandler;
 import joshie.enchiridion.library.handlers.WriteableBookHandler.GuiScreenWriteable;
 import joshie.enchiridion.util.ECreativeTab;
 import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.EResourcePack;
 import joshie.enchiridion.util.PenguinFont;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.IResourcePack;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -151,26 +150,26 @@ public class EClientProxy extends ECommonProxy {
     
     /** GUI HANDLING **/
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int slotID, int y, int z) {
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int slotID, int handOrdinal, int z) {
         if (ID == GuiIDs.COMPUTERCRAFT) {
-            return ComputerCraftHandler.getComputercraftPrintoutGui(player, slotID);
+            //return ComputerCraftHandler.getComputercraftPrintoutGui(player, slotID);
         } else if (ID == GuiIDs.WARPLIST) {
-            return WarpBookHandler.getWarplistGui(player, slotID);
+            //return WarpBookHandler.getWarplistGui(player, slotID);
         } else if (ID == GuiIDs.WARPBOOK) {
-            return WarpBookHandler.getWarpbookGui(player, slotID);
+            //return WarpBookHandler.getWarpbookGui(player, slotID);
         } else if (ID == GuiIDs.WRITEABLE) {
             return new GuiScreenWriteable(player, slotID);
         }else if (ID == GuiIDs.LIBRARY) {
-            return new GuiLibrary(player.inventory, LibraryHelper.getClientLibraryContents());
+            return new GuiLibrary(player.inventory, LibraryHelper.getClientLibraryContents(), HeldHelper.getHandFromOrdinal(handOrdinal));
         } else if (ID == GuiIDs.BOOK_FORCE) {
             return GuiBook.INSTANCE;
         } else {
-            ItemStack held = player.getCurrentEquippedItem();
+            ItemStack held = HeldHelper.getStackFromOrdinal(player, handOrdinal);
             if (held != null && held.getItem() == ECommonProxy.book) {
                 IBook book = BookRegistry.INSTANCE.getBook(held);
                 if (book != null) {
                     return GuiBook.INSTANCE.setBook(book, player.isSneaking());
-                } else return GuiBookCreate.INSTANCE.setStack(player.getCurrentEquippedItem());
+                } else return GuiBookCreate.INSTANCE.setStack(held);
             }
         }
 

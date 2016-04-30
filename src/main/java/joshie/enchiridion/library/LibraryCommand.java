@@ -1,18 +1,15 @@
 package joshie.enchiridion.library;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.PacketLibraryCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.BlockPos;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.registry.LanguageRegistry;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LibraryCommand implements ICommand {
     @Override
@@ -36,17 +33,12 @@ public class LibraryCommand implements ICommand {
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] parameters) {
+    public void execute(MinecraftServer server, ICommandSender sender, String[] parameters) {
         if (parameters == null || parameters.length != 1) return;
         try {
             if (parameters[0].equals("refresh")) {
                 PacketHandler.sendToServer(new PacketLibraryCommand("refresh"));
-            } else if (parameters[0].equals("lang")) {
-                for (ModContainer mod : Loader.instance().getActiveModList()) {
-                    LanguageRegistry.instance().loadLanguagesFor(mod, Side.SERVER);
-                    break;
-                }
-            } else if (parameters[0].equals("resources")) {
+            } if (parameters[0].equals("resources")) {
                 Minecraft.getMinecraft().scheduleResourcesRefresh();
             } else if (parameters[0].equals("reset")) {
                 PacketHandler.sendToServer(new PacketLibraryCommand("reset"));
@@ -57,12 +49,12 @@ public class LibraryCommand implements ICommand {
     }
 
     @Override
-    public boolean canCommandSenderUseCommand(ICommandSender sender) {
+    public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
         return true;
     }
 
     @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
         ArrayList<String> string = new ArrayList();
         for (int i = 0; i < 30; i++) {
             string.add("" + i);

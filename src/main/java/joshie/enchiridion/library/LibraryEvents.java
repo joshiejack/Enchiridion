@@ -1,8 +1,5 @@
 package joshie.enchiridion.library;
 
-import org.apache.logging.log4j.Level;
-import org.lwjgl.input.Keyboard;
-
 import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
@@ -10,15 +7,11 @@ import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.helpers.MCServerHelper;
 import joshie.enchiridion.helpers.SyncHelper;
 import joshie.enchiridion.lib.GuiIDs;
-import joshie.enchiridion.network.PacketHandler;
-import joshie.enchiridion.network.PacketOpenLibrary;
-import joshie.enchiridion.network.PacketSyncLibraryAllowed;
-import joshie.enchiridion.network.PacketSyncLibraryContents;
-import joshie.enchiridion.network.PacketSyncMD5;
+import joshie.enchiridion.network.*;
 import joshie.enchiridion.network.core.PacketPart;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.gui.GuiSelectWorld;
+import net.minecraft.client.gui.GuiWorldSelection;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -28,13 +21,15 @@ import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.logging.log4j.Level;
+import org.lwjgl.input.Keyboard;
 
 public class LibraryEvents {
     //Setup the Client
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onOpenGui(GuiOpenEvent event) {
-        if (event.gui instanceof GuiSelectWorld || event.gui instanceof GuiMultiplayer) {
+        if (event.getGui() instanceof GuiWorldSelection || event.getGui() instanceof GuiMultiplayer) {
             LibraryHelper.resetClient();
         }
     }

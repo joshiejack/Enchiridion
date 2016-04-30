@@ -1,8 +1,5 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
 import net.minecraft.client.Minecraft;
@@ -10,6 +7,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
     protected void init(ItemStack output, ArrayList<Object> input, int width) {
@@ -75,7 +75,7 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
             if (o instanceof List) {
                 addToUnique(getMostCommonName(new ArrayList((List)o)));
             } else if (o instanceof ItemStack) {
-                addToUnique(Item.itemRegistry.getNameForObject(((ItemStack) o).getItem()));
+                addToUnique(Item.REGISTRY.getNameForObject(((ItemStack) o).getItem()));
                 addToUnique(((ItemStack) o).getItemDamage());
             }
         }

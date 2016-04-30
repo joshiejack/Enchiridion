@@ -13,7 +13,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -22,8 +25,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-import static net.minecraft.util.EnumChatFormatting.DARK_GREEN;
-import static net.minecraft.util.EnumChatFormatting.RESET;
+import static net.minecraft.util.text.TextFormatting.DARK_GREEN;
+import static net.minecraft.util.text.TextFormatting.RESET;
 
 public class ItemEnchiridion extends Item {
     public ItemEnchiridion() {
@@ -38,7 +41,7 @@ public class ItemEnchiridion extends Item {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         if (stack.getItemDamage() == 1) {
-            return EnumChatFormatting.GOLD + Enchiridion.translate("library");
+            return TextFormatting.GOLD + Enchiridion.translate("library");
         }
 
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
@@ -66,22 +69,22 @@ public class ItemEnchiridion extends Item {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
         if (stack.getItemDamage() == 1) {
-            if (player.isSneaking()) player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, 0, 0);
+            if (player.isSneaking()) player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, hand.ordinal(), 0);
             else {
                 int currentBook = LibraryHelper.getLibraryContents(player).getCurrentBook();
                 ItemStack book = LibraryHelper.getLibraryContents(player).getStackInSlot(currentBook);
                 if (book != null) {
                     IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(book);
                     if (handler != null) {
-                        handler.handle(book, player, currentBook, player.isSneaking());
+                        handler.handle(book, player, hand, currentBook, player.isSneaking());
                     }
-                } else player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, 0, 0);
+                } else player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, hand.ordinal(), 0);
             }
 
-        } else player.openGui(Enchiridion.instance, GuiIDs.BOOK, world, 0, 0, 0);
-        return stack;
+        } else player.openGui(Enchiridion.instance, GuiIDs.BOOK, world, 0, hand.ordinal(), 0);
+        return new ActionResult(EnumActionResult.SUCCESS, stack);
     }
 
     @Override
@@ -101,7 +104,8 @@ public class ItemEnchiridion extends Item {
     @Override
     public Item setUnlocalizedName(String unlocalizedName) {
         super.setUnlocalizedName(unlocalizedName);
-        GameRegistry.registerItem(this, unlocalizedName);
+        setRegistryName(unlocalizedName);
+        GameRegistry.register(this);
         return this;
     }
 }

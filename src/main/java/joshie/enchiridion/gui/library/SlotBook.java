@@ -12,12 +12,15 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 
 public class SlotBook extends Slot {
-    private static final ItemStack dummy = new ItemStack(Items.book);
+    private static final ItemStack dummy = new ItemStack(Items.BOOK);
+    private EnumHand hand;
 
-    public SlotBook(IInventory inventory, int index, int xPosition, int yPosition) {
+    public SlotBook(IInventory inventory, EnumHand hand, int index, int xPosition, int yPosition) {
         super(inventory, index, xPosition, yPosition);
+        this.hand = hand;
     }
 
     @Override
@@ -33,8 +36,8 @@ public class SlotBook extends Slot {
             if (handler != null) {
                 if (player.worldObj.isRemote) {
                     boolean isShiftPressed = MCClientHelper.isShiftPressed();
-                    PacketHandler.sendToServer(new PacketHandleBook(slot.slotNumber, isShiftPressed));
-                    handler.handle(stack, player, slot.slotNumber, isShiftPressed);
+                    PacketHandler.sendToServer(new PacketHandleBook(slot.slotNumber, hand, isShiftPressed));
+                    handler.handle(stack, player, hand, slot.slotNumber, isShiftPressed);
                     LibraryHelper.getClientLibraryContents().setCurrentBook(slot.slotNumber);
                 }
                 

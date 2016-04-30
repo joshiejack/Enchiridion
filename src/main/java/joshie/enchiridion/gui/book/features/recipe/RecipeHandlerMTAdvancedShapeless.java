@@ -1,16 +1,16 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.minecraft.MineTweakerMC;
 import minetweaker.api.oredict.IOreDictEntry;
 import minetweaker.api.recipes.ShapelessRecipe;
-import minetweaker.mc18.recipes.ShapelessRecipeAdvanced;
+import minetweaker.mc19.recipes.ShapelessRecipeAdvanced;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class RecipeHandlerMTAdvancedShapeless extends RecipeHandlerRecipeBase {
     public RecipeHandlerMTAdvancedShapeless() {}

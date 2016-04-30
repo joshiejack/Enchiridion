@@ -1,14 +1,14 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import java.util.List;
-import java.util.Map;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+
+import java.util.List;
+import java.util.Map;
 
 public class RecipeHandlerFurnace extends RecipeHandlerBase {
     private static WrappedFuelStack fuels;
@@ -20,7 +20,7 @@ public class RecipeHandlerFurnace extends RecipeHandlerBase {
 
         if (fuels == null) fuels = new WrappedFuelStack(0D, 65D, 2.5F);
         stackList.add(fuels);
-        addToUnique(Item.itemRegistry.getNameForObject(input.getItem()));
+        addToUnique(Item.REGISTRY.getNameForObject(input.getItem()));
         addToUnique(input.getItemDamage());
     }
 

@@ -23,8 +23,8 @@ public class EConfig {
     public static boolean offlineMode;
     public static boolean libraryAsItem;
     public static boolean libraryAsHotkey;
-    public static boolean loadWarpbook;
-    public static boolean loadComputercraft;
+    //public static boolean loadWarpbook;
+    //public static boolean loadComputercraft;
     public static boolean addWrittenBookRecipeForLibrary;
     public static boolean addOreDictionaryRecipeForLibrary;
     public static String defaultText = "";
@@ -58,8 +58,8 @@ public class EConfig {
             libraryAsHotkey = config.getBoolean("Enable Library as Hotkey", CATEGORY_SETTINGS, true, "The library can be opened with a hotkey if this is true");
             addWrittenBookRecipeForLibrary = config.getBoolean("Add a Recipe for the Library Item using Written Books", CATEGORY_SETTINGS, false, "Disabling this will not add the default recipe for the library in written book form");
             addOreDictionaryRecipeForLibrary = config.getBoolean("Add a Recipe for the Library Item using Any Books", CATEGORY_SETTINGS, true, "Disabling this will not add the default recipe for the library, note this overrides the other recipe");
-            loadWarpbook = config.getBoolean("Load Warpbook Support", CATEGORY_MOD_SUPPORT, true, "");
-            loadComputercraft = config.getBoolean("Load ComputerCraft Support", CATEGORY_MOD_SUPPORT, true, "");
+            //loadWarpbook = config.getBoolean("Load Warpbook Support", CATEGORY_MOD_SUPPORT, true, "");
+            //loadComputercraft = config.getBoolean("Load ComputerCraft Support", CATEGORY_MOD_SUPPORT, true, "");
             if (debugMode) {
                 allowDataAndImagesFromServers = true;
                 syncDataAndImagesToClients = true;
@@ -77,7 +77,7 @@ public class EConfig {
 
     @SubscribeEvent
     public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (event.modID.equalsIgnoreCase(EInfo.MODID)) {
+        if (event.getModID().equalsIgnoreCase(EInfo.MODID)) {
             loadConfiguration();
         }
     }
@@ -86,7 +86,7 @@ public class EConfig {
 
     public static ItemStack getDefaultItem() {
         if (stack == null) stack = StackHelper.getStackFromString(defaultItem);
-        if (stack == null) stack = new ItemStack(Items.iron_sword);
+        if (stack == null) stack = new ItemStack(Items.IRON_SWORD);
         return stack;
     }
 }

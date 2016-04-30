@@ -5,8 +5,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.ITextComponent;
 
 public abstract class InventoryStorage implements IInventory {
     protected ItemStack[] inventory;
@@ -21,8 +21,8 @@ public abstract class InventoryStorage implements IInventory {
     }
 
     @Override
-    public IChatComponent getDisplayName() {
-        return new ChatComponentTranslation(getName(), new Object[0]);
+    public ITextComponent getDisplayName() {
+        return new TextComponentTranslation(getName(), new Object[0]);
     }
 
     @Override

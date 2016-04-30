@@ -1,10 +1,10 @@
 package joshie.enchiridion.helpers;
 
-import java.util.UUID;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+
+import java.util.UUID;
 
 public class UUIDHelper {
     public static UUID getPlayerUUID(EntityPlayer player) {
@@ -18,7 +18,7 @@ public class UUIDHelper {
     /** Gets the player from the uuid **/
     public static EntityPlayer getPlayerFromUUID(UUID uuid) {        
         //Loops through every single player
-        for (EntityPlayer player : FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().playerEntityList) {
+        for (EntityPlayer player : FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerList()) {
             if (getPlayerUUID(player).equals(uuid)) {
                 return (EntityPlayer) player;
             }

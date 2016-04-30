@@ -1,7 +1,5 @@
 package joshie.enchiridion.library.handlers;
 
-import java.io.IOException;
-
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
@@ -14,8 +12,11 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+
+import java.io.IOException;
 
 public class WriteableBookHandler implements IBookHandler {
     @Override
@@ -24,10 +25,10 @@ public class WriteableBookHandler implements IBookHandler {
     }
 
     @Override
-    public void handle(ItemStack stack, EntityPlayer player, int slotID, boolean isShiftPressed) {
+    public void handle(ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
         player.openGui(Enchiridion.instance, GuiIDs.WRITEABLE, player.worldObj, slotID, 0, 0);
     }
-    
+
     //Our own version for the writeable so that we send packets to the library instead of the hand
     public static class GuiScreenWriteable extends GuiScreenBook {
         private int slot;
@@ -68,12 +69,12 @@ public class WriteableBookHandler implements IBookHandler {
 
                         for (int i = 0; i < this.bookPages.tagCount(); ++i) {
                             String s1 = this.bookPages.getStringTagAt(i);
-                            IChatComponent ichatcomponent = new ChatComponentText(s1);
-                            s1 = IChatComponent.Serializer.componentToJson(ichatcomponent);
+                            ITextComponent ichatcomponent = new TextComponentString(s1);
+                            s1 = ITextComponent.Serializer.componentToJson(ichatcomponent);
                             this.bookPages.set(i, new NBTTagString(s1));
                         }
 
-                        this.bookObj.setItem(Items.written_book);
+                        this.bookObj.setItem(Items.WRITTEN_BOOK);
                     }
 
                     //Set the book in the library

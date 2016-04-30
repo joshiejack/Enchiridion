@@ -1,24 +1,21 @@
 package joshie.enchiridion;
 
-import joshie.enchiridion.data.book.BookEvents;
-import joshie.enchiridion.network.*;
-import org.apache.logging.log4j.Level;
-
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
+import joshie.enchiridion.data.book.BookEvents;
 import joshie.enchiridion.gui.library.ContainerLibrary;
 import joshie.enchiridion.gui.library.LibraryRecipe;
+import joshie.enchiridion.helpers.HeldHelper;
 import joshie.enchiridion.items.ItemEnchiridion;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryEvents;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.library.LibraryRegistry;
-import joshie.enchiridion.library.handlers.ComputerCraftHandler;
 import joshie.enchiridion.library.handlers.EnchiridionBookHandler;
 import joshie.enchiridion.library.handlers.RightClickBookHandler;
 import joshie.enchiridion.library.handlers.TemporarySwitchHandler;
-import joshie.enchiridion.library.handlers.WarpBookHandler;
 import joshie.enchiridion.library.handlers.WriteableBookHandler;
+import joshie.enchiridion.network.*;
 import joshie.enchiridion.util.ECreativeTab;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -31,6 +28,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import org.apache.logging.log4j.Level;
 
 public class ECommonProxy implements IGuiHandler {
     public static Item book;
@@ -45,8 +43,8 @@ public class ECommonProxy implements IGuiHandler {
         EnchiridionAPI.library.registerBookHandler(new WriteableBookHandler()); //Writeable Books
         EnchiridionAPI.library.registerBookHandler(new RightClickBookHandler()); //Default Handler
         EnchiridionAPI.library.registerBookHandler(new TemporarySwitchHandler()); //Switch Click Handler
-        if (EConfig.loadComputercraft) attemptToRegisterModdedBookHandler(ComputerCraftHandler.class);
-        if (EConfig.loadWarpbook) attemptToRegisterModdedBookHandler(WarpBookHandler.class);
+        //if (EConfig.loadComputercraft) attemptToRegisterModdedBookHandler(ComputerCraftHandler.class);
+        //if (EConfig.loadWarpbook) attemptToRegisterModdedBookHandler(WarpBookHandler.class);
 
         //Register events
         MinecraftForge.EVENT_BUS.register(new BookEvents());
@@ -72,8 +70,8 @@ public class ECommonProxy implements IGuiHandler {
         if (EConfig.addOreDictionaryRecipeForLibrary) {
             GameRegistry.addRecipe(new LibraryRecipe());
         } else if (EConfig.addWrittenBookRecipeForLibrary) {
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ECommonProxy.book, 1, 1), "WWW", "BBB", "WWW", new ItemStack(Blocks.planks, 1, 1), new ItemStack(Items.writable_book), new ItemStack(Blocks.planks, 1, 1)));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ECommonProxy.book, 1, 1), "WWW", "BBB", "WWW", new ItemStack(Blocks.planks, 1, 1), new ItemStack(Items.writable_book), new ItemStack(Blocks.planks, 1, 5)));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ECommonProxy.book, 1, 1), "WWW", "BBB", "WWW", new ItemStack(Blocks.PLANKS, 1, 1), new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Blocks.PLANKS, 1, 1)));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ECommonProxy.book, 1, 1), "WWW", "BBB", "WWW", new ItemStack(Blocks.PLANKS, 1, 1), new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Blocks.PLANKS, 1, 5)));
         }
     }
 
@@ -92,11 +90,11 @@ public class ECommonProxy implements IGuiHandler {
 
     /** GUI HANDLING **/
     @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int integer1, int y, int z) {
-        if (ID == GuiIDs.WARPBOOK) {
+    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int integer1, int handOrdinal, int z) {
+        /*if (ID == GuiIDs.WARPBOOK) {
             return WarpBookHandler.getWarpbookContainer(player, integer1);
-        } else if (ID == GuiIDs.LIBRARY) {
-            return new ContainerLibrary(player.inventory, LibraryHelper.getServerLibraryContents(player));
+        } else */if (ID == GuiIDs.LIBRARY) {
+            return new ContainerLibrary(player.inventory, LibraryHelper.getServerLibraryContents(player), HeldHelper.getHandFromOrdinal(handOrdinal));
         } else return null;
     }
 

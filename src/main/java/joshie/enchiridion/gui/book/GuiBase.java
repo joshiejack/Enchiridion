@@ -11,7 +11,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -167,7 +167,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
         float f1 = (float) (color >> 8 & 255) / 255.0F;
         float f2 = (float) (color & 255) / 255.0F;
         Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        VertexBuffer worldrenderer = tessellator.getBuffer();
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -244,7 +244,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        VertexBuffer worldrenderer = tessellator.getBuffer();
         Minecraft.getMinecraft().getTextureManager().bindTexture(resource);
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
         worldrenderer.pos((double) (x + left), (double) (y + bottom), (double) zLevel).tex(0, 1).color(1F, 1F, 1F, 1F).endVertex();

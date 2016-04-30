@@ -1,7 +1,7 @@
 package joshie.enchiridion.network.core;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -18,7 +18,7 @@ public class PenguinPacketHandler implements IMessageHandler<PenguinPacket, IMes
                 }
             });
         } else {
-            MinecraftServer.getServer().addScheduledTask(new Runnable() {
+            FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(new Runnable() {
                 @Override
                 public void run() {
                     message.handleQueuedServer(ctx.getServerHandler());
