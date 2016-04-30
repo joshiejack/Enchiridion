@@ -40,7 +40,7 @@ public class ECommonProxy implements IGuiHandler {
     public void preInit() {
         book = new ItemEnchiridion().setCreativeTab(ECreativeTab.enchiridion).setHasSubtypes(true).setUnlocalizedName("book");
         EnchiridionAPI.instance = new EAPIHandler();
-        EnchiridionAPI.library = new LibraryRegistry();
+        EnchiridionAPI.library = LibraryRegistry.INSTANCE;
         EnchiridionAPI.library.registerBookHandler(new EnchiridionBookHandler()); //Enchiridion
         EnchiridionAPI.library.registerBookHandler(new WriteableBookHandler()); //Writeable Books
         EnchiridionAPI.library.registerBookHandler(new RightClickBookHandler()); //Default Handler

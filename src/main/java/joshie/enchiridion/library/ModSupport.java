@@ -31,7 +31,7 @@ public class ModSupport {
                 if (stack != null) {
                     if (book.getHandler().equals("customwood")) {
                         EnchiridionAPI.library.registerWood(stack, book.shouldMatchDamage(), book.shouldMatchNBT());
-                    } else EnchiridionAPI.library.registerBookHandlerForStack(book.getHandler(), stack, book.shouldMatchDamage(), book.shouldMatchNBT());
+                    } else LibraryRegistry.INSTANCE.registerBookHandlerForStackFromJSON(book.getHandler(), stack, book.shouldMatchDamage(), book.shouldMatchNBT());
                 }
             } catch (Exception e) {}
         }
