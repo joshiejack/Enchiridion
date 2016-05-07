@@ -1,7 +1,5 @@
 package joshie.enchiridion.library.handlers;
 
-import java.io.IOException;
-
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
@@ -16,6 +14,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
+
+import java.io.IOException;
 
 public class WriteableBookHandler implements IBookHandler {
     @Override
@@ -59,10 +59,7 @@ public class WriteableBookHandler implements IBookHandler {
                         this.bookObj.setTagInfo("pages", this.bookPages);
                     }
 
-                    String s2 = "MC|BEdit";
-
                     if (publish) {
-                        s2 = "MC|BSign";
                         this.bookObj.setTagInfo("author", new NBTTagString(this.editingPlayer.getName()));
                         this.bookObj.setTagInfo("title", new NBTTagString(this.bookTitle.trim()));
 

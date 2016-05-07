@@ -1,36 +1,39 @@
+Enchiridion - 3.1.1
+â€¢ Added execute command action for buttons
+
 Enchiridion - 3.1.0
-• Added the ability to save and load templates, as well as setting them as default or not.
-• Added Preview windows and the option to make pages scrollable (which looks stupid normally), However these are intended to be used in the preview windows. So you can have a scrollable section within the books.
-• Because of the above, the arrows are now a template that are defaulted to defaultly be added :P
-• Added toggle visibility of layers action to buttons
-• You can now resize the hover/unhover text with buttons like they were text
-• Selecting a layer will now act as if you had selected the layer directly (You can't select locked layers) (allowing the use of ctrl click on layers etc)
-• Fix button copying, not copying the text label fields
-• Fix item and recipe copying not copying the tooltip field
-• Updated the enchiridion book
-• Added Ctrl + X support to copying features aka cut.
-• Instead of shift clicking buttons in edit mode, you now simply right or middle click them (Less chance of conflict with shift resizing)
+â€¢ Added the ability to save and load templates, as well as setting them as default or not.
+â€¢ Added Preview windows and the option to make pages scrollable (which looks stupid normally), However these are intended to be used in the preview windows. So you can have a scrollable section within the books.
+â€¢ Because of the above, the arrows are now a template that are defaulted to defaultly be added :P
+â€¢ Added toggle visibility of layers action to buttons
+â€¢ You can now resize the hover/unhover text with buttons like they were text
+â€¢ Selecting a layer will now act as if you had selected the layer directly (You can't select locked layers) (allowing the use of ctrl click on layers etc)
+â€¢ Fix button copying, not copying the text label fields
+â€¢ Fix item and recipe copying not copying the tooltip field
+â€¢ Updated the enchiridion book
+â€¢ Added Ctrl + X support to copying features aka cut.
+â€¢ Instead of shift clicking buttons in edit mode, you now simply right or middle click them (Less chance of conflict with shift resizing)
 
 Enchiridon - 3.0.1
-• Added a recipe for the library (With config to disable)
-  • Default recipe is like a bookshelf but using dark wood on the tops, and any books that are supported by the library in the centre
-  • The books aren't consumed in the recipe, because why lose your information!
-• Changed the hotkey to be disabled by default (Fixed localisation)
-• Library now functions slightly differently
-  • First right click of empty library will open the library
-  • Books when right clicked will be marked as last clicked book
-  • The Enchiridion library will appear as if it is that book
-  • Further right clicks will open this mods book
-  • Hold shift when right clicking a library to open it's gui
-• Added some things to allow for Progression Integration
-• Ingame Config support by Girafi
-• Changed the default gui texture slightly, (old books use old one still)
-• Added a slightly different positioned grid option to match the texture
-• Fixed ItemStack saving
+â€¢ Added a recipe for the library (With config to disable)
+  â€¢ Default recipe is like a bookshelf but using dark wood on the tops, and any books that are supported by the library in the centre
+  â€¢ The books aren't consumed in the recipe, because why lose your information!
+â€¢ Changed the hotkey to be disabled by default (Fixed localisation)
+â€¢ Library now functions slightly differently
+  â€¢ First right click of empty library will open the library
+  â€¢ Books when right clicked will be marked as last clicked book
+  â€¢ The Enchiridion library will appear as if it is that book
+  â€¢ Further right clicks will open this mods book
+  â€¢ Hold shift when right clicking a library to open it's gui
+â€¢ Added some things to allow for Progression Integration
+â€¢ Ingame Config support by Girafi
+â€¢ Changed the default gui texture slightly, (old books use old one still)
+â€¢ Added a slightly different positioned grid option to match the texture
+â€¢ Fixed ItemStack saving
 
 Enchiridion - 3.0.0 
-• Updated to 1.8.9
-• Removed pedia
+â€¢ Updated to 1.8.9
+â€¢ Removed pedia
 
 ===================================================================================================
 
@@ -39,110 +42,110 @@ Enchiridion - 3.0.0
 ===================================================================================================
 
 Enchiridion 2 - 2.0.2a
-• Fix crash when opening books on a server
+â€¢ Fix crash when opening books on a server
 
 Enchiridion 2 - 2.0.2
-• Fix potential crash in Enchirdion 1, wait what?
-• Made some internal changes so that mods can include books
-• Added 'Recipe' feature to books, dynamically displays a recipe
+â€¢ Fix potential crash in Enchirdion 1, wait what?
+â€¢ Made some internal changes so that mods can include books
+â€¢ Added 'Recipe' feature to books, dynamically displays a recipe
     If you want to switch between types for an item, click it twice
     I.E. Iron Ingot has the Block > Ingot and Ore > Ingot Recipes. If you click it a second time, it will display the next recipe type.
-• Fixed Box features having to be width 16 at least
-• Fixed Box features being able to go under 1 height
-• Add scrollwheel support for turning pages in books
-• Add additional translation support for books, i.e. being able to have a seperate json, if they need to move things around
-• Add tooltips for items in the books
-• Remove Autodiscovery
-• Switch from stencil based cutoff to scissor
-• Add ability to use left and right arrow keys to move the wiki left <> right
-• Don't open wiki menu if f3 is held down
+â€¢ Fixed Box features having to be width 16 at least
+â€¢ Fixed Box features being able to go under 1 height
+â€¢ Add scrollwheel support for turning pages in books
+â€¢ Add additional translation support for books, i.e. being able to have a seperate json, if they need to move things around
+â€¢ Add tooltips for items in the books
+â€¢ Remove Autodiscovery
+â€¢ Switch from stencil based cutoff to scissor
+â€¢ Add ability to use left and right arrow keys to move the wiki left <> right
+â€¢ Don't open wiki menu if f3 is held down
 
 Enchiridion 2 - 2.0.1
-• Package Enchiridion 1 inside of Enchiridion 2
-• ^ For the purposes of the curse launcher
+â€¢ Package Enchiridion 1 inside of Enchiridion 2
+â€¢ ^ For the purposes of the curse launcher
 
 Enchiridion 2 - 2.0e
-• Fix crash on server startup when autodiscovery is disabled
+â€¢ Fix crash on server startup when autodiscovery is disabled
 
 Enchiridion 2 - 2.0d
-• Add check for invalid characters in page names (Only allow Alphanumeric characters, no spaces (no need it's an unlocalized name));
-• Require at least one letter/number in page names
-• Disable Autodiscovery by default
-• Fix deleting a wiki page... Deleting too much on some systems (Well kinda fixed).
-• ^ Must enable deleting pages in the config
+â€¢ Add check for invalid characters in page names (Only allow Alphanumeric characters, no spaces (no need it's an unlocalized name));
+â€¢ Require at least one letter/number in page names
+â€¢ Disable Autodiscovery by default
+â€¢ Fix deleting a wiki page... Deleting too much on some systems (Well kinda fixed).
+â€¢ ^ Must enable deleting pages in the config
 
 Enchiridion 2 - 2.0c
-• Remove Botania Hijacking
-• Change some defaults for Botania and FSP (Reference: Alfheim Book changed to "openGuiClass vazkii.botania.client.gui.lexicon.GuiLexiconIndex" and fsp type to switch.
-• Change default font color in books to grey
-• Don't crash when a stack has issues with search
-• Attempt to grab the UUID for the library from the username, if a match was not found
+â€¢ Remove Botania Hijacking
+â€¢ Change some defaults for Botania and FSP (Reference: Alfheim Book changed to "openGuiClass vazkii.botania.client.gui.lexicon.GuiLexiconIndex" and fsp type to switch.
+â€¢ Change default font color in books to grey
+â€¢ Don't crash when a stack has issues with search
+â€¢ Attempt to grab the UUID for the library from the username, if a match was not found
 
 Enchiridion 2 - 2.0b
-• Fix Accidental dependency on Botania
+â€¢ Fix Accidental dependency on Botania
 
 Enchiridion 2 - 2.0a
-• It is suggested that you delete library_books.json for this update
-• Fix a crash when there is no lang for the page you are reading in the language you have selected (defaults to en_US.json now).
-• Fix default settings for blood magic and open blocks books
-• Add two more witchery books and Encyclopedia Aura from Aura Cascade to default list (Girafi)
-• Add a config for those with bad graphics cards. (Disables the 'cutoff' effect with the pedia so some things overlap. Bad graphics cards see a blank pedia currently (like my laptop >.<, so it's better than nothing))
-• Move the pedia further up the screen (I was going to have a header but it's now just wasted space).
-• I believe I've fixed how stubborn the library can be, breaking time to time?
-• Can now specify 'free' in library_books.json. (If it is false the book is only added when you have obtained it normally).
-• A bunch more things added to library_books.json, the following all require 'free' to be set to false.
-• onCrafted - This book can be found in the library once you have crafted it (vanilla crafting)
-• openGuiClass - This is a string whenever a player opens this gui, this book will then be available in the library
-• openGuiNBT - This is a nbt key that the item the player is holding must have when opening the gui
-• onPickup - When a player picks this item up after dropping it, it will get added to the library
-• overwrite - The book that should overwrite
-• Adds a command "/enchiridion refresh" which will reload the books in the library.
-• Config to disable the autodiscovery of pedia articles in mods. It may reduce load time.
+â€¢ It is suggested that you delete library_books.json for this update
+â€¢ Fix a crash when there is no lang for the page you are reading in the language you have selected (defaults to en_US.json now).
+â€¢ Fix default settings for blood magic and open blocks books
+â€¢ Add two more witchery books and Encyclopedia Aura from Aura Cascade to default list (Girafi)
+â€¢ Add a config for those with bad graphics cards. (Disables the 'cutoff' effect with the pedia so some things overlap. Bad graphics cards see a blank pedia currently (like my laptop >.<, so it's better than nothing))
+â€¢ Move the pedia further up the screen (I was going to have a header but it's now just wasted space).
+â€¢ I believe I've fixed how stubborn the library can be, breaking time to time?
+â€¢ Can now specify 'free' in library_books.json. (If it is false the book is only added when you have obtained it normally).
+â€¢ A bunch more things added to library_books.json, the following all require 'free' to be set to false.
+â€¢ onCrafted - This book can be found in the library once you have crafted it (vanilla crafting)
+â€¢ openGuiClass - This is a string whenever a player opens this gui, this book will then be available in the library
+â€¢ openGuiNBT - This is a nbt key that the item the player is holding must have when opening the gui
+â€¢ onPickup - When a player picks this item up after dropping it, it will get added to the library
+â€¢ overwrite - The book that should overwrite
+â€¢ Adds a command "/enchiridion refresh" which will reload the books in the library.
+â€¢ Config to disable the autodiscovery of pedia articles in mods. It may reduce load time.
 
 Enchiridion 2 - 2.0
-• Complete Rewrite aka new mod, can be used with Enchiridion 1 (Books made with ench1 don't work with ench2 sooo).
-• Books are now formatted with json, have more options and have an ingame editor to make editing them a lot easier.
-• The Book Binder is no more (at least for now (1.7), since you can use this with ench1 it doesn't matter)
-• Replacing the Book Binder is the library. This is a bunch of books preloaded in (no need to craft or carry an item), To access the library Press (by default) H. And then click the library button in the top right.
-• Adds a Minecraftopedia, based on the Civilopedia from Civ 5. See the pedia ingame for more details (H to open)! (Edit/Add/Delete articles etc.).
+â€¢ Complete Rewrite aka new mod, can be used with Enchiridion 1 (Books made with ench1 don't work with ench2 sooo).
+â€¢ Books are now formatted with json, have more options and have an ingame editor to make editing them a lot easier.
+â€¢ The Book Binder is no more (at least for now (1.7), since you can use this with ench1 it doesn't matter)
+â€¢ Replacing the Book Binder is the library. This is a bunch of books preloaded in (no need to craft or carry an item), To access the library Press (by default) H. And then click the library button in the top right.
+â€¢ Adds a Minecraftopedia, based on the Civilopedia from Civ 5. See the pedia ingame for more details (H to open)! (Edit/Add/Delete articles etc.).
 
 Enchiridion 1.2b
-• The registry for books is now based on itemstacks, allowing witchery books in the bookbinder again
+â€¢ The registry for books is now based on itemstacks, allowing witchery books in the bookbinder again
 
 Enchiridion 1.2a
-• Will not crash on load if no icon is specified
-• Will no longer crash if a book is no longer installed
-• Fix crash with icons in debug mode, missed a file seperator
-• Fix Custom Icon, and normal icon rendering of books in debug mode.
-• Debug mode now affects server and client side
-• Can now specify alias='false' in text values to make books use the unicode font instead.
+â€¢ Will not crash on load if no icon is specified
+â€¢ Will no longer crash if a book is no longer installed
+â€¢ Fix crash with icons in debug mode, missed a file seperator
+â€¢ Fix Custom Icon, and normal icon rendering of books in debug mode.
+â€¢ Debug mode now affects server and client side
+â€¢ Can now specify alias='false' in text values to make books use the unicode font instead.
 
 Enchiridion 1.2
-• Books can now have custom icons. Add a line to the book info to specify a resource. With <icon>test/icon</icon>
-• Added config option to allow you to spawn in a world, with a book binder full of books
-• Added config option to enable/disable autopickup of books
-• Autopickup now plays a sound
-• Book Strings, now have an Additions and Removals. Additions are extra strings, while Removals allow you to blacklist items from the bookbinder.
-• Modders can now add books to be accepted by the book binder via IMC
+â€¢ Books can now have custom icons. Add a line to the book info to specify a resource. With <icon>test/icon</icon>
+â€¢ Added config option to allow you to spawn in a world, with a book binder full of books
+â€¢ Added config option to enable/disable autopickup of books
+â€¢ Autopickup now plays a sound
+â€¢ Book Strings, now have an Additions and Removals. Additions are extra strings, while Removals allow you to blacklist items from the bookbinder.
+â€¢ Modders can now add books to be accepted by the book binder via IMC
 
 Enchiridion 1.1a
-• Added a config option to adjust the icon looping, set to 0, to disable (may help with fps)
-• Added config options to enable/disable book binder or it's recipe
-• Books should behave now? (no freezy?) Let me know if not!
+â€¢ Added a config option to adjust the icon looping, set to 0, to disable (may help with fps)
+â€¢ Added config options to enable/disable book binder or it's recipe
+â€¢ Books should behave now? (no freezy?) Let me know if not!
 
 Enchiridion 1.1
-• Added Bookbinder
-• Custom books support on crafting and on world start entries
+â€¢ Added Bookbinder
+â€¢ Custom books support on crafting and on world start entries
 
 Enchiridion 1.0c
-• Fixed potential n must be positive crash when updating icons
+â€¢ Fixed potential n must be positive crash when updating icons
 
 Enchiridion 1.0b
-• Fixed potential crash
-• Fixed null items showing up as dolly's in some packs
+â€¢ Fixed potential crash
+â€¢ Fixed null items showing up as dolly's in some packs
 
 Enchiridion 1.0a
-• Fixed Server crash from calling client side code
+â€¢ Fixed Server crash from calling client side code
 
 Enchiridion 1.0
-• Seperated from Mariculture
+â€¢ Seperated from Mariculture

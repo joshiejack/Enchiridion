@@ -99,6 +99,7 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerButtonAction(new ActionPreviousPage());
         EnchiridionAPI.instance.registerButtonAction(new ActionOpenWebpage());
         EnchiridionAPI.instance.registerButtonAction(new ActionToggleLayer());
+        EnchiridionAPI.instance.registerButtonAction(new ActionExecuteCommand());
         
         //Register Recipe Handlers
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapedVanilla());
