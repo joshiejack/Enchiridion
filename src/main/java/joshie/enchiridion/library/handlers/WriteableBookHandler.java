@@ -60,10 +60,7 @@ public class WriteableBookHandler implements IBookHandler {
                         this.bookObj.setTagInfo("pages", this.bookPages);
                     }
 
-                    String s2 = "MC|BEdit";
-
                     if (publish) {
-                        s2 = "MC|BSign";
                         this.bookObj.setTagInfo("author", new NBTTagString(this.editingPlayer.getName()));
                         this.bookObj.setTagInfo("title", new NBTTagString(this.bookTitle.trim()));
 

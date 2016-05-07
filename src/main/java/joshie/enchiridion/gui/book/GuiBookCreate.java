@@ -8,7 +8,6 @@ import joshie.enchiridion.util.PenguinFont;
 import joshie.enchiridion.util.TextEditor;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
@@ -39,8 +38,6 @@ public class GuiBookCreate extends GuiScreen implements ITextEditable {
             text = text.replace("\n", "");
             String sanitized = text.replaceAll("[^A-Za-z0-9]", "_");
             Book book = new Book(sanitized, text); //Create the book
-            stack.setTagCompound(new NBTTagCompound());
-            stack.getTagCompound().setString("identifier", sanitized);
             BookRegistry.INSTANCE.register(book); //Register the book
             GuiBook.INSTANCE.setBook(book, true);
             GuiBook.INSTANCE.onGuiClosed(); //Save the data to json
