@@ -40,6 +40,6 @@ public class ActionExecuteCommand extends AbstractAction {
             mc.displayGuiScreen((GuiScreen)null);
         }
 
-        return false;
+        return true;
     }
 }
