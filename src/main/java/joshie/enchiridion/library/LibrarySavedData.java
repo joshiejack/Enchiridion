@@ -75,7 +75,7 @@ public class LibrarySavedData extends WorldSavedData {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         NBTTagList tag_list_players = new NBTTagList();
         for (Map.Entry<UUID, LibraryInventory> entry : players.entrySet()) {
             if (entry.getKey() != null && entry.getValue() != null) {
@@ -86,5 +86,6 @@ public class LibrarySavedData extends WorldSavedData {
         }
 
         nbt.setTag("LibraryInventory", tag_list_players);
+        return nbt;
     }
 }

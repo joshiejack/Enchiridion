@@ -8,7 +8,7 @@ import joshie.enchiridion.lib.EInfo;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.resources.data.IMetadataSection;
-import net.minecraft.client.resources.data.IMetadataSerializer;
+import net.minecraft.client.resources.data.MetadataSerializer;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
@@ -70,7 +70,7 @@ public class EResourcePack implements IResourcePack {
     }
 
     @Override
-    public <T extends IMetadataSection> T getPackMetadata(IMetadataSerializer p_135058_1_, String p_135058_2_) throws IOException {
+    public <T extends IMetadataSection> T getPackMetadata(MetadataSerializer serializer, String string) throws IOException {
         return null;
     }
 
