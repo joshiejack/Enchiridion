@@ -1,18 +1,7 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import minetweaker.api.item.IIngredient;
-import minetweaker.api.item.IItemStack;
-import minetweaker.api.minecraft.MineTweakerMC;
-import minetweaker.api.oredict.IOreDictEntry;
-import minetweaker.api.recipes.ShapedRecipe;
-import minetweaker.mc19.recipes.ShapedRecipeAdvanced;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
+/*public class RecipeHandlerMTAdvancedShaped extends RecipeHandlerRecipeBase {
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-
-public class RecipeHandlerMTAdvancedShaped extends RecipeHandlerRecipeBase {
     public RecipeHandlerMTAdvancedShaped() {}
     public RecipeHandlerMTAdvancedShaped(IRecipe recipe) {
         try {
@@ -50,5 +39,5 @@ public class RecipeHandlerMTAdvancedShaped extends RecipeHandlerRecipeBase {
             shaped = ShapedRecipeAdvanced.class.getDeclaredField("recipe");
             shaped.setAccessible(true);
         } catch (Exception e) {}
-    }
-}
+
+}}*/

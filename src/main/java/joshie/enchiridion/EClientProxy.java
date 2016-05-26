@@ -106,8 +106,8 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessVanilla());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessOre());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerFurnace());
-        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShaped.class, "crafttweaker");
-        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShapeless.class, "crafttweaker");
+        //attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShaped.class, "crafttweaker"); //TODO: Re-Enable These
+        //attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShapeless.class, "crafttweaker"); //TODO: Re-Enable
 
         //Register Button Template
         Template template = new Template("enchiridion_default_buttons", "Turn Page Arrows", new ELocation("default_buttons_thumbnail"), DefaultHelper.addArrows(new Page(0)));
