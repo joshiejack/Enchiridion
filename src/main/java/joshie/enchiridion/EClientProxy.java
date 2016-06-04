@@ -18,7 +18,6 @@ import joshie.enchiridion.items.SmartLibrary;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryHelper;
-import joshie.enchiridion.library.LibraryRegistry;
 import joshie.enchiridion.library.handlers.WriteableBookHandler.GuiScreenWriteable;
 import joshie.enchiridion.util.ECreativeTab;
 import joshie.enchiridion.util.ELocation;
@@ -106,8 +105,8 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessVanilla());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessOre());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerFurnace());
-        //attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShaped.class, "crafttweaker"); //TODO: Re-Enable These
-        //attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShapeless.class, "crafttweaker"); //TODO: Re-Enable
+        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShaped.class, "crafttweaker");
+        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShapeless.class, "crafttweaker");
 
         //Register Button Template
         Template template = new Template("enchiridion_default_buttons", "Turn Page Arrows", new ELocation("default_buttons_thumbnail"), DefaultHelper.addArrows(new Page(0)));
@@ -145,7 +144,6 @@ public class EClientProxy extends ECommonProxy {
     
     @Override
     public void setupFont() {
-        LibraryRegistry.INSTANCE.getBooksAsItemStack();
         PenguinFont.load();
     }
     

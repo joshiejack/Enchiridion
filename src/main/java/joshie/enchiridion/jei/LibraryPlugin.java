@@ -9,6 +9,7 @@ import mezz.jei.api.gui.IAdvancedGuiHandler;
 import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @JEIPlugin
@@ -16,6 +17,7 @@ public class LibraryPlugin extends BlankModPlugin implements IAdvancedGuiHandler
     @Override
     public void register(@Nonnull IModRegistry registry) {
         registry.addRecipeHandlers(new LibraryRecipeHandler());
+        registry.addRecipes(Collections.singletonList(new LibraryRecipeWrapper()));
         registry.addAdvancedGuiHandlers(this);
     }
 

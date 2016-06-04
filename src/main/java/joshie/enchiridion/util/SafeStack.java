@@ -18,6 +18,10 @@ public class SafeStack {
         }
     }
 
+    public ItemStack toStack() {
+        return new ItemStack(Item.REGISTRY.getObject(location), 1, OreDictionary.WILDCARD_VALUE);
+    }
+
     public static List<SafeStack> allInstances(ItemStack stack) {
         List<SafeStack> safe = new ArrayList();
         safe.add(new SafeStackMod(stack));
@@ -115,6 +119,11 @@ public class SafeStack {
         }
 
         @Override
+        public ItemStack toStack() {
+            return new ItemStack(Item.REGISTRY.getObject(location), 1, damage);
+        }
+
+        @Override
         public int hashCode() {
             final int prime = 31;
             int result = super.hashCode();
@@ -139,6 +148,14 @@ public class SafeStack {
         protected SafeStackNBT(ItemStack stack) {
             super(stack);
             this.tag = stack.getTagCompound();
+        }
+
+        @Override
+        public ItemStack toStack() {
+            ItemStack result = new ItemStack(Item.REGISTRY.getObject(location), 1, OreDictionary.WILDCARD_VALUE);
+            NBTTagCompound copy = (NBTTagCompound) tag.copy();
+            result.setTagCompound(copy);
+            return result;
         }
 
         @Override
@@ -168,6 +185,14 @@ public class SafeStack {
         protected SafeStackNBTDamage(ItemStack stack) {
             super(stack);
             this.tag = stack.getTagCompound();
+        }
+
+        @Override
+        public ItemStack toStack() {
+            ItemStack result = new ItemStack(Item.REGISTRY.getObject(location), 1, damage);
+            NBTTagCompound copy = (NBTTagCompound) tag.copy();
+            result.setTagCompound(copy);
+            return result;
         }
 
         @Override
