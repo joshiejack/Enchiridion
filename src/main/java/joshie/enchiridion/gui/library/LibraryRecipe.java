@@ -62,9 +62,15 @@ public class LibraryRecipe implements IRecipe {
         return new ItemStack(ECommonProxy.book, 1, 1);
     }
 
+    private ItemStack getStackOfOne(InventoryCrafting inv, int index) {
+        ItemStack ret = inv.getStackInSlot(index).copy();
+        ret.stackSize = 1;
+        return ret;
+    }
+
     @Override
     public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-        return new ItemStack[] { null, null, null, inv.getStackInSlot(3), inv.getStackInSlot(4), inv.getStackInSlot(5), null, null, null };
+        return new ItemStack[] { null, null, null, getStackOfOne(inv, 3), getStackOfOne(inv, 4), getStackOfOne(inv, 5), null, null, null };
     }
 
 }
