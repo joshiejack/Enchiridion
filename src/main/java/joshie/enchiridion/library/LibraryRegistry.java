@@ -2,7 +2,6 @@ package joshie.enchiridion.library;
 
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.api.library.ILibraryRegistry;
-import joshie.enchiridion.gui.library.LibraryRecipe;
 import joshie.enchiridion.util.SafeStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

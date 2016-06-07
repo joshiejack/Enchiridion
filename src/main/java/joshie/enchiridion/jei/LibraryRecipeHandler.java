@@ -1,6 +1,5 @@
 package joshie.enchiridion.jei;
 
-import joshie.enchiridion.gui.library.LibraryRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;

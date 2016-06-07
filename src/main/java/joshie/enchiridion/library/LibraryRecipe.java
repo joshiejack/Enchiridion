@@ -1,4 +1,4 @@
-package joshie.enchiridion.gui.library;
+package joshie.enchiridion.library;
 
 import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.api.EnchiridionAPI;

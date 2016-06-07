@@ -4,7 +4,7 @@ import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.data.book.BookEvents;
 import joshie.enchiridion.gui.library.ContainerLibrary;
-import joshie.enchiridion.gui.library.LibraryRecipe;
+import joshie.enchiridion.library.LibraryRecipe;
 import joshie.enchiridion.helpers.HeldHelper;
 import joshie.enchiridion.items.ItemEnchiridion;
 import joshie.enchiridion.lib.GuiIDs;

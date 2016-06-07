@@ -2,7 +2,7 @@ package joshie.enchiridion.jei;
 
 import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.gui.library.LibraryRecipe;
+import joshie.enchiridion.library.LibraryRecipe;
 import joshie.enchiridion.helpers.ItemListHelper;
 import joshie.enchiridion.util.SafeStack;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
