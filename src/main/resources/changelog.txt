@@ -1,3 +1,7 @@
+Enchiridion - 3.1.4
+• Fix Craft Tweaker support
+• Update to same level as the 1.9.4 version
+
 Enchiridion - 3.1.3
 • Readd CraftTweaker support
 • Fix JEI Integration
