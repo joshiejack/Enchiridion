@@ -1,3 +1,10 @@
+Enchiridion - 3.1.4
+• Fix Craft Tweaker support
+• Update to same level as the 1.9.4 version
+    aka
+    • Fix JEI Integration
+    • Fix Library Recipe accidentally consuming books
+
 Enchiridion - 3.1.1
 • Added execute command action for buttons
 
