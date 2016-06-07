@@ -17,7 +17,6 @@ import joshie.enchiridion.items.SmartLibrary;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryHelper;
-import joshie.enchiridion.library.LibraryRegistry;
 import joshie.enchiridion.library.handlers.ComputerCraftHandler;
 import joshie.enchiridion.library.handlers.WarpBookHandler;
 import joshie.enchiridion.library.handlers.WriteableBookHandler.GuiScreenWriteable;
@@ -146,7 +145,6 @@ public class EClientProxy extends ECommonProxy {
     
     @Override
     public void setupFont() {
-        LibraryRegistry.INSTANCE.getBooksAsItemStack();
         PenguinFont.load();
     }
     

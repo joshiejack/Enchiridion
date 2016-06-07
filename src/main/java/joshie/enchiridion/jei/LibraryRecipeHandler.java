@@ -1,17 +1,16 @@
 package joshie.enchiridion.jei;
 
-import javax.annotation.Nonnull;
-
-import joshie.enchiridion.gui.library.LibraryRecipe;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 
-public class LibraryRecipeHandler implements IRecipeHandler<LibraryRecipe> {
+import javax.annotation.Nonnull;
+
+public class LibraryRecipeHandler implements IRecipeHandler<LibraryRecipeWrapper> {
     @Override
     @Nonnull
-    public Class<LibraryRecipe> getRecipeClass() {
-        return LibraryRecipe.class;
+    public Class<LibraryRecipeWrapper> getRecipeClass() {
+        return LibraryRecipeWrapper.class;
     }
 
     @Nonnull
@@ -22,12 +21,12 @@ public class LibraryRecipeHandler implements IRecipeHandler<LibraryRecipe> {
 
     @Override
     @Nonnull
-    public IRecipeWrapper getRecipeWrapper(@Nonnull LibraryRecipe recipe) {
-        return new LibraryRecipeWrapper();
+    public IRecipeWrapper getRecipeWrapper(@Nonnull LibraryRecipeWrapper recipe) {
+        return recipe;
     }
 
     @Override
-    public boolean isRecipeValid(@Nonnull LibraryRecipe recipe) {
+    public boolean isRecipeValid(@Nonnull LibraryRecipeWrapper recipe) {
         return true;
     }
 }

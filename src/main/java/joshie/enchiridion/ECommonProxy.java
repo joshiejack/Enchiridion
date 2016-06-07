@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Level;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.gui.library.ContainerLibrary;
-import joshie.enchiridion.gui.library.LibraryRecipe;
+import joshie.enchiridion.library.LibraryRecipe;
 import joshie.enchiridion.items.ItemEnchiridion;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryEvents;

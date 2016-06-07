@@ -1,7 +1,4 @@
-package joshie.enchiridion.gui.library;
-
-import java.util.HashSet;
-import java.util.Set;
+package joshie.enchiridion.library;
 
 import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.api.EnchiridionAPI;
@@ -10,6 +7,9 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class LibraryRecipe implements IRecipe {
     public static Set<SafeStack> validWoods = new HashSet();
@@ -62,9 +62,14 @@ public class LibraryRecipe implements IRecipe {
         return new ItemStack(ECommonProxy.book, 1, 1);
     }
 
-    @Override
-    public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-        return new ItemStack[] { null, null, null, inv.getStackInSlot(3), inv.getStackInSlot(4), inv.getStackInSlot(5), null, null, null };
+    private ItemStack getStackOfOne(InventoryCrafting inv, int index) {
+        ItemStack ret = inv.getStackInSlot(index).copy();
+        ret.stackSize = 1;
+        return ret;
     }
 
+    @Override
+    public ItemStack[] getRemainingItems(InventoryCrafting inv) {
+        return new ItemStack[] { null, null, null, getStackOfOne(inv, 3), getStackOfOne(inv, 4), getStackOfOne(inv, 5), null, null, null };
+    }
 }

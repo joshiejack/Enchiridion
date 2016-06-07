@@ -1,41 +1,22 @@
 package joshie.enchiridion.library;
 
-import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.api.library.ILibraryRegistry;
-import joshie.enchiridion.gui.library.LibraryRecipe;
-import joshie.enchiridion.helpers.ItemListHelper;
 import joshie.enchiridion.util.SafeStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class LibraryRegistry implements ILibraryRegistry {
     private HashMap<String, IBookHandler> handlers = new HashMap();
     private HashMap<SafeStack, IBookHandler> bookHandlerRegistry = new HashMap();
     private HashMap<SafeStack, IBookHandler> allowedBookRegistry = new HashMap();
-    public List<ItemStack> cache = new ArrayList();
 
     public static final LibraryRegistry INSTANCE = new LibraryRegistry();
 
     private LibraryRegistry() {}
-
-    public List<ItemStack> getBooksAsItemStack() {
-        if (cache == null || cache.size() == 0) {
-            cache = new ArrayList();
-            for (ItemStack stack : ItemListHelper.allItems()) {
-                if (EnchiridionAPI.library.getBookHandlerForStack(stack) != null) {
-                    cache.add(stack);
-                }
-            }
-        }
-
-        return cache;
-    }
 
     public void registerBookHandlerForStackFromJSON(String handlerName, ItemStack itemStack, boolean matchDamage, boolean matchNBT) {
         SafeStack safeStack = SafeStack.newInstance("IGNORE", itemStack, "IGNORE", matchDamage, matchNBT);

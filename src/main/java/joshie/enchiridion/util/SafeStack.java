@@ -1,13 +1,13 @@
 package joshie.enchiridion.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SafeStack {
     public ResourceLocation location;
@@ -16,6 +16,10 @@ public class SafeStack {
         if (stack != null) {
             location = Item.itemRegistry.getNameForObject(stack.getItem());
         }
+    }
+
+    public ItemStack toStack() {
+        return new ItemStack(Item.itemRegistry.getObject(location), 1, OreDictionary.WILDCARD_VALUE);
     }
 
     public static List<SafeStack> allInstances(ItemStack stack) {
@@ -115,6 +119,11 @@ public class SafeStack {
         }
 
         @Override
+        public ItemStack toStack() {
+            return new ItemStack(Item.itemRegistry.getObject(location), 1, damage);
+        }
+
+        @Override
         public int hashCode() {
             final int prime = 31;
             int result = super.hashCode();
@@ -139,6 +148,14 @@ public class SafeStack {
         protected SafeStackNBT(ItemStack stack) {
             super(stack);
             this.tag = stack.getTagCompound();
+        }
+
+        @Override
+        public ItemStack toStack() {
+            ItemStack result = new ItemStack(Item.itemRegistry.getObject(location), 1, OreDictionary.WILDCARD_VALUE);
+            NBTTagCompound copy = (NBTTagCompound) tag.copy();
+            result.setTagCompound(copy);
+            return result;
         }
 
         @Override
@@ -168,6 +185,14 @@ public class SafeStack {
         protected SafeStackNBTDamage(ItemStack stack) {
             super(stack);
             this.tag = stack.getTagCompound();
+        }
+
+        @Override
+        public ItemStack toStack() {
+            ItemStack result = new ItemStack(Item.itemRegistry.getObject(location), 1, damage);
+            NBTTagCompound copy = (NBTTagCompound) tag.copy();
+            result.setTagCompound(copy);
+            return result;
         }
 
         @Override
