@@ -1,11 +1,14 @@
 package joshie.enchiridion;
 
+import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.SyncHelper;
 import joshie.enchiridion.library.LibraryCommand;
 import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -13,10 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLConstructionEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -68,6 +68,20 @@ public class Enchiridion {
         if(manager instanceof ServerCommandManager) {
             ServerCommandManager serverCommandManager = ((ServerCommandManager)manager);
             serverCommandManager.registerCommand(new LibraryCommand());
+        }
+    }
+
+    @EventHandler
+    public void handleIMCMessages(FMLInterModComms.IMCEvent event) {
+        for (FMLInterModComms.IMCMessage message : event.getMessages()) {
+            if (message.key.equalsIgnoreCase("registerBook")) {
+                NBTTagCompound tag = message.getNBTValue();
+                String handlerType = tag.getString("handlerType");
+                ItemStack stack = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("stack"));
+                boolean matchDamage = tag.hasKey("matchDamage") && tag.getBoolean("matchDamage");
+                boolean matchNBT = tag.hasKey("matchNBT") && tag.getBoolean("matchNBT");
+                EnchiridionAPI.library.registerBookHandlerForStack(handlerType, stack, matchDamage, matchNBT);
+            }
         }
     }
 

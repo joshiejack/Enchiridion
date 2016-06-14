@@ -1,3 +1,7 @@
+Enchiridion - 3.1.5
+• Add Tinkers Books as default
+• Add IMC for registering Books
+
 Enchiridion - 3.1.4
 • Fix Craft Tweaker support
 

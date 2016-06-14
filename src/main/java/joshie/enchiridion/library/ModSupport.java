@@ -50,6 +50,7 @@ public class ModSupport {
         books.add("rightclick", "opencomputers:tool 4", true, false);
         books.add("rightclick", "rftools:rfToolsManualItem", false, false);
         books.add("rightclick", "deepresonance:dr_manual", false, false);
+        books.add("rightclick", "tconstruct:book", false, false);
         books.add("computercraft", "computercraft:printout", false, false);
         books.add("switchclick", "ImmersiveEngineering:tool 3", true, false);
         books.add("warpbook", "warpbook:warpbook", false, false);
