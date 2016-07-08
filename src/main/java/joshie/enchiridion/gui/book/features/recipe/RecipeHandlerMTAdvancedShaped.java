@@ -5,9 +5,9 @@ import minetweaker.api.item.IItemStack;
 import minetweaker.api.minecraft.MineTweakerMC;
 import minetweaker.api.oredict.IOreDictEntry;
 import minetweaker.api.recipes.ShapedRecipe;
-import minetweaker.mc19.recipes.ShapedRecipeAdvanced;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.fml.common.Loader;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -41,13 +41,17 @@ public class RecipeHandlerMTAdvancedShaped extends RecipeHandlerRecipeBase {
     
     @Override
     protected Class getRecipeClass() {
-        return ShapedRecipeAdvanced.class;
+        return clazz;
     }
 
     private static Field shaped;
+    private static Class clazz;
     static {
         try {
-            shaped = ShapedRecipeAdvanced.class.getDeclaredField("recipe");
+            if (Loader.MC_VERSION.equals("1.9.4")) clazz = Class.forName("minetweaker.mc19.recipes.ShapedRecipeAdvanced");
+            else if (Loader.MC_VERSION.equals("1.10.2")) clazz = Class.forName("minetweaker.mc1102.recipes.ShapedRecipeAdvanced");
+
+            shaped = clazz.getDeclaredField("recipe");
             shaped.setAccessible(true);
         } catch (Exception e) {}
     }
