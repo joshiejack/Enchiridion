@@ -339,7 +339,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
                 TextEditor.INSTANCE.clearEditable();
 
                 if (this.page != null) {
-                    int closest = (int) (5*(Math.floor(Math.abs(page.getPageNumber()/5))));
+                    int closest = (int) (5*(Math.floor(page.getPageNumber()/5)));
                     int difference = closest - this.page.getPageNumber();
                     if (difference > 50 || difference < -50) {
                         GuiTimeLine.INSTANCE.startPage = closest;
