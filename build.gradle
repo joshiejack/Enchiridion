@@ -60,6 +60,7 @@ processResources
 }
 
 jar {
+    classifier = ''
     manifest {
         attributes 'FMLAT': 'enchiridion_at.cfg'
     }
