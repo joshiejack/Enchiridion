@@ -70,6 +70,7 @@ publishing {
     tasks.publish.dependsOn 'build'
     publications {
         mavenJava(MavenPublication) {
+            artifactId 'Enchiridion'
             artifact jar
         }
     }
