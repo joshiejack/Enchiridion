@@ -11,10 +11,7 @@ import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryEvents;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.library.LibraryRegistry;
-import joshie.enchiridion.library.handlers.EnchiridionBookHandler;
-import joshie.enchiridion.library.handlers.RightClickBookHandler;
-import joshie.enchiridion.library.handlers.TemporarySwitchHandler;
-import joshie.enchiridion.library.handlers.WriteableBookHandler;
+import joshie.enchiridion.library.handlers.*;
 import joshie.enchiridion.network.*;
 import joshie.enchiridion.util.ECreativeTab;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,6 +42,7 @@ public class ECommonProxy implements IGuiHandler {
         EnchiridionAPI.library.registerBookHandler(new WriteableBookHandler()); //Writeable Books
         EnchiridionAPI.library.registerBookHandler(new RightClickBookHandler()); //Default Handler
         EnchiridionAPI.library.registerBookHandler(new TemporarySwitchHandler()); //Switch Click Handler
+        EnchiridionAPI.library.registerBookHandler(new CopyNBTHandler()); //Copy NBT Handler
         //if (EConfig.loadComputercraft) attemptToRegisterModdedBookHandler(ComputerCraftHandler.class);
         //if (EConfig.loadWarpbook) attemptToRegisterModdedBookHandler(WarpBookHandler.class);
 

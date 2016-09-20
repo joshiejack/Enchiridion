@@ -16,9 +16,8 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'maven-publish'
 
 repositories {
-  maven {
-    url "http://dvs1.progwml6.com/files/maven"
-  }
+  maven {	url "http://tehnut.info/maven" }
+  maven {   url "http://dvs1.progwml6.com/files/maven" }
 }
 
 ext.buildnumber=""
@@ -41,6 +40,7 @@ minecraft {
 
 dependencies {
   deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
+  deobfCompile "info.amerifrance.guideapi:Guide-API:${minecraft_version}-${guideapi_version}"
 }
 
 processResources

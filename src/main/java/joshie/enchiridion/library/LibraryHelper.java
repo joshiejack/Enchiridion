@@ -38,7 +38,7 @@ public class LibraryHelper {
 
     @SideOnly(Side.CLIENT)
     public static LibraryInventory getClientLibraryContents() {
-        return theClient.getLibraryInventory((EntityPlayer) null);
+        return theClient.getLibraryInventory(null);
     }
 
     public static LibraryInventory getServerLibraryContents(EntityPlayer player) {

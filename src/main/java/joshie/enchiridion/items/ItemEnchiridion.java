@@ -1,5 +1,7 @@
 package joshie.enchiridion.items;
 
+import amerifrance.guideapi.api.IGuideItem;
+import amerifrance.guideapi.api.impl.Book;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
@@ -19,6 +21,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -28,9 +31,21 @@ import java.util.List;
 import static net.minecraft.util.text.TextFormatting.DARK_GREEN;
 import static net.minecraft.util.text.TextFormatting.RESET;
 
-public class ItemEnchiridion extends Item {
+@Optional.Interface(modid = "guideapi", iface = "amerifrance.guideapi.api.IGuideItem")
+public class ItemEnchiridion extends Item implements IGuideItem {
     public ItemEnchiridion() {
         setHasSubtypes(true);
+    }
+
+    @Optional.Method(modid = "guideapi")
+    @Override
+    public Book getBook(ItemStack stack) {
+        return null;
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return oldStack.getItem() != newStack.getItem() || oldStack.getItemDamage() != newStack.getItemDamage();
     }
 
     @Override

@@ -14,6 +14,7 @@ import joshie.enchiridion.gui.library.GuiLibrary;
 import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.EditHelper;
 import joshie.enchiridion.helpers.HeldHelper;
+import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.items.SmartLibrary;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.lib.GuiIDs;
@@ -23,6 +24,7 @@ import joshie.enchiridion.util.ECreativeTab;
 import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.EResourcePack;
 import joshie.enchiridion.util.PenguinFont;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.IResourcePack;
@@ -145,6 +147,17 @@ public class EClientProxy extends ECommonProxy {
     @Override
     public void setupFont() {
         PenguinFont.load();
+        /** Colorise the books **/
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, index) -> {
+            if (stack.getItemDamage() == 1) {
+                ItemStack current = LibraryHelper.getLibraryContents(MCClientHelper.getPlayer()).getCurrentBookItem();
+                if (current != null) {
+                    return Minecraft.getMinecraft().getItemColors().getColorFromItemstack(current, index);
+                }
+            }
+
+            return -1;
+        }, ECommonProxy.book);
     }
     
     /** GUI HANDLING **/

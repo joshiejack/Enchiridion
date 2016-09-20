@@ -1,3 +1,10 @@
+Enchiridion - 3.1.9
+• Fix switch book handler
+• Add guide api support
+
+Enchiridion - 3.1.8
+• Fix IE/Optifine/Enchiridion trio bug
+
 Enchiridion - 3.1.7
 • Fix timeline jumping messing up on negative numbers
 

@@ -54,6 +54,7 @@ public class ModSupport {
         books.add("computercraft", "computercraft:printout", false, false);
         books.add("switchclick", "ImmersiveEngineering:tool 3", true, false);
         books.add("warpbook", "warpbook:warpbook", false, false);
+        books.add("copynbt", "guideapi:ItemGuideBook", false, false);
         books.add("customwood", "minecraft:planks 1", true, false);
         books.add("customwood", "minecraft:planks 5", true, false);
         books.add("customwood", "thaumcraft:plank 0", true, false);
