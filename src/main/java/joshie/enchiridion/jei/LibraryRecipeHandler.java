@@ -19,6 +19,12 @@ public class LibraryRecipeHandler implements IRecipeHandler<LibraryRecipeWrapper
         return VanillaRecipeCategoryUid.CRAFTING;
     }
 
+    @Nonnull
+    @Override
+    public String getRecipeCategoryUid(@Nonnull LibraryRecipeWrapper recipe) {
+        return getRecipeCategoryUid();
+    }
+
     @Override
     @Nonnull
     public IRecipeWrapper getRecipeWrapper(@Nonnull LibraryRecipeWrapper recipe) {
