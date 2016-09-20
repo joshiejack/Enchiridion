@@ -27,6 +27,7 @@ import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
@@ -148,15 +149,18 @@ public class EClientProxy extends ECommonProxy {
     public void setupFont() {
         PenguinFont.load();
         /** Colorise the books **/
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, index) -> {
-            if (stack.getItemDamage() == 1) {
-                ItemStack current = LibraryHelper.getLibraryContents(MCClientHelper.getPlayer()).getCurrentBookItem();
-                if (current != null) {
-                    return Minecraft.getMinecraft().getItemColors().getColorFromItemstack(current, index);
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+                if (stack.getItemDamage() == 1) {
+                    ItemStack current = LibraryHelper.getLibraryContents(MCClientHelper.getPlayer()).getCurrentBookItem();
+                    if (current != null) {
+                        return Minecraft.getMinecraft().getItemColors().getColorFromItemstack(current, tintIndex);
+                    }
                 }
-            }
 
-            return -1;
+                return -1;
+            }
         }, ECommonProxy.book);
     }
     
