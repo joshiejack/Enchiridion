@@ -14,7 +14,7 @@ import java.util.List;
 public class LibraryCommand implements ICommand {
     @Override
     public int compareTo(ICommand o) {
-        return 0;
+        return getCommandName().compareTo(o.getCommandName());
     }
 
     @Override

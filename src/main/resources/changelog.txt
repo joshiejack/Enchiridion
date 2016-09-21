@@ -1,3 +1,6 @@
+Enchiridion - 3.1.10
+• Fix command
+
 Enchiridion - 3.1.9
 • Fix switch book handler
 • Add guide api support
