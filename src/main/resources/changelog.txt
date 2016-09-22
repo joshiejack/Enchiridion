@@ -1,3 +1,6 @@
+Enchiridion - 3.1.11
+• Fix Copy NBT Handler
+
 Enchiridion - 3.1.10
 • Fix command
 
