@@ -1,4 +1,3 @@
-// For those who want the bleeding edge
 buildscript {
     repositories {
         jcenter()
@@ -16,13 +15,14 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'maven-publish'
 
 repositories {
-  maven {	url "http://tehnut.info/maven" }
-  maven {   url "http://dvs1.progwml6.com/files/maven" }
+    maven { url "http://tehnut.info/maven" }
+    maven { url "http://dvs1.progwml6.com/files/maven" }
+    maven { url "http://blamejared.com/maven" }
 }
 
 ext.buildnumber=""
 if (System.getenv().BUILD_NUMBER) {
-    ext.buildnumber="-" + System.getenv().BUILD_NUMBER
+    ext.buildnumber = "-" + System.getenv().BUILD_NUMBER
 }
 
 version = "${minecraft_version}-${mod_version}${buildnumber}"
@@ -33,27 +33,27 @@ minecraft {
     version = "${minecraft_version}-${forge_version}"
     runDir = "run"
     mappings = "${mappings_version}"
-    
+
     replace "@VERSION@", "${mod_version}"
     replaceIn "EInfo.java"
 }
 
 dependencies {
-  deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
-  deobfCompile "info.amerifrance.guideapi:Guide-API:${minecraft_version}-${guideapi_version}"
+    deobfCompile "mezz.jei:jei_${minecraft_version}:${jei_version}"
+    deobfCompile "info.amerifrance.guideapi:Guide-API:${minecraft_version}-${guideapi_version}"
+    deobfCompile "MineTweaker3:MineTweaker3-API:${minetweaker_version}"
 }
 
-processResources
-{
+processResources {
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
 
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
-        
+
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }

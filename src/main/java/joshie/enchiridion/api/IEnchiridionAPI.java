@@ -13,9 +13,9 @@ public interface IEnchiridionAPI {
      *  for a books folder with json. You need to do this if you wish your book data
      *  to ever get registered.
      *  
-     *  @param mod  This should either be just your modid i.e. "Mariculture" , IF your assetspath is the same
+     *  @param modid  This should either be just your modid i.e. "Mariculture" , IF your assets path is the same
      *              ^ the assets path will get converted to all lower case, so don't worry about capitalisation for the above
-     *              or in the format "modid:assetspath". for example, a mod called called Smash with the modid Fish and assets Dog would be.
+     *              or in the format "modid:assets_path". for example, a mod called called Smash with the modid Fish and assets Dog would be.
      *              
      *              Fish:dog
      *              

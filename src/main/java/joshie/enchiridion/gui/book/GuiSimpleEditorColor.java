@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GuiSimpleEditorColor extends GuiSimpleEditorAbstract {
     public static final GuiSimpleEditorColor INSTANCE = new GuiSimpleEditorColor();
-    private static final String[][] colors = new String[][] { 
+    private static final String[][] COLORS = new String[][] {
         new String[] { "#ffbfbf", "#f99", "#ff7373", "#ff4d4d", "#ff2626", "#f00", "#d90000",       "#b20000", "#8c0000", "#600",       "#400000", "#000", "#fff",      "#fff", "#fff"}, 
         new String[] { "#ffcfbf", "#ffb399", "#ff9673", "#ff7a4d", "#ff5c26", "#ff4000", "#d93600", "#b22d00", "#8c2300", "#661a00",    "#401000", "#000", "#eee",      "#f0f0e1", "#ececfb"},
         new String[] { "#ffdfbf", "#fc9", "#ffb973", "#ffa64d", "#ff9326", "#ff8000", "#d96d00",    "#b25900", "#8c4600", "#630",       "#402000", "#000", "#ddd",      "#dfdfd0", "#dbdbea"}, 
@@ -38,11 +38,11 @@ public class GuiSimpleEditorColor extends GuiSimpleEditorAbstract {
     private static int[][] colorsI;
     
     static {
-        colorsI = new int[colors.length][];
-        for (int y = 0; y < colors.length; y++) {
+        colorsI = new int[COLORS.length][];
+        for (int y = 0; y < COLORS.length; y++) {
             int[] color = new int[15];
             for (int x = 0; x < 15; x++) {
-                String colorS = colors[y][x];
+                String colorS = COLORS[y][x];
                 try {
                     if (colorS.length() == 4) colorS = colorS.replaceAll(".", "$0$0");
                     color[x] = (int) Long.parseLong("ff" + colorS.replace("#", ""), 16);

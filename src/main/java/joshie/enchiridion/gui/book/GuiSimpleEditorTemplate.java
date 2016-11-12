@@ -16,10 +16,10 @@ import java.util.List;
 
 public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
     public static final GuiSimpleEditorTemplate INSTANCE = new GuiSimpleEditorTemplate();
-    private static final ResourceLocation arrow_right_on = new ELocation("arrow_right_on");
-    private static final ResourceLocation arrow_right_off = new ELocation("arrow_right_off");
-    private static final ResourceLocation arrow_left_on = new ELocation("arrow_left_on");
-    private static final ResourceLocation arrow_left_off = new ELocation("arrow_left_off");
+    private static final ResourceLocation ARROW_RIGHT_ON = new ELocation("arrow_right_on");
+    private static final ResourceLocation ARROW_RIGHT_OFF = new ELocation("arrow_right_off");
+    private static final ResourceLocation ARROW_LEFT_ON = new ELocation("arrow_left_on");
+    private static final ResourceLocation ARROW_LEFT_OFF = new ELocation("arrow_left_off");
 
     private final HashMap<String, ITemplate> templates = new HashMap();
     private ArrayList<ITemplate> sorted = new ArrayList();
@@ -52,11 +52,11 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
 
     //CONVERT IN TO BUTTONS
 
-    private static final int xPosStart = 4;
+    private static final int X_POS_START = 4;
 
     private void drawBoxLabel(String name, int yPos) {
-        drawBorderedRectangle(xPosStart - 2, yPos, 83, yPos + 10, 0xFFB0A483, 0xFF48453C);
-        drawSplitScaledString("[b]" + name + "[/b]", xPosStart, yPos + 3, 0xFF48453C, 0.5F);
+        drawBorderedRectangle(X_POS_START - 2, yPos, 83, yPos + 10, 0xFFB0A483, 0xFF48453C);
+        drawSplitScaledString("[b]" + name + "[/b]", X_POS_START, yPos + 3, 0xFF48453C, 0.5F);
     }
 
     @Override

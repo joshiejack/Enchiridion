@@ -2,7 +2,6 @@ package joshie.enchiridion.gui.book.features.recipe;
 
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
-import minetweaker.api.minecraft.MineTweakerMC;
 import minetweaker.api.oredict.IOreDictEntry;
 import minetweaker.api.recipes.ShapedRecipe;
 import net.minecraft.item.ItemStack;
@@ -18,10 +17,10 @@ public class RecipeHandlerMTAdvancedShaped extends RecipeHandlerRecipeBase {
         try {
             ShapedRecipe mtRecipe = (ShapedRecipe) shaped.get(recipe);
             IIngredient[] inputs = mtRecipe.getIngredients();
-            ItemStack outStack = MineTweakerMC.getItemStack(mtRecipe.getOutput());
+            ItemStack outStack = toStack(mtRecipe.getOutput());
             ArrayList<Object> objects = new ArrayList();
             for (IIngredient ingredient: inputs) {
-                if (ingredient instanceof IItemStack) objects.add(MineTweakerMC.getItemStack(ingredient));
+                if (ingredient instanceof IItemStack) objects.add(toStack((IItemStack) ingredient));
                 if (ingredient instanceof IOreDictEntry) objects.add(((IOreDictEntry) ingredient).getName());
             }
             

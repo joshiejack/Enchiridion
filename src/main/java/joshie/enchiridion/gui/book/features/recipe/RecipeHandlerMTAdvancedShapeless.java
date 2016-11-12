@@ -2,7 +2,6 @@ package joshie.enchiridion.gui.book.features.recipe;
 
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
-import minetweaker.api.minecraft.MineTweakerMC;
 import minetweaker.api.oredict.IOreDictEntry;
 import minetweaker.api.recipes.ShapelessRecipe;
 import net.minecraft.item.ItemStack;
@@ -18,27 +17,27 @@ public class RecipeHandlerMTAdvancedShapeless extends RecipeHandlerRecipeBase {
         try {
             ShapelessRecipe mtRecipe = (ShapelessRecipe) shapeless.get(recipe);
             IIngredient[] inputs = mtRecipe.getIngredients();
-            ItemStack outStack = MineTweakerMC.getItemStack(mtRecipe.getOutput());
-            ArrayList<Object> objects = new ArrayList();
+            ItemStack outStack = toStack(mtRecipe.getOutput());
+            ArrayList<Object> objects = new ArrayList<Object>();
             for (IIngredient ingredient: inputs) {
-                if (ingredient instanceof IItemStack) objects.add(MineTweakerMC.getItemStack(ingredient));
+                if (ingredient instanceof IItemStack) objects.add(toStack((IItemStack) ingredient));
                 if (ingredient instanceof IOreDictEntry) objects.add(((IOreDictEntry) ingredient).getName());
             }
-            
+
             init(outStack, objects, 3);
         } catch (Exception e) { e.printStackTrace(); }
     }
-    
+
     @Override
     public String getRecipeName() {
         return "MTAdvancedShapelessdRecipe";
     }
-    
+
     @Override
     protected Class getHandlerClass() {
         return this.getClass();
     }
-    
+
     @Override
     protected Class getRecipeClass() {
         return clazz;
@@ -52,6 +51,6 @@ public class RecipeHandlerMTAdvancedShapeless extends RecipeHandlerRecipeBase {
             else if (Loader.MC_VERSION.equals("1.10.2")) clazz = Class.forName("minetweaker.mc1102.recipes.ShapelessRecipeAdvanced");
             shapeless = clazz.getDeclaredField("recipe");
             shapeless.setAccessible(true);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
     }
 }

@@ -50,7 +50,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        EnchiridionAPI.draw.drawImage(toolbar, -9, EConfig.timelineYPos - 9, 440, EConfig.timelineYPos + 13);
+        EnchiridionAPI.draw.drawImage(TOOLBAR, -9, EConfig.timelineYPos - 9, 440, EConfig.timelineYPos + 13);
         //EnchiridionAPI.draw.drawBorderedRectangle(-6, EConfig.timelineYPos - 7, 437, EConfig.timelineYPos, 0xFF312921, 0xFF191511);
         EnchiridionAPI.draw.drawBorderedRectangle(-6, EConfig.timelineYPos, 437, EConfig.timelineYPos + 11, 0x00000000, 0xFF191511);
         int currentPageNumber = EnchiridionAPI.book.getPage().getPageNumber();

@@ -1,3 +1,6 @@
+Enchiridion - 3.1.13
+• Fixed potiental crash with JEI
+
 Enchiridion - 3.1.12
 • Fix compatibility with JEI version 3.11.0.269+
 

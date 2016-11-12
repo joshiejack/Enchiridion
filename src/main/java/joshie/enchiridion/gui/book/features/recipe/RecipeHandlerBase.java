@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public abstract class RecipeHandlerBase implements IRecipeHandler {
-    protected static final ResourceLocation location = new ELocation("guide_elements");
+    protected static final ResourceLocation LOCATION = new ELocation("guide_elements");
     protected ArrayList<IItemStack> stackList = new ArrayList();
     private String unique;
 

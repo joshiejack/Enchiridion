@@ -37,16 +37,16 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
         return false;
     }
 
-    private static final int xPosStart = 4;
+    private static final int X_POS_START = 4;
 
     private void drawBoxLabel(String name, int yPos) {
-        drawBorderedRectangle(xPosStart - 2, yPos, 83, yPos + 10, 0xFFB0A483, 0xFF48453C);
-        drawSplitScaledString("[b]" + name + "[/b]", xPosStart, yPos + 3, 0xFF48453C, 0.5F);
+        drawBorderedRectangle(X_POS_START - 2, yPos, 83, yPos + 10, 0xFFB0A483, 0xFF48453C);
+        drawSplitScaledString("[b]" + name + "[/b]", X_POS_START, yPos + 3, 0xFF48453C, 0.5F);
     }
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        int xPos = xPosStart;
+        int xPos = X_POS_START;
         int yPos = -11;
 
         //Draw the extra information for the actions
@@ -109,7 +109,7 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY) {
-        int xPos = xPosStart;
+        int xPos = X_POS_START;
         int yPos = -11;
         //Draw the extra information for the actions
         drawBoxLabel("Extra Fields", yPos + 20);

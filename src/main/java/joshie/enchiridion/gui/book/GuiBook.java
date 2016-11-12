@@ -25,10 +25,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class GuiBook extends GuiBase implements IBookHelper {
-    private static final ResourceLocation legacyCoverL = new ELocation("guide_cover_left");
-    private static final ResourceLocation legacyCoverR = new ELocation("guide_cover_right");
-    private static final ResourceLocation legacyLeft = new ELocation("guide_page_left");
-    private static final ResourceLocation legacyRight = new ELocation("guide_page_right");
+    private static final ResourceLocation LEGACY_COVER_L = new ELocation("guide_cover_left");
+    private static final ResourceLocation LEGACY_COVER_R = new ELocation("guide_cover_right");
+    private static final ResourceLocation LEGACY_LEFT = new ELocation("guide_page_left");
+    private static final ResourceLocation LEGACY_RIGHT = new ELocation("guide_page_right");
     public static final GuiBook INSTANCE = new GuiBook(); //Instane of this book
 
     //Page Number Cache
@@ -58,18 +58,18 @@ public class GuiBook extends GuiBase implements IBookHelper {
             //Display the left side
             if (book.isBackgroundLegacy()) {
                 GlStateManager.color(red, green, blue);
-                mc.getTextureManager().bindTexture(legacyCoverL);
+                mc.getTextureManager().bindTexture(LEGACY_COVER_L);
                 drawTexturedModalRect(x - 9, y, 35, 0, 212 + 9, ySize);
                 GlStateManager.color(1F, 1F, 1F);
-                mc.getTextureManager().bindTexture(legacyLeft);
+                mc.getTextureManager().bindTexture(LEGACY_LEFT);
                 drawTexturedModalRect(x, y, 44, 0, 212, ySize);
 
                 //Display the right side
                 GlStateManager.color(red, green, blue);
-                mc.getTextureManager().bindTexture(legacyCoverR);
+                mc.getTextureManager().bindTexture(LEGACY_COVER_R);
                 drawTexturedModalRect(x + 212, y, 0, 0, 218 + 9, ySize);
                 GlStateManager.color(1F, 1F, 1F);
-                mc.getTextureManager().bindTexture(legacyRight);
+                mc.getTextureManager().bindTexture(LEGACY_RIGHT);
                 drawTexturedModalRect(x + 212, y, 0, 0, 218, ySize);
             } else EnchiridionAPI.draw.drawImage(book.getBackgroundResource(), book.getBackgroundStartX(), book.getBackgroundStartY(), book.getBackgroundEndX(), book.getBackgroundEndY());
         }

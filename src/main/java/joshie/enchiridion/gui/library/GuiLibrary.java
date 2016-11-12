@@ -14,7 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiLibrary extends GuiContainer {
-    private static final ResourceLocation location = new ELocation("library");
+    private static final ResourceLocation LOCATION = new ELocation("library");
     private ScaledResolution scaledresolution;
     public final int xSize = 430;
     public final int ySize = 217;
@@ -30,7 +30,7 @@ public class GuiLibrary extends GuiContainer {
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         x = (width - xSize) / 2;
         y = (height - ySize) / 2;
-        drawImage(location, -10, -10, 440, 240);
+        drawImage(LOCATION, -10, -10, 440, 240);
     }
 
     //Helper

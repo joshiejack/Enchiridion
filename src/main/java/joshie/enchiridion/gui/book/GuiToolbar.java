@@ -23,16 +23,16 @@ public class GuiToolbar extends AbstractGuiOverlay {
         return mouseX >= xPos && mouseX <= xPos + 8 && mouseY >= EConfig.toolbarYPos + 2 && mouseY <= EConfig.toolbarYPos + 10;
     }
 
-    private static final int xStart = -3;
-    private static final int xEnd = 426;
+    private static final int X_START = -3;
+    private static final int X_END = 426;
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        EnchiridionAPI.draw.drawImage(toolbar, -10, EConfig.toolbarYPos - 5, 441, EConfig.toolbarYPos + 17);
+        EnchiridionAPI.draw.drawImage(TOOLBAR, -10, EConfig.toolbarYPos - 5, 441, EConfig.toolbarYPos + 17);
         EnchiridionAPI.draw.drawBorderedRectangle(-6, EConfig.toolbarYPos, 437, EConfig.toolbarYPos + 12, 0xFFE4D6AE, 0x5579725A);
 
         //Draw the left hand buttons first
-        int x = xStart;
+        int x = X_START;
         for (IToolbarButton button: leftButtons) {
             if (!isOverButton(x, mouseX, mouseY)) EnchiridionAPI.draw.drawImage(button.getResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
             else EnchiridionAPI.draw.drawImage(button.getHoverResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
@@ -41,7 +41,7 @@ public class GuiToolbar extends AbstractGuiOverlay {
         }
 
         //Now draw the right hand buttons
-        x = xEnd;
+        x = X_END;
         for (IToolbarButton button: rightButtons) {
             if (!isOverButton(x, mouseX, mouseY)) EnchiridionAPI.draw.drawImage(button.getResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
             else EnchiridionAPI.draw.drawImage(button.getHoverResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
@@ -52,7 +52,7 @@ public class GuiToolbar extends AbstractGuiOverlay {
 
     @Override
     public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
-        int x = xStart;
+        int x = X_START;
         for (IToolbarButton button: leftButtons) {
             if (isOverButton(x, mouseX, mouseY)) {
                 tooltip.add(button.getTooltip());
@@ -62,7 +62,7 @@ public class GuiToolbar extends AbstractGuiOverlay {
         }
 
         //Right side of buttons
-        x = xEnd;
+        x = X_END;
         for (IToolbarButton button: rightButtons) {
             if (isOverButton(x, mouseX, mouseY)) {
                 tooltip.add(button.getTooltip());
@@ -74,7 +74,7 @@ public class GuiToolbar extends AbstractGuiOverlay {
 
     @Override
     public void mouseReleased(int mouseX, int mouseY) {
-        int x = xStart;
+        int x = X_START;
         for (IToolbarButton button: leftButtons) {
             if (isOverButton(x, mouseX, mouseY)) {
                 button.performAction();
@@ -84,7 +84,7 @@ public class GuiToolbar extends AbstractGuiOverlay {
         }
 
         //Right side of buttons
-        x = xEnd;
+        x = X_END;
         for (IToolbarButton button: rightButtons) {
             if (isOverButton(x, mouseX, mouseY)) {
                 button.performAction();

@@ -10,10 +10,10 @@ import java.util.ArrayList;
 
 public class GuiLayers extends AbstractGuiOverlay {
     public static final GuiLayers INSTANCE = new GuiLayers();
-    private static final ResourceLocation lock_dflt = new ResourceLocation("enchiridion:textures/books/lock_dftl.png");
-    private static final ResourceLocation lock_hover = new ResourceLocation("enchiridion:textures/books/lock_hover.png");
-    private static final ResourceLocation visible_dflt = new ResourceLocation("enchiridion:textures/books/layer_dftl.png");
-    private static final ResourceLocation visible_hover = new ResourceLocation("enchiridion:textures/books/layer_hover.png");
+    private static final ResourceLocation LOCK_DFLT = new ResourceLocation("enchiridion:textures/books/lock_dftl.png");
+    private static final ResourceLocation LOCK_HOVER = new ResourceLocation("enchiridion:textures/books/lock_hover.png");
+    private static final ResourceLocation VISIBLE_DFLT = new ResourceLocation("enchiridion:textures/books/layer_dftl.png");
+    private static final ResourceLocation VISIBLE_HOVER = new ResourceLocation("enchiridion:textures/books/layer_hover.png");
     private IFeatureProvider dragged = null;
     private int held = 0;
     private int yStart = 0;
@@ -37,7 +37,7 @@ public class GuiLayers extends AbstractGuiOverlay {
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        EnchiridionAPI.draw.drawImage(sidebar, EConfig.layersXPos - 3, EConfig.toolbarYPos - 7, EConfig.layersXPos + 87, EConfig.timelineYPos + 13);
+        EnchiridionAPI.draw.drawImage(SIDEBAR, EConfig.layersXPos - 3, EConfig.toolbarYPos - 7, EConfig.layersXPos + 87, EConfig.timelineYPos + 13);
         EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos, EConfig.toolbarYPos + 7, EConfig.layersXPos + 85, EConfig.timelineYPos + 11, 0xFF312921, 0xFF191511);
         EnchiridionAPI.draw.drawSplitScaledString("[b]" + Enchiridion.translate("layers") + "[/b]", EConfig.layersXPos + 20, EConfig.toolbarYPos - 2, 250, 0xFFFFFFFF, 1F);
         int layerY = 0;
@@ -48,13 +48,13 @@ public class GuiLayers extends AbstractGuiOverlay {
             IFeatureProvider feature = features.get(i);
             /** LOCK ICON **/
             //Setup the defaults for the lock icon
-            ResourceLocation resource = lock_dflt;
+            ResourceLocation resource = LOCK_DFLT;
             int color1 = 0xFFE4D6AE;
             int color2 = 0x5579725A;
 
             //Switch over to the hover if it applies
             if (mouseX >= EConfig.layersXPos + 4 && mouseX <= EConfig.layersXPos + 9 && mouseY >= EConfig.toolbarYPos - 1 + layerY && mouseY <= EConfig.toolbarYPos + layerY + 5) {
-                resource = lock_hover;
+                resource = LOCK_HOVER;
                 color1 = 0xFFB0A483;
                 color2 = 0xFF48453C;
             }
@@ -66,12 +66,12 @@ public class GuiLayers extends AbstractGuiOverlay {
 
             /** VISIBILITY ICON **/
             //Reset
-            resource = visible_dflt;
+            resource = VISIBLE_DFLT;
             color1 = 0xFFE4D6AE;
             color2 = 0x5579725A;
 
             if (mouseX > EConfig.layersXPos + 9 && mouseX < EConfig.layersXPos + 20 && mouseY >= EConfig.toolbarYPos - 1 + layerY && mouseY <= EConfig.toolbarYPos + layerY + 5) {
-                resource = visible_hover;
+                resource = VISIBLE_HOVER;
                 color1 = 0xFFB0A483;
                 color2 = 0xFF48453C;
             }

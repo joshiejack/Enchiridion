@@ -112,7 +112,7 @@ public class Page implements IPage {
         pageNumber = number;
     }
 
-    private static final SortIndex sorter = new SortIndex();
+    private static final SortIndex SORTER = new SortIndex();
     private static class SortIndex implements Comparator {
         @Override
         public int compare(Object o1, Object o2) {
@@ -144,7 +144,7 @@ public class Page implements IPage {
 
     @Override
     public void sort() {
-        Collections.sort(features, sorter); //Sort everything out in to order
+        Collections.sort(features, SORTER); //Sort everything out in to order
 
         int i = 0;
         for (IFeatureProvider provider: features) { //Fix all the id numbers

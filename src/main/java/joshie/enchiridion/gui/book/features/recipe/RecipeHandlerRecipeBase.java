@@ -2,6 +2,7 @@ package joshie.enchiridion.gui.book.features.recipe;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
+import minetweaker.api.item.IItemStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -73,7 +74,7 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
 
         for (Object o : input) {
             if (o instanceof List) {
-                addToUnique(getMostCommonName(new ArrayList((List)o)));
+                addToUnique(getMostCommonName(new ArrayList((List) o)));
             } else if (o instanceof ItemStack) {
                 addToUnique(Item.REGISTRY.getNameForObject(((ItemStack) o).getItem()));
                 addToUnique(((ItemStack) o).getItemDamage());
@@ -90,16 +91,17 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
             if (stack.isItemEqual(output)) {
                 try {
                     list.add((IRecipeHandler) Class.forName(getHandlerClass().getName()).getConstructor(IRecipe.class).newInstance(check));
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                }
             }
         }
     }
-    
+
     @Override
     public String getRecipeName() {
         return getRecipeClass().getSimpleName();
     }
-    
+
     protected abstract Class getRecipeClass();
 
     protected abstract Class getHandlerClass();
@@ -121,8 +123,13 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
 
     @Override
     protected void drawBackground() {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(location);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(LOCATION);
         EnchiridionAPI.draw.drawTexturedRectangle(0D, 0D, 0, 0, 58, 58, 1F);
         EnchiridionAPI.draw.drawTexturedRectangle(84D, 42D, 1, 63, 20, 14, 1F);
+    }
+
+    protected ItemStack toStack(IItemStack iStack) {
+        if (iStack == null) return null;
+        return (ItemStack) iStack.getInternal();
     }
 }

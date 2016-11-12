@@ -32,7 +32,7 @@ public class GuiSimpleEditor extends AbstractGuiOverlay implements ITextEditable
 
         if (editor != null) {
             /** Draw the Background **/
-            EnchiridionAPI.draw.drawImage(sidebar, EConfig.editorXPos - 3, EConfig.toolbarYPos - 7, EConfig.editorXPos + 87, EConfig.timelineYPos + 13);
+            EnchiridionAPI.draw.drawImage(SIDEBAR, EConfig.editorXPos - 3, EConfig.toolbarYPos - 7, EConfig.editorXPos + 87, EConfig.timelineYPos + 13);
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.editorXPos, EConfig.toolbarYPos + 7, EConfig.editorXPos + 85, EConfig.timelineYPos + 11, 0xFF312921, 0xFF191511);
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.editorXPos + 2, EConfig.toolbarYPos + 9, EConfig.editorXPos + 83, EConfig.timelineYPos + 9, 0xFFE4D6AE, 0x5579725A);
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.editorXPos, EConfig.toolbarYPos - 3, EConfig.editorXPos + 84, EConfig.toolbarYPos + 7, 0xFF312921, 0xFF191511);

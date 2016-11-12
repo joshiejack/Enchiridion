@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 public class WrappedStack implements IItemStack {
-    protected static final Random rand = new Random();
+    protected static final Random RAND = new Random();
     protected List<ItemStack> permutations = new ArrayList();
     protected boolean hasPermutations = false;
     protected ItemStack stack;
@@ -54,7 +54,7 @@ public class WrappedStack implements IItemStack {
             }
 
             hasPermutations = permutations.size() > 1;
-            stack = permutations.get(rand.nextInt(permutations.size()));
+            stack = permutations.get(RAND.nextInt(permutations.size()));
         }
     }
 
@@ -70,7 +70,7 @@ public class WrappedStack implements IItemStack {
 
             if (ticker <= 0) {
                 ticker = 100;
-                stack = permutations.get(rand.nextInt(permutations.size()));
+                stack = permutations.get(RAND.nextInt(permutations.size()));
             }
         }
     }

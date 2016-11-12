@@ -7,6 +7,7 @@ import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.gui.IAdvancedGuiHandler;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,5 +32,11 @@ public class LibraryPlugin extends BlankModPlugin implements IAdvancedGuiHandler
         List<Rectangle> rectangles = new ArrayList();
         rectangles.add(new Rectangle(library.x, library.y + 40, 367, 116));
         return rectangles;
+    }
+
+    @Nullable
+    @Override
+    public Object getIngredientUnderMouse(GuiLibrary guiContainer, int mouseX, int mouseY) {
+        return null;
     }
 }

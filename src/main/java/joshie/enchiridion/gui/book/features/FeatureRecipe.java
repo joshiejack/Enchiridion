@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FeatureRecipe extends FeatureItem {
-    public transient static final ArrayList<IRecipeHandler> handlers = new ArrayList();
+    public transient static final ArrayList<IRecipeHandler> HANDLERS = new ArrayList();
 
     protected String ingredients = "plankWood:plankWood:plankWood:cobblestone:ingotAluminum:cobblestone:cobblestone:dustRedstone:cobblestone";
     protected String recipeType = "ShapedOreRecipe";
@@ -34,7 +34,7 @@ public class FeatureRecipe extends FeatureItem {
 
     private boolean buildRecipe(boolean isLoading) {
         ArrayList<IRecipeHandler> recipes = new ArrayList();
-        for (IRecipeHandler handler : handlers) {
+        for (IRecipeHandler handler : HANDLERS) {
             handler.addRecipes(stack, recipes);
         }
 

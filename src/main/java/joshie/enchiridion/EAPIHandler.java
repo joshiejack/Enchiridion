@@ -50,11 +50,7 @@ public class EAPIHandler implements IEnchiridionAPI {
             Enchiridion.log(Level.ERROR, "When attempting to register books with Enchiridion a mod with the modid " + modid + " could not be found");
         } else {
             String jar = mod.getSource().toString();
-            if (jar.contains(".jar") || jar.contains(".zip")) {
-                BookRegistry.INSTANCE.registerModInJar(assetspath, new File(jar));
-            } else {
-                BookRegistry.INSTANCE.registerModInDev(assetspath, mod.getSource());
-            }
+            BookRegistry.INSTANCE.registerMod(assetspath, new File(jar));
         }
     }
 
@@ -70,7 +66,7 @@ public class EAPIHandler implements IEnchiridionAPI {
 
     @Override
     public void registerRecipeHandler(IRecipeHandler handler) {
-        FeatureRecipe.handlers.add(handler);
+        FeatureRecipe.HANDLERS.add(handler);
         Enchiridion.log(Level.INFO, "Registered a new recipe handler: " + handler.getRecipeName());
     }
 

@@ -61,27 +61,8 @@ public class BookRegistry implements ItemMeshDefinition {
             } catch (Exception e) { e.printStackTrace(); }
         }
     }
-    
-    public void registerModInDev(String modid, File source) {                                                             //Fix for intellij, although it needs to be in a folder called Enchiridion
-        File path = new File(FileHelper.getDevAssetsForModPath(source.getParentFile(), modid, "books").toString().replace("\\out\\production", "\\Enchiridion"));
-        if (!path.exists()) {
-            path.mkdir();
-        }
-        
-        Collection<File> files = FileUtils.listFiles(path, new String[] { "json" }, false);
-        for (File file : files) {
-            try {
-                String json = FileUtils.readFileToString(file);
-                IBook data = register(GsonHelper.getModifiedGson().fromJson(json, Book.class).setModID(modid));
-                data.setModID(modid);
-                Enchiridion.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.getUniqueName() + " for the language: " + data.getLanguageKey());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
-    public void registerModInJar(String modid, File jar) {
+    public void registerMod(String modid, File jar) {
         try {
             ZipFile zipfile = new ZipFile(jar);
             Enumeration enumeration = zipfile.entries();
@@ -106,7 +87,7 @@ public class BookRegistry implements ItemMeshDefinition {
     
     private final HashMap<String, HashMap<String, IBook>> books = new HashMap();
     private final HashMap<String, ModelResourceLocation> locations = new HashMap();
-    private ModelResourceLocation dflt = new ModelResourceLocation("minecraft:book", "inventory");
+    private static ModelResourceLocation DFLT = new ModelResourceLocation("minecraft:book", "inventory");
     
     public Collection<ModelResourceLocation> getModels() {
         return locations.values();
@@ -232,7 +213,7 @@ public class BookRegistry implements ItemMeshDefinition {
         if (stack.getItemDamage() == 1) return EClientProxy.libraryItem;
         else {
             IBook book = getBook(stack);
-            if (book == null) return dflt;
+            if (book == null) return DFLT;
             else return locations.get(book.getUniqueName());
         }
     }

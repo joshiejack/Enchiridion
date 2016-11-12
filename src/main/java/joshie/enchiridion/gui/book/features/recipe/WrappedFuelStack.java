@@ -15,6 +15,6 @@ public class WrappedFuelStack extends WrappedStack {
         }
                
         hasPermutations = permutations.size() > 1;
-        stack = permutations.get(rand.nextInt(permutations.size()));
+        stack = permutations.get(RAND.nextInt(permutations.size()));
     }
 }

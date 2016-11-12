@@ -35,7 +35,7 @@ public class Enchiridion {
     public static Enchiridion instance;
     public static File root;
 
-    private static final Logger logger = LogManager.getLogger(MODNAME);
+    private static final Logger LOGGER = LogManager.getLogger(MODNAME);
 
     @EventHandler
     public void onConstruction(FMLConstructionEvent event) {
@@ -87,7 +87,7 @@ public class Enchiridion {
 
     //Universal log helper
     public static void log(Level level, String message) {
-        logger.log(level, message);
+        LOGGER.log(level, message);
     }
 
     //Universal helper translation

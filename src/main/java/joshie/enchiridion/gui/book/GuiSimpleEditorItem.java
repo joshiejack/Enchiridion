@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class GuiSimpleEditorItem extends AbstractGuiOverlay {
     public static final GuiSimpleEditorItem INSTANCE = new GuiSimpleEditorItem();
-    private static final ResourceLocation checked = new ELocation("check_selected");
-    private static final ResourceLocation unchecked = new ELocation("check_unselected");
+    private static final ResourceLocation CHECKED = new ELocation("check_selected");
+    private static final ResourceLocation UNCHECKED = new ELocation("check_unselected");
     public IItemSelectable selectable = null;
     private ArrayList<ItemStack> sorted;
     private int position;

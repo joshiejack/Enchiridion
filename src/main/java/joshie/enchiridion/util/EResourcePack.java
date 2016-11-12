@@ -23,7 +23,7 @@ public class EResourcePack implements IResourcePack {
     public static final EResourcePack INSTANCE = new EResourcePack();
 
     private EResourcePack(){}
-    private static final Set<String> domains = ImmutableSet.<String>of(EInfo.MODID);
+    private static final Set<String> DOMAINS = ImmutableSet.<String>of(EInfo.MODID);
 
     private File getFileLocationFromResource(ResourceLocation location) {
         String path = location.getResourcePath();
@@ -66,7 +66,7 @@ public class EResourcePack implements IResourcePack {
 
     @Override
     public Set<String> getResourceDomains() {
-        return domains;
+        return DOMAINS;
     }
 
     @Override

@@ -46,7 +46,7 @@ import org.lwjgl.input.Keyboard;
 import java.util.List;
 
 public class EClientProxy extends ECommonProxy {
-    public static final ModelResourceLocation bookResource = new ModelResourceLocation(new ResourceLocation(EInfo.MODPATH, "book"), "inventory");
+    public static final ModelResourceLocation BOOK_RESOURCE = new ModelResourceLocation(new ResourceLocation(EInfo.MODPATH, "book"), "inventory");
     public static KeyBinding libraryKeyBinding;
     public static ModelResourceLocation library;
     public static ModelResourceLocation libraryItem;
@@ -63,7 +63,7 @@ public class EClientProxy extends ECommonProxy {
     public void setupClient() {
         LibraryHelper.resetClient();
         BookRegistry.INSTANCE.loadBooksFromConfig();
-        ModelBakery.registerItemVariants(ECommonProxy.book, bookResource);
+        ModelBakery.registerItemVariants(ECommonProxy.book, BOOK_RESOURCE);
         MinecraftForge.EVENT_BUS.register(new SmartLibrary());
         ModelLoader.setCustomMeshDefinition(ECommonProxy.book, BookRegistry.INSTANCE);
         EnchiridionAPI.book = GuiBook.INSTANCE;
@@ -116,7 +116,7 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerTemplate(template);
         
         //Register the Enchiridion Book
-        EnchiridionAPI.instance.registerModWithBooks("enchiridion");
+        EnchiridionAPI.instance.registerModWithBooks(EInfo.MODID);
         //Setup the models for the library
         if (EConfig.libraryAsItem) {
             library = new ModelResourceLocation(new ResourceLocation(EInfo.MODPATH, "library"), "inventory");

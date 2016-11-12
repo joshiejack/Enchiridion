@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
 public class SlotBook extends Slot {
-    private static final ItemStack dummy = new ItemStack(Items.BOOK);
+    private static final ItemStack DUMMY = new ItemStack(Items.BOOK);
     private EnumHand hand;
 
     public SlotBook(IInventory inventory, EnumHand hand, int index, int xPosition, int yPosition) {
@@ -45,6 +45,6 @@ public class SlotBook extends Slot {
             }
         }
 
-        return dummy;
+        return DUMMY;
     }
 }

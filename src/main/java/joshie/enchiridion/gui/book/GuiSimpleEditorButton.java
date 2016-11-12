@@ -26,10 +26,10 @@ import java.util.List;
 
 public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     public static final GuiSimpleEditorButton INSTANCE = new GuiSimpleEditorButton();
-    private static final ResourceLocation arrow_right_on = new ELocation("arrow_right_on");
-    private static final ResourceLocation arrow_right_off = new ELocation("arrow_right_off");
-    private static final ResourceLocation arrow_left_on = new ELocation("arrow_left_on");
-    private static final ResourceLocation arrow_left_off = new ELocation("arrow_left_off");
+    private static final ResourceLocation ARROW_RIGHT_ON = new ELocation("arrow_right_on");
+    private static final ResourceLocation ARROW_RIGHT_OFF = new ELocation("arrow_right_off");
+    private static final ResourceLocation ARROW_LEFT_ON = new ELocation("arrow_left_on");
+    private static final ResourceLocation ARROW_LEFT_OFF = new ELocation("arrow_left_off");
 
     private final ArrayList<IButtonAction> actions = new ArrayList();
     private ArrayList<IButtonAction> sorted = new ArrayList();
@@ -124,10 +124,10 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         int colorI = 0x00000000;
         int colorB = 0xFFB0A483;
         drawBoxLabel(Enchiridion.translate("select.unhover"), yPos + 20);
-        drawImage(arrow_left_off, 4, yPos + 32, 22, yPos + 42);
-        drawImage(arrow_right_off, 24, yPos + 32, 42, yPos + 42);
-        if (arrow_left_off.equals(button.getResource(false))) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
-        else if (arrow_right_off.equals(button.getResource(false))) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
+        drawImage(ARROW_LEFT_OFF, 4, yPos + 32, 22, yPos + 42);
+        drawImage(ARROW_RIGHT_OFF, 24, yPos + 32, 42, yPos + 42);
+        if (ARROW_LEFT_OFF.equals(button.getResource(false))) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
+        else if (ARROW_RIGHT_OFF.equals(button.getResource(false))) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
         else {
             //colorI = 0xFF312921;
             colorB = 0xFF191511;
@@ -142,10 +142,10 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         colorI = 0x00000000;
         colorB = 0xFFB0A483;
         drawBoxLabel(Enchiridion.translate("select.hover"), yPos + 20);
-        drawImage(arrow_left_on, 4, yPos + 32, 22, yPos + 42);
-        drawImage(arrow_right_on, 24, yPos + 32, 42, yPos + 42);
-        if (arrow_left_on.equals(button.getResource(true))) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
-        else if(arrow_right_on.equals(button.getResource(true))) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
+        drawImage(ARROW_LEFT_ON, 4, yPos + 32, 22, yPos + 42);
+        drawImage(ARROW_RIGHT_ON, 24, yPos + 32, 42, yPos + 42);
+        if (ARROW_LEFT_ON.equals(button.getResource(true))) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
+        else if(ARROW_RIGHT_ON.equals(button.getResource(true))) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
         else {
             //colorI = 0xFF312921;
             colorB = 0xFF191511;
@@ -247,10 +247,10 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
         //Update the resource for arrows in the unhovered position
         if (isOverPosition(4, yPos + 32, 22, yPos + 42, mouseX, mouseY)) {
-            button.setResourceLocation(false, arrow_left_off);
+            button.setResourceLocation(false, ARROW_LEFT_OFF);
             return true;
         } else if (isOverPosition(24, yPos + 32, 42, yPos + 42, mouseX, mouseY)) {
-            button.setResourceLocation(false, arrow_right_off);
+            button.setResourceLocation(false, ARROW_RIGHT_OFF);
             return true;
         } else if (isOverPosition(45, yPos + 31, 80, yPos + 43, mouseX, mouseY)) {
             ResourceLocation resource = loadResource();
@@ -264,10 +264,10 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         //Update the resources for arrows in the hovered position
         yPos += 25;
         if (isOverPosition(4, yPos + 32, 22, yPos + 42, mouseX, mouseY)) {
-            button.setResourceLocation(true, arrow_left_on);
+            button.setResourceLocation(true, ARROW_LEFT_ON);
             return true;
         } else if (isOverPosition(24, yPos + 32, 42, yPos + 42, mouseX, mouseY)) {
-            button.setResourceLocation(true, arrow_right_on);
+            button.setResourceLocation(true, ARROW_RIGHT_ON);
             return true;
         } else if (isOverPosition(45, yPos + 31, 80, yPos + 43, mouseX, mouseY)) {
             ResourceLocation resource = loadResource();
