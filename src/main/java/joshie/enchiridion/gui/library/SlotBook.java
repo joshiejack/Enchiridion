@@ -25,8 +25,8 @@ public class SlotBook extends Slot {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        if (stack.getItem() == ECommonProxy.book && stack.getItemDamage() == 1) return false; //FORBID LIBRARIES
-        return EnchiridionAPI.library.getBookHandlerForStack(stack) != null;
+        //FORBID LIBRARIES
+        return !(stack.getItem() == ECommonProxy.book && stack.getItemDamage() == 1) && EnchiridionAPI.library.getBookHandlerForStack(stack) != null;
     }
 
     public ItemStack handle(EntityPlayer player, int mouseButton, Slot slot) {
@@ -40,7 +40,7 @@ public class SlotBook extends Slot {
                     handler.handle(stack, player, hand, slot.slotNumber, isShiftPressed);
                     LibraryHelper.getClientLibraryContents().setCurrentBook(slot.slotNumber);
                 }
-                
+
                 return null;
             }
         }

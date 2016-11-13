@@ -38,7 +38,8 @@ public class FeatureProvider implements IFeatureProvider {
     private transient long timestamp;
     private transient IPage pageContainer;
 
-    public FeatureProvider() {}
+    public FeatureProvider() {
+    }
 
     public FeatureProvider(IFeature feature, int x, int y, double width, double height) {
         this.feature = feature;
@@ -107,7 +108,7 @@ public class FeatureProvider implements IFeatureProvider {
             }
         }
     }
-    
+
     @Override
     public void addTooltip(List<String> tooltip, int mouseX, int mouseY) {
         if (isOverFeature(mouseX, mouseY)) {
@@ -124,7 +125,6 @@ public class FeatureProvider implements IFeatureProvider {
             TextEditor.INSTANCE.clearEditable();
             return true;
         }
-
         return false;
     }
 
@@ -143,14 +143,13 @@ public class FeatureProvider implements IFeatureProvider {
 
             //Perform clicks
             if (!EnchiridionAPI.book.isEditMode() || (EnchiridionAPI.book.isEditMode() && button != 0)) {
-                if(feature.performClick(mouseX, mouseY, button)) return true;
+                if (feature.performClick(mouseX, mouseY, button)) return true;
             }
 
             if (!isLocked) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -166,7 +165,7 @@ public class FeatureProvider implements IFeatureProvider {
         if (!EventHelper.isFeatureVisible(getPage(), isVisible(), layerIndex)) return;
         feature.performRelease(mouseX, mouseY, button);
     }
-    
+
     @Override
     public void select(int mouseX, int mouseY) {
         isSelected = true;
@@ -219,15 +218,15 @@ public class FeatureProvider implements IFeatureProvider {
             int changeY = (mouseY - prevY);
             xPos += changeX;
             yPos += changeY;
-            
+
             if (GuiGrid.INSTANCE.isActivated()) {
                 int large = GuiGrid.INSTANCE.getGridSize();
                 int small = large - 1;
 
                 if (changeX < 0) {
-                    xPos = ((xPos - small) / large * large) - (GuiGrid.INSTANCE.isPixelGrid() ? 1: 0);
+                    xPos = ((xPos - small) / large * large) - (GuiGrid.INSTANCE.isPixelGrid() ? 1 : 0);
                 } else if (changeX > 0) {
-                    xPos = ((xPos + small) / large * large) - (GuiGrid.INSTANCE.isPixelGrid() ? 1: 0);;
+                    xPos = ((xPos + small) / large * large) - (GuiGrid.INSTANCE.isPixelGrid() ? 1 : 0);
                 }
 
                 if (changeY < 0) {
@@ -267,7 +266,7 @@ public class FeatureProvider implements IFeatureProvider {
                 else if (dragTopLeft) {
                     //TODO: FIX DRAGGING FROM TOP LEFT WHEN KEEPING RATIO
                     height = (width * originalHeight) / originalWidth;
-                    yPos = (int) (originalY);
+                    yPos = originalY;
                 }
             }
         }

@@ -10,39 +10,41 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
+import javax.annotation.Nonnull;
+
 public class ContainerLibrary extends Container {
     public IInventory library;
 
     public ContainerLibrary(InventoryPlayer playerInventory, IInventory library, EnumHand hand) {
         //Set the library
         this.library = library;
-        
+
         //Left hand side slots
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 3; j++) {
-                addSlotToContainer(new SlotBook(library, hand, j + (i * 3),  -51 + (j * 18), 22 + (i * 23)));
+                addSlotToContainer(new SlotBook(library, hand, j + (i * 3), -51 + (j * 18), 22 + (i * 23)));
             }
         }
-        
+
         //Right hand side slots
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 3; j++) {
-                addSlotToContainer(new SlotBook(library, hand, 15 + j + (i * 3),  175 + (j * 18), 22 + (i * 23)));
+                addSlotToContainer(new SlotBook(library, hand, 15 + j + (i * 3), 175 + (j * 18), 22 + (i * 23)));
             }
         }
-        
+
         //Centre Slots
         for (int i = 0; i < 5; i++) {
-            int y = i == 0 ? 1: 0;
+            int y = i == 0 ? 1 : 0;
             for (int j = 0; j < 7; j++) {
-                addSlotToContainer(new SlotBook(library, hand, 30 + j + (i * 7),  26 + (j * 18), -1 + (i * 23) - y));
+                addSlotToContainer(new SlotBook(library, hand, 30 + j + (i * 7), 26 + (j * 18), -1 + (i * 23) - y));
             }
         }
-        
-       // addSlotToContainer(new SlotBook(library, 0, 8, 15)); //Add one book slot
+
+        // addSlotToContainer(new SlotBook(library, 0, 8, 15)); //Add one book slot
         bindPlayerInventory(playerInventory, 30);
     }
-    
+
     protected void bindPlayerInventory(InventoryPlayer inventory, int yOffset) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
@@ -54,19 +56,19 @@ public class ContainerLibrary extends Container {
             addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 142 + yOffset));
         }
     }
-    
+
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
+    public boolean canInteractWith(@Nonnull EntityPlayer player) {
         return true;
     }
-    
+
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slotID) {
         int size = library.getSizeInventory();
         int low = size + 27;
         int high = low + 9;
         ItemStack itemstack = null;
-        Slot slot = (Slot) inventorySlots.get(slotID);
+        Slot slot = inventorySlots.get(slotID);
 
         if (slot != null && slot.getHasStack()) {
             ItemStack stack = slot.getStack();
@@ -84,7 +86,7 @@ public class ContainerLibrary extends Container {
             } else if (!mergeItemStack(stack, size, high, false)) return null;
 
             if (stack.stackSize == 0) {
-                slot.putStack((ItemStack) null);
+                slot.putStack(null);
             } else {
                 slot.onSlotChanged();
             }
@@ -97,8 +99,9 @@ public class ContainerLibrary extends Container {
         return itemstack;
     }
 
-    public ItemStack func_184996_a(int slotID, int mouseButton, ClickType type, EntityPlayer player) {
-        Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : (Slot) inventorySlots.get(slotID);
+    @Override
+    public ItemStack slotClick(int slotID, int mouseButton, ClickType type, EntityPlayer player) {
+        Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : inventorySlots.get(slotID);
         return slot instanceof SlotBook && ((SlotBook) slot).handle(player, mouseButton, slot) == null ? null : super.slotClick(slotID, mouseButton, type, player);
     }
 }

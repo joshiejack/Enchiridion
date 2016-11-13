@@ -5,7 +5,7 @@ import joshie.enchiridion.api.book.IPage;
 
 public class JumpHelper {
     public static IPage getPageByNumber(IBook book, int number) {
-        for (IPage page: book.getPages()) {
+        for (IPage page : book.getPages()) {
             if (page.getPageNumber() == number) {
                 return page;
             }
@@ -18,10 +18,10 @@ public class JumpHelper {
         if (dragged.getPageNumber() != pageNumber) {
             if (getPageByNumber(book, pageNumber) != null) {
                 dragged.setPageNumber(pageNumber);
-                for (IPage page: book.getPages()) {
+                for (IPage page : book.getPages()) {
                     if (page == dragged) continue;
                     else {
-                        //Increase any pagenumbers to come after the new insertion to their new value
+                        //Increase any page numbers to come after the new insertion to their new value
                         int original = page.getPageNumber();
                         if (original >= pageNumber) {
                             page.setPageNumber(original + 1);

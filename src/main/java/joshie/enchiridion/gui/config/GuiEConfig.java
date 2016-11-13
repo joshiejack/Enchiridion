@@ -17,7 +17,7 @@ public class GuiEConfig extends GuiConfig {
     }
 
     private static List<IConfigElement> getConfigElements() {
-        List<IConfigElement> list = new ArrayList<IConfigElement>();
+        List<IConfigElement> list = new ArrayList<>();
 
         List<IConfigElement> settings = new ConfigElement(EConfig.config.getCategory(EConfig.CATEGORY_SETTINGS.toLowerCase())).getChildElements();
         List<IConfigElement> modSupport = new ConfigElement(EConfig.config.getCategory(EConfig.CATEGORY_MOD_SUPPORT.toLowerCase())).getChildElements();

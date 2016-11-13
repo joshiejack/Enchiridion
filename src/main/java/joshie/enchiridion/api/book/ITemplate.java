@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface ITemplate {
     /** Returns the unique name **/
-    public String getUniqueName();
+    String getUniqueName();
 
     /** Returns the name of the template **/
-    public String getTemplateName();
+    String getTemplateName();
 
-    /** Returns a resourcelocation for this templates icon **/
-    public ResourceLocation getIcon();
+    /** Returns a resource location for this templates icon **/
+    ResourceLocation getIcon();
 
     /** Returns a list of all the features in this template **/
-    public List<IFeatureProvider> getFeatures();
+    List<IFeatureProvider> getFeatures();
 }

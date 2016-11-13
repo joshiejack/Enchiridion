@@ -6,7 +6,8 @@ import joshie.enchiridion.network.core.PenguinPacket;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class PacketOpenLibrary extends PenguinPacket {
-    public PacketOpenLibrary() {}
+    public PacketOpenLibrary() {
+    }
 
     @Override
     public void handlePacket(EntityPlayer player) {

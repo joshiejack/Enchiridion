@@ -32,7 +32,9 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
     public int unhoveredXOffset;
     public int unhoveredYOffset;
 
-    public FeatureButton(){}
+    public FeatureButton() {
+    }
+
     public FeatureButton(IButtonAction action) {
         this.action = action;
         setResourceLocation(true, new ELocation("arrow_left_on")); //Default
@@ -111,22 +113,18 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
 
     @Override
     public boolean performClick(int mouseX, int mouseY, int button) {
-        if (action != null && action.isVisible() && processesClick(button)) {
-            return action.performAction();
-        } else return false;
+        return action != null && action.isVisible() && processesClick(button) && action.performAction();
     }
 
     @Override
     public void addTooltip(List<String> tooltip, int mouseX, int mouseY) {
         if (action != null && action.isVisible()) {
             String[] title = getTooltip().split("\n");
-            if (title != null) {
-                boolean first = false;
-                for (String t: title) {
-                    if (first || !t.equals("")) {
-                        tooltip.add(t);
-                    } else first = true;
-                }
+            boolean first = false;
+            for (String t : title) {
+                if (first || !t.equals("")) {
+                    tooltip.add(t);
+                } else first = true;
             }
         }
     }
@@ -211,7 +209,7 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
 
     @Override
     public int getTextOffsetX(boolean isHovered) {
-        return isHovered ? hoverXOffset: unhoveredXOffset;
+        return isHovered ? hoverXOffset : unhoveredXOffset;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class ButtonChangeIcon extends ButtonAbstract {
     public ButtonChangeIcon() {
         super("book");
     }
-    
+
     public static void refreshResources() {
         if (EConfig.resourceReload) Minecraft.getMinecraft().scheduleResourcesRefresh();
     }
@@ -37,7 +37,7 @@ public class ButtonChangeIcon extends ButtonAbstract {
                 Writer writer = new OutputStreamWriter(new FileOutputStream(iconJson), "UTF-8");
                 writer.write(GsonHelper.getModifiedGson().toJson(template));
                 writer.close();
-                
+
                 //Reload the icons
                 refreshResources();
             } catch (Exception e) {

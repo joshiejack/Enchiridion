@@ -31,13 +31,14 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     private static final ResourceLocation ARROW_LEFT_ON = new ELocation("arrow_left_on");
     private static final ResourceLocation ARROW_LEFT_OFF = new ELocation("arrow_left_off");
 
-    private final ArrayList<IButtonAction> actions = new ArrayList();
-    private ArrayList<IButtonAction> sorted = new ArrayList();
-    private HashMap<String, WrappedEditable> fieldCache = new HashMap();
-    private HashMap<Object, String[]> fieldNameCache = new HashMap();
+    private final ArrayList<IButtonAction> actions = new ArrayList<>();
+    private ArrayList<IButtonAction> sorted = new ArrayList<>();
+    private HashMap<String, WrappedEditable> fieldCache = new HashMap<>();
+    private HashMap<Object, String[]> fieldNameCache = new HashMap<>();
     private FeatureButton button = null;
 
-    protected GuiSimpleEditorButton() {}
+    protected GuiSimpleEditorButton() {
+    }
 
     public void registerAction(IButtonAction action) {
         actions.add(action);
@@ -45,8 +46,8 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
     public IBookEditorOverlay setButton(FeatureButton button) {
         this.button = button;
-        this.fieldCache = new HashMap();
-        this.fieldNameCache = new HashMap();
+        this.fieldCache = new HashMap<>();
+        this.fieldNameCache = new HashMap<>();
         return this;
     }
 
@@ -69,7 +70,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
         return false;
     }
-    
+
     //CONVERT IN TO BUTTONS
 
     private static final int xPosStart = 4;
@@ -83,7 +84,8 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         try {
             Field f = object.getClass().getField(fieldName);
             return (Modifier.isTransient(f.getModifiers()));
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         return false;
     }
@@ -103,11 +105,12 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        if (button == null || button.getAction() == null) return;; //NO WORK!!!
+        if (button == null || button.getAction() == null) return;
+        //NO WORK!!!
         drawBoxLabel(Enchiridion.translate("select.action"), 9);
         int xPos = xPosStart;
         int yPos = 13;
-        for (IButtonAction action: sorted) {
+        for (IButtonAction action : sorted) {
             drawImage(action.getResource(), xPos + 1, yPos + 8, xPos + 9, yPos + 16);
             if (action.getName().equals(button.getAction().getName())) {
                 drawBorderedRectangle(xPos, yPos + 7, xPos + 10, yPos + 17, 0x00000000, 0xFF48453C);
@@ -126,8 +129,10 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         drawBoxLabel(Enchiridion.translate("select.unhover"), yPos + 20);
         drawImage(ARROW_LEFT_OFF, 4, yPos + 32, 22, yPos + 42);
         drawImage(ARROW_RIGHT_OFF, 24, yPos + 32, 42, yPos + 42);
-        if (ARROW_LEFT_OFF.equals(button.getResource(false))) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
-        else if (ARROW_RIGHT_OFF.equals(button.getResource(false))) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
+        if (ARROW_LEFT_OFF.equals(button.getResource(false)))
+            drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
+        else if (ARROW_RIGHT_OFF.equals(button.getResource(false)))
+            drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
         else {
             //colorI = 0xFF312921;
             colorB = 0xFF191511;
@@ -138,14 +143,16 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         drawSplitScaledString("[b]" + Enchiridion.translate("select.custom") + "[/b]", 53, yPos + 35, 0xFFFFFFFF, 0.5F);
 
         //Draw the hovered button selector
-        yPos+= 25;
+        yPos += 25;
         colorI = 0x00000000;
         colorB = 0xFFB0A483;
         drawBoxLabel(Enchiridion.translate("select.hover"), yPos + 20);
         drawImage(ARROW_LEFT_ON, 4, yPos + 32, 22, yPos + 42);
         drawImage(ARROW_RIGHT_ON, 24, yPos + 32, 42, yPos + 42);
-        if (ARROW_LEFT_ON.equals(button.getResource(true))) drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
-        else if(ARROW_RIGHT_ON.equals(button.getResource(true))) drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
+        if (ARROW_LEFT_ON.equals(button.getResource(true)))
+            drawBorderedRectangle(3, yPos + 31, 23, yPos + 43, 0x00000000, 0xFF48453C);
+        else if (ARROW_RIGHT_ON.equals(button.getResource(true)))
+            drawBorderedRectangle(23, yPos + 31, 43, yPos + 43, 0x00000000, 0xFF48453C);
         else {
             //colorI = 0xFF312921;
             colorB = 0xFF191511;
@@ -155,11 +162,11 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         drawBorderedRectangle(45, yPos + 31, 80, yPos + 43, colorI, colorB);
         drawSplitScaledString("[b]" + Enchiridion.translate("select.custom") + "[/b]", 53, yPos + 35, 0xFFFFFFFF, 0.5F);
 
-        yPos+= 25;
+        yPos += 25;
         //Draw the extra information for the actions
         drawBoxLabel("Button Fields", yPos + 20);
         yPos = drawFields(button, yPos, mouseX, mouseY);
-        yPos+= 10;
+        yPos += 10;
 
         int change = drawFields(button.getAction(), yPos, mouseX, mouseY);
         if (change != yPos) {
@@ -171,13 +178,13 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     }
 
     private int drawFields(Object object, int yPos, int mouseX, int mouseY) {
-        for (String f: getFieldNames(object)) {
+        for (String f : getFieldNames(object)) {
             if (isTransient(object, f)) continue;
             drawBorderedRectangle(2, yPos + 30, 83, yPos + 37, 0xFF312921, 0xFF191511);
             String name = Enchiridion.translate("button.action.field." + f);
             drawSplitScaledString("[b]" + name + "[/b]", 4, yPos + 32, 0xFFFFFFFF, 0.5F);
 
-            WrappedEditable editable = null;
+            WrappedEditable editable;
             if (!fieldCache.containsKey(f)) {
                 editable = new WrappedEditable(object, f);
                 fieldCache.put(f, editable);
@@ -185,7 +192,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
             String text = TextEditor.INSTANCE.getText(editable);
             if (text == null) {
-                TextEditor.INSTANCE.setText("");
+                TextEditor.INSTANCE.setText();
                 text = TextEditor.INSTANCE.getText(editable);
             }
 
@@ -196,8 +203,8 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
         return yPos;
     }
-    
-    public int getLineCount (String text) {
+
+    public int getLineCount(String text) {
         text = PenguinFont.INSTANCE.replaceFormatting(text);
         while (text != null && text.endsWith("\n")) {
             text = text.substring(0, text.length() - 1);
@@ -205,12 +212,12 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
         return PenguinFont.INSTANCE.splitStringWidth(text, 155);
     }
-    
+
     @Override
     public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
         int xPos = xPosStart;
         int yPos = 13;
-        for (IButtonAction action: sorted) {
+        for (IButtonAction action : sorted) {
             if (isOverAction(xPos, yPos, mouseX, mouseY)) {
                 tooltip.add(action.getName());
             }
@@ -225,19 +232,18 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY) {
-        if (button == null || button.getAction() == null) return false;; //NO WORK!!!
+        if (button == null || button.getAction() == null) return false;
+        //NO WORK!!!
 
         int xPos = xPosStart;
         int yPos = 13;
-        for (IButtonAction action: sorted) {
+        for (IButtonAction action : sorted) {
             if (isOverAction(xPos, yPos, mouseX, mouseY)) {
-                IButtonAction old = button.getAction();
                 button.setAction(action.create());
                 button.getAction().onFieldsSet(""); //CREATE!
                 setButton(button);
                 return true;
             }
-
             xPos += 10;
             if (xPos > 70) {
                 xPos = xPosStart;
@@ -278,26 +284,25 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
             return true;
         }
 
-        yPos+= 25;
+        yPos += 25;
 
         int ret = clickFields(button, yPos, mouseX, mouseY);
         if (ret < 0) return true;
         else yPos = ret;
 
-        yPos+= 10;
+        yPos += 10;
         ret = clickFields(button.getAction(), yPos, mouseX, mouseY);
         if (ret < 0) return true;
         else yPos = ret;
-
 
 
         return false;
     }
 
     private int clickFields(Object object, int yPos, int mouseX, int mouseY) {
-        for (String f: getFieldNames(object)) {
+        for (String f : getFieldNames(object)) {
             if (isTransient(object, f)) continue;
-            WrappedEditable editable = null;
+            WrappedEditable editable;
             if (!fieldCache.containsKey(f)) {
                 editable = new WrappedEditable(object, f);
                 fieldCache.put(f, editable);
@@ -310,11 +315,8 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
                 editable.click();
                 return -1;
             }
-
-
             yPos = yPos + 6 + lines;
         }
-
         return yPos;
     }
 
@@ -327,19 +329,19 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
                 EnchiridionAPI.book.getSelected().setWidth(buffered.getWidth());
                 EnchiridionAPI.book.getSelected().setHeight(buffered.getHeight());
                 return location;
-            } catch (Exception e) {}
+            } catch (Exception ignored) {
+            }
         }
-
         return null;
     }
 
     @Override
     public void updateSearch(String search) {
-        sorted = new ArrayList();
+        sorted = new ArrayList<>();
         if (search == null || search.equals("")) {
             sorted.addAll(actions);
         } else {
-            for (IButtonAction action: actions) {
+            for (IButtonAction action : actions) {
                 if (action.getName().toLowerCase().contains(search.toLowerCase())) {
                     sorted.add(action);
                 }

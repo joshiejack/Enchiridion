@@ -8,10 +8,11 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class WrappedStack implements IItemStack {
     protected static final Random RAND = new Random();
-    protected List<ItemStack> permutations = new ArrayList();
+    protected List<ItemStack> permutations = new ArrayList<>();
     protected boolean hasPermutations = false;
     protected ItemStack stack;
     private int ticker = 0;
@@ -23,36 +24,26 @@ public class WrappedStack implements IItemStack {
         this.x = x;
         this.y = y;
         this.scale = scale;
-        
+
         if (object == null) stack = null;
         else {
             if (object instanceof String) {
                 object = OreDictionary.getOres((String) object);
             }
-            
+
             if (object instanceof ItemStack) {
                 stack = ((ItemStack) object).copy();
                 if (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
-                    ArrayList<Integer> metaList = new ArrayList();
-                    for (ItemStack aStack : ItemListHelper.items()) {
-                        if (aStack.getItem() == stack.getItem()) {
-                            permutations.add(aStack);
-                        }
-                    }
+                    permutations.addAll(ItemListHelper.items().stream().filter(aStack -> aStack.getItem() == stack.getItem()).collect(Collectors.toList()));
                 } else permutations.add(stack);
             } else if (object instanceof List) {
-                List<ItemStack> stacks = new ArrayList((List)object);
+                List<ItemStack> stacks = new ArrayList<>((List) object);
                 for (ItemStack stacky : stacks) {
                     if (stacky.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
-                        for (ItemStack aStack : ItemListHelper.items()) {
-                            if (aStack.getItem() == stacky.getItem()) {
-                                permutations.add(aStack);
-                            }
-                        }
+                        permutations.addAll(ItemListHelper.items().stream().filter(aStack -> aStack.getItem() == stacky.getItem()).collect(Collectors.toList()));
                     } else permutations.add(stacky);
                 }
             }
-
             hasPermutations = permutations.size() > 1;
             stack = permutations.get(RAND.nextInt(permutations.size()));
         }
@@ -62,7 +53,7 @@ public class WrappedStack implements IItemStack {
     public ItemStack getItemStack() {
         return stack;
     }
-    
+
     @Override
     public void onDisplayTick() {
         if (hasPermutations) {

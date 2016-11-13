@@ -10,18 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FeatureRecipe extends FeatureItem {
-    public transient static final ArrayList<IRecipeHandler> HANDLERS = new ArrayList();
+    public transient static final ArrayList<IRecipeHandler> HANDLERS = new ArrayList<>();
 
     protected String ingredients = "plankWood:plankWood:plankWood:cobblestone:ingotAluminum:cobblestone:cobblestone:dustRedstone:cobblestone";
     protected String recipeType = "ShapedOreRecipe";
     protected transient int index = 0;
     protected transient IRecipeHandler handler;
 
-    public FeatureRecipe() {}
+    public FeatureRecipe() {
+    }
+
     public FeatureRecipe(ItemStack item) {
         setItemStack(item);
     }
-    
+
     @Override
     public FeatureRecipe copy() {
         FeatureRecipe recipe = new FeatureRecipe();
@@ -33,7 +35,7 @@ public class FeatureRecipe extends FeatureItem {
     }
 
     private boolean buildRecipe(boolean isLoading) {
-        ArrayList<IRecipeHandler> recipes = new ArrayList();
+        ArrayList<IRecipeHandler> recipes = new ArrayList<>();
         for (IRecipeHandler handler : HANDLERS) {
             handler.addRecipes(stack, recipes);
         }
@@ -88,7 +90,7 @@ public class FeatureRecipe extends FeatureItem {
             index = 0;
             buildRecipe(false);
         }
-        
+
         //Update the provider
         if (position != null) {
             update(position);
@@ -98,8 +100,6 @@ public class FeatureRecipe extends FeatureItem {
     @Override
     public void update(IFeatureProvider position) {
         super.update(position);
-        int xPos = position.getLeft();
-        int yPos = position.getTop();
 
         if (handler != null) {
             double width = position.getWidth();
@@ -121,7 +121,7 @@ public class FeatureRecipe extends FeatureItem {
     }
 
     @Override
-    public void addTooltip(List list, int mouseX, int mouseY) {
+    public void addTooltip(List<String> list, int mouseX, int mouseY) {
         if (!hideTooltip && handler != null) {
             EnchiridionAPI.draw.setRenderData(position.getLeft(), position.getTop(), position.getWidth(), position.getHeight(), size);
             handler.addTooltip(list);

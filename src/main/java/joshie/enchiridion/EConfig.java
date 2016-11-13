@@ -11,10 +11,10 @@ import org.apache.logging.log4j.Level;
 
 import java.io.File;
 
-public class EConfig {
+public class EConfig { //TODO Move to new Forge config (If stable)
     public static Configuration config;
-    public static String CATEGORY_SETTINGS = "Settings";
-    public static String CATEGORY_MOD_SUPPORT = "Mod Support";
+    public static final String CATEGORY_SETTINGS = "Settings";
+    public static final String CATEGORY_MOD_SUPPORT = "Mod Support";
     public static boolean allowDataAndImagesFromServers;
     public static boolean syncDataAndImagesToClients;
     public static boolean debugMode = false;
@@ -23,8 +23,8 @@ public class EConfig {
     public static boolean offlineMode;
     public static boolean libraryAsItem;
     public static boolean libraryAsHotkey;
-    //public static boolean loadWarpbook;
-    //public static boolean loadComputercraft;
+    //public static boolean loadWarpbook; //TODO Re-add when updated to 1.11
+    //public static boolean loadComputercraft; //TODO Re-add when updated to 1.11
     public static boolean addWrittenBookRecipeForLibrary;
     public static boolean addOreDictionaryRecipeForLibrary;
     public static String defaultText = "";

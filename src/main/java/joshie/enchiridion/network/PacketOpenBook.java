@@ -7,29 +7,31 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 public class PacketOpenBook extends PenguinPacket {
-    String bookid;
-    int page;
+    private String bookID;
+    private int page;
 
-    public PacketOpenBook() {}
-    public PacketOpenBook(String bookid, int page) {
-        this.bookid = bookid;
+    public PacketOpenBook() {
+    }
+
+    public PacketOpenBook(String bookID, int page) {
+        this.bookID = bookID;
         this.page = page;
     }
 
     @Override
     public void toBytes(ByteBuf to) {
-        ByteBufUtils.writeUTF8String(to, bookid);
+        ByteBufUtils.writeUTF8String(to, bookID);
         to.writeInt(page);
     }
 
     @Override
     public void fromBytes(ByteBuf from) {
-        bookid = ByteBufUtils.readUTF8String(from);
+        bookID = ByteBufUtils.readUTF8String(from);
         page = from.readInt();
     }
 
     @Override
     public void handlePacket(EntityPlayer player) {
-        EnchiridionAPI.instance.openBook(player, bookid, page);
+        EnchiridionAPI.instance.openBook(player, bookID, page);
     }
 }

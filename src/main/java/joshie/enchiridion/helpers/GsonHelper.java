@@ -25,6 +25,6 @@ public class GsonHelper {
 
         return GsonHelper.gson;
     }
-    
+
     public static Gson gson = null;
 }

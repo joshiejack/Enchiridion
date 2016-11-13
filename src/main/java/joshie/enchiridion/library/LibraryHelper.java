@@ -12,7 +12,7 @@ public class LibraryHelper {
     @SideOnly(Side.CLIENT)
     private static LibraryProxy theClient;
     private static LibraryProxyServer theServer;
-    
+
     public static void resetServer(World world) {
         if (world != null) {
             theServer = (new LibraryProxyServer(world));
@@ -44,7 +44,7 @@ public class LibraryHelper {
     public static LibraryInventory getServerLibraryContents(EntityPlayer player) {
         return theServer.getLibraryInventory(player);
     }
-    
+
     public static Collection<LibraryInventory> getAllInventories() {
         return theServer.getAllInventories();
     }

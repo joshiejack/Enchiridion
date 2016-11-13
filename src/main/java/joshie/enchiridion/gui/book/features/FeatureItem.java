@@ -16,7 +16,9 @@ public class FeatureItem extends FeatureAbstract implements IItemSelectable {
     public boolean hideTooltip;
     public transient float size;
 
-    public FeatureItem(){}
+    public FeatureItem() {
+    }
+
     public FeatureItem(ItemStack item) {
         setItemStack(item);
     }
@@ -57,7 +59,7 @@ public class FeatureItem extends FeatureAbstract implements IItemSelectable {
     }
 
     @Override
-    public void addTooltip(List list, int mouseX, int mouseY) {
+    public void addTooltip(List<String> list, int mouseX, int mouseY) {
         if (!hideTooltip && this.stack != null) {
             list.addAll(stack.getTooltip(MCClientHelper.getPlayer(), false));
         }
@@ -73,7 +75,7 @@ public class FeatureItem extends FeatureAbstract implements IItemSelectable {
     public boolean getTooltipsEnabled() {
         return !hideTooltip;
     }
-    
+
     @Override
     public void setTooltips(boolean value) {
         hideTooltip = !value;

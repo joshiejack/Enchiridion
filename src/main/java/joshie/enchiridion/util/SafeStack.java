@@ -23,11 +23,11 @@ public class SafeStack {
     }
 
     public static List<SafeStack> allInstances(ItemStack stack) {
-        List<SafeStack> safe = new ArrayList();
+        List<SafeStack> safe = new ArrayList<>();
         safe.add(new SafeStackMod(stack));
         int[] ids = OreDictionary.getOreIDs(stack);
         for (int i : ids) {
-            safe.add(new SafeStackOre(stack, OreDictionary.getOreName(i)));
+            safe.add(new SafeStackOre(OreDictionary.getOreName(i)));
         }
 
         safe.add(new SafeStackMod(stack));
@@ -38,11 +38,11 @@ public class SafeStack {
         return safe;
     }
 
-    public static SafeStack newInstance(String modid, ItemStack stack, String orename, boolean matchDamage, boolean matchNBT) {
+    public static SafeStack newInstance(String modid, ItemStack stack, String oreName, boolean matchDamage, boolean matchNBT) {
         if (!modid.equals("IGNORE")) {
             return new SafeStackMod(stack);
-        } else if (!orename.equals("IGNORE")) {
-            return new SafeStackOre(stack, orename);
+        } else if (!oreName.equals("IGNORE")) {
+            return new SafeStackOre(oreName);
         } else if (matchNBT && matchDamage) {
             return new SafeStackNBTDamage(stack);
         } else if (matchNBT) {
@@ -53,18 +53,18 @@ public class SafeStack {
     }
 
     public static class SafeStackOre extends SafeStack {
-        public String orename;
+        String oreName;
 
-        protected SafeStackOre(ItemStack stack, String orename) {
+        SafeStackOre(String oreName) {
             super(null);
-            this.orename = orename;
+            this.oreName = oreName;
         }
 
         @Override
         public int hashCode() {
             final int prime = 31;
             int result = super.hashCode();
-            result = prime * result + ((orename == null) ? 0 : orename.hashCode());
+            result = prime * result + ((oreName == null) ? 0 : oreName.hashCode());
             return result;
         }
 
@@ -74,9 +74,9 @@ public class SafeStack {
             if (!super.equals(obj)) return false;
             if (getClass() != obj.getClass()) return false;
             SafeStackOre other = (SafeStackOre) obj;
-            if (orename == null) {
-                if (other.orename != null) return false;
-            } else if (!orename.equals(other.orename)) return false;
+            if (oreName == null) {
+                if (other.oreName != null) return false;
+            } else if (!oreName.equals(other.oreName)) return false;
             return true;
         }
     }
@@ -94,8 +94,7 @@ public class SafeStack {
         @Override
         public int hashCode() {
             final int prime = 31;
-            int result = prime * ((modid == null) ? 0 : modid.hashCode());
-            return result;
+            return prime * ((modid == null) ? 0 : modid.hashCode());
         }
 
         @Override
@@ -111,9 +110,9 @@ public class SafeStack {
     }
 
     public static class SafeStackDamage extends SafeStack {
-        public int damage;
+        int damage;
 
-        protected SafeStackDamage(ItemStack stack) {
+        SafeStackDamage(ItemStack stack) {
             super(stack);
             this.damage = stack.getItemDamage();
         }
@@ -137,15 +136,14 @@ public class SafeStack {
             if (!super.equals(obj)) return false;
             if (getClass() != obj.getClass()) return false;
             SafeStackDamage other = (SafeStackDamage) obj;
-            if (damage != other.damage) return false;
-            return true;
+            return damage == other.damage;
         }
     }
 
     public static class SafeStackNBT extends SafeStack {
-        public NBTTagCompound tag;
+        NBTTagCompound tag;
 
-        protected SafeStackNBT(ItemStack stack) {
+        SafeStackNBT(ItemStack stack) {
             super(stack);
             this.tag = stack.getTagCompound();
         }
@@ -153,7 +151,7 @@ public class SafeStack {
         @Override
         public ItemStack toStack() {
             ItemStack result = new ItemStack(Item.REGISTRY.getObject(location), 1, OreDictionary.WILDCARD_VALUE);
-            NBTTagCompound copy = (NBTTagCompound) tag.copy();
+            NBTTagCompound copy = tag.copy();
             result.setTagCompound(copy);
             return result;
         }
@@ -180,9 +178,9 @@ public class SafeStack {
     }
 
     public static class SafeStackNBTDamage extends SafeStackDamage {
-        public NBTTagCompound tag;
+        NBTTagCompound tag;
 
-        protected SafeStackNBTDamage(ItemStack stack) {
+        SafeStackNBTDamage(ItemStack stack) {
             super(stack);
             this.tag = stack.getTagCompound();
         }
@@ -190,7 +188,7 @@ public class SafeStack {
         @Override
         public ItemStack toStack() {
             ItemStack result = new ItemStack(Item.REGISTRY.getObject(location), 1, damage);
-            NBTTagCompound copy = (NBTTagCompound) tag.copy();
+            NBTTagCompound copy = tag.copy();
             result.setTagCompound(copy);
             return result;
         }

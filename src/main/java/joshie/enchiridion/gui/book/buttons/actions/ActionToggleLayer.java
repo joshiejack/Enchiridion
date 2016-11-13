@@ -41,19 +41,18 @@ public class ActionToggleLayer extends AbstractAction {
         try {
             if (regex) {
                 Pattern p = Pattern.compile(layer);
-                if (p != null) {
-                    return BookEvents.invert(EnchiridionAPI.book.getBook(), EnchiridionAPI.book.getPage(), p);
-                }
+                return BookEvents.invert(EnchiridionAPI.book.getBook(), EnchiridionAPI.book.getPage(), p);
             } else if (comma) {
                 String[] ss = layer.replace(" ", "").split(",");
-                for (String s: ss) {
+                for (String s : ss) {
                     BookEvents.invert(EnchiridionAPI.book.getBook(), EnchiridionAPI.book.getPage(), Pattern.compile(s));
                 }
 
                 return true;
             }
-        } catch (Exception e) { e.printStackTrace(); }
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
-     }
+    }
 }

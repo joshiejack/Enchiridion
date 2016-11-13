@@ -31,7 +31,7 @@ public class FileCopier {
         } else {
             fileChooser.setCurrentDirectory(last_directory);
         }
-        
+
         fileChooser.setFileFilter(filter);
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -39,7 +39,7 @@ public class FileCopier {
             last_directory = selectedFile.getParentFile();
             return selectedFile;
         }
-        
+
         return null;
     }
 
@@ -55,6 +55,8 @@ public class FileCopier {
             if (newFile.exists()) return newFile;
             FileUtils.copyFile(userFile, newFile); //Copy the file over
             return newFile;
-        } catch (Exception e) { return null; }
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

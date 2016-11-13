@@ -1,3 +1,7 @@
+Enchiridion - 3.1.14
+• Updated to Minecraft 1.11
+• Now requires Java 8
+
 Enchiridion - 3.1.13
 • Fixed potiental crash with JEI
 • Fixed server error when opening the library

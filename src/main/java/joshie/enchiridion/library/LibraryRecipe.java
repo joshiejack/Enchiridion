@@ -8,22 +8,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
 public class LibraryRecipe implements IRecipe {
-    public static Set<SafeStack> validWoods = new HashSet();
+    public static final Set<SafeStack> VALID_WOODS = new HashSet<>();
 
     private boolean isWood(ItemStack stack) {
-        for (SafeStack safe: SafeStack.allInstances(stack)) {
-            if (validWoods.contains(safe)) return true;
+        for (SafeStack safe : SafeStack.allInstances(stack)) {
+            if (VALID_WOODS.contains(safe)) return true;
         }
 
         return false;
     }
 
     @Override
-    public boolean matches(InventoryCrafting inv, World world) {
+    public boolean matches(@Nonnull InventoryCrafting inv, @Nonnull World world) {
         for (int i = 0; i < 3; i++) {
             ItemStack stack = inv.getStackInSlot(i);
             if (stack == null) return false;
@@ -48,7 +49,7 @@ public class LibraryRecipe implements IRecipe {
     }
 
     @Override
-    public ItemStack getCraftingResult(InventoryCrafting inv) {
+    public ItemStack getCraftingResult(@Nonnull InventoryCrafting inv) {
         return matches(inv, null) ? getRecipeOutput() : null;
     }
 
@@ -69,8 +70,8 @@ public class LibraryRecipe implements IRecipe {
     }
 
     @Override
-    public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-        return new ItemStack[] { null, null, null, getStackOfOne(inv, 3), getStackOfOne(inv, 4), getStackOfOne(inv, 5), null, null, null };
+    @Nonnull
+    public ItemStack[] getRemainingItems(@Nonnull InventoryCrafting inv) {
+        return new ItemStack[]{null, null, null, getStackOfOne(inv, 3), getStackOfOne(inv, 4), getStackOfOne(inv, 5), null, null, null};
     }
-
 }

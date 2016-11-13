@@ -8,19 +8,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RecipeHandlerShapedVanilla extends RecipeHandlerRecipeBase {
-    public RecipeHandlerShapedVanilla() {}
+    public RecipeHandlerShapedVanilla() {
+    }
+
     public RecipeHandlerShapedVanilla(IRecipe recipe) {
         try {
             ShapedRecipes shaped = (ShapedRecipes) recipe;
-            init(recipe.getRecipeOutput(), new ArrayList<Object>(Arrays.asList((ItemStack[]) shaped.recipeItems)), shaped.recipeWidth);
-        } catch (Exception e) { e.printStackTrace(); }
+            init(recipe.getRecipeOutput(), new ArrayList<>(Arrays.asList((ItemStack[]) shaped.recipeItems)), shaped.recipeWidth);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-        
+
     @Override
     protected Class getHandlerClass() {
         return this.getClass();
     }
-    
+
     @Override
     protected Class getRecipeClass() {
         return ShapedRecipes.class;

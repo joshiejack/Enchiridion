@@ -2,7 +2,7 @@
 {
   "modid": "enchiridion",
   "name": "Enchiridion",
-  "description": "Books mod for minecraft",
+  "description": "Books mod for Minecraft",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",

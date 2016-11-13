@@ -9,7 +9,8 @@ public class GuiGrid extends AbstractGuiOverlay {
     private boolean isFullWidth;
     private int gridSize = 5;
 
-    private GuiGrid() {}
+    private GuiGrid() {
+    }
 
     public int getGridSize() {
         return isPixelGrid() ? 3 : gridSize;
@@ -18,7 +19,7 @@ public class GuiGrid extends AbstractGuiOverlay {
     public boolean isActivated() {
         return isVisible;
     }
-    
+
     public boolean isPixelGrid() {
         return pixelGrid;
     }
@@ -27,10 +28,10 @@ public class GuiGrid extends AbstractGuiOverlay {
         if (pixelGrid && !isVisible) {
             isVisible = true;
             gridSize = 5;
-        } else if (pixelGrid && isVisible) {
+        } else if (pixelGrid) {
             pixelGrid = false;
             isVisible = false;
-        } else if (!isVisible && !pixelGrid) {
+        } else if (!isVisible) {
             gridSize = 5;
             isVisible = true;
         } else {

@@ -6,121 +6,121 @@ import java.util.Collection;
 import java.util.List;
 
 public interface IBook {
-    /** GETTERS **/
+    //GETTERS
     /** Return the modid, returns enchiridion if config book **/
-    public String getModID();
-    
+    String getModID();
+
     /** Return the unique identifier for this book,
      *  Is used to determine which book this is
      *  Used to grab language variants.
      *  Doesn't need to be unique for language variants **/
-    public String getUniqueName();
+    String getUniqueName();
 
     /** Return the save name for this book
      *  Should be unique for every single book **/
-    public String getSaveName();
+    String getSaveName();
 
     /** Return the display name for this book **/
-    public String getDisplayName();
+    String getDisplayName();
 
     /** Return the hex color for this book **/
-    public int getColorAsInt();
+    int getColorAsInt();
 
     /** Return the language key for this book,
      *  for example en_US **/
-    public String getLanguageKey();
+    String getLanguageKey();
 
     /** Whether or not this book displays it's background **/
-    public boolean isBackgroundVisible();
+    boolean isBackgroundVisible();
 
     /** Whether or not we should render the old texture **/
-    public boolean isBackgroundLegacy();
+    boolean isBackgroundLegacy();
 
     /** The resource location of the background **/
-    public ResourceLocation getBackgroundResource();
+    ResourceLocation getBackgroundResource();
 
     /** The start position for the background on the x axis **/
-    public int getBackgroundStartX();
+    int getBackgroundStartX();
 
     /** The start position for the background on the y axis **/
-    public int getBackgroundStartY();
+    int getBackgroundStartY();
 
     /** The end position for the background on the x axis **/
-    public int getBackgroundEndX();
+    int getBackgroundEndX();
 
     /** The end position for the background on the y axis **/
-    public int getBackgroundEndY();
+    int getBackgroundEndY();
 
     /** Returns the default page number **/
-    public int getDefaultPage();
+    int getDefaultPage();
 
     /** Whether this book is editable or not **/
-    public boolean isLocked();
+    boolean isLocked();
 
     /** Returns true if this book doesn't remember the last page
      *  you were using when you close it. (Resets itself to the default) */
-    public boolean doesBookForgetClose();
+    boolean doesBookForgetClose();
 
     /** Returns a list of all the pages in the book
      *  Adding to this won't work, use {@link #addPage(IPage)} **/
-    public List<IPage> getPages();
+    List<IPage> getPages();
 
     /** Returns true if this book was originally made in 1.7.10 **/
-    public boolean isLegacyBook();
+    boolean isLegacyBook();
 
     /** Returns true if the arrows were visible before in 1.7.10 **/
-    public boolean wereArrowsVisible();
+    boolean wereArrowsVisible();
 
     /** Returns whatever iconPass1 was set to in 1.7.10 **/
-    public String getIconPass1();
+    String getIconPass1();
 
-    /** SETTERS **/
+    //SETTERS
     /** Internal use only **/
-    public IBook setModID(String modid);
+    IBook setModID(String modid);
 
     /** Set the save name for this book **/
-    public void setSaveName(String name);
+    void setSaveName(String name);
 
     /** Set the display name for this book **/
-    public void setDisplayName(String name);
+    void setDisplayName(String name);
 
     /** Adds tooltip info **/
-    public void addInformation(List<String> tooltip);
+    void addInformation(List<String> tooltip);
 
     /** Set the color of this book **/
-    public void setColorAsInt(int color);
+    void setColorAsInt(int color);
 
     /** Set the language key for this book **/
-    public void setLanguageKey(String language);
+    void setLanguageKey(String language);
 
     /** Sets the books background **/
-    public void setBackgroundResource(String string);
+    void setBackgroundResource(String string);
 
-    /** Legacy Helpers **/
+    //Legacy Helpers
     /** Marks this as a legacy book **/
-    public void setLegacy();
+    void setLegacy();
 
-    /** Sets arrow visiblity **/
-    public void setArrowVisiblity(boolean isVisible);
+    /** Sets arrow visibility **/
+    void setArrowVisibility(boolean isVisible);
 
-    /** Sets iconpass1 **/
-    public void setIconPass1(String name);
+    /** Sets icon pass 1 **/
+    void setIconPass1(String name);
 
     /** Save this book in the new format **/
-    public void setMadeIn189();
+    void setMadeIn189();
 
-    /** Creates a new arraylist for the books page **/
-    public void create();
+    /** Creates a new array list for the books page **/
+    void create();
 
     /** Adds a new page **/
-    public void addPage(IPage page);
+    void addPage(IPage page);
 
     /** Removes an existing page **/
-    public void removePage(IPage page);
+    void removePage(IPage page);
 
     /** Returns a list of default ids **/
-    public List<String> getDefaultFeatures();
+    List<String> getDefaultFeatures();
 
     /** Call to set the default features for this book **/
-    public void setDefaultFeatures(Collection<String> features);
+    void setDefaultFeatures(Collection<String> features);
 }

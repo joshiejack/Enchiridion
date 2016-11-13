@@ -23,7 +23,8 @@ public class PacketSyncFile extends PacketSyncByteArray {
     private String directory;
     private int length;
 
-    public PacketSyncFile() {}
+    public PacketSyncFile() {
+    }
 
     public PacketSyncFile(String directory, PacketPart type) {
         super(type);
@@ -58,21 +59,23 @@ public class PacketSyncFile extends PacketSyncByteArray {
     }
 
     @Override
-    public void receivedHashcode(EntityPlayer player) {}
+    public void receivedHashcode(EntityPlayer player) {
+    }
 
     @Override
-    public void receivedLengthRequest(EntityPlayer player) {}
+    public void receivedLengthRequest(EntityPlayer player) {
+    }
 
     @Override
     public void receivedStringLength(EntityPlayer player) {
-        byte[][]bites = new byte[length][];
+        byte[][] bites = new byte[length][];
         SyncHelper.bytesClient.put(directory, bites);
         PacketHandler.sendToServer(new PacketSyncFile(directory, REQUEST_DATA));
     }
 
     @Override
     public void receivedDataRequest(EntityPlayer player) {
-        byte[][]bites = SyncHelper.bytesServer.get(directory);
+        byte[][] bites = SyncHelper.bytesServer.get(directory);
         for (int index = 0; index < bites.length; index++) {
             PacketHandler.sendToClient(new PacketSyncFile(directory, SEND_DATA, index, bites[index]), player);
         }
@@ -82,12 +85,12 @@ public class PacketSyncFile extends PacketSyncByteArray {
     public void receivedData(EntityPlayer player) {
         byte[][] bites = SyncHelper.bytesClient.get(directory);
         bites[length] = this.bites;
-        
+
         //If we are missing any bytes run away
         for (byte[] b : bites) {
             if (b == null) return;
         }
-        
+
 
         try {
             //Combined all exist byte arrays
@@ -95,7 +98,7 @@ public class PacketSyncFile extends PacketSyncByteArray {
             for (byte[] b : bites) stream.write(b);
             byte[] combined = stream.toByteArray();
             stream.close();
-            
+
             File file = new File(FileHelper.getBooksDirectory(), directory);
             if (!file.exists()) {
                 file.getParentFile().mkdirs();

@@ -14,15 +14,16 @@ import java.util.HashMap;
 
 public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
     public static final GuiSimpleEditorGeneric INSTANCE = new GuiSimpleEditorGeneric();
-    private HashMap<String, WrappedEditable> fieldCache = new HashMap();
+    private HashMap<String, WrappedEditable> fieldCache = new HashMap<>();
     private String[] fieldNameCache;
     private static ISimpleEditorFieldProvider provider = null;
 
-    protected GuiSimpleEditorGeneric() {}
+    protected GuiSimpleEditorGeneric() {
+    }
 
     public IBookEditorOverlay setFeature(ISimpleEditorFieldProvider points) {
-        this.provider = points;
-        this.fieldCache = new HashMap();
+        provider = points;
+        this.fieldCache = new HashMap<>();
         this.fieldNameCache = null;
         return this;
     }
@@ -33,7 +34,6 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -46,18 +46,17 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        int xPos = X_POS_START;
         int yPos = -11;
 
         //Draw the extra information for the actions
         drawBoxLabel(Enchiridion.translate("fields.extra"), yPos + 20);
         for (String f : getFieldNames()) {
-            if(isTransient(f)) continue;
+            if (isTransient(f)) continue;
             drawBorderedRectangle(2, yPos + 30, 83, yPos + 37, 0xFF312921, 0xFF191511);
             String name = Enchiridion.translate("button.action.field." + f);
             drawSplitScaledString("[b]" + name + "[/b]", 4, yPos + 32, 0xFFFFFFFF, 0.5F);
 
-            WrappedEditable editable = null;
+            WrappedEditable editable;
             if (!fieldCache.containsKey(f)) {
                 editable = new WrappedEditable(provider, f);
                 fieldCache.put(f, editable);
@@ -65,7 +64,7 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
 
             String text = TextEditor.INSTANCE.getText(editable);
             if (text == null) {
-                TextEditor.INSTANCE.setText("");
+                TextEditor.INSTANCE.setText();
                 text = TextEditor.INSTANCE.getText(editable);
             }
 
@@ -85,7 +84,7 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
 
         return PenguinFont.INSTANCE.splitStringWidth(text, 155);
     }
-    
+
     public String[] getFieldNames() {
         if (fieldNameCache != null) return fieldNameCache;
         fieldNameCache = new String[provider.getClass().getFields().length];
@@ -94,7 +93,7 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
             fieldNameCache[i] = field.getName();
             i++;
         }
-        
+
         return fieldNameCache;
     }
 
@@ -102,20 +101,19 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
         try {
             Field f = provider.getClass().getField(fieldName);
             return (Modifier.isTransient(f.getModifiers()));
-        } catch (Exception e) {}
-
+        } catch (Exception ignored) {
+        }
         return false;
     }
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY) {
-        int xPos = X_POS_START;
         int yPos = -11;
         //Draw the extra information for the actions
         drawBoxLabel("Extra Fields", yPos + 20);
         for (String f : getFieldNames()) {
-            if(isTransient(f)) continue;
-            WrappedEditable editable = null;
+            if (isTransient(f)) continue;
+            WrappedEditable editable;
             if (!fieldCache.containsKey(f)) {
                 editable = new WrappedEditable(provider, f);
                 fieldCache.put(f, editable);
@@ -123,7 +121,7 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
 
             String text = TextEditor.INSTANCE.getText(editable);
             if (text == null) {
-                TextEditor.INSTANCE.setText("");
+                TextEditor.INSTANCE.setText();
                 text = TextEditor.INSTANCE.getText(editable);
             }
 
@@ -153,7 +151,7 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
         public void onFieldsSet() {
             //After all is done update the
             if (object instanceof ISimpleEditorFieldProvider) {
-                ((ISimpleEditorFieldProvider)object).onFieldsSet(fieldName);
+                ((ISimpleEditorFieldProvider) object).onFieldsSet(fieldName);
             }
         }
 
@@ -168,7 +166,9 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
                     onFieldsSet();
                     return true;
                 }
-            } catch (Exception e){ e.printStackTrace(); }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             TextEditor.INSTANCE.setEditable(this);
             return true;
@@ -213,7 +213,6 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
             //After all is done update the
             onFieldsSet();
         }

@@ -23,26 +23,26 @@ public interface IEnchiridionAPI {
      *              what your assets folder is called, where you store the book json
      *              Although nowadays it's more than likely your modid is the same as
      *              your assets path so just that will do!.*/
-    public void registerModWithBooks(String modid);
+    void registerModWithBooks(String modid);
 
     /** Register a recipe handler, Client Side only **/
-    public void registerRecipeHandler(IRecipeHandler handler);
+    void registerRecipeHandler(IRecipeHandler handler);
     
     /** Register an editor overlay, Client Side only **/
-    public void registerEditorOverlay(IBookEditorOverlay overlay);
+    void registerEditorOverlay(IBookEditorOverlay overlay);
     
     /** Register a toolbar button, Client Side only **/
-    public void registerToolbarButton(IToolbarButton button);
+    void registerToolbarButton(IToolbarButton button);
     
     /** Register a button action, Client Side only **/
-    public void registerButtonAction(IButtonAction action);
+    void registerButtonAction(IButtonAction action);
 
     /** Register a custom template **/
-    public void registerTemplate(ITemplate template);
+    void registerTemplate(ITemplate template);
 
     /** Call this to get a book from it's id **/
-    public IBook getBook(String bookid);
+    IBook getBook(String bookID);
 
     /** Call this to open a books gui **/
-    public void openBook(EntityPlayer player, String bookid, int page);
+    void openBook(EntityPlayer player, String bookID, int page);
 }

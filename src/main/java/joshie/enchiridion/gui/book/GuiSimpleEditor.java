@@ -16,9 +16,10 @@ public class GuiSimpleEditor extends AbstractGuiOverlay implements ITextEditable
     private int yStart = 0;
     private int layerPosition = 0;
     private IBookEditorOverlay editor = null;
-    
-    private GuiSimpleEditor() {}
-    
+
+    private GuiSimpleEditor() {
+    }
+
     public void setEditor(IBookEditorOverlay editor) {
         this.editor = editor;
         this.text = "";
@@ -26,12 +27,12 @@ public class GuiSimpleEditor extends AbstractGuiOverlay implements ITextEditable
             editor.updateSearch(this.text);
         }
     }
-    
+
     @Override
     public void draw(int mouseX, int mouseY) {
 
         if (editor != null) {
-            /** Draw the Background **/
+            /* Draw the Background */
             EnchiridionAPI.draw.drawImage(SIDEBAR, EConfig.editorXPos - 3, EConfig.toolbarYPos - 7, EConfig.editorXPos + 87, EConfig.timelineYPos + 13);
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.editorXPos, EConfig.toolbarYPos + 7, EConfig.editorXPos + 85, EConfig.timelineYPos + 11, 0xFF312921, 0xFF191511);
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.editorXPos + 2, EConfig.toolbarYPos + 9, EConfig.editorXPos + 83, EConfig.timelineYPos + 9, 0xFFE4D6AE, 0x5579725A);
@@ -40,14 +41,14 @@ public class GuiSimpleEditor extends AbstractGuiOverlay implements ITextEditable
             editor.draw(mouseX, mouseY);
         }
     }
-    
+
     @Override
     public void keyTyped(char character, int key) {
-         if (editor != null) {
-             editor.updateSearch(getTextField());
-         }
+        if (editor != null) {
+            editor.updateSearch(getTextField());
+        }
     }
-    
+
     @Override
     public boolean mouseClicked(int mouseX, int mouseY) {
         if (editor != null) {
@@ -61,9 +62,9 @@ public class GuiSimpleEditor extends AbstractGuiOverlay implements ITextEditable
 
         return false;
     }
-    
+
     @Override
-       public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
+    public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
         if (editor != null) {
             editor.addToolTip(tooltip, mouseX, mouseY);
         }

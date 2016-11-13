@@ -15,13 +15,16 @@ public abstract class FeatureAbstract implements IFeature {
     }
 
     @Override
-    public void draw(int mouseX, int mouseY) {}
+    public void draw(int mouseX, int mouseY) {
+    }
 
     @Override
-    public void addTooltip(List<String> tooltip, int mouseX, int mouseY) {}
+    public void addTooltip(List<String> tooltip, int mouseX, int mouseY) {
+    }
 
     @Override
-    public void keyTyped(char character, int key) {}
+    public void keyTyped(char character, int key) {
+    }
 
     @Override
     public boolean getAndSetEditMode() {
@@ -34,22 +37,28 @@ public abstract class FeatureAbstract implements IFeature {
     }
 
     @Override
-    public void performRelease(int mouseX, int mouseY, int button) {}
+    public void performRelease(int mouseX, int mouseY, int button) {
+    }
 
     @Override
-    public void follow(int mouseX, int mouseY) {}
+    public void follow(int mouseX, int mouseY) {
+    }
 
     @Override
-    public void scroll(boolean down, int amount) {}
+    public void scroll(boolean down, int amount) {
+    }
 
     @Override
-    public void onDeselected() {}
+    public void onDeselected() {
+    }
 
     @Override
-    public void readFromJson(JsonObject json) {}
+    public void readFromJson(JsonObject json) {
+    }
 
     @Override
-    public void writeToJson(JsonObject json) {}
+    public void writeToJson(JsonObject json) {
+    }
 
     @Override
     public String getName() {

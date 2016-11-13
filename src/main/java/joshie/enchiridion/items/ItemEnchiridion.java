@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 import static net.minecraft.util.text.TextFormatting.DARK_GREEN;
@@ -44,7 +45,7 @@ public class ItemEnchiridion extends Item implements IGuideItem {
     }
 
     @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, @Nonnull ItemStack newStack, boolean slotChanged) {
         return oldStack.getItem() != newStack.getItem() || oldStack.getItemDamage() != newStack.getItemDamage();
     }
 
@@ -54,7 +55,8 @@ public class ItemEnchiridion extends Item implements IGuideItem {
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack) {
+    @Nonnull
+    public String getItemStackDisplayName(@Nonnull ItemStack stack) {
         if (stack.getItemDamage() == 1) {
             return TextFormatting.GOLD + Enchiridion.translate("library");
         }
@@ -84,7 +86,8 @@ public class ItemEnchiridion extends Item implements IGuideItem {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+    @Nonnull
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
         if (stack.getItemDamage() == 1) {
             if (player.isSneaking()) player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, hand.ordinal(), 0);
             else {
@@ -99,11 +102,11 @@ public class ItemEnchiridion extends Item implements IGuideItem {
             }
 
         } else player.openGui(Enchiridion.instance, GuiIDs.BOOK, world, 0, hand.ordinal(), 0);
-        return new ActionResult(EnumActionResult.SUCCESS, stack);
+        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, List list) {
+    public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
         if (EConfig.libraryAsItem) list.add(new ItemStack(item, 1, 1));
 
         list.add(new ItemStack(item));
@@ -117,7 +120,8 @@ public class ItemEnchiridion extends Item implements IGuideItem {
     }
 
     @Override
-    public Item setUnlocalizedName(String unlocalizedName) {
+    @Nonnull
+    public Item setUnlocalizedName(@Nonnull String unlocalizedName) {
         super.setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
         GameRegistry.register(this);

@@ -4,6 +4,7 @@ import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.MCClientHelper;
+import joshie.enchiridion.lib.EInfo;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -12,7 +13,9 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Book implements IBook {
-    /** VARIABLES **/
+    /**
+     * VARIABLES
+     **/
     //Internal Information
     private String modid;
     private String uniqueName;
@@ -24,21 +27,21 @@ public class Book implements IBook {
     private String colorHex;
     private String language;
     private boolean hasCustomIcon;
-    
+
     //Background, with default texture
     private boolean showBackground; //Whether to show any background at all
     private boolean legacyTexture; //Use the legacy texture for the books instead
     private String backgroundResource = "enchiridion:textures/books/rustic2.png";
-    private int backgroundStartX = -10;
-    private int backgroundStartY = -10;
-    private int backgroundEndX = 440;
-    private int backgroundEndY = 240;
-    
+    private final int BACKGROUND_START_X = -10;
+    private final int BACKGROUND_START_Y = -10;
+    private final int BACKGROUND_END_X = 440;
+    private final int BACKGROUND_END_Y = 240;
+
     //Extra Information
     private int defaultPage;
     private boolean isLocked;
     private boolean forgetPageOnClose;
-    
+
     //Book itself
     private List<IPage> book;
     //Default Features UniqueIDs
@@ -54,9 +57,13 @@ public class Book implements IBook {
     private transient ResourceLocation resourceLocation;
     private transient boolean convertedColor;
     private transient List<String> information;
-    
-    /** CONSTRUCTOR **/
-    public Book(){}
+
+    /**
+     * CONSTRUCTOR
+     **/
+    public Book() {
+    }
+
     public Book(String name, String display) {
         this.displayName = display;
         this.uniqueName = name;
@@ -65,18 +72,20 @@ public class Book implements IBook {
         this.language = MCClientHelper.getLang();
         this.hasCustomIcon = true;
         this.showBackground = true;
-        this.book = new ArrayList();
+        this.book = new ArrayList<>();
         this.book.add(DefaultHelper.addDefaults(this, new Page(0).setBook(this)));
-        this.defaultIDs = new ArrayList();
+        this.defaultIDs = new ArrayList<>();
         this.defaultIDs.add("enchiridion_default_buttons");
     }
-    
-    /** METHODS **/
+
+    /**
+     * METHODS
+     **/
     @Override
     public String getModID() {
         return modid;
     }
-    
+
     @Override
     public String getUniqueName() {
         return uniqueName;
@@ -98,9 +107,9 @@ public class Book implements IBook {
             try {
                 convertedColor = true;
                 color = (int) Long.parseLong(colorHex, 16);
-            } catch (Exception e) {}
+            } catch (Exception ignored) {
+            }
         }
-
         return color;
     }
 
@@ -108,7 +117,7 @@ public class Book implements IBook {
     public String getLanguageKey() {
         return language;
     }
-    
+
     @Override
     public boolean isBackgroundVisible() {
         return showBackground;
@@ -124,28 +133,27 @@ public class Book implements IBook {
         if (resourceLocation == null) {
             resourceLocation = new ResourceLocation(backgroundResource);
         }
-
         return resourceLocation;
     }
 
     @Override
     public int getBackgroundStartX() {
-        return backgroundStartX;
+        return BACKGROUND_START_X;
     }
 
     @Override
     public int getBackgroundStartY() {
-        return backgroundStartY;
+        return BACKGROUND_START_Y;
     }
 
     @Override
     public int getBackgroundEndX() {
-        return backgroundEndX;
+        return BACKGROUND_END_X;
     }
 
     @Override
     public int getBackgroundEndY() {
-        return backgroundEndY;
+        return BACKGROUND_END_Y;
     }
 
     @Override
@@ -165,7 +173,7 @@ public class Book implements IBook {
 
     @Override
     public List<IPage> getPages() {
-        return new ArrayList(book);
+        return new ArrayList<>(book);
     }
 
     @Override
@@ -184,8 +192,8 @@ public class Book implements IBook {
     }
 
     @Override
-    public IBook setModID(String modidi) {
-        modid = modidi;
+    public IBook setModID(String modID) {
+        modid = modID;
         return this;
     }
 
@@ -223,7 +231,7 @@ public class Book implements IBook {
     }
 
     @Override
-    public void setArrowVisiblity(boolean isVisible) {
+    public void setArrowVisibility(boolean isVisible) {
         showArrows = isVisible;
     }
 
@@ -239,7 +247,7 @@ public class Book implements IBook {
 
     @Override
     public void create() {
-        book = new ArrayList();
+        book = new ArrayList<>();
     }
 
     @Override
@@ -262,27 +270,25 @@ public class Book implements IBook {
         if (information == null) {
             if (displayInfo == null) displayInfo = "";
             String[] split = displayInfo.split("/n");
-            information = new ArrayList();
-            for (String s: split) {
+            information = new ArrayList<>();
+            for (String s : split) {
                 if (!s.equals("")) information.add(s);
             }
         }
-        
         tooltip.addAll(information);
     }
 
     @Override
     public List<String> getDefaultFeatures() {
         if (defaultIDs == null) {
-            defaultIDs = new ArrayList();
+            defaultIDs = new ArrayList<>();
             defaultIDs.add("enchiridion_default_buttons");
         }
-
         return defaultIDs;
     }
 
     @Override
     public void setDefaultFeatures(Collection<String> features) {
-        this.defaultIDs = new ArrayList(features);
+        this.defaultIDs = new ArrayList<>(features);
     }
 }

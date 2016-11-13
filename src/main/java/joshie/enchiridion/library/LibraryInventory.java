@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class LibraryInventory extends InventoryStorage {
@@ -31,11 +32,11 @@ public class LibraryInventory extends InventoryStorage {
             this.uuid = UUIDHelper.getPlayerUUID(player);
         }
     }
-    
+
     public int getCurrentBook() {
         return currentBook;
     }
-    
+
     public ItemStack getCurrentBookItem() {
         return getStackInSlot(getCurrentBook());
     }
@@ -44,7 +45,7 @@ public class LibraryInventory extends InventoryStorage {
         currentBook = slot;
         markDirty();
     }
-    
+
     private boolean insertIntoNextFreeSlot(ItemStack stack) {
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i] == null) {
@@ -52,30 +53,30 @@ public class LibraryInventory extends InventoryStorage {
                 return true; //If we could insert the book, return true
             }
         }
-        
+
         return false;
     }
-    
+
     public void addDefaultBooks() {
         if (!receivedBooks) {
-            for (ItemStack stack: ModSupport.getFreeBooks()) {
+            for (ItemStack stack : ModSupport.getFreeBooks()) {
                 if (!insertIntoNextFreeSlot(stack)) {
                     break;
                 }
             }
-            
+
             receivedBooks = true;
             markDirty();
         }
     }
-    
-    
+
+
     //Only should be called server side
     public void reset() {
         receivedBooks = false;
         markDirty();
     }
-    
+
     //Only should be called server side
     public void clear() {
         inventory = new ItemStack[MAX];
@@ -110,6 +111,7 @@ public class LibraryInventory extends InventoryStorage {
     }
 
     @Override
+    @Nonnull
     public String getName() {
         return "enchiridion.library";
     }

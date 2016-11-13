@@ -10,8 +10,10 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 public class PacketSetLibraryBook extends PenguinPacket {
     private ItemStack stack;
     private int slot;
-    
-    public PacketSetLibraryBook() {}
+
+    public PacketSetLibraryBook() {
+    }
+
     public PacketSetLibraryBook(ItemStack stack, int slot) {
         this.stack = stack;
         this.slot = slot;

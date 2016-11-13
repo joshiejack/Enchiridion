@@ -3,17 +3,17 @@ package joshie.enchiridion.api.gui;
 import net.minecraft.util.ResourceLocation;
 
 public interface IToolbarButton {
-    /** Return the resource location for this button **/
-    public ResourceLocation getResource();
+    /** @return the resource location for this button **/
+    ResourceLocation getResource();
 
-    /** Return the resource location for when this button is hovered over **/
-    public ResourceLocation getHoverResource();
+    /** @return the resource location for when this button is hovered over **/
+    ResourceLocation getHoverResource();
 
     /** On Click **/
-    public void performAction();
+    void performAction();
 
-    /** Return the the tooltip for hovering over this button **/
-    public String getTooltip();
+    /** @return the the tooltip for hovering over this button **/
+    String getTooltip();
 
     /** If this button is left aligned,
      *  otherwise it'll be assigned to the right instead  */

@@ -4,12 +4,12 @@ import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.data.book.BookEvents;
 import joshie.enchiridion.gui.library.ContainerLibrary;
-import joshie.enchiridion.library.LibraryRecipe;
 import joshie.enchiridion.helpers.HeldHelper;
 import joshie.enchiridion.items.ItemEnchiridion;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryEvents;
 import joshie.enchiridion.library.LibraryHelper;
+import joshie.enchiridion.library.LibraryRecipe;
 import joshie.enchiridion.library.LibraryRegistry;
 import joshie.enchiridion.library.handlers.*;
 import joshie.enchiridion.network.*;
@@ -32,10 +32,11 @@ import org.apache.logging.log4j.Level;
 public class ECommonProxy implements IGuiHandler {
     public static Item book;
 
-    public void onConstruction() {}
+    public void onConstruction() {
+    }
 
     public void preInit() {
-        book = new ItemEnchiridion().setCreativeTab(ECreativeTab.enchiridion).setHasSubtypes(true).setUnlocalizedName("book");
+        book = new ItemEnchiridion().setCreativeTab(ECreativeTab.ENCHIRIDION).setHasSubtypes(true).setUnlocalizedName("book");
         EnchiridionAPI.instance = new EAPIHandler();
         EnchiridionAPI.library = LibraryRegistry.INSTANCE;
         EnchiridionAPI.library.registerBookHandler(new EnchiridionBookHandler()); //Enchiridion
@@ -43,8 +44,8 @@ public class ECommonProxy implements IGuiHandler {
         EnchiridionAPI.library.registerBookHandler(new RightClickBookHandler()); //Default Handler
         EnchiridionAPI.library.registerBookHandler(new TemporarySwitchHandler()); //Switch Click Handler
         EnchiridionAPI.library.registerBookHandler(new CopyNBTHandler()); //Copy NBT Handler
-        //if (EConfig.loadComputercraft) attemptToRegisterModdedBookHandler(ComputerCraftHandler.class);
-        //if (EConfig.loadWarpbook) attemptToRegisterModdedBookHandler(WarpBookHandler.class);
+        //if (EConfig.loadComputercraft) attemptToRegisterModdedBookHandler(ComputerCraftHandler.class); //TODO Re-add when updated to 1.11
+        //if (EConfig.loadWarpbook) attemptToRegisterModdedBookHandler(WarpBookHandler.class); // TODO Re-add when updated to 1.11
 
         //Register events
         MinecraftForge.EVENT_BUS.register(new BookEvents());
@@ -85,16 +86,21 @@ public class ECommonProxy implements IGuiHandler {
         }
     }
 
-    public void setupClient() {}
+    public void setupClient() {
+    }
 
-    public void setupFont() {}
+    public void setupFont() {
+    }
 
-    /** GUI HANDLING **/
+    /**
+     * GUI HANDLING
+     **/
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int integer1, int handOrdinal, int z) {
-        /*if (ID == GuiIDs.WARPBOOK) {
+        /*if (ID == GuiIDs.WARPBOOK) { //TODO Re-add when updated to 1.11
             return WarpBookHandler.getWarpbookContainer(player, integer1);
-        } else */if (ID == GuiIDs.LIBRARY) {
+        } else */
+        if (ID == GuiIDs.LIBRARY) {
             return new ContainerLibrary(player.inventory, LibraryHelper.getServerLibraryContents(player), HeldHelper.getHandFromOrdinal(handOrdinal));
         } else return null;
     }

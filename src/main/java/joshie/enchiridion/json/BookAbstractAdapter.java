@@ -21,18 +21,23 @@ public class BookAbstractAdapter implements JsonDeserializer<Book> {
         try {
             //Load the basic fields
             Field[] fields = Book.class.getDeclaredFields();
-            for (Field f: fields) {
+            for (Field f : fields) {
                 f.setAccessible(true); //Screw my own private variables
                 if (Modifier.isTransient(f.getModifiers())) continue; //Ignore transients
-                if (f.getType().equals(boolean.class)) f.set(book, JSONHelper.getBooleanIfExists(jsonObject, f.getName()));
+                if (f.getType().equals(boolean.class))
+                    f.set(book, JSONHelper.getBooleanIfExists(jsonObject, f.getName()));
                 if (f.getType().equals(int.class)) f.set(book, JSONHelper.getIntegerIfExists(jsonObject, f.getName()));
-                if (f.getType().equals(String.class)) f.set(book, JSONHelper.getStringIfExists(jsonObject, f.getName()));
+                if (f.getType().equals(String.class))
+                    f.set(book, JSONHelper.getStringIfExists(jsonObject, f.getName()));
             }
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //Add in the book data
         book.create();
-        if (EConfig.debugMode) Enchiridion.log(Level.INFO, "=== Preparing to read the book : " + book.getDisplayName() + " ===");
+        if (EConfig.debugMode)
+            Enchiridion.log(Level.INFO, "=== Preparing to read the book : " + book.getDisplayName() + " ===");
         JsonArray array = jsonObject.get("book").getAsJsonArray();
         for (int i = 0; i < array.size(); i++) {
             JsonObject page = array.get(i).getAsJsonObject();
@@ -42,7 +47,7 @@ public class BookAbstractAdapter implements JsonDeserializer<Book> {
 
         if (jsonObject.get("showArrows") != null) { //READING IN AN OLD BOOK
             book.setLegacy();
-            book.setArrowVisiblity(JSONHelper.getBooleanIfExists(jsonObject, "showArrows"));
+            book.setArrowVisibility(JSONHelper.getBooleanIfExists(jsonObject, "showArrows"));
             book.setIconPass1(JSONHelper.getStringIfExists(jsonObject, "iconPass1"));
             book.setColorAsInt(JSONHelper.getIntegerIfExists(jsonObject, "color"));
         } else book.setMadeIn189();

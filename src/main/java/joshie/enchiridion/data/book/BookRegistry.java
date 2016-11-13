@@ -25,6 +25,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Level;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -38,27 +39,32 @@ import java.util.zip.ZipFile;
 public class BookRegistry implements ItemMeshDefinition {
     public static final BookRegistry INSTANCE = new BookRegistry();
 
-    private BookRegistry() {}
+    private BookRegistry() {
+    }
 
     public void loadBooksFromConfig() {
         //If the book directory doesn't exist create it
         File directory = FileHelper.getBooksDirectory();
 
-        Collection<File> files = FileUtils.listFiles(directory, new String[] { "json" }, false);
+        Collection<File> files = FileUtils.listFiles(directory, new String[]{"json"}, false);
         for (File file : files) { //Grab a list of all the json files in the directory
             //Read all the json books from this directory
             try {
                 register(GsonHelper.getModifiedGson().fromJson(FileUtils.readFileToString(file), Book.class));
-            } catch (Exception e) { e.printStackTrace(); }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         //Load the templates
-        files = FileUtils.listFiles(FileHelper.getTemplatesDirectory(), new String[] { "json" }, false);
+        files = FileUtils.listFiles(FileHelper.getTemplatesDirectory(), new String[]{"json"}, false);
         for (File file : files) { //Grab a list of all the json files in the directory
             //Read all the json books from this directory
             try {
                 GuiSimpleEditorTemplate.INSTANCE.registerTemplate(GsonHelper.getModifiedGson().fromJson(FileUtils.readFileToString(file), Template.class));
-            } catch (Exception e) { e.printStackTrace(); }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -77,18 +83,20 @@ public class BookRegistry implements ItemMeshDefinition {
                         String json = IOUtils.toString(zipfile.getInputStream(zipentry));
                         IBook data = register(GsonHelper.getModifiedGson().fromJson(json, Book.class).setModID(modid));
                         Enchiridion.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.getUniqueName() + " for the language: " + data.getLanguageKey());
-                    } catch (Exception e) {}
+                    } catch (Exception ignored) {
+                    }
                 }
             }
 
             zipfile.close();
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
     }
-    
-    private final HashMap<String, HashMap<String, IBook>> books = new HashMap();
-    private final HashMap<String, ModelResourceLocation> locations = new HashMap();
-    private static ModelResourceLocation DFLT = new ModelResourceLocation("minecraft:book", "inventory");
-    
+
+    private final HashMap<String, HashMap<String, IBook>> books = new HashMap<>();
+    private final HashMap<String, ModelResourceLocation> locations = new HashMap<>();
+    private static final ModelResourceLocation DFLT = new ModelResourceLocation("minecraft:book", "inventory");
+
     public Collection<ModelResourceLocation> getModels() {
         return locations.values();
     }
@@ -125,7 +133,7 @@ public class BookRegistry implements ItemMeshDefinition {
                 }
 
                 //Initialise everything
-                for (IFeatureProvider feature: page.getFeatures()) {
+                for (IFeatureProvider feature : page.getFeatures()) {
                     feature.update(page);
                 }
 
@@ -138,34 +146,36 @@ public class BookRegistry implements ItemMeshDefinition {
         String language = book.getLanguageKey() == null ? "en_US" : book.getLanguageKey();
         translations.put(language, book);
 
-        String id = book.getModID() == null || book.getModID().equals("") ? EInfo.MODPATH : book.getModID();
+        String id = book.getModID() == null || book.getModID().equals("") ? EInfo.MODID : book.getModID();
         ModelResourceLocation location = new ModelResourceLocation(new ResourceLocation(id, book.getUniqueName()), "inventory");
         ModelBakery.registerItemVariants(ECommonProxy.book, location);
         locations.put(book.getUniqueName(), location);
-        
+
         //Now that the book has been registered, we should go and check if the it has a corresponding json for it's icon,
         //If it does not, then we should create this json ourselves using the default enchiridion icon
-       //Create the json for books which don't have the json already
-       if (book.getModID() == null || book.getModID().equals("")) {
-           File iconJson = FileHelper.getIconsJSONForBook(book);
-           if (!iconJson.exists()) {
-               try {
-                   BookIconTemplate template = new BookIconTemplate();
-                   template.parent = "enchiridion:item/book";
-                   template.textures = new Icons();
-                   if (book.getIconPass1() != null && !book.getIconPass1().equals("")) {
-                       template.textures.layer0 = "enchiridion:items/" + book.getIconPass1().replace(".png", "");
-                   } else template.textures.layer0 = "enchiridion:items/book";
+        //Create the json for books which don't have the json already
+        if (book.getModID() == null || book.getModID().equals("")) {
+            File iconJson = FileHelper.getIconsJSONForBook(book);
+            if (!iconJson.exists()) {
+                try {
+                    BookIconTemplate template = new BookIconTemplate();
+                    template.parent = "enchiridion:item/book";
+                    template.textures = new Icons();
+                    if (book.getIconPass1() != null && !book.getIconPass1().equals("")) {
+                        template.textures.layer0 = "enchiridion:items/" + book.getIconPass1().replace(".png", "");
+                    } else template.textures.layer0 = "enchiridion:items/book";
 
-                   Writer writer = new OutputStreamWriter(new FileOutputStream(iconJson), "UTF-8");
-                   writer.write(GsonHelper.getModifiedGson().toJson(template));;
-                   writer.close();
-               } catch (Exception e) { e.printStackTrace(); }
+                    Writer writer = new OutputStreamWriter(new FileOutputStream(iconJson), "UTF-8");
+                    writer.write(GsonHelper.getModifiedGson().toJson(template));
+                    writer.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-       }
+        }
 
         //Now that all that is done, let's go through and remove all the errored features
-        for (IPage page: book.getPages()) {
+        for (IPage page : book.getPages()) {
             Iterator<IFeatureProvider> feature = page.getFeatures().iterator();
             while (feature.hasNext()) {
                 if (feature.next().getFeature() instanceof FeatureError) {
@@ -173,22 +183,22 @@ public class BookRegistry implements ItemMeshDefinition {
                 }
             }
         }
-        
+
         return book;
     }
-    
+
     public HashMap<String, IBook> getTranslations(String identifier) {
         HashMap<String, IBook> translations = books.get(identifier);
         if (translations != null) return translations;
         else {
-            translations = new HashMap();
+            translations = new HashMap<>();
             books.put(identifier, translations);
             return translations;
         }
     }
 
     public IBook getBook(ItemStack held) {
-        if (held.getItem() == null) return null;
+        if (held == null) return null;
         if (!held.hasTagCompound()) return null;
         String identifier = held.getTagCompound().getString("identifier");
         return getBookByName(identifier);
@@ -209,7 +219,8 @@ public class BookRegistry implements ItemMeshDefinition {
     }
 
     @Override
-    public ModelResourceLocation getModelLocation(ItemStack stack) {
+    @Nonnull
+    public ModelResourceLocation getModelLocation(@Nonnull ItemStack stack) {
         if (stack.getItemDamage() == 1) return EClientProxy.libraryItem;
         else {
             IBook book = getBook(stack);

@@ -21,15 +21,17 @@ public class ButtonInsertImage extends ButtonAbstract {
         File file = FileCopier.copyFileFromUser(FileHelper.getImageSaveDirectory());
         if (file != null) {
             try {
-                String foldername = EnchiridionAPI.book.getBook().getSaveName();
+                String folderName = EnchiridionAPI.book.getBook().getSaveName();
                 String modid = EnchiridionAPI.book.getBook().getModID();
                 IPage current = EnchiridionAPI.book.getPage();
-                String path = "";
+                String path = ""; //TODO Figure out what this was used for
                 if (modid == null || modid.equals("")) {
-                    path = EInfo.MODID + ":images/" + foldername + "/" + file.getName();
-                } else path = modid + ":textures/books/images/" + file.getName();
+                    path = EInfo.MODID + ":images/" + folderName + "/" + file.getName();
+                } else {
+                    path = modid + ":textures/books/images/" + file.getName();
+                }
 
-                FeatureImage feature = new FeatureImage(EInfo.MODID + ":images/" + foldername + "/" + file.getName());
+                FeatureImage feature = new FeatureImage(EInfo.MODID + ":images/" + folderName + "/" + file.getName());
                 BufferedImage buffered = ImageIO.read(file);
                 int width = buffered.getWidth();
                 int height = buffered.getHeight();

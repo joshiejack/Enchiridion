@@ -9,7 +9,7 @@ public class PenguinNetwork {
     private final SimpleNetworkWrapper INSTANCE;
     private final PenguinPacketHandler handler;
     private int id;
-    
+
     public PenguinNetwork(String name) {
         INSTANCE = new SimpleNetworkWrapper(name);
         handler = new PenguinPacketHandler();
@@ -18,7 +18,7 @@ public class PenguinNetwork {
     public void registerPacket(Class clazz, Side side) {
         INSTANCE.registerMessage(handler, clazz, id++, side);
     }
-    
+
     public void sendToClient(IMessage message, EntityPlayerMP player) {
         INSTANCE.sendTo(message, player);
     }
@@ -26,7 +26,7 @@ public class PenguinNetwork {
     public void sendToServer(IMessage message) {
         INSTANCE.sendToServer(message);
     }
-    
+
     public void sendToEveryone(IMessage message) {
         INSTANCE.sendToAll(message);
     }

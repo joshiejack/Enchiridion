@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
     protected final int ySize = 217;
     protected ScaledResolution res;
 
-    public List<String> tooltip = new ArrayList();
+    public final List<String> TOOLTIP = new ArrayList<>();
     public int mouseX = 0;
     public int mouseY = 0;
     public int x;
@@ -37,21 +38,22 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
     private double renderWidth;
     private double renderHeight;
     private float renderSize;
-    
-    protected GuiBase() {}
-    
+
+    protected GuiBase() {
+    }
+
     @Override
     public void drawScreen(int x2, int y2, float partialTicks) {
         x = (width - xSize) / 2;
         y = (height - ySize) / 2;
         res = new ScaledResolution(mc);
-        tooltip.clear();
+        TOOLTIP.clear();
     }
 
     public ScaledResolution getRes() {
         return res;
     }
-    
+
     @Override
     public void handleMouseInput() throws IOException {
         int x = Mouse.getEventX() * width / mc.displayWidth;
@@ -90,7 +92,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
         int bottom = top + scaled;
         return mouseX >= left && mouseX <= right && mouseY >= top && mouseY <= bottom;
     }
-    
+
     @Override
     public boolean isMouseOverArea(double x2, double y2, int width, int height, float scale) {
         int left = getLeft(x2);
@@ -98,7 +100,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
         int scaledX = (int) (width * scale * renderSize);
         int scaledY = (int) (height * scale * renderSize);
         int right = left + scaledX;
-        int bottom = top + scaledY; 
+        int bottom = top + scaledY;
         return mouseX >= left && mouseX <= right && mouseY >= top && mouseY <= bottom;
     }
 
@@ -167,7 +169,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
         float f1 = (float) (color >> 8 & 255) / 255.0F;
         float f2 = (float) (color & 255) / 255.0F;
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer worldrenderer = tessellator.getBuffer();
+        VertexBuffer buffer = tessellator.getBuffer();
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -187,18 +189,18 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
             posY = -thickness;
         }
 
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION);
-        worldrenderer.pos((double) left, (double) top + posX, 0.0D).endVertex();
-        worldrenderer.pos((double) right, (double) bottom + posX, 0.0D).endVertex();
-        worldrenderer.pos((double) right + posY, (double) bottom, 0.0D).endVertex();
-        worldrenderer.pos((double) left + posY, (double) top, 0.0D).endVertex();
+        buffer.begin(7, DefaultVertexFormats.POSITION);
+        buffer.pos((double) left, (double) top + posX, 0.0D).endVertex();
+        buffer.pos((double) right, (double) bottom + posX, 0.0D).endVertex();
+        buffer.pos((double) right + posY, (double) bottom, 0.0D).endVertex();
+        buffer.pos((double) left + posY, (double) top, 0.0D).endVertex();
         tessellator.draw();
 
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        worldrenderer.pos((double) left, (double) top, 0.0D).color(f, f1, f2, f3).endVertex();
-        worldrenderer.pos((double) left + 5, (double) top, 0.0D).color(f, f1, f2, f3).endVertex();
-        worldrenderer.pos((double) left + 5, (double) top + 5, 0.0D).color(f, f1, f2, f3).endVertex();
-        worldrenderer.pos((double) left, (double) top + 5, 0.0D).color(f, f1, f2, f3).endVertex();
+        buffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        buffer.pos((double) left, (double) top, 0.0D).color(f, f1, f2, f3).endVertex();
+        buffer.pos((double) left + 5, (double) top, 0.0D).color(f, f1, f2, f3).endVertex();
+        buffer.pos((double) left + 5, (double) top + 5, 0.0D).color(f, f1, f2, f3).endVertex();
+        buffer.pos((double) left, (double) top + 5, 0.0D).color(f, f1, f2, f3).endVertex();
         tessellator.draw();
 
         GlStateManager.enableTexture2D();
@@ -217,7 +219,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
 
     @Override
     public void drawStack(ItemStack stack, int left, int top, float size) {
-        if (stack == null || stack.getItem() == null) return; //Don't draw stacks that don't exist
+        if (stack == null) return; //Don't draw stacks that don't exist
         int x2 = (int) Math.floor(((x + left) / size));
         int y2 = (int) Math.floor(((y + top) / size));
         ClientStackHelper.drawStack(stack, x2, y2, size);
@@ -244,20 +246,20 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer worldrenderer = tessellator.getBuffer();
+        VertexBuffer buffer = tessellator.getBuffer();
         Minecraft.getMinecraft().getTextureManager().bindTexture(resource);
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        worldrenderer.pos((double) (x + left), (double) (y + bottom), (double) zLevel).tex(0, 1).color(1F, 1F, 1F, 1F).endVertex();
-        worldrenderer.pos((double) (x + right), (double) (y + bottom), (double) zLevel).tex(1, 1).color(1F, 1F, 1F, 1F).endVertex();
-        worldrenderer.pos((double) (x + right), (double) (y + top), (double) zLevel).tex(1, 0).color(1F, 1F, 1F, 1F).endVertex();
-        worldrenderer.pos((double) (x + left), (double) (y + top), (double) zLevel).tex(0, 0).color(1F, 1F, 1F, 1F).endVertex();
+        buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+        buffer.pos((double) (x + left), (double) (y + bottom), (double) zLevel).tex(0, 1).color(1F, 1F, 1F, 1F).endVertex();
+        buffer.pos((double) (x + right), (double) (y + bottom), (double) zLevel).tex(1, 1).color(1F, 1F, 1F, 1F).endVertex();
+        buffer.pos((double) (x + right), (double) (y + top), (double) zLevel).tex(1, 0).color(1F, 1F, 1F, 1F).endVertex();
+        buffer.pos((double) (x + left), (double) (y + top), (double) zLevel).tex(0, 0).color(1F, 1F, 1F, 1F).endVertex();
         tessellator.draw();
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
 
     @Override //From vanilla, switching to my font renderer though
-    protected void drawHoveringText(List<String> textLines, int x, int y, FontRenderer font) {
+    protected void drawHoveringText(List<String> textLines, int x, int y, @Nonnull FontRenderer font) {
         if (!textLines.isEmpty()) {
             GlStateManager.disableRescaleNormal();
             RenderHelper.disableStandardItemLighting();
@@ -305,7 +307,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
             this.drawGradientRect(l1 - 3, i2 + k + 2, l1 + i + 3, i2 + k + 3, j1, j1);
 
             for (int k1 = 0; k1 < textLines.size(); ++k1) {
-                String s1 = (String) textLines.get(k1);
+                String s1 = textLines.get(k1);
                 PenguinFont.INSTANCE.drawStringWithShadow(s1, (float) l1, (float) i2, -1);
 
                 if (k1 == 0) {

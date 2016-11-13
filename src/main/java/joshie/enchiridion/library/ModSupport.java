@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class ModSupport {
-    public static HashSet<String> supported = new HashSet();
+    public static HashSet<String> supported = new HashSet<>();
     private static ModdedBooks books;
 
     public static void loadDataFromJson(String serverName, String json) {
@@ -31,19 +31,21 @@ public class ModSupport {
                 if (stack != null) {
                     if (book.getHandler().equals("customwood")) {
                         EnchiridionAPI.library.registerWood(stack, book.shouldMatchDamage(), book.shouldMatchNBT());
-                    } else LibraryRegistry.INSTANCE.registerBookHandlerForStackFromJSON(book.getHandler(), stack, book.shouldMatchDamage(), book.shouldMatchNBT());
+                    } else
+                        LibraryRegistry.INSTANCE.registerBookHandlerForStackFromJSON(book.getHandler(), stack, book.shouldMatchDamage(), book.shouldMatchNBT());
                 }
-            } catch (Exception e) {}
+            } catch (Exception ignored) {
+            }
         }
     }
 
-    private static void setDefaults(String serverName) {
+    private static void setDefaults(String serverName) { //TODO Check Mod IDs when they are updated to 1.11
         books = new ModdedBooks(); //Create the books
         books.add("enchiridion", "enchiridion:book", true, false);
         books.add("writeable", "minecraft:writable_book", false, false);
         books.add("rightclick", "minecraft:written_book", false, false);
-        books.add("rightclick", "Thaumcraft:thaumonomicon", false, false);
-        books.add("rightclick", "Botania:lexicon", false, false);
+        books.add("rightclick", "thaumcraft:thaumonomicon", false, false);
+        books.add("rightclick", "botania:lexicon", false, false);
         books.add("rightclick", "aura:lexicon", false, false);
         books.add("rightclick", "totemic:totempedia", false, false);
         books.add("rightclick", "openblocks:infoBook", false, false);
@@ -52,7 +54,7 @@ public class ModSupport {
         books.add("rightclick", "deepresonance:dr_manual", false, false);
         books.add("rightclick", "tconstruct:book", false, false);
         books.add("computercraft", "computercraft:printout", false, false);
-        books.add("switchclick", "ImmersiveEngineering:tool 3", true, false);
+        books.add("switchclick", "immersiveengineering:tool 3", true, false);
         books.add("warpbook", "warpbook:warpbook", false, false);
         books.add("copynbt", "guideapi:ItemGuideBook", false, false);
         books.add("customwood", "minecraft:planks 1", true, false);
@@ -65,7 +67,7 @@ public class ModSupport {
         books.add("customwood", "chisel:thinWood-dark", false, false);
         books.add("customwood", "chisel:thinWood-spruce", false, false);
         books.add("customwood", "biomesoplenty:planks_0 14", true, false);
-        books.add("customwood", "Botania:livingwood", false, false);
+        books.add("customwood", "botania:livingwood", false, false);
 
         try {
             //Write the json
@@ -74,26 +76,27 @@ public class ModSupport {
             Writer writer = new OutputStreamWriter(new FileOutputStream(toSave), "UTF-8");
             writer.write(json);
             writer.close();
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
     }
 
     public static ItemStack[] getFreeBooks() {
         return books.getFreeBooks();
     }
 
-    private static HashMap<String, ModdedBooks> cache = new HashMap();
+    private static final HashMap<String, ModdedBooks> CACHE = new HashMap<>();
 
     public static void reset() {
-        cache.clear();
+        CACHE.clear();
     }
 
     public static int getHashcode(String serverName) {
-        if (cache.containsKey(serverName)) {
-            return cache.get(serverName).hashCode();
+        if (CACHE.containsKey(serverName)) {
+            return CACHE.get(serverName).hashCode();
         }
 
         loadDataFromJson(serverName, FileHelper.getLibraryJson(serverName)); //Load in any existing json files
-        cache.put(serverName, books);
+        CACHE.put(serverName, books);
         return books.hashCode();
     }
 }

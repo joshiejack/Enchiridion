@@ -7,7 +7,10 @@ import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
-import net.minecraft.client.renderer.block.model.*;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
@@ -17,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class SmartLibrary implements IBakedModel {
@@ -28,6 +32,7 @@ public class SmartLibrary implements IBakedModel {
     }
 
     @Override
+    @Nonnull
     public ItemOverrideList getOverrides() {
         return LibraryOverride.INSTANCE;
     }
@@ -39,12 +44,13 @@ public class SmartLibrary implements IBakedModel {
         private ItemModelMesher mesher;
 
         public LibraryOverride() {
-            super(ImmutableList.<ItemOverride>of());
+            super(ImmutableList.of());
         }
 
         @Override
-        public IBakedModel handleItemState(IBakedModel originalModel, ItemStack stack, World world, EntityLivingBase entity) {
-            IBakedModel ret = null;
+        @Nonnull
+        public IBakedModel handleItemState(@Nonnull IBakedModel originalModel, ItemStack stack, @Nonnull World world, @Nonnull EntityLivingBase entity) {
+            IBakedModel ret;
             //Setup
             if (mesher == null) mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
             library = mesher.getModelManager().getModel(EClientProxy.library);
@@ -59,8 +65,11 @@ public class SmartLibrary implements IBakedModel {
         }
     }
 
-    /** Redundant crap below :/ **/
+    /**
+     * Redundant crap below :/
+     **/
     @Override
+    @Nonnull
     public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
         return null;
     }
@@ -81,11 +90,13 @@ public class SmartLibrary implements IBakedModel {
     }
 
     @Override
+    @Nonnull
     public TextureAtlasSprite getParticleTexture() {
         return library.getParticleTexture();
     }
 
     @Override
+    @Nonnull
     public ItemCameraTransforms getItemCameraTransforms() {
         return ItemCameraTransforms.DEFAULT;
     }

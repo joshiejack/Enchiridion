@@ -2,7 +2,6 @@ package joshie.enchiridion.gui.book.buttons.actions;
 
 import joshie.enchiridion.api.book.IButtonAction;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
 
 public class ActionExecuteCommand extends AbstractAction {
     public String command;
@@ -32,12 +31,14 @@ public class ActionExecuteCommand extends AbstractAction {
     public boolean performAction() {
         Minecraft mc = Minecraft.getMinecraft();
         try {
-            if (net.minecraftforge.client.ClientCommandHandler.instance.executeCommand(mc.thePlayer, command) != 0) return false;
+            if (net.minecraftforge.client.ClientCommandHandler.instance.executeCommand(mc.thePlayer, command) != 0)
+                return false;
             mc.thePlayer.sendChatMessage(command);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
 
         if (close) {
-            mc.displayGuiScreen((GuiScreen)null);
+            mc.displayGuiScreen(null);
         }
 
         return true;

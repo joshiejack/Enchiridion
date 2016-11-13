@@ -3,7 +3,8 @@ package joshie.enchiridion.gui.book.features;
 import joshie.enchiridion.api.book.IFeature;
 
 public class FeatureError extends FeatureAbstract {
-    public FeatureError(){}
+    public FeatureError() {
+    }
 
     @Override
     public IFeature copy() {

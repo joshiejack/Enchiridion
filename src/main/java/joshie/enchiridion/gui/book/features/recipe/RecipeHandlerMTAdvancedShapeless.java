@@ -12,20 +12,24 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class RecipeHandlerMTAdvancedShapeless extends RecipeHandlerRecipeBase {
-    public RecipeHandlerMTAdvancedShapeless() {}
+    public RecipeHandlerMTAdvancedShapeless() {
+    }
+
     public RecipeHandlerMTAdvancedShapeless(IRecipe recipe) {
         try {
             ShapelessRecipe mtRecipe = (ShapelessRecipe) shapeless.get(recipe);
             IIngredient[] inputs = mtRecipe.getIngredients();
             ItemStack outStack = toStack(mtRecipe.getOutput());
-            ArrayList<Object> objects = new ArrayList<Object>();
-            for (IIngredient ingredient: inputs) {
+            ArrayList<Object> objects = new ArrayList<>();
+            for (IIngredient ingredient : inputs) {
                 if (ingredient instanceof IItemStack) objects.add(toStack((IItemStack) ingredient));
                 if (ingredient instanceof IOreDictEntry) objects.add(((IOreDictEntry) ingredient).getName());
             }
 
             init(outStack, objects, 3);
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -45,12 +49,14 @@ public class RecipeHandlerMTAdvancedShapeless extends RecipeHandlerRecipeBase {
 
     private static Field shapeless;
     private static Class clazz;
+
     static {
         try {
-            if (Loader.MC_VERSION.equals("1.9.4")) clazz = Class.forName("minetweaker.mc19.recipes.ShapelessRecipeAdvanced");
-            else if (Loader.MC_VERSION.equals("1.10.2")) clazz = Class.forName("minetweaker.mc1102.recipes.ShapelessRecipeAdvanced");
+            if (Loader.MC_VERSION.equals("1.11")) //TODO
+                clazz = Class.forName("minetweaker.mc111.recipes.ShapelessRecipeAdvanced");
             shapeless = clazz.getDeclaredField("recipe");
             shapeless.setAccessible(true);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 }

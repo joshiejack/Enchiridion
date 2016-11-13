@@ -9,7 +9,9 @@ import java.io.IOException;
 public class FeatureImage extends FeatureResource {
     public transient String name;
 
-    public FeatureImage() {}
+    public FeatureImage() {
+    }
+
     public FeatureImage(String path) {
         this.path = path;
     }
@@ -46,5 +48,6 @@ public class FeatureImage extends FeatureResource {
     }
 
     @Override
-    protected void readImage(String[] split) throws IOException {}
+    protected void readImage(String[] split) throws IOException {
+    }
 }

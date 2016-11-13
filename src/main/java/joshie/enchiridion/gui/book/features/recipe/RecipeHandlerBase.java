@@ -15,20 +15,21 @@ import java.util.List;
 
 public abstract class RecipeHandlerBase implements IRecipeHandler {
     protected static final ResourceLocation LOCATION = new ELocation("guide_elements");
-    protected ArrayList<IItemStack> stackList = new ArrayList();
+    protected ArrayList<IItemStack> stackList = new ArrayList<>();
     private String unique;
 
-    public RecipeHandlerBase() {}
-    
+    public RecipeHandlerBase() {
+    }
+
     public void addToUnique(Object o) {
         String string = "" + o;
         if (unique == null) {
             unique = string;
         } else unique += ":" + string;
     }
-    
+
     @Override
-    public void addTooltip(List list) {
+    public void addTooltip(List<String> list) {
         for (IItemStack stack : stackList) {
             if (stack == null || stack.getItemStack() == null) continue;
             if (EnchiridionAPI.draw.isMouseOverIItemStack(stack)) {
@@ -40,17 +41,15 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
 
     protected final Object getObject(ArrayList<Object> input, int i) {
         if (i >= input.size()) return null;
-        for (Object o: input) {
-            if (o instanceof ItemStack) {
-                ((ItemStack)o).stackSize = 1;
-            }
-        }
-        
+        input.stream().filter(o -> o instanceof ItemStack).forEach(o -> {
+            ((ItemStack) o).stackSize = 1;
+        });
+
         return input.get(i);
     }
 
     protected final String getMostCommonName(ArrayList<ItemStack> stacks) {
-        HashMap<String, Integer> map = new HashMap();
+        HashMap<String, Integer> map = new HashMap<>();
         for (ItemStack stack : stacks) {
             int[] ids = OreDictionary.getOreIDs(stack);
             for (int i : ids) {
@@ -71,7 +70,6 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
                 highest = string;
             }
         }
-
         return highest;
     }
 

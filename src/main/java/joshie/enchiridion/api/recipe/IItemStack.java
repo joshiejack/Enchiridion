@@ -3,17 +3,17 @@ package joshie.enchiridion.api.recipe;
 import net.minecraft.item.ItemStack;
 
 public interface IItemStack {
-    /** Returns the current item stack **/
-    public ItemStack getItemStack();
+    /** @return Returns the current item stack **/
+    ItemStack getItemStack();
 
-    /** Return the xPosition of this stack **/
-    public double getX();
+    /** @return the xPosition of this stack **/
+    double getX();
 
-    /** Return the yPosition of this stack **/
-    public double getY();
+    /** @return the yPosition of this stack **/
+    double getY();
 
-    /** Return the scale of this stack **/
-    public float getScale();
+    /** @return the scale of this stack **/
+    float getScale();
 
     /** Called when rendered, to update the stack if necessary **/
     void onDisplayTick();

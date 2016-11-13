@@ -66,8 +66,8 @@ public class WriteableBookHandler implements IBookHandler {
 
                         for (int i = 0; i < this.bookPages.tagCount(); ++i) {
                             String s1 = this.bookPages.getStringTagAt(i);
-                            ITextComponent ichatcomponent = new TextComponentString(s1);
-                            s1 = ITextComponent.Serializer.componentToJson(ichatcomponent);
+                            ITextComponent textComponent = new TextComponentString(s1);
+                            s1 = ITextComponent.Serializer.componentToJson(textComponent);
                             this.bookPages.set(i, new NBTTagString(s1));
                         }
 

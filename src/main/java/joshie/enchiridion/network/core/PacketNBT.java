@@ -9,7 +9,9 @@ import net.minecraft.network.PacketBuffer;
 public abstract class PacketNBT extends PenguinPacket {
     public NBTTagCompound nbt;
 
-    public PacketNBT() {}
+    public PacketNBT() {
+    }
+
     public PacketNBT(ItemStack[] inventory) {
         nbt = new NBTTagCompound();
         nbt.setInteger("length", inventory.length);

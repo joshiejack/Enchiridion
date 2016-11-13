@@ -10,13 +10,15 @@ import net.minecraft.item.ItemStack;
 import java.util.HashMap;
 
 public class LibraryRegistry implements ILibraryRegistry {
-    private HashMap<String, IBookHandler> handlers = new HashMap();
-    private HashMap<SafeStack, IBookHandler> bookHandlerRegistry = new HashMap();
-    private HashMap<SafeStack, IBookHandler> allowedBookRegistry = new HashMap();
+    private HashMap<String, IBookHandler> handlers = new HashMap<>();
+    private HashMap<SafeStack, IBookHandler> bookHandlerRegistry = new HashMap<>();
+    private HashMap<SafeStack, IBookHandler> allowedBookRegistry = new HashMap<>();
 
     public static final LibraryRegistry INSTANCE = new LibraryRegistry();
 
-    private LibraryRegistry() {}
+    private LibraryRegistry() {
+    }
+
     public void registerBookHandlerForStackFromJSON(String handlerName, ItemStack itemStack, boolean matchDamage, boolean matchNBT) {
         SafeStack safeStack = SafeStack.newInstance("IGNORE", itemStack, "IGNORE", matchDamage, matchNBT);
         allowedBookRegistry.put(safeStack, handlers.get(handlerName));
@@ -24,8 +26,8 @@ public class LibraryRegistry implements ILibraryRegistry {
 
     @Override
     public void resetStacksAllowedInLibrary() {
-        allowedBookRegistry = new HashMap();
-        for (SafeStack stack: bookHandlerRegistry.keySet()) {
+        allowedBookRegistry = new HashMap<>();
+        for (SafeStack stack : bookHandlerRegistry.keySet()) {
             allowedBookRegistry.put(stack, bookHandlerRegistry.get(stack));
         }
     }
@@ -60,6 +62,6 @@ public class LibraryRegistry implements ILibraryRegistry {
 
     @Override
     public void registerWood(ItemStack stack, boolean matchDamage, boolean matchNBT) {
-        LibraryRecipe.validWoods.add(SafeStack.newInstance("IGNORE", stack, "IGNORE", matchDamage, matchNBT));
+        LibraryRecipe.VALID_WOODS.add(SafeStack.newInstance("IGNORE", stack, "IGNORE", matchDamage, matchNBT));
     }
 }

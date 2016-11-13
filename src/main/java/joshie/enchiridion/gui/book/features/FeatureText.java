@@ -20,7 +20,9 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
     public String text = "";
     public float size = 1F;
 
-    public FeatureText(){}
+    public FeatureText() {
+    }
+
     public FeatureText(String text) {
         this.text = text;
     }
@@ -50,7 +52,7 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
             EnchiridionAPI.draw.drawSplitScaledString(TextEditor.INSTANCE.getText(this), position.getLeft(), position.getTop(), wrap, 0x555555, size);
         }
     }
-    
+
     @Override
     public boolean getAndSetEditMode() {
         if (MCClientHelper.isShiftPressed()) {
@@ -74,7 +76,7 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
             return true;
         }
     }
-        
+
     @Override
     public void onDeselected() {
         if (readTemp) {
@@ -82,7 +84,7 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
             try {
                 encoded = IOUtils.toByteArray(new FileInputStream("enchiridion.temp.txt"));
                 text = (new String(encoded, Charset.defaultCharset()));
-                File file = new File("enchiridion.temp.txt");
+                //File file = new File("enchiridion.temp.txt");
                 //file.delete();
                 readTemp = false;
             } catch (IOException e) {
@@ -92,7 +94,7 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
 
         TextEditor.INSTANCE.setEditable(null);
     }
-    
+
     @Override
     public void keyTyped(char character, int key) {
         if (MCClientHelper.isShiftPressed()) {
@@ -107,7 +109,7 @@ public class FeatureText extends FeatureAbstract implements ITextEditable {
             }
         }
     }
-    
+
     @Override
     public String getTextField() {
         return text;

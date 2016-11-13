@@ -6,22 +6,22 @@ import net.minecraft.util.ResourceLocation;
 
 public interface IButtonAction extends ISimpleEditorFieldProvider {
     /** Create a copy of this action **/
-    public IButtonAction copy();
-    public IButtonAction create();
-    public String getName();
+    IButtonAction copy();
+    IButtonAction create();
+    String getName();
 
     /** Perform the action, Return true if it was successful **/
-    public boolean performAction();
+    boolean performAction();
 
     /** Whether the button this action is attached to, should be visible **/
-    public boolean isVisible();
+    boolean isVisible();
 
     /** Called to read data for the button **/
-    public void readFromJson(JsonObject object);
+    void readFromJson(JsonObject object);
 
     /** Called to write data for this button **/
-    public void writeToJson(JsonObject object);
+    void writeToJson(JsonObject object);
 
-    /** Return the resource location to display for this action **/
-    public ResourceLocation getResource();
+    /** @return the resource location to display for this action **/
+    ResourceLocation getResource();
 }

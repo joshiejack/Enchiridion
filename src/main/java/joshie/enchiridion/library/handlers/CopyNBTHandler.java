@@ -23,4 +23,3 @@ public class CopyNBTHandler extends TemporarySwitchHandler {
         super.handle(stack, player, hand, slotID, isShiftPressed);
     }
 }
-

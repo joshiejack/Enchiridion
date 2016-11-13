@@ -12,7 +12,9 @@ public class FeatureJump extends FeatureAbstract {
     protected transient int number;
     protected transient String jumpTo;
 
-    public FeatureJump(){}
+    public FeatureJump() {
+    }
+
     public FeatureJump(int number, String jumpTo) {
         this.number = number;
         this.jumpTo = jumpTo;
@@ -27,10 +29,9 @@ public class FeatureJump extends FeatureAbstract {
     public void draw(int mouseX, int mouseY) {
         if (page == null) {
             if (jumpTo != null && !jumpTo.equals("#LEGACY#")) {
-                if (page == null) {
-                    try {
-                        page = JumpHelper.getPageByNumber(GuiBook.INSTANCE.getBook(), Integer.parseInt(jumpTo));
-                    } catch (Exception e) {}
+                try {
+                    page = JumpHelper.getPageByNumber(GuiBook.INSTANCE.getBook(), Integer.parseInt(jumpTo));
+                } catch (Exception ignored) {
                 }
             } else {
                 page = JumpHelper.getPageByNumber(GuiBook.INSTANCE.getBook(), number);

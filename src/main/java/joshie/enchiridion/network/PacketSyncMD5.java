@@ -15,9 +15,10 @@ import static joshie.enchiridion.network.core.PacketPart.SEND_DATA;
 
 public class PacketSyncMD5 extends PacketSyncStringArray {
     private volatile static String[] tempClient;
-    private volatile static HashMap<EntityPlayer, String[]> tempServer = new HashMap();
+    private volatile static HashMap<EntityPlayer, String[]> tempServer = new HashMap<>();
 
-    public PacketSyncMD5() {}
+    public PacketSyncMD5() {
+    }
 
     public PacketSyncMD5(PacketPart part) {
         super(part);
@@ -28,10 +29,12 @@ public class PacketSyncMD5 extends PacketSyncStringArray {
     }
 
     @Override
-    public void receivedHashcode(EntityPlayer player) {} //Unused
+    public void receivedHashcode(EntityPlayer player) {
+    } //Unused
 
     @Override
-    public void receivedLengthRequest(EntityPlayer player) {} //Unused
+    public void receivedLengthRequest(EntityPlayer player) {
+    } //Unused
 
     @Override
     public void receivedStringLength(EntityPlayer player) {
@@ -80,18 +83,19 @@ public class PacketSyncMD5 extends PacketSyncStringArray {
                 for (String s : tempClient) {
                     builder.append(s);
                 }
-                
 
-                if (EConfig.debugMode) Enchiridion.log(Level.INFO, "Client received all data and is this is for integer " + integer);
+
+                if (EConfig.debugMode)
+                    Enchiridion.log(Level.INFO, "Client received all data and is this is for integer " + integer);
                 if (!SyncHelper.doMD5Match(tempClient)) {
-                    if (EConfig.debugMode) Enchiridion.log(Level.INFO, "Some hash is missing, sending the missing hashes");
+                    if (EConfig.debugMode)
+                        Enchiridion.log(Level.INFO, "Some hash is missing, sending the missing hashes");
                     PacketHandler.sendToServer(new PacketSyncMD5(PacketPart.SEND_SIZE, "", SyncHelper.md5requests.length));
                 }
             }
         } else if (tempServer.get(player) != null && tempServer.get(player).length > integer) {
             String[] temp = tempServer.get(player);
             temp[integer] = text;
-            boolean all = true;
             for (String s : temp) {
                 if (s == null) return; //Do no continue
             }

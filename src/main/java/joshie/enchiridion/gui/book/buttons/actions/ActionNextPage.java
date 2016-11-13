@@ -7,6 +7,7 @@ import joshie.enchiridion.api.book.IPage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ActionNextPage extends AbstractAction {
     public ActionNextPage() {
@@ -27,15 +28,12 @@ public class ActionNextPage extends AbstractAction {
     public boolean performAction() {
         try {
             List<IPage> pages = EnchiridionAPI.book.getBook().getPages();
-            List<Integer> numbers = new ArrayList<Integer>();
-            for (IPage page: pages) {
-                numbers.add(page.getPageNumber());
-            }
+            List<Integer> numbers = pages.stream().map(IPage::getPageNumber).collect(Collectors.toList());
 
             Collections.sort(numbers, new SortNumerical());
 
             int number = EnchiridionAPI.book.getPage().getPageNumber();
-            for (Integer integer: numbers) {
+            for (Integer integer : numbers) {
                 if (integer > number) {
                     return EnchiridionAPI.book.jumpToPageIfExists(integer);
                 }
@@ -43,8 +41,8 @@ public class ActionNextPage extends AbstractAction {
 
             //If we failed to find the next available page, reset the book to page 1
             return EnchiridionAPI.book.jumpToPageIfExists(numbers.get(0));
-        } catch (Exception e) {}
-
+        } catch (Exception ignored) {
+        }
         return false;
     }
 }

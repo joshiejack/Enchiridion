@@ -44,14 +44,14 @@ public class Enchiridion {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        root = new File(event.getModConfigurationDirectory(), MODPATH);
+        root = new File(event.getModConfigurationDirectory(), MODID);
         EConfig.init(FileHelper.getConfigFile());
         MinecraftForge.EVENT_BUS.register(new EConfig());
-        
+
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         proxy.preInit();
     }
-    
+
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.addRecipe();
@@ -62,27 +62,25 @@ public class Enchiridion {
     public void onServerStarting(FMLServerStartingEvent event) {
         LibraryHelper.resetServer(FMLCommonHandler.instance().getMinecraftServerInstance().worldServers[0]);
         SyncHelper.resetSyncing();
+
         //Register commands
-        
         ICommandManager manager = event.getServer().getCommandManager();
-        if(manager instanceof ServerCommandManager) {
-            ServerCommandManager serverCommandManager = ((ServerCommandManager)manager);
+        if (manager instanceof ServerCommandManager) {
+            ServerCommandManager serverCommandManager = ((ServerCommandManager) manager);
             serverCommandManager.registerCommand(new LibraryCommand());
         }
     }
 
     @EventHandler
     public void handleIMCMessages(FMLInterModComms.IMCEvent event) {
-        for (FMLInterModComms.IMCMessage message : event.getMessages()) {
-            if (message.key.equalsIgnoreCase("registerBook")) {
-                NBTTagCompound tag = message.getNBTValue();
-                String handlerType = tag.getString("handlerType");
-                ItemStack stack = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("stack"));
-                boolean matchDamage = tag.hasKey("matchDamage") && tag.getBoolean("matchDamage");
-                boolean matchNBT = tag.hasKey("matchNBT") && tag.getBoolean("matchNBT");
-                EnchiridionAPI.library.registerBookHandlerForStack(handlerType, stack, matchDamage, matchNBT);
-            }
-        }
+        event.getMessages().stream().filter(message -> message.key.equalsIgnoreCase("registerBook")).forEach(message -> {
+            NBTTagCompound tag = message.getNBTValue();
+            String handlerType = tag.getString("handlerType");
+            ItemStack stack = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("stack"));
+            boolean matchDamage = tag.hasKey("matchDamage") && tag.getBoolean("matchDamage");
+            boolean matchNBT = tag.hasKey("matchNBT") && tag.getBoolean("matchNBT");
+            EnchiridionAPI.library.registerBookHandlerForStack(handlerType, stack, matchDamage, matchNBT);
+        });
     }
 
     //Universal log helper

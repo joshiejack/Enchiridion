@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ItemListHelper {
@@ -16,18 +15,15 @@ public class ItemListHelper {
     private static ArrayList<ItemStack> allItems = null;
 
     public static List<ItemStack> init() {
-        items = new ArrayList();
-        allItems = new ArrayList();
-        
-        Iterator iterator = Item.REGISTRY.iterator();
-        while (iterator.hasNext()) {
-            Item item = (Item) iterator.next();
+        items = new ArrayList<>();
+        allItems = new ArrayList<>();
 
+        for (Item item : Item.REGISTRY) {
             if (item == null) {
                 continue;
             }
 
-            if (item.getCreativeTabs() != null && item.getCreativeTabs().length > 0) {
+            if (item.getCreativeTabs().length > 0) {
                 for (CreativeTabs tab : item.getCreativeTabs()) {
                     try {
                         item.getSubItems(item, tab, items);
@@ -37,17 +33,16 @@ public class ItemListHelper {
                 }
             }
         }
-        
         allItems.addAll(items);
         return items;
     }
-    
+
     public static List<ItemStack> items() {
-        return items != null? items: init();
+        return items != null ? items : init();
     }
 
     public static List<ItemStack> allItems() {
-        return allItems != null? allItems: init();
+        return allItems != null ? allItems : init();
     }
 
     public static void addInventory() {

@@ -13,7 +13,8 @@ public class GuiTimeLine extends AbstractGuiOverlay {
     private int held = 0;
     public int startPage = 0;
 
-    private GuiTimeLine() {}
+    private GuiTimeLine() {
+    }
 
     private boolean isValid(int index, int real) {
         if ((real < 10000 && real >= 0) || (real > -1000 && real <= 0)) return index == 0 || (index + 1) % 5 == 0;
@@ -28,7 +29,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
         } else if (index == 109) {
             if (real >= 10000) return -10;
             if (real >= 1000) return -8;
-             return -5;
+            return -5;
         } else {
             if (index == 4 && real >= 1000) return -1;
             if (real >= 10000) return -6;
@@ -42,7 +43,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
         }
 
         return 0;
-     }
+    }
 
     private boolean isOverTimeLine(int xPos, int mouseX, int mouseY) {
         return mouseX >= xPos && mouseX <= xPos + 3 && mouseY >= EConfig.timelineYPos && mouseY <= EConfig.timelineYPos + 10;
@@ -66,10 +67,10 @@ public class GuiTimeLine extends AbstractGuiOverlay {
 
             if (isValid(j, thisNumber + 1)) {
                 EnchiridionAPI.draw.drawSplitScaledString("" + (thisNumber + 1), positionX + getOffsetX(j, thisNumber + 1), EConfig.timelineYPos - 5, 199, 0xFFDDDDDD, 0.5F);
-                fill = exists ? 0xFFEEEEEE: 0xFFB0A483;
+                fill = exists ? 0xFFEEEEEE : 0xFFB0A483;
             }
 
-            if (currentPageNumber == thisNumber)  fill = 0xFF8C0000;
+            if (currentPageNumber == thisNumber) fill = 0xFF8C0000;
             if (isOverTimeLine(positionX, mouseX, mouseY)) {
                 hoverX = positionX;
                 fill = 0xFFFFFF00;
@@ -82,7 +83,8 @@ public class GuiTimeLine extends AbstractGuiOverlay {
         if (dragged != null) {
             if (held < 30) {
                 held++;
-            } else EnchiridionAPI.draw.drawRectangle(hoverX, EConfig.timelineYPos, hoverX + 4, EConfig.timelineYPos + 10, 0xFFFF9326);
+            } else
+                EnchiridionAPI.draw.drawRectangle(hoverX, EConfig.timelineYPos, hoverX + 4, EConfig.timelineYPos + 10, 0xFFFF9326);
         }
     }
 

@@ -6,8 +6,8 @@ import joshie.enchiridion.api.book.IPage;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ButtonDeletePage extends ButtonAbstract {
     public ButtonDeletePage() {
@@ -18,7 +18,7 @@ public class ButtonDeletePage extends ButtonAbstract {
     public void performAction() {
         IPage currentPage = EnchiridionAPI.book.getPage();
         int numberOfPages = EnchiridionAPI.book.getBook().getPages().size();
-        int pageNumber = 1;
+        int pageNumber;
         if (numberOfPages > 1) {
             pageNumber = getPreviousPage();
             EnchiridionAPI.book.jumpToPageIfExists(pageNumber); //Jump to the previous page
@@ -31,21 +31,13 @@ public class ButtonDeletePage extends ButtonAbstract {
 
     public int getPreviousPage() {
         List<IPage> pages = EnchiridionAPI.book.getBook().getPages();
-        List<Integer> numbersTemp = new ArrayList<Integer>();
-        for (IPage page: pages) {
-            numbersTemp.add(page.getPageNumber());
-        }
+        List<Integer> numbersTemp = pages.stream().map(IPage::getPageNumber).collect(Collectors.toList());
 
-        Collections.sort(numbersTemp, new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                return ((Integer)o1).compareTo((Integer)o2);
-            }
-        });
+        Collections.sort(numbersTemp, Integer::compareTo);
 
         List<Integer> numbers = Lists.reverse(numbersTemp);
         int number = EnchiridionAPI.book.getPage().getPageNumber();
-        for (Integer integer: numbers) {
+        for (Integer integer : numbers) {
             if (integer < number) {
                 return integer;
             }

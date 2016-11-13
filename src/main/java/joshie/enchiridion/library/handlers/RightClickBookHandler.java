@@ -17,6 +17,7 @@ public class RightClickBookHandler implements IBookHandler {
         try {
             ItemStack ret = stack.useItemRightClick(player.worldObj, player, hand).getResult();
             EnchiridionAPI.library.getLibraryInventory(player).setInventorySlotContents(slotID, ret);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
     }
 }

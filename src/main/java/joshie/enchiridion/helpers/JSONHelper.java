@@ -8,7 +8,7 @@ public class JSONHelper {
             return json.get(name).getAsString();
         } else return "";
     }
-    
+
     public static int getIntegerIfExists(JsonObject json, String name) {
         if (json.get(name) != null) {
             return json.get(name).getAsInt();
@@ -16,8 +16,6 @@ public class JSONHelper {
     }
 
     public static boolean getBooleanIfExists(JsonObject json, String name) {
-        if (json.get(name) != null) {
-            return json.get(name).getAsBoolean();
-        } else return false;
+        return json.get(name) != null && json.get(name).getAsBoolean();
     }
 }

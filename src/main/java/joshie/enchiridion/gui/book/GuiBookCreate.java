@@ -18,13 +18,15 @@ public class GuiBookCreate extends GuiScreen implements ITextEditable {
     private String text;
     private ItemStack stack;
 
-    private GuiBookCreate() {}
+    private GuiBookCreate() {
+    }
+
     public GuiBookCreate setStack(ItemStack stack) {
         this.stack = stack;
         this.text = "";
         return this;
     }
-    
+
     @Override
     public String getTextField() {
         return text;
@@ -66,7 +68,7 @@ public class GuiBookCreate extends GuiScreen implements ITextEditable {
             mc.thePlayer.closeScreen();
         }
     }
-    
+
     private int x, y;
 
     public void drawScreen(int i, int j, float f) {
@@ -79,7 +81,7 @@ public class GuiBookCreate extends GuiScreen implements ITextEditable {
         drawARect(-102, -57, 102, -55, 0xFFFFFFFF);
         drawARect(-100, -55, 100, -37, 0xFF000000);
         drawARect(-100, -37, 100, -39, 0xFFFFFFFF);
-        
+
         drawSplitString(TextEditor.INSTANCE.getText(this), -95, -50, 700, 0xFFFFFFFF);
     }
 

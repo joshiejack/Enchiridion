@@ -6,11 +6,13 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import java.util.ArrayList;
 
 public class RecipeHandlerShapelessVanilla extends RecipeHandlerRecipeBase {
-    public RecipeHandlerShapelessVanilla() {}
+    public RecipeHandlerShapelessVanilla() {
+    }
+
     public RecipeHandlerShapelessVanilla(IRecipe recipe) {
         try {
             ShapelessRecipes shapeless = (ShapelessRecipes) recipe;
-            init(recipe.getRecipeOutput(), new ArrayList<Object>(shapeless.recipeItems), 3);
+            init(recipe.getRecipeOutput(), new ArrayList<>(shapeless.recipeItems), 3);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -25,5 +27,4 @@ public class RecipeHandlerShapelessVanilla extends RecipeHandlerRecipeBase {
     protected Class getRecipeClass() {
         return ShapelessRecipes.class;
     }
-
 }

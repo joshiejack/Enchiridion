@@ -11,10 +11,12 @@ public abstract class AbstractGuiOverlay implements IBookEditorOverlay {
     protected static final ResourceLocation SIDEBAR = new ELocation("sidebar");
 
     @Override
-    public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {}
+    public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
+    }
 
     @Override
-    public void keyTyped(char character, int key) {}
+    public void keyTyped(char character, int key) {
+    }
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY) {
@@ -22,11 +24,14 @@ public abstract class AbstractGuiOverlay implements IBookEditorOverlay {
     }
 
     @Override
-    public void mouseReleased(int mouseX, int mouseY) {}
+    public void mouseReleased(int mouseX, int mouseY) {
+    }
 
     @Override
-    public void scroll(boolean down, int mouseX, int mouseY) {}
+    public void scroll(boolean down, int mouseX, int mouseY) {
+    }
 
     @Override
-    public void updateSearch(String search) {}
+    public void updateSearch(String search) {
+    }
 }

@@ -5,27 +5,27 @@ import com.google.gson.JsonObject;
 import java.util.List;
 
 public interface IFeature {
-    /** Return a duplicate of this feature **/
-    public IFeature copy();
+    /** @return a duplicate of this feature **/
+    IFeature copy();
     
-    public void update(IFeatureProvider position);
-    public void draw(int mouseX, int mouseY);
-    public void addTooltip(List<String> tooltip, int mouseX, int mouseY);
-    public void keyTyped(char character, int key);
+    void update(IFeatureProvider position);
+    void draw(int mouseX, int mouseY);
+    void addTooltip(List<String> tooltip, int mouseX, int mouseY);
+    void keyTyped(char character, int key);
     
-    /** Return true if this feature should display yellow squares instead of blue
+    /** @return true if this feature should display yellow squares instead of blue
      *  Should also open any edit menus required **/
-    public boolean getAndSetEditMode();
+    boolean getAndSetEditMode();
     
-    /** Called when not in edit mode, or shift is clicked, on mouseClick **/
-    public boolean performClick(int mouseX, int mouseY, int button);
-    public void performRelease(int mouseX, int mouseY, int button);
-    public void follow(int mouseX, int mouseY);
-    public void scroll(boolean down, int amount);
-    public void onDeselected();
-    public void readFromJson(JsonObject json);
-    public void writeToJson(JsonObject json);
+    /* Called when not in edit mode, or shift is clicked, on mouseClick **/
+    boolean performClick(int mouseX, int mouseY, int button);
+    void performRelease(int mouseX, int mouseY, int button);
+    void follow(int mouseX, int mouseY);
+    void scroll(boolean down, int amount);
+    void onDeselected();
+    void readFromJson(JsonObject json);
+    void writeToJson(JsonObject json);
 
-    /** Return the name of this feature **/
-    public String getName();
+    /** @return the name of this feature **/
+    String getName();
 }

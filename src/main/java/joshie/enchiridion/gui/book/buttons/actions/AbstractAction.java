@@ -12,7 +12,9 @@ public abstract class AbstractAction implements IButtonAction {
     protected transient ResourceLocation resource;
     protected transient String name;
 
-    public AbstractAction() {}
+    public AbstractAction() {
+    }
+
     public AbstractAction(String name) {
         this.name = name;
         this.resource = new ELocation(name);
@@ -28,7 +30,8 @@ public abstract class AbstractAction implements IButtonAction {
         if (field.equals("")) initAction();
     }
 
-    public void initAction() {}
+    public void initAction() {
+    }
 
     @Override
     public String getName() {
@@ -46,15 +49,17 @@ public abstract class AbstractAction implements IButtonAction {
     }
 
     @Override
-    public void readFromJson(JsonObject object) {}
+    public void readFromJson(JsonObject object) {
+    }
 
     @Override
-    public void writeToJson(JsonObject object) {}
+    public void writeToJson(JsonObject object) {
+    }
 
     protected static class SortNumerical implements Comparator {
         @Override
         public int compare(Object o1, Object o2) {
-            return ((Integer)o1).compareTo((Integer)o2);
+            return ((Integer) o1).compareTo((Integer) o2);
         }
     }
 }

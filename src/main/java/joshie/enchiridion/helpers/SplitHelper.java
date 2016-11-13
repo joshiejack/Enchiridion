@@ -17,18 +17,18 @@ public class SplitHelper {
         result[lastIndex] = string.substring(j);
         return result;
     }
-    
-    public static byte[][] splitByteArrayEvery(byte[] bytes, int interval) {    
+
+    public static byte[][] splitByteArrayEvery(byte[] bytes, int interval) {
         int size = ((bytes.length - 1) / interval) + 1;
-        byte[][] newArray = new byte[size][]; 
+        byte[][] newArray = new byte[size][];
         int counter = 0;
-        
+
         for (int i = 0; i < bytes.length - interval + 1; i += interval)
             newArray[counter++] = Arrays.copyOfRange(bytes, i, i + interval);
 
         if (bytes.length % interval != 0)
             newArray[counter] = Arrays.copyOfRange(bytes, bytes.length - bytes.length % interval, bytes.length);
-        
+
         return newArray;
     }
 }

@@ -9,7 +9,7 @@ public class IButtonActionAbstractAdapter implements JsonSerializer<IButtonActio
     @Override
     public JsonElement serialize(IButtonAction src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject result = new JsonObject();
-        result.add("class",  new JsonPrimitive(src.getClass().getCanonicalName()));
+        result.add("class", new JsonPrimitive(src.getClass().getCanonicalName()));
         result.add("properties", context.serialize(src, src.getClass()));
         JsonObject element = result.get("properties").getAsJsonObject();
         src.writeToJson(element);
@@ -21,7 +21,7 @@ public class IButtonActionAbstractAdapter implements JsonSerializer<IButtonActio
         JsonObject jsonObject = json.getAsJsonObject();
         String clazz = jsonObject.get("class").getAsString();
         JsonElement element = jsonObject.get("properties");
-        
+
         //Update actions
         if (clazz.startsWith("joshie.enchiridion.books.features.actions")) {
             clazz = clazz.replace("joshie.enchiridion.books.features.actions", "joshie.enchiridion.gui.book.buttons.actions");

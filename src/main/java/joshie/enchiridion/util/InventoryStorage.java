@@ -8,6 +8,8 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 
+import javax.annotation.Nonnull;
+
 public abstract class InventoryStorage implements IInventory {
     protected ItemStack[] inventory;
 
@@ -21,8 +23,9 @@ public abstract class InventoryStorage implements IInventory {
     }
 
     @Override
+    @Nonnull
     public ITextComponent getDisplayName() {
-        return new TextComponentTranslation(getName(), new Object[0]);
+        return new TextComponentTranslation(getName());
     }
 
     @Override
@@ -39,17 +42,17 @@ public abstract class InventoryStorage implements IInventory {
     public ItemStack decrStackSize(int index, int count) {
         if (inventory[index] != null) {
             if (inventory[index].stackSize <= count) {
-                ItemStack itemstack = inventory[index];
+                ItemStack stack = inventory[index];
                 inventory[index] = null;
                 markDirty();
-                return itemstack;
+                return stack;
             }
-            ItemStack itemstack1 = inventory[index].splitStack(count);
+            ItemStack splitStack = inventory[index].splitStack(count);
             if (inventory[index].stackSize == 0) {
                 inventory[index] = null;
             }
             markDirty();
-            return itemstack1;
+            return splitStack;
         } else return null;
     }
 
@@ -79,21 +82,24 @@ public abstract class InventoryStorage implements IInventory {
     }
 
     @Override
-    public void markDirty() {}
+    public void markDirty() {
+    }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
+    public boolean isUseableByPlayer(@Nonnull EntityPlayer player) {
         return true;
     }
 
     @Override
-    public void openInventory(EntityPlayer player) {}
+    public void openInventory(@Nonnull EntityPlayer player) {
+    }
 
     @Override
-    public void closeInventory(EntityPlayer player) {}
+    public void closeInventory(@Nonnull EntityPlayer player) {
+    }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
+    public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {
         return true;
     }
 
@@ -103,7 +109,8 @@ public abstract class InventoryStorage implements IInventory {
     }
 
     @Override
-    public void setField(int id, int value) {}
+    public void setField(int id, int value) {
+    }
 
     @Override
     public int getFieldCount() {
@@ -143,8 +150,6 @@ public abstract class InventoryStorage implements IInventory {
                 nbttaglist.appendTag(nbttagcompound);
             }
         }
-
         nbt.setTag("Items", nbttaglist);
     }
-
 }

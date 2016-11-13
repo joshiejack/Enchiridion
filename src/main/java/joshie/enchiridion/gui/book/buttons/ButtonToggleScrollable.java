@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 public class ButtonToggleScrollable extends ButtonAbstract {
     private ResourceLocation selected_dflt;
     private ResourceLocation selected_hover;
-    private String translateselected;
+    private String translate_selected;
 
     public ButtonToggleScrollable() {
         super("scroll");
@@ -16,7 +16,7 @@ public class ButtonToggleScrollable extends ButtonAbstract {
         hover = new ResourceLocation(EInfo.TEXPATH + name + "_unselected_hover.png");
         selected_dflt = new ResourceLocation(EInfo.TEXPATH + name + "_selected_dftl.png");
         selected_hover = new ResourceLocation(EInfo.TEXPATH + name + "_selected_hover.png");
-        translateselected = "button." + name + ".selected";
+        translate_selected = "button." + name + ".selected";
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ButtonToggleScrollable extends ButtonAbstract {
 
     @Override
     public String getTooltip() {
-        return GuiBook.INSTANCE.getPage().isScrollingEnabled() ? Enchiridion.translate(translateselected) : Enchiridion.translate(translate);
+        return GuiBook.INSTANCE.getPage().isScrollingEnabled() ? Enchiridion.translate(translate_selected) : Enchiridion.translate(translate);
     }
 
     @Override

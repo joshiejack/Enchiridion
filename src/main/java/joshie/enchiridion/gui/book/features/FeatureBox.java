@@ -10,7 +10,9 @@ public class FeatureBox extends FeatureAbstract implements IColorable {
     public String color;
     public transient int colorI;
 
-    public FeatureBox() {}
+    public FeatureBox() {
+    }
+
     public FeatureBox(String color) {
         this.color = color;
     }
@@ -27,7 +29,7 @@ public class FeatureBox extends FeatureAbstract implements IColorable {
 
     @Override
     public boolean getAndSetEditMode() {
-        GuiSimpleEditor.INSTANCE.setEditor(GuiSimpleEditorColor.INSTANCE.setColorable(this));     
+        GuiSimpleEditor.INSTANCE.setEditor(GuiSimpleEditorColor.INSTANCE.setColorable(this));
         return false;
     }
 
@@ -36,7 +38,7 @@ public class FeatureBox extends FeatureAbstract implements IColorable {
         if (!attemptToParseString(color)) {
             String doubled = color.replaceAll(".", "$0$0");
             if (!attemptToParseString(doubled)) {
-                if(!attemptToParseString(doubled.replace("#", ""))) {
+                if (!attemptToParseString(doubled.replace("#", ""))) {
                     this.colorI = previousColor;
                     return false;
                 } else return true;
@@ -48,7 +50,9 @@ public class FeatureBox extends FeatureAbstract implements IColorable {
         try {
             colorI = (int) Long.parseLong(string, 16);
             return true;
-        } catch (Exception e) { return false; }
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
@@ -61,12 +65,12 @@ public class FeatureBox extends FeatureAbstract implements IColorable {
     public void draw(int mouseX, int mouseY) {
         EnchiridionAPI.draw.drawRectangle(position.getLeft(), position.getTop(), position.getRight(), position.getBottom(), colorI);
     }
-    
+
     @Override
     public String getColorAsHex() {
         return color;
     }
-    
+
     @Override
     public void setColorAsHex(String color) {
         String previous = this.color;

@@ -23,19 +23,19 @@ public class IFeatureAbstractAdapter implements JsonSerializer<IFeature>, JsonDe
     public IFeature deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         JsonElement type = jsonObject.get("type"); //Compatiblity with previous books
-        
-        String clazz = "";
+
+        String clazz;
         if (type != null) {
             clazz = EInfo.JAVAPATH + "books.features." + type.getAsString();
         } else {
             clazz = jsonObject.get("class").getAsString();
         }
-        
+
         //For no reason except i changed the name during development
         if (clazz.startsWith("joshie.enchiridion.books.features")) {
             clazz = clazz.replace("joshie.enchiridion.books.features", "joshie.enchiridion.gui.book.features");
         }
-        
+
         JsonElement element = jsonObject.get("properties");
         try {
             IFeature feature = context.deserialize(element, Class.forName(clazz));
@@ -43,7 +43,7 @@ public class IFeatureAbstractAdapter implements JsonSerializer<IFeature>, JsonDe
 
             //Legacy Button Adapter
             if (feature instanceof FeatureButton) {
-                return ((FeatureButton)feature).fix(element.getAsJsonObject());
+                return ((FeatureButton) feature).fix(element.getAsJsonObject());
             }
 
             return feature;

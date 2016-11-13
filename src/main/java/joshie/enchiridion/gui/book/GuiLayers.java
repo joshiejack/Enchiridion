@@ -4,27 +4,29 @@ import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IFeatureProvider;
+import joshie.enchiridion.lib.EInfo;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 
 public class GuiLayers extends AbstractGuiOverlay {
     public static final GuiLayers INSTANCE = new GuiLayers();
-    private static final ResourceLocation LOCK_DFLT = new ResourceLocation("enchiridion:textures/books/lock_dftl.png");
-    private static final ResourceLocation LOCK_HOVER = new ResourceLocation("enchiridion:textures/books/lock_hover.png");
-    private static final ResourceLocation VISIBLE_DFLT = new ResourceLocation("enchiridion:textures/books/layer_dftl.png");
-    private static final ResourceLocation VISIBLE_HOVER = new ResourceLocation("enchiridion:textures/books/layer_hover.png");
+    private static final ResourceLocation LOCK_DFLT = new ResourceLocation(EInfo.MODID, "textures/books/lock_dftl.png");
+    private static final ResourceLocation LOCK_HOVER = new ResourceLocation(EInfo.MODID, "textures/books/lock_hover.png");
+    private static final ResourceLocation VISIBLE_DFLT = new ResourceLocation(EInfo.MODID, "textures/books/layer_dftl.png");
+    private static final ResourceLocation VISIBLE_HOVER = new ResourceLocation(EInfo.MODID, "textures/books/layer_hover.png");
     private IFeatureProvider dragged = null;
     private int held = 0;
     private int yStart = 0;
     private int layerPosition = 0;
-    
-    private GuiLayers() {}
+
+    private GuiLayers() {
+    }
 
     public boolean isDragging() {
         return held != 0;
     }
-    
+
     private boolean isOverLayer(int layerY, int mouseX, int mouseY) {
         if (mouseX > EConfig.layersXPos + 20 && mouseX <= EConfig.layersXPos + 83) {
             if (mouseY >= EConfig.toolbarYPos - 3 + layerY && mouseY <= EConfig.toolbarYPos + 8 + layerY) {
@@ -46,7 +48,7 @@ public class GuiLayers extends AbstractGuiOverlay {
         for (int i = layerPosition; i < Math.min(features.size(), layerPosition + 24); i++) {
             layerY += 12;
             IFeatureProvider feature = features.get(i);
-            /** LOCK ICON **/
+            /* LOCK ICON */
             //Setup the defaults for the lock icon
             ResourceLocation resource = LOCK_DFLT;
             int color1 = 0xFFE4D6AE;
@@ -61,10 +63,11 @@ public class GuiLayers extends AbstractGuiOverlay {
 
             //Draw the lock icons
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 2, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 11, EConfig.toolbarYPos + 7 + layerY, color1, color2);
-            if (feature.isLocked()) EnchiridionAPI.draw.drawImage(resource, EConfig.layersXPos + 4, EConfig.toolbarYPos - 1 + layerY, EConfig.layersXPos + 9, EConfig.toolbarYPos + layerY + 5);
-            /** END LOCK ICON **/
+            if (feature.isLocked())
+                EnchiridionAPI.draw.drawImage(resource, EConfig.layersXPos + 4, EConfig.toolbarYPos - 1 + layerY, EConfig.layersXPos + 9, EConfig.toolbarYPos + layerY + 5);
+            /* END LOCK ICON */
 
-            /** VISIBILITY ICON **/
+            /* VISIBILITY ICON */
             //Reset
             resource = VISIBLE_DFLT;
             color1 = 0xFFE4D6AE;
@@ -77,37 +80,38 @@ public class GuiLayers extends AbstractGuiOverlay {
             }
 
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 11, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 20, EConfig.toolbarYPos + 7 + layerY, color1, color2);
-            if (feature.isVisible()) EnchiridionAPI.draw.drawImage(resource, EConfig.layersXPos + 12, EConfig.toolbarYPos - 1 + layerY, EConfig.layersXPos + 19, EConfig.toolbarYPos + layerY + 5);
-            /** END VISIBILITY ICON **/
+            if (feature.isVisible())
+                EnchiridionAPI.draw.drawImage(resource, EConfig.layersXPos + 12, EConfig.toolbarYPos - 1 + layerY, EConfig.layersXPos + 19, EConfig.toolbarYPos + layerY + 5);
+            /* END VISIBILITY ICON */
 
-            /** Layer itself **/
+            /* Layer itself */
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 20, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 83, EConfig.toolbarYPos + 7 + layerY, 0xFFE4D6AE, 0x5579725A);
 
             if (isOverLayer(layerY, mouseX, mouseY) || EnchiridionAPI.book.isGroupSelected(feature)) {
                 hoverY = layerY;
                 EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 20, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 83, EConfig.toolbarYPos + 7 + layerY, 0xFFB0A483, 0xFF48453C);
             }
-            /** End Layer **/
+            /* End Layer */
 
             String name = feature.getFeature().getName();
             String truncated = name.substring(0, Math.min(name.length(), 20));
             EnchiridionAPI.draw.drawSplitScaledString(truncated.replace("\n", " "), EConfig.layersXPos + 25, EConfig.toolbarYPos + layerY, 250, 0xFF000000, 0.5F);
         }
-        
-        
+
+
         //Dragging!
-          if (dragged != null && hoverY != 0) {
-              if (held < 20) {
-                  held++;
-              } else {
-                  String name = dragged.getFeature().getName();
+        if (dragged != null && hoverY != 0) {
+            if (held < 20) {
+                held++;
+            } else {
+                String name = dragged.getFeature().getName();
                 String truncated = name.substring(0, Math.min(name.length(), 20));
-                  EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 20, EConfig.toolbarYPos - 3 + hoverY, EConfig.layersXPos + 83, EConfig.toolbarYPos + 7 + hoverY, 0xFFEEEEEE, 0xFF48453C);
-                  EnchiridionAPI.draw.drawSplitScaledString(truncated, EConfig.layersXPos + 25, EConfig.toolbarYPos + hoverY, 250, 0xFF000000, 0.5F);
-              }
-          }
+                EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 20, EConfig.toolbarYPos - 3 + hoverY, EConfig.layersXPos + 83, EConfig.toolbarYPos + 7 + hoverY, 0xFFEEEEEE, 0xFF48453C);
+                EnchiridionAPI.draw.drawSplitScaledString(truncated, EConfig.layersXPos + 25, EConfig.toolbarYPos + hoverY, 250, 0xFF000000, 0.5F);
+            }
+        }
     }
-    
+
     @Override
     public boolean mouseClicked(int mouseX, int mouseY) {
         int layerY = 0;
@@ -126,7 +130,7 @@ public class GuiLayers extends AbstractGuiOverlay {
         dragged = null;
         return false;
     }
-    
+
     private void insertLayerAt(int mouseY, int layerNumber) {
         int change = 0;
         int difference = mouseY - yStart;
@@ -139,7 +143,7 @@ public class GuiLayers extends AbstractGuiOverlay {
             EnchiridionAPI.book.getPage().sort();
         }
     }
-    
+
     @Override
     public void mouseReleased(int mouseX, int mouseY) {
         boolean placing = held >= 20;
@@ -152,7 +156,7 @@ public class GuiLayers extends AbstractGuiOverlay {
                     insertLayerAt(mouseY, features.get(i).getLayerIndex());
                 } else {
                     IFeatureProvider selected = EnchiridionAPI.book.getSelected();
-                    if (selected != null)  selected.deselect();
+                    if (selected != null) selected.deselect();
                     EnchiridionAPI.book.setSelected(features.get(i));
                     selected = EnchiridionAPI.book.getSelected();
                     selected.select(mouseX, mouseY);
@@ -161,18 +165,18 @@ public class GuiLayers extends AbstractGuiOverlay {
                 }
             }
             
-            /** LOCK **/
+            /* LOCK */
             if (mouseX >= EConfig.layersXPos + 4 && mouseX <= EConfig.layersXPos + 9 && mouseY >= EConfig.toolbarYPos - 1 + layerY && mouseY <= EConfig.toolbarYPos + layerY + 5) {
-                   IFeatureProvider feature = features.get(i);
+                IFeatureProvider feature = features.get(i);
                 feature.setLocked(!feature.isLocked());
             }
-            /** END LOCK **/
-            /** VISIBLE **/
+            /* END LOCK */
+            /* VISIBLE */
             if (mouseX > EConfig.layersXPos + 9 && mouseX < EConfig.layersXPos + 20 && mouseY >= EConfig.toolbarYPos - 1 + layerY && mouseY <= EConfig.toolbarYPos + layerY + 5) {
                 IFeatureProvider feature = features.get(i);
                 feature.setVisible(!feature.isVisible());
             }
-            /** END VISIBLE **/
+            /* END VISIBLE */
         }
 
 

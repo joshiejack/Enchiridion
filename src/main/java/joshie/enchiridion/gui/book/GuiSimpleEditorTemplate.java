@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
     public static final GuiSimpleEditorTemplate INSTANCE = new GuiSimpleEditorTemplate();
@@ -21,17 +22,18 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
     private static final ResourceLocation ARROW_LEFT_ON = new ELocation("arrow_left_on");
     private static final ResourceLocation ARROW_LEFT_OFF = new ELocation("arrow_left_off");
 
-    private final HashMap<String, ITemplate> templates = new HashMap();
-    private ArrayList<ITemplate> sorted = new ArrayList();
+    private final HashMap<String, ITemplate> templates = new HashMap<>();
+    private ArrayList<ITemplate> sorted = new ArrayList<>();
     private int position = 0;
 
-    protected GuiSimpleEditorTemplate() {}
+    protected GuiSimpleEditorTemplate() {
+    }
 
 
     public void registerTemplate(ITemplate template) {
         templates.put(template.getUniqueName(), template);
 
-        for (IFeatureProvider provider: template.getFeatures()) {
+        for (IFeatureProvider provider : template.getFeatures()) {
             provider.update(new Page(0));
         }
     }
@@ -64,14 +66,14 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
         int count = 0;
         int yPlus = 0;
         int xPlus = 0;
-        for (ITemplate template: sorted) {
+        for (ITemplate template : sorted) {
             if (count < position || count > position + 17) {
                 count++;
                 continue;
             }
 
             if (isOverPosition(2 + xPlus, 11 + yPlus, 42 + xPlus, 34 + yPlus, mouseX, mouseY)) {
-                for (IFeatureProvider provider: template.getFeatures()) {
+                for (IFeatureProvider provider : template.getFeatures()) {
                     provider.draw(mouseX, mouseY);
                 }
             }
@@ -83,7 +85,7 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
 
             xPlus += 41;
 
-            if(xPlus >= 42) {
+            if (xPlus >= 42) {
                 xPlus = 0;
                 yPlus += 25;
             }
@@ -110,7 +112,7 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
         int count = 0;
         int yPlus = 0;
         int xPlus = 0;
-        for (ITemplate template: sorted) {
+        for (ITemplate template : sorted) {
             if (count < position || count > position + 17) {
                 count++;
                 continue;
@@ -125,7 +127,7 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
 
             xPlus += 41;
 
-            if(xPlus >= 42) {
+            if (xPlus >= 42) {
                 xPlus = 0;
                 yPlus += 25;
             }
@@ -135,7 +137,7 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
     }
 
     private void switchDefaulthood(ITemplate template) {
-        HashSet<String> set = new HashSet(GuiBook.INSTANCE.getBook().getDefaultFeatures());
+        HashSet<String> set = new HashSet<>(GuiBook.INSTANCE.getBook().getDefaultFeatures());
         if (set.contains(template.getUniqueName())) {
             set.remove(template.getUniqueName());
         } else set.add(template.getUniqueName());
@@ -148,7 +150,7 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
         int count = 0;
         int yPlus = 0;
         int xPlus = 0;
-        for (ITemplate template: sorted) {
+        for (ITemplate template : sorted) {
             if (count < position || count > position + 17) {
                 count++;
                 continue;
@@ -158,38 +160,30 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
                 if (MCClientHelper.isShiftPressed()) {
                     switchDefaulthood(template);
                 } else {
-                    for (IFeatureProvider provider: template.getFeatures()) {
+                    for (IFeatureProvider provider : template.getFeatures()) {
                         GuiBook.INSTANCE.getPage().addFeature(provider.getFeature(), provider.getLeft(), provider.getTop(), provider.getWidth(), provider.getHeight(), provider.isLocked(), !provider.isVisible());
                     }
                 }
-
                 return true;
             }
-
             xPlus += 41;
 
-            if(xPlus >= 42) {
+            if (xPlus >= 42) {
                 xPlus = 0;
                 yPlus += 25;
             }
-
             count++;
         }
-
         return false;
     }
 
     @Override
     public void updateSearch(String search) {
-        sorted = new ArrayList();
+        sorted = new ArrayList<>();
         if (search == null || search.equals("")) {
             sorted.addAll(templates.values());
         } else {
-            for (ITemplate template: templates.values()) {
-                if (template.getTemplateName().toLowerCase().contains(search.toLowerCase())) {
-                    sorted.add(template);
-                }
-            }
+            sorted.addAll(templates.values().stream().filter(template -> template.getTemplateName().toLowerCase().contains(search.toLowerCase())).collect(Collectors.toList()));
         }
     }
 }

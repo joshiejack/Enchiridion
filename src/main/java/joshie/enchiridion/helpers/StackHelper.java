@@ -53,9 +53,8 @@ public class StackHelper {
         String s = formatNBT(str, pos).getUnformattedText();
         try {
             NBTBase nbtbase = JsonToNBT.getTagFromJson(s);
-            if (!(nbtbase instanceof NBTTagCompound)) return null;
             return (NBTTagCompound) nbtbase;
-        } catch (Exception nbtexception) {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -97,32 +96,28 @@ public class StackHelper {
 
     private static Item getItemByText(String str) {
         str = str.replace("%20", " ");
-        Item item = (Item) Item.REGISTRY.getObject(new ResourceLocation(str));
+        Item item = Item.REGISTRY.getObject(new ResourceLocation(str));
         if (item == null) {
             try {
-                Item item1 = Item.getItemById(Integer.parseInt(str));
-                item = item1;
-            } catch (NumberFormatException numberformatexception) {
-                ;
+                item = Item.getItemById(Integer.parseInt(str));
+            } catch (NumberFormatException ignored) {
             }
         }
-
         return item;
     }
 
     private static ITextComponent formatNBT(String[] str, int start) {
-        TextComponentString chatcomponenttext = new TextComponentString("");
+        TextComponentString textComponentString = new TextComponentString("");
 
         for (int j = start; j < str.length; ++j) {
             if (j > start) {
-                chatcomponenttext.appendText(" ");
+                textComponentString.appendText(" ");
             }
-
             Object object = new TextComponentString(str[j]);
-            chatcomponenttext.appendSibling((ITextComponent) object);
+            textComponentString.appendSibling((ITextComponent) object);
         }
 
-        return chatcomponenttext;
+        return textComponentString;
     }
 
     private static int parseMeta(String str) {

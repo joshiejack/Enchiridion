@@ -31,8 +31,8 @@ public class ActionOpenWebpage extends AbstractAction {
         try {
             Desktop.getDesktop().browse(new URI(url));
             return true;
-        } catch (Exception e) {}
-
+        } catch (Exception ignored) {
+        }
         return false;
     }
 }

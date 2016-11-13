@@ -11,14 +11,16 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Page implements IPage {
-    public List<IFeatureProvider> features = new ArrayList();
+    public List<IFeatureProvider> features = new ArrayList<>();
     public int pageNumber;
     public boolean isScrollable;
     public transient int scrollAmount;
     public transient int maximumScroll;
     public transient IBook book;
 
-    public Page() {}
+    public Page() {
+    }
+
     public Page(int number) {
         this.pageNumber = number;
     }
@@ -53,7 +55,7 @@ public class Page implements IPage {
             this.scrollAmount = maximumScroll;
         }
 
-        for (IFeatureProvider provider: getFeatures()) {
+        for (IFeatureProvider provider : getFeatures()) {
             provider.update(this);
         }
     }
@@ -104,7 +106,7 @@ public class Page implements IPage {
 
     @Override
     public ArrayList<IFeatureProvider> getFeatures() {
-        return new ArrayList(features);
+        return new ArrayList<>(features);
     }
 
     @Override
@@ -113,13 +115,14 @@ public class Page implements IPage {
     }
 
     private static final SortIndex SORTER = new SortIndex();
+
     private static class SortIndex implements Comparator {
         @Override
         public int compare(Object o1, Object o2) {
             IFeatureProvider provider1 = (IFeatureProvider) o1;
             IFeatureProvider provider2 = (IFeatureProvider) o2;
             if (provider1.getLayerIndex() == provider2.getLayerIndex()) {
-                return provider1.getTimeChanged() >= provider2.getTimeChanged() ? 1: -1;
+                return provider1.getTimeChanged() >= provider2.getTimeChanged() ? 1 : -1;
             } else return provider1.getLayerIndex() > provider2.getLayerIndex() ? 1 : -1;
         }
     }
@@ -133,8 +136,8 @@ public class Page implements IPage {
     @Override
     public void updateMaximumScroll(int screenTop) {
         int maxY = 0;
-        for (IFeatureProvider provider: features) {
-            if (provider.getTop() + provider.getHeight() > maxY){
+        for (IFeatureProvider provider : features) {
+            if (provider.getTop() + provider.getHeight() > maxY) {
                 maxY = (int) (provider.getTop() + provider.getHeight());
             }
         }
@@ -147,7 +150,7 @@ public class Page implements IPage {
         Collections.sort(features, SORTER); //Sort everything out in to order
 
         int i = 0;
-        for (IFeatureProvider provider: features) { //Fix all the id numbers
+        for (IFeatureProvider provider : features) { //Fix all the id numbers
             provider.setLayerIndex(i);
             i++;
         }
@@ -155,6 +158,6 @@ public class Page implements IPage {
 
     @Override
     public void clear() {
-        features = new ArrayList();
+        features = new ArrayList<>();
     }
 }

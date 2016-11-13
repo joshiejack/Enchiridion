@@ -7,22 +7,22 @@ import net.minecraft.item.ItemStack;
 
 public interface ILibraryRegistry {
     /** Called when entering a new world **/
-    public void resetStacksAllowedInLibrary();
+    void resetStacksAllowedInLibrary();
     
     /** Register a method for handling the opening of books
      *  This method should be called on the client and the server **/
-    public void registerBookHandler(IBookHandler handler);
+    void registerBookHandler(IBookHandler handler);
     
     /** Register this book for being handled
-     *  Ensure you call this after preinit, and register book handlers in preinit **/
-    public void registerBookHandlerForStack(String handlerName, ItemStack stack, boolean matchDamage, boolean matchNBT);
+     *  Ensure you call this after preInit, and register book handlers in preInit **/
+    void registerBookHandlerForStack(String handlerName, ItemStack stack, boolean matchDamage, boolean matchNBT);
     
     /** Gets the book handler instance for this stack **/
-    public IBookHandler getBookHandlerForStack(ItemStack stack);
+    IBookHandler getBookHandlerForStack(ItemStack stack);
     
-    /** Returns the IInventory for this players libraryy **/
-    public IInventory getLibraryInventory(EntityPlayer player);
+    /** @return Returns the IInventory for this players library **/
+    IInventory getLibraryInventory(EntityPlayer player);
     
     /** Register wood as being able to be used to craft the library **/
-    public void registerWood(ItemStack stack, boolean matchDamage, boolean matchNBT);
+    void registerWood(ItemStack stack, boolean matchDamage, boolean matchNBT);
 }

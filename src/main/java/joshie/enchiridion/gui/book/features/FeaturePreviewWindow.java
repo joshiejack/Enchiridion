@@ -24,7 +24,9 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
     public transient boolean isDragging;
     public transient int startY;
 
-    public FeaturePreviewWindow() {}
+    public FeaturePreviewWindow() {
+    }
+
     public FeaturePreviewWindow(int page) {
         this.pageNumber = page;
     }
@@ -70,12 +72,12 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
             for (IFeatureProvider feature : Lists.reverse(page.getFeatures())) {
                 if (feature instanceof FeaturePreviewWindow) continue; //No Cascading
                 mouseY = GuiBook.INSTANCE.mouseY + page.getScroll();
-                if(feature.mouseClicked(mouseX, mouseY, button)) return true;
+                if (feature.mouseClicked(mouseX, mouseY, button)) return true;
             }
 
 
             int scrollMax = page.getScrollbarMax(position.getBottom() - 5);
-            int pos = (int)((page.getScroll() * (position.getHeight() - 10)) / scrollMax);
+            int pos = (int) ((page.getScroll() * (position.getHeight() - 10)) / scrollMax);
             if (isOverScrollY(pos, mouseX, GuiBook.INSTANCE.mouseY)) {
                 isDragging = true;
                 startY = GuiBook.INSTANCE.mouseY;
@@ -104,7 +106,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
             if (isDragging) {
                 if (startY != GuiBook.INSTANCE.mouseY) {
                     int scrollPosition = (int) (((GuiBook.INSTANCE.mouseY - position.getTop()) * (scrollMax)) / position.getHeight());
-                    page.updateMaximumScroll(position.getBottom() -5); //Update the max
+                    page.updateMaximumScroll(position.getBottom() - 5); //Update the max
                     page.setScrollPosition(scrollPosition);
                 }
 
@@ -115,7 +117,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
             int scale = GuiBook.INSTANCE.getRes().getScaleFactor();
             GL11.glEnable(GL_SCISSOR_TEST);
             GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
-            GL11.glScissor((GuiBook.INSTANCE.x + position.getLeft()) * scale, (int)(GuiBook.INSTANCE.y + 217 - position.getTop() - position.getHeight()) * scale, (int)position.getWidth() * scale, (int)position.getHeight() * scale);
+            GL11.glScissor((GuiBook.INSTANCE.x + position.getLeft()) * scale, (int) (GuiBook.INSTANCE.y + 217 - position.getTop() - position.getHeight()) * scale, (int) position.getWidth() * scale, (int) position.getHeight() * scale);
 
             for (IFeatureProvider feature : Lists.reverse(page.getFeatures())) {
                 if (feature instanceof FeaturePreviewWindow) continue; //No Cascading
@@ -125,7 +127,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
                 }
 
                 boolean isMouseHovering = position.isOverFeature(xMouse, yMouse);
-                int mouseX = isMouseHovering ? GuiBook.INSTANCE.mouseX: Short.MAX_VALUE;
+                int mouseX = isMouseHovering ? GuiBook.INSTANCE.mouseX : Short.MAX_VALUE;
                 int mouseY = isMouseHovering ? GuiBook.INSTANCE.mouseY + page.getScroll() : Short.MAX_VALUE;
                 int originalY = GuiBook.INSTANCE.mouseY;
                 if (isMouseHovering) {
@@ -133,7 +135,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
                 }
 
                 feature.draw(mouseX, mouseY);
-                feature.addTooltip(GuiBook.INSTANCE.tooltip, mouseX, mouseY);
+                feature.addTooltip(GuiBook.INSTANCE.TOOLTIP, mouseX, mouseY);
                 if (isMouseHovering) {
                     GuiBook.INSTANCE.mouseY = originalY;
                 }
@@ -148,7 +150,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
 
             GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
             int minY = Short.MAX_VALUE;
-            for (IFeatureProvider provider: page.getFeatures()) {
+            for (IFeatureProvider provider : page.getFeatures()) {
                 if (provider.getTop() < minY) {
                     minY = provider.getTop();
                 }
@@ -156,7 +158,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
 
             if (position.getHeight() < (scrollMax + position.getBottom() - 5 - minY)) {
                 EnchiridionAPI.draw.drawBorderedRectangle(position.getRight() - 10, position.getTop(), position.getRight(), position.getBottom(), 0xFFB0A483, 0xFF362C24);
-                int pos = (int)((page.getScroll() * (position.getHeight() - 10)) / scrollMax);
+                int pos = (int) ((page.getScroll() * (position.getHeight() - 10)) / scrollMax);
                 EnchiridionAPI.draw.drawBorderedRectangle(position.getRight() - 10, position.getTop() + pos, position.getRight(), position.getTop() + pos + 10, 0xFF2F271F, 0xFF191511);
             }
         }
@@ -165,7 +167,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
     @Override
     public void scroll(boolean down, int amount) {
         if (page != null && page != thisPage) {
-            page.updateMaximumScroll(position.getBottom() -5); //Called constantly
+            page.updateMaximumScroll(position.getBottom() - 5); //Called constantly
             page.scroll(down, amount);
         }
     }

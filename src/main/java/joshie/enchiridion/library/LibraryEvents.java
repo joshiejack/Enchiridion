@@ -45,17 +45,16 @@ public class LibraryEvents {
                 //Sync what's allowed in the library
                 String serverName = MCServerHelper.getHostName();
                 PacketHandler.sendToClient(new PacketSyncLibraryAllowed(PacketPart.SEND_HASH, serverName, ModSupport.getHashcode(serverName)), mp);
-                
+
                 //Sync what is in the library
                 LibraryInventory inventory = LibraryHelper.getServerLibraryContents(player);
                 inventory.addDefaultBooks();
                 PacketHandler.sendToClient(new PacketSyncLibraryContents(inventory), mp);
-                
+
                 //Start the md5 process
                 if (EConfig.syncDataAndImagesToClients) {
                     PacketHandler.sendToClient(new PacketSyncMD5(PacketPart.SEND_SIZE, "", SyncHelper.servermd5.length), mp);
                 }
-                
                 SyncHelper.playersSynced.add(mp);
             }
         }

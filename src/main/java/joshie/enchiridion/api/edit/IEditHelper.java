@@ -5,8 +5,8 @@ import joshie.enchiridion.api.gui.ISimpleEditorFieldProvider;
 
 public interface IEditHelper {
     /** Put this feature in the simple editor **/
-    public void setSimpleEditorFeature(ISimpleEditorFieldProvider feature);
+    void setSimpleEditorFeature(ISimpleEditorFieldProvider feature);
 
     /** Returns a jump to page button **/
-    public IButtonActionProvider getJumpPageButton(int page);
+    IButtonActionProvider getJumpPageButton(int page);
 }

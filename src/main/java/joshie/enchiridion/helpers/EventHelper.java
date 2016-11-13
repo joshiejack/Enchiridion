@@ -9,9 +9,9 @@ public class EventHelper {
     public static boolean isFeatureVisible(IPage ipage, boolean isVisible, int layer) {
         if (ipage.getBook() == null) return isVisible;
         EntityPlayer player = MCClientHelper.getPlayer();
-        String bookid = ipage.getBook().getUniqueName();
+        String bookID = ipage.getBook().getUniqueName();
         int page = ipage.getPageNumber();
-        FeatureVisibleEvent event = new FeatureVisibleEvent(player, isVisible, bookid, page, layer);
+        FeatureVisibleEvent event = new FeatureVisibleEvent(player, isVisible, bookID, page, layer);
         MinecraftForge.EVENT_BUS.post(event);
         return event.isVisible;
     }

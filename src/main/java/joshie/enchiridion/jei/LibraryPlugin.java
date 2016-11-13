@@ -23,20 +23,21 @@ public class LibraryPlugin extends BlankModPlugin implements IAdvancedGuiHandler
     }
 
     @Override
+    @Nonnull
     public Class<GuiLibrary> getGuiContainerClass() {
         return GuiLibrary.class;
     }
 
     @Override
-    public List<Rectangle> getGuiExtraAreas(GuiLibrary library) {
-        List<Rectangle> rectangles = new ArrayList();
+    public List<Rectangle> getGuiExtraAreas(@Nonnull GuiLibrary library) {
+        List<Rectangle> rectangles = new ArrayList<>();
         rectangles.add(new Rectangle(library.x, library.y + 40, 367, 116));
         return rectangles;
     }
 
-    @Nullable
     @Override
-    public Object getIngredientUnderMouse(GuiLibrary guiContainer, int mouseX, int mouseY) {
+    @Nullable
+    public Object getIngredientUnderMouse(@Nonnull GuiLibrary guiContainer, int mouseX, int mouseY) {
         return null;
     }
 }

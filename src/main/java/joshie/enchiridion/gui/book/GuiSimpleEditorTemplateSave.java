@@ -52,14 +52,14 @@ public class GuiSimpleEditorTemplateSave extends GuiSimpleEditorAbstract impleme
 
         int bpp = 4;
         ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
-        GL11.glReadPixels(left, top, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer );
+        GL11.glReadPixels(left, top, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
 
         File file = new File(FileHelper.getTemplatesDirectory(), name + ".png");
         String format = "PNG";
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        for(int x = 0; x < width; x++) {
-            for(int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 int i = (x + (width * y)) * bpp;
                 int r = buffer.get(i) & 0xFF;
                 int g = buffer.get(i + 1) & 0xFF;
@@ -70,7 +70,9 @@ public class GuiSimpleEditorTemplateSave extends GuiSimpleEditorAbstract impleme
 
         try {
             ImageIO.write(resizeImage(image, BufferedImage.TYPE_INT_RGB, 280, 158), format, file);
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private BufferedImage resizeImage(BufferedImage originalImage, int type, int width, int height) {

@@ -9,10 +9,11 @@ import java.util.List;
 
 public class GuiToolbar extends AbstractGuiOverlay {
     public static final GuiToolbar INSTANCE = new GuiToolbar();
-    private List<IToolbarButton> leftButtons = new ArrayList();
-    private List<IToolbarButton> rightButtons = new ArrayList();
+    private List<IToolbarButton> leftButtons = new ArrayList<>();
+    private List<IToolbarButton> rightButtons = new ArrayList<>();
 
-    private GuiToolbar() {}
+    private GuiToolbar() {
+    }
 
     public void registerButton(IToolbarButton button) {
         if (button.isLeftAligned()) leftButtons.add(button);
@@ -33,64 +34,64 @@ public class GuiToolbar extends AbstractGuiOverlay {
 
         //Draw the left hand buttons first
         int x = X_START;
-        for (IToolbarButton button: leftButtons) {
-            if (!isOverButton(x, mouseX, mouseY)) EnchiridionAPI.draw.drawImage(button.getResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
-            else EnchiridionAPI.draw.drawImage(button.getHoverResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
-
-            x+= 12;
+        for (IToolbarButton button : leftButtons) {
+            if (!isOverButton(x, mouseX, mouseY)) {
+                EnchiridionAPI.draw.drawImage(button.getResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
+            } else {
+                EnchiridionAPI.draw.drawImage(button.getHoverResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
+            }
+            x += 12;
         }
 
         //Now draw the right hand buttons
         x = X_END;
-        for (IToolbarButton button: rightButtons) {
-            if (!isOverButton(x, mouseX, mouseY)) EnchiridionAPI.draw.drawImage(button.getResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
-            else EnchiridionAPI.draw.drawImage(button.getHoverResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
-
-            x-= 12;
+        for (IToolbarButton button : rightButtons) {
+            if (!isOverButton(x, mouseX, mouseY)) {
+                EnchiridionAPI.draw.drawImage(button.getResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
+            } else {
+                EnchiridionAPI.draw.drawImage(button.getHoverResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
+            }
+            x -= 12;
         }
     }
 
     @Override
     public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
         int x = X_START;
-        for (IToolbarButton button: leftButtons) {
+        for (IToolbarButton button : leftButtons) {
             if (isOverButton(x, mouseX, mouseY)) {
                 tooltip.add(button.getTooltip());
             }
-
-            x+= 12;
+            x += 12;
         }
 
         //Right side of buttons
         x = X_END;
-        for (IToolbarButton button: rightButtons) {
+        for (IToolbarButton button : rightButtons) {
             if (isOverButton(x, mouseX, mouseY)) {
                 tooltip.add(button.getTooltip());
             }
-
-            x-= 12;
+            x -= 12;
         }
     }
 
     @Override
     public void mouseReleased(int mouseX, int mouseY) {
         int x = X_START;
-        for (IToolbarButton button: leftButtons) {
+        for (IToolbarButton button : leftButtons) {
             if (isOverButton(x, mouseX, mouseY)) {
                 button.performAction();
             }
-
-            x+= 12;
+            x += 12;
         }
 
         //Right side of buttons
         x = X_END;
-        for (IToolbarButton button: rightButtons) {
+        for (IToolbarButton button : rightButtons) {
             if (isOverButton(x, mouseX, mouseY)) {
                 button.performAction();
             }
-
-            x-= 12;
+            x -= 12;
         }
     }
 }

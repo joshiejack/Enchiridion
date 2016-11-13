@@ -27,7 +27,6 @@ import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,17 +45,18 @@ import org.lwjgl.input.Keyboard;
 import java.util.List;
 
 public class EClientProxy extends ECommonProxy {
-    public static final ModelResourceLocation BOOK_RESOURCE = new ModelResourceLocation(new ResourceLocation(EInfo.MODPATH, "book"), "inventory");
+    public static final ModelResourceLocation BOOK_RESOURCE = new ModelResourceLocation(new ResourceLocation(EInfo.MODID, "book"), "inventory");
     public static KeyBinding libraryKeyBinding;
     public static ModelResourceLocation library;
     public static ModelResourceLocation libraryItem;
-    
+
     @Override
     public void onConstruction() {
         try {
             List<IResourcePack> defaultResourcePacks = ObfuscationReflectionHelper.getPrivateValue(FMLClientHandler.class, FMLClientHandler.instance(), "resourcePackList");
             defaultResourcePacks.add(EResourcePack.INSTANCE);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
@@ -75,7 +75,7 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerEditorOverlay(GuiToolbar.INSTANCE);
         EnchiridionAPI.instance.registerEditorOverlay(GuiLayers.INSTANCE);
         EnchiridionAPI.instance.registerEditorOverlay(GuiSimpleEditor.INSTANCE);
-        
+
         //Left aligned buttons
         EnchiridionAPI.instance.registerToolbarButton(new ButtonInsertText());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonInsertImage());
@@ -84,7 +84,7 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerToolbarButton(new ButtonInsertItem());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonInsertRecipe());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonInsertPreviewWindow());
-        
+
         //Right aligned
         EnchiridionAPI.instance.registerToolbarButton(new ButtonDeletePage());
         EnchiridionAPI.instance.registerToolbarButton(new ButtonChangeBackground());
@@ -101,7 +101,7 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerButtonAction(new ActionOpenWebpage());
         EnchiridionAPI.instance.registerButtonAction(new ActionToggleLayer());
         EnchiridionAPI.instance.registerButtonAction(new ActionExecuteCommand());
-        
+
         //Register Recipe Handlers
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapedVanilla());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapedOre());
@@ -114,59 +114,59 @@ public class EClientProxy extends ECommonProxy {
         //Register Button Template
         Template template = new Template("enchiridion_default_buttons", "Turn Page Arrows", new ELocation("default_buttons_thumbnail"), DefaultHelper.addArrows(new Page(0)));
         EnchiridionAPI.instance.registerTemplate(template);
-        
+
         //Register the Enchiridion Book
         EnchiridionAPI.instance.registerModWithBooks(EInfo.MODID);
         //Setup the models for the library
         if (EConfig.libraryAsItem) {
-            library = new ModelResourceLocation(new ResourceLocation(EInfo.MODPATH, "library"), "inventory");
-            ModelBakery.registerItemVariants(ECommonProxy.book, library); //Load in the librarytexture
-            libraryItem = new ModelResourceLocation(new ResourceLocation(EInfo.MODPATH, "libraryitem"), "inventory");
+            library = new ModelResourceLocation(new ResourceLocation(EInfo.MODID, "library"), "inventory");
+            ModelBakery.registerItemVariants(ECommonProxy.book, library); //Load in the library texture
+            libraryItem = new ModelResourceLocation(new ResourceLocation(EInfo.MODID, "libraryitem"), "inventory");
         }
-        
+
         //Register the keybinding
         if (EConfig.libraryAsHotkey) {
             libraryKeyBinding = new KeyBinding("enchiridion.key.library", Keyboard.KEY_L, "key.categories.misc");
             ClientRegistry.registerKeyBinding(libraryKeyBinding);
         }
-        
+
         ItemStack book = new ItemStack(ECommonProxy.book);
         book.setTagCompound(new NBTTagCompound());
         book.getTagCompound().setString("identifier", "enchiridion");
-        ECreativeTab.enchiridion.setItemStack(book);
+        ECreativeTab.ENCHIRIDION.setItemStack(book);
     }
-    
+
     private void attemptToRegisterRecipeHandler(Class clazz, String mod) {
         try {
             if (Loader.isModLoaded(mod)) {
                 IRecipeHandler handler = (IRecipeHandler) clazz.newInstance();
                 if (handler != null) EnchiridionAPI.instance.registerRecipeHandler(handler);
             }
-        } catch (Exception e) {}
+        } catch (Exception ignored) {
+        }
     }
-    
+
     @Override
     public void setupFont() {
         PenguinFont.load();
-        /** Colorise the books **/
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
-            @Override
-            public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-                if (stack.getItemDamage() == 1) {
-                    ItemStack current = LibraryHelper.getLibraryContents(MCClientHelper.getPlayer()).getCurrentBookItem();
-                    if (current != null) {
-                        return Minecraft.getMinecraft().getItemColors().getColorFromItemstack(current, tintIndex);
-                    }
+        /* Colorize the books */
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) -> {
+            if (stack.getItemDamage() == 1) {
+                ItemStack current = LibraryHelper.getLibraryContents(MCClientHelper.getPlayer()).getCurrentBookItem();
+                if (current != null) {
+                    return Minecraft.getMinecraft().getItemColors().getColorFromItemstack(current, tintIndex);
                 }
-
-                return -1;
             }
+
+            return -1;
         }, ECommonProxy.book);
     }
-    
-    /** GUI HANDLING **/
+
+    /**
+     * GUI HANDLING
+     **/
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int slotID, int handOrdinal, int z) {
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int slotID, int handOrdinal, int z) { //TODO Re-add mod support when updated CC of Warp Book is updated to 1.11
         if (ID == GuiIDs.COMPUTERCRAFT) {
             //return ComputerCraftHandler.getComputercraftPrintoutGui(player, slotID);
         } else if (ID == GuiIDs.WARPLIST) {
@@ -175,7 +175,7 @@ public class EClientProxy extends ECommonProxy {
             //return WarpBookHandler.getWarpbookGui(player, slotID);
         } else if (ID == GuiIDs.WRITEABLE) {
             return new GuiScreenWriteable(player, slotID);
-        }else if (ID == GuiIDs.LIBRARY) {
+        } else if (ID == GuiIDs.LIBRARY) {
             return new GuiLibrary(player.inventory, LibraryHelper.getClientLibraryContents(), HeldHelper.getHandFromOrdinal(handOrdinal));
         } else if (ID == GuiIDs.BOOK_FORCE) {
             return GuiBook.INSTANCE;
@@ -188,7 +188,6 @@ public class EClientProxy extends ECommonProxy {
                 } else return GuiBookCreate.INSTANCE.setStack(held);
             }
         }
-
         return null;
     }
 }

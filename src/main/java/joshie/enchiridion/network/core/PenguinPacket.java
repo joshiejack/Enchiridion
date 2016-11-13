@@ -9,12 +9,14 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public abstract class PenguinPacket implements IMessage {
     public abstract void handlePacket(EntityPlayer player);
-    
-    @Override
-    public void toBytes(ByteBuf to) {}
 
     @Override
-    public void fromBytes(ByteBuf from) {}
+    public void toBytes(ByteBuf to) {
+    }
+
+    @Override
+    public void fromBytes(ByteBuf from) {
+    }
 
     public void handleQueuedClient(NetHandlerPlayClient handler) {
         handlePacket(MCClientHelper.getPlayer());

@@ -24,16 +24,16 @@ public class DefaultHelper {
 
     public static IPage addDefaults(IBook book, IPage page) {
         if (book.getDefaultFeatures() != null) {
-            for (String unique: book.getDefaultFeatures()) {
+            for (String unique : book.getDefaultFeatures()) {
                 List<IFeatureProvider> providers = GuiSimpleEditorTemplate.INSTANCE.getFeaturesFromString(unique);
-                for (IFeatureProvider provider: providers) {
+                for (IFeatureProvider provider : providers) {
                     page.addFeature(provider.getFeature(), provider.getLeft(), provider.getTop(), provider.getWidth(), provider.getHeight(), provider.isLocked(), !provider.isVisible());
                 }
             }
         } else addArrows(page);
 
         //Initialise everything
-        for (IFeatureProvider feature: page.getFeatures()) {
+        for (IFeatureProvider feature : page.getFeatures()) {
             feature.update(page);
         }
 

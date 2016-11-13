@@ -12,14 +12,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BookEvents {
-    public static HashMap<String, HashMultimap<Integer, Pattern>> inverted = new HashMap();
+    public static final HashMap<String, HashMultimap<Integer, Pattern>> INVERTED = new HashMap<>();
 
     @SubscribeEvent
     public void onAttemptToRender(FeatureVisibleEvent event) {
-        if (inverted.containsKey(event.bookid)) {
-            HashMultimap<Integer, Pattern> map = inverted.get(event.bookid);
+        if (INVERTED.containsKey(event.bookID)) {
+            HashMultimap<Integer, Pattern> map = INVERTED.get(event.bookID);
             if (map.containsKey(event.page)) {
-                for (Pattern pattern: map.get(event.page)) {
+                for (Pattern pattern : map.get(event.page)) {
                     Matcher m = pattern.matcher("" + (event.layer + 1));
                     if (m.matches()) {
                         event.isVisible = !event.isVisible; //Inverted
@@ -31,8 +31,8 @@ public class BookEvents {
 
     public static boolean invert(IBook book, IPage page, Pattern pattern) {
         //If we already had everything, then we shall remove it from the map
-        if (inverted.containsKey(book.getUniqueName())) {
-            HashMultimap map = inverted.get(book.getUniqueName());
+        if (INVERTED.containsKey(book.getUniqueName())) {
+            HashMultimap<Integer, Pattern> map = INVERTED.get(book.getUniqueName());
             if (map.containsKey(page.getPageNumber())) {
                 Collection<Pattern> layers = map.get(page.getPageNumber());
                 if (layers.contains(pattern)) {
@@ -42,10 +42,10 @@ public class BookEvents {
         }
 
         //Otherwise
-        HashMultimap map = inverted.get(book.getUniqueName());
+        HashMultimap<Integer, Pattern> map = INVERTED.get(book.getUniqueName());
         if (map == null) map = HashMultimap.create();
         map.get(page.getPageNumber()).add(pattern);
-        inverted.put(book.getUniqueName(), map);
+        INVERTED.put(book.getUniqueName(), map);
         return true;
     }
 }

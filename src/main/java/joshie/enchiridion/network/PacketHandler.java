@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketHandler {
     private static final PenguinNetwork INSTANCE = new PenguinNetwork(EInfo.MODID);
-    
+
     public static void registerPacket(Class clazz) {
         registerPacket(clazz, Side.CLIENT);
         registerPacket(clazz, Side.SERVER);

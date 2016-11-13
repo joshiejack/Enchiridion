@@ -14,7 +14,9 @@ public class PacketHandleBook extends PenguinPacket {
     private boolean isShiftPressed;
     private EnumHand hand;
 
-    public PacketHandleBook() {}
+    public PacketHandleBook() {
+    }
+
     public PacketHandleBook(int slot, EnumHand hand, boolean isShiftPressed) {
         this.slot = slot;
         this.hand = hand;
@@ -43,7 +45,6 @@ public class PacketHandleBook extends PenguinPacket {
             if (handler != null) {
                 handler.handle(stack, player, hand, slot, isShiftPressed);
             }
-
             LibraryHelper.getServerLibraryContents(player).setCurrentBook(slot);
         }
     }
