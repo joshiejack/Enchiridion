@@ -218,8 +218,8 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
     }
 
     @Override
-    public void drawStack(ItemStack stack, int left, int top, float size) {
-        if (stack == null) return; //Don't draw stacks that don't exist
+    public void drawStack(@Nonnull ItemStack stack, int left, int top, float size) {
+        if (stack.isEmpty()) return; //Don't draw stacks that don't exist
         int x2 = (int) Math.floor(((x + left) / size));
         int y2 = (int) Math.floor(((y + top) / size));
         ClientStackHelper.drawStack(stack, x2, y2, size);

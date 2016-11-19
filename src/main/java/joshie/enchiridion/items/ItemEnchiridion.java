@@ -96,7 +96,7 @@ public class ItemEnchiridion extends Item /*implements IGuideItem*/ {
                 if (!book.isEmpty()) {
                     IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(book);
                     if (handler != null) {
-                        handler.handle(player, hand, currentBook, player.isSneaking());
+                        handler.handle(book, player, hand, currentBook, player.isSneaking());
                     }
                 } else player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, hand.ordinal(), 0);
             }

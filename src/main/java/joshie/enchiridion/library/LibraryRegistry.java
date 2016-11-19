@@ -44,7 +44,7 @@ public class LibraryRegistry implements ILibraryRegistry {
     }
 
     @Override
-    public void registerBookHandlerForStack(String handlerName, ItemStack itemStack, boolean matchDamage, boolean matchNBT) {
+    public void registerBookHandlerForStack(String handlerName, @Nonnull ItemStack itemStack, boolean matchDamage, boolean matchNBT) {
         SafeStack safeStack = SafeStack.newInstance("IGNORE", itemStack, "IGNORE", matchDamage, matchNBT);
         bookHandlerRegistry.put(safeStack, handlers.get(handlerName));
     }
@@ -62,7 +62,7 @@ public class LibraryRegistry implements ILibraryRegistry {
     }
 
     @Override
-    public void registerWood(ItemStack stack, boolean matchDamage, boolean matchNBT) {
+    public void registerWood(@Nonnull ItemStack stack, boolean matchDamage, boolean matchNBT) {
         LibraryRecipe.VALID_WOODS.add(SafeStack.newInstance("IGNORE", stack, "IGNORE", matchDamage, matchNBT));
     }
 }

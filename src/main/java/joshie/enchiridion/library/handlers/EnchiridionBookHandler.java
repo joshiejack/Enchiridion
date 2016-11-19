@@ -6,7 +6,10 @@ import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.GuiBook;
 import joshie.enchiridion.lib.GuiIDs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+
+import javax.annotation.Nonnull;
 
 public class EnchiridionBookHandler implements IBookHandler {
     @Override
@@ -15,7 +18,7 @@ public class EnchiridionBookHandler implements IBookHandler {
     }
 
     @Override
-    public void handle(EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
+    public void handle(@Nonnull ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
         if (player.world.isRemote) {
             GuiBook.INSTANCE.setBook(BookRegistry.INSTANCE.getBook(player.getHeldItem(hand)), isShiftPressed);
         }

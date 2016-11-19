@@ -16,6 +16,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 
 public class WriteableBookHandler implements IBookHandler {
@@ -25,7 +26,7 @@ public class WriteableBookHandler implements IBookHandler {
     }
 
     @Override
-    public void handle(EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
+    public void handle(@Nonnull ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
         player.openGui(Enchiridion.instance, GuiIDs.WRITEABLE, player.world, slotID, 0, 0);
     }
 

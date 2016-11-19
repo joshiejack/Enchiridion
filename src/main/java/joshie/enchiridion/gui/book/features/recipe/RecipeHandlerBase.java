@@ -41,9 +41,7 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
 
     protected final Object getObject(ArrayList<Object> input, int i) {
         if (i >= input.size()) return null;
-        input.stream().filter(o -> o instanceof ItemStack).forEach(o -> {
-            ((ItemStack) o).setCount(1);
-        });
+        input.stream().filter(o -> o instanceof ItemStack).forEach(o -> ((ItemStack) o).setCount(1));
 
         return input.get(i);
     }

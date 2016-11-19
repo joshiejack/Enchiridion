@@ -84,11 +84,7 @@ public class TextEditor {
         if (editable == null) return;
         tick++;
         if (tick % 60 == 0) {
-            if (white) {
-                white = false;
-            } else {
-                white = true;
-            }
+            white = !white;
         }
     }
 

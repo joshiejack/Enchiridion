@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 
 public class ECreativeTab extends CreativeTabs {
     public static final ECreativeTab ENCHIRIDION = new ECreativeTab(EInfo.MODID);
-    public final ItemStack icon = new ItemStack(Items.WRITABLE_BOOK);
+    @Nonnull
     public ItemStack itemstack;
 
     public ECreativeTab(String label) {
@@ -22,13 +22,13 @@ public class ECreativeTab extends CreativeTabs {
     @Override
     @Nonnull
     public ItemStack getTabIconItem() {
-        return icon;
+        return new ItemStack(Items.WRITABLE_BOOK);
     }
 
     @SideOnly(Side.CLIENT)
     @Nonnull
     public ItemStack getIconItemStack() {
-        if (itemstack == null) return super.getIconItemStack();
+        if (itemstack.isEmpty()) return super.getIconItemStack();
         else return itemstack;
     }
 

@@ -8,11 +8,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
-    protected void init(ItemStack output, ArrayList<Object> input, int width) {
+    protected void init(@Nonnull ItemStack output, ArrayList<Object> input, int width) {
         int length = input.size();
         stackList.add(new WrappedStack(output, 115D, 31D, 1.75F));
         if (length == 1) {
@@ -82,7 +83,7 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
     }
 
     @Override
-    public void addRecipes(ItemStack output, List<IRecipeHandler> list) {
+    public void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list) {
         for (IRecipe check : CraftingManager.getInstance().getRecipeList()) {
             ItemStack stack = check.getRecipeOutput();
             //CHECK -- > EXTENDS the class

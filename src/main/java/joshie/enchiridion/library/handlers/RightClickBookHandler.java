@@ -6,6 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
+import javax.annotation.Nonnull;
+
 public class RightClickBookHandler implements IBookHandler {
     @Override
     public String getName() {
@@ -13,7 +15,7 @@ public class RightClickBookHandler implements IBookHandler {
     }
 
     @Override
-    public void handle(EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
+    public void handle(@Nonnull ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
         try {
             ItemStack ret = player.getHeldItem(hand).useItemRightClick(player.world, player, hand).getResult();
             EnchiridionAPI.library.getLibraryInventory(player).setInventorySlotContents(slotID, ret);

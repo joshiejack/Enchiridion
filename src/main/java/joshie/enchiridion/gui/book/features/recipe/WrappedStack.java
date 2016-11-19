@@ -5,6 +5,7 @@ import joshie.enchiridion.helpers.ItemListHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,6 +15,7 @@ public class WrappedStack implements IItemStack {
     protected static final Random RAND = new Random();
     protected List<ItemStack> permutations = new ArrayList<>();
     protected boolean hasPermutations = false;
+    @Nonnull
     protected ItemStack stack;
     private int ticker = 0;
     private double x;
@@ -25,7 +27,7 @@ public class WrappedStack implements IItemStack {
         this.y = y;
         this.scale = scale;
 
-        if (object == null) stack = null;
+        if (object == null) stack = ItemStack.EMPTY;
         else {
             if (object instanceof String) {
                 object = OreDictionary.getOres((String) object);
@@ -50,6 +52,7 @@ public class WrappedStack implements IItemStack {
     }
 
     @Override
+    @Nonnull
     public ItemStack getItemStack() {
         return stack;
     }

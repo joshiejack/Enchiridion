@@ -58,7 +58,7 @@ public class SmartLibrary implements IBakedModel {
                 ret = mesher.getModelManager().getModel(BookRegistry.INSTANCE.getModelLocation(stack));
             } else {
                 ItemStack book = LibraryHelper.getClientLibraryContents().getCurrentBookItem();
-                ret = book == null ? library : mesher.getItemModel(book);
+                ret = book.isEmpty() ? library : mesher.getItemModel(book);
             }
 
             return ret == null ? mesher.getItemModel(broken) : ret;

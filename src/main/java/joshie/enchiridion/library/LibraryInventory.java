@@ -81,7 +81,7 @@ public class LibraryInventory extends InventoryStorage {
 
     //Only should be called server side
     public void clear() {
-        inventory.set(MAX, ItemStack.EMPTY);
+        inventory.clear();
         markDirty();
         EntityPlayer player = getAndCreatePlayer();
         if (player != null) {

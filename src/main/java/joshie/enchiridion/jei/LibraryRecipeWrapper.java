@@ -8,6 +8,7 @@ import joshie.enchiridion.util.SafeStack;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -20,11 +21,11 @@ public class LibraryRecipeWrapper extends BlankRecipeWrapper implements IShapedC
     private final int width = 3;
     private final int height = 3;
     private List<List<ItemStack>> inputs;
-    private List<ItemStack> output;
+    private ItemStack output;
 
     public LibraryRecipeWrapper() {
         inputs = new ArrayList<>();
-        inputs.add(getWoodsAsStacks());
+        inputs.add(Collections.singletonList(new ItemStack(Items.POTATO)));
         inputs.add(getWoodsAsStacks());
         inputs.add(getWoodsAsStacks());
         inputs.add(getBooksAsStacks());
@@ -33,7 +34,7 @@ public class LibraryRecipeWrapper extends BlankRecipeWrapper implements IShapedC
         inputs.add(getWoodsAsStacks());
         inputs.add(getWoodsAsStacks());
         inputs.add(getWoodsAsStacks());
-        output = Collections.singletonList(new ItemStack(ECommonProxy.book, 1, 1));
+        output = new ItemStack(ECommonProxy.book, 1, 1);
     }
 
     private List<ItemStack> getWoodsAsStacks() {
@@ -47,7 +48,7 @@ public class LibraryRecipeWrapper extends BlankRecipeWrapper implements IShapedC
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
         ingredients.setInputLists(ItemStack.class, inputs);
-        ingredients.setOutputs(ItemStack.class, output);
+        ingredients.setOutput(ItemStack.class, output);
     }
 
     @Override

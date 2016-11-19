@@ -2,8 +2,11 @@ package joshie.enchiridion.api.recipe;
 
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public interface IItemStack {
     /** @return Returns the current item stack **/
+    @Nonnull
     ItemStack getItemStack();
 
     /** @return the xPosition of this stack **/

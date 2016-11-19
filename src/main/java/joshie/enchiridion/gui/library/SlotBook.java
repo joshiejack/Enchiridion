@@ -40,7 +40,7 @@ public class SlotBook extends Slot {
                 if (player.world.isRemote) {
                     boolean isShiftPressed = MCClientHelper.isShiftPressed();
                     PacketHandler.sendToServer(new PacketHandleBook(slot.slotNumber, hand, isShiftPressed));
-                    handler.handle(player, hand, slot.slotNumber, isShiftPressed);
+                    handler.handle(stack, player, hand, slot.slotNumber, isShiftPressed);
                     LibraryHelper.getClientLibraryContents().setCurrentBook(slot.slotNumber);
                 }
                 return ItemStack.EMPTY;

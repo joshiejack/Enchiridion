@@ -23,6 +23,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     public static final GuiSimpleEditorButton INSTANCE = new GuiSimpleEditorButton();
@@ -84,7 +85,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         try {
             Field f = object.getClass().getField(fieldName);
             return (Modifier.isTransient(f.getModifiers()));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
         return false;
@@ -341,11 +342,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         if (search == null || search.equals("")) {
             sorted.addAll(actions);
         } else {
-            for (IButtonAction action : actions) {
-                if (action.getName().toLowerCase().contains(search.toLowerCase())) {
-                    sorted.add(action);
-                }
-            }
+            sorted.addAll(actions.stream().filter(action -> action.getName().toLowerCase().contains(search.toLowerCase())).collect(Collectors.toList()));
         }
     }
 }

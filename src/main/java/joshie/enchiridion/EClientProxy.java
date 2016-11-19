@@ -181,7 +181,7 @@ public class EClientProxy extends ECommonProxy {
             return GuiBook.INSTANCE;
         } else {
             ItemStack held = HeldHelper.getStackFromOrdinal(player, handOrdinal);
-            if (held != null && held.getItem() == ECommonProxy.book) {
+            if (!held.isEmpty() && held.getItem() == ECommonProxy.book) {
                 IBook book = BookRegistry.INSTANCE.getBook(held);
                 if (book != null) {
                     return GuiBook.INSTANCE.setBook(book, player.isSneaking());

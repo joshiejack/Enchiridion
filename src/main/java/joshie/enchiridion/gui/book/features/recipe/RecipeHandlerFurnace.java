@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
@@ -27,11 +28,11 @@ public class RecipeHandlerFurnace extends RecipeHandlerBase {
     }
 
     @Override
-    public void addRecipes(ItemStack output, List<IRecipeHandler> list) {
+    public void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list) {
         Map<ItemStack, ItemStack> smeltingList = FurnaceRecipes.instance().getSmeltingList();
         for (ItemStack key : smeltingList.keySet()) {
             ItemStack stack = smeltingList.get(key);
-            if (stack == null) continue;
+            if (stack.isEmpty()) continue;
             if (stack.isItemEqual(output)) {
                 list.add(new RecipeHandlerFurnace(stack, key));
             }

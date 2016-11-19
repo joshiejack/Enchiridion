@@ -8,6 +8,8 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
+import javax.annotation.Nonnull;
+
 public class TemporarySwitchHandler implements IBookHandler {
     @Override
     public String getName() {
@@ -15,8 +17,7 @@ public class TemporarySwitchHandler implements IBookHandler {
     }
 
     @Override
-    public void handle(EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
-        ItemStack stack = player.getHeldItem(hand);
+    public void handle(@Nonnull ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
         try {
             ItemStack held = ItemStack.EMPTY; //Set the item to null
             EntityEquipmentSlot slot = HeldHelper.getSlotFromHand(hand);

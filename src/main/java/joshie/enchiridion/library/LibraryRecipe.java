@@ -77,11 +77,10 @@ public class LibraryRecipe implements IRecipe {
     public NonNullList<ItemStack> getRemainingItems(@Nonnull InventoryCrafting inv) {
         NonNullList<ItemStack> list = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
 
-        for (int i = 0; i < list.size(); ++i) {
-            list.set(i, getStackOfOne(inv, 3));
-            list.set(i, getStackOfOne(inv, 4));
-            list.set(i, getStackOfOne(inv, 5));
-        }
+        list.set(3, getStackOfOne(inv, 3));
+        list.set(4, getStackOfOne(inv, 4));
+        list.set(5, getStackOfOne(inv, 5));
+
         return list;
     }
 }

@@ -5,6 +5,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public interface ILibraryRegistry {
     /** Called when entering a new world **/
     void resetStacksAllowedInLibrary();
@@ -15,14 +17,14 @@ public interface ILibraryRegistry {
     
     /** Register this book for being handled
      *  Ensure you call this after preInit, and register book handlers in preInit **/
-    void registerBookHandlerForStack(String handlerName, ItemStack stack, boolean matchDamage, boolean matchNBT);
+    void registerBookHandlerForStack(String handlerName, @Nonnull ItemStack stack, boolean matchDamage, boolean matchNBT);
     
     /** Gets the book handler instance for this stack **/
-    IBookHandler getBookHandlerForStack(ItemStack stack);
+    IBookHandler getBookHandlerForStack(@Nonnull ItemStack stack);
     
     /** @return Returns the IInventory for this players library **/
     IInventory getLibraryInventory(EntityPlayer player);
     
     /** Register wood as being able to be used to craft the library **/
-    void registerWood(ItemStack stack, boolean matchDamage, boolean matchNBT);
+    void registerWood(@Nonnull ItemStack stack, boolean matchDamage, boolean matchNBT);
 }

@@ -6,6 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 
+import javax.annotation.Nonnull;
+
 public class CopyNBTHandler extends TemporarySwitchHandler {
     @Override
     public String getName() {
@@ -13,13 +15,13 @@ public class CopyNBTHandler extends TemporarySwitchHandler {
     }
 
     @Override
-    public void handle(EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
+    public void handle(@Nonnull ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
         ItemStack library = player.getHeldItem(hand);
         if (library.hasTagCompound()) { //Copy the current configs for the library item to the item itself, to be saved
             library.setTagCompound(library.getTagCompound());
             LibraryHelper.markDirty();
         } else library.setTagCompound(new NBTTagCompound());
 
-        super.handle(player, hand, slotID, isShiftPressed);
+        super.handle(stack, player, hand, slotID, isShiftPressed);
     }
 }

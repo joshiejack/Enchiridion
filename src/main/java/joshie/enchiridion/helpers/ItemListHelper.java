@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import org.apache.logging.log4j.Level;
 
+import java.util.stream.Collectors;
+
 public class ItemListHelper {
     private static NonNullList<ItemStack> items = NonNullList.withSize(0, ItemStack.EMPTY);
     private static NonNullList<ItemStack> allItems = NonNullList.withSize(0, ItemStack.EMPTY);
@@ -44,12 +46,6 @@ public class ItemListHelper {
     }
 
     public static void addInventory() {
-        for (ItemStack stack : Minecraft.getMinecraft().player.inventory.mainInventory) {
-            if (!stack.isEmpty()) {
-                if (!allItems().contains(stack)) {
-                    allItems.add(stack);
-                }
-            }
-        }
+        allItems.addAll(Minecraft.getMinecraft().player.inventory.mainInventory.stream().filter(stack -> !stack.isEmpty()).filter(stack -> !allItems().contains(stack)).collect(Collectors.toList()));
     }
 }

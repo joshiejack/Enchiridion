@@ -43,7 +43,7 @@ public class PacketHandleBook extends PenguinPacket {
         if (!stack.isEmpty()) {
             IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(stack);
             if (handler != null) {
-                handler.handle(player, hand, slot, isShiftPressed);
+                handler.handle(stack, player, hand, slot, isShiftPressed);
             }
             LibraryHelper.getServerLibraryContents(player).setCurrentBook(slot);
         }

@@ -32,9 +32,7 @@ public class Template implements ITemplate {
         this.uniquename = uniquename;
         this.templatename = templatename;
         this.features = new ArrayList<>();
-        for (IFeatureProvider provider : page.getFeatures()) {
-            this.features.add(provider.copy());
-        }
+        this.features.addAll(page.getFeatures().stream().map(IFeatureProvider::copy).collect(Collectors.toList()));
     }
 
     @Override
