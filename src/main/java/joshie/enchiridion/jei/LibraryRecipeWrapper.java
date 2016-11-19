@@ -40,7 +40,7 @@ public class LibraryRecipeWrapper extends BlankRecipeWrapper implements IShapedC
         return LibraryRecipe.VALID_WOODS.stream().map(SafeStack::toStack).collect(Collectors.toList());
     }
 
-    public List<ItemStack> getBooksAsStacks() {
+    private List<ItemStack> getBooksAsStacks() {
         return ItemListHelper.allItems().stream().filter(stack -> EnchiridionAPI.library.getBookHandlerForStack(stack) != null).collect(Collectors.toList());
     }
 
@@ -48,18 +48,6 @@ public class LibraryRecipeWrapper extends BlankRecipeWrapper implements IShapedC
     public void getIngredients(@Nonnull IIngredients ingredients) {
         ingredients.setInputLists(ItemStack.class, inputs);
         ingredients.setOutputs(ItemStack.class, output);
-    }
-
-    @Nonnull
-    @Override
-    public List getInputs() {
-        return inputs;
-    }
-
-    @Nonnull
-    @Override
-    public List<ItemStack> getOutputs() {
-        return output;
     }
 
     @Override

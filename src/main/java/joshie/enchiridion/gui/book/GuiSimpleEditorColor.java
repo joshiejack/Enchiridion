@@ -4,8 +4,6 @@ import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.util.IColorable;
 
-import java.util.List;
-
 public class GuiSimpleEditorColor extends GuiSimpleEditorAbstract {
     public static final GuiSimpleEditorColor INSTANCE = new GuiSimpleEditorColor();
     private static final String[][] COLORS = new String[][]{

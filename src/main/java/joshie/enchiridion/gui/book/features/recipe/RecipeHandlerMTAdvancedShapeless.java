@@ -1,3 +1,4 @@
+/*
 package joshie.enchiridion.gui.book.features.recipe;
 
 import minetweaker.api.item.IIngredient;
@@ -59,4 +60,4 @@ public class RecipeHandlerMTAdvancedShapeless extends RecipeHandlerRecipeBase {
         } catch (Exception ignored) {
         }
     }
-}
+}*/

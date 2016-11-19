@@ -82,12 +82,12 @@ public class EAPIHandler implements IEnchiridionAPI {
 
     @Override
     public void openBook(EntityPlayer player, String bookID, int page) {
-        if (player.worldObj.isRemote) {
+        if (player.world.isRemote) {
             IBook book = BookRegistry.INSTANCE.getBookByName(bookID);
             if (book != null) {
                 GuiBook.INSTANCE.setBook(book, false);
                 EnchiridionAPI.book.jumpToPageIfExists(page - 1);
-                player.openGui(Enchiridion.instance, GuiIDs.BOOK_FORCE, player.worldObj, 0, 0, 0);
+                player.openGui(Enchiridion.instance, GuiIDs.BOOK_FORCE, player.world, 0, 0, 0);
             }
         } else PacketHandler.sendToClient(new PacketOpenBook(bookID, page), player);
     }

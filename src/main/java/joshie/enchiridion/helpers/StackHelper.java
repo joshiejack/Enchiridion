@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class StackHelper {
@@ -38,8 +39,8 @@ public class StackHelper {
             str = str + " " + stack.getItemDamage();
         }
 
-        if (stack.stackSize > 1) {
-            str = str + " *" + stack.stackSize;
+        if (stack.getCount() > 1) {
+            str = str + " *" + stack.getCount();
         }
 
         if (stack.hasTagCompound()) {
@@ -71,9 +72,10 @@ public class StackHelper {
         return str.startsWith("*");
     }
 
+    @Nonnull
     private static ItemStack getStackFromArray(String[] str) {
         Item item = getItemByText(str[0]);
-        if (item == null) return null;
+        if (item == null) return ItemStack.EMPTY;
 
         int meta = 0;
         int amount = 1;
@@ -90,7 +92,7 @@ public class StackHelper {
 
         stack.setItemDamage(meta);
         stack.setTagCompound(tag);
-        stack.stackSize = amount;
+        stack.setCount(amount);
         return stack;
     }
 

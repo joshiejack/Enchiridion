@@ -15,24 +15,24 @@ import java.util.List;
 public class LibraryCommand implements ICommand {
     @Override
     public int compareTo(@Nonnull ICommand o) {
-        return getCommandName().compareTo(o.getCommandName());
+        return getName().compareTo(o.getName());
     }
 
     @Override
     @Nonnull
-    public String getCommandName() {
+    public String getName() {
         return "enchiridion";
     }
 
     @Override
     @Nonnull
-    public String getCommandUsage(@Nonnull ICommandSender sender) {
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/enchiridion refresh";
     }
 
     @Override
     @Nonnull
-    public List<String> getCommandAliases() {
+    public List<String> getAliases() {
         return new ArrayList<>();
     }
 
@@ -65,7 +65,7 @@ public class LibraryCommand implements ICommand {
 
     @Override
     @Nonnull
-    public List<String> getTabCompletionOptions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, BlockPos pos) {
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, BlockPos pos) {
         ArrayList<String> string = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
             string.add("" + i);

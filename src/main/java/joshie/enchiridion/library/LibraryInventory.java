@@ -7,6 +7,7 @@ import joshie.enchiridion.util.InventoryStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -37,6 +38,7 @@ public class LibraryInventory extends InventoryStorage {
         return currentBook;
     }
 
+    @Nonnull
     public ItemStack getCurrentBookItem() {
         return getStackInSlot(getCurrentBook());
     }
@@ -47,9 +49,9 @@ public class LibraryInventory extends InventoryStorage {
     }
 
     private boolean insertIntoNextFreeSlot(ItemStack stack) {
-        for (int i = 0; i < inventory.length; i++) {
-            if (inventory[i] == null) {
-                inventory[i] = stack;
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).isEmpty()) {
+                inventory.set(i, stack);
                 return true; //If we could insert the book, return true
             }
         }
@@ -79,7 +81,7 @@ public class LibraryInventory extends InventoryStorage {
 
     //Only should be called server side
     public void clear() {
-        inventory = new ItemStack[MAX];
+        inventory.set(MAX, ItemStack.EMPTY);
         markDirty();
         EntityPlayer player = getAndCreatePlayer();
         if (player != null) {
@@ -99,7 +101,7 @@ public class LibraryInventory extends InventoryStorage {
         return uuid;
     }
 
-    public ItemStack[] getInventory() {
+    public NonNullList<ItemStack> getInventory() {
         return inventory;
     }
 

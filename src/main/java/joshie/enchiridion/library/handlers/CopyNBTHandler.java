@@ -13,13 +13,13 @@ public class CopyNBTHandler extends TemporarySwitchHandler {
     }
 
     @Override
-    public void handle(ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
+    public void handle(EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
         ItemStack library = player.getHeldItem(hand);
         if (library.hasTagCompound()) { //Copy the current configs for the library item to the item itself, to be saved
-            stack.setTagCompound(library.getTagCompound());
+            library.setTagCompound(library.getTagCompound());
             LibraryHelper.markDirty();
         } else library.setTagCompound(new NBTTagCompound());
 
-        super.handle(stack, player, hand, slotID, isShiftPressed);
+        super.handle(player, hand, slotID, isShiftPressed);
     }
 }

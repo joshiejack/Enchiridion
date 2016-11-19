@@ -14,6 +14,8 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
+import javax.annotation.Nonnull;
+
 public class SlotBook extends Slot {
     private static final ItemStack DUMMY = new ItemStack(Items.BOOK);
     private EnumHand hand;
@@ -29,19 +31,19 @@ public class SlotBook extends Slot {
         return !(stack.getItem() == ECommonProxy.book && stack.getItemDamage() == 1) && EnchiridionAPI.library.getBookHandlerForStack(stack) != null;
     }
 
+    @Nonnull
     public ItemStack handle(EntityPlayer player, int mouseButton, Slot slot) {
         if (mouseButton == 1) {
             ItemStack stack = slot.getStack();
             IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(stack);
             if (handler != null) {
-                if (player.worldObj.isRemote) {
+                if (player.world.isRemote) {
                     boolean isShiftPressed = MCClientHelper.isShiftPressed();
                     PacketHandler.sendToServer(new PacketHandleBook(slot.slotNumber, hand, isShiftPressed));
-                    handler.handle(stack, player, hand, slot.slotNumber, isShiftPressed);
+                    handler.handle(player, hand, slot.slotNumber, isShiftPressed);
                     LibraryHelper.getClientLibraryContents().setCurrentBook(slot.slotNumber);
                 }
-
-                return null;
+                return ItemStack.EMPTY;
             }
         }
 

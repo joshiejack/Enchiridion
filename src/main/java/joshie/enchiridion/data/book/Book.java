@@ -4,7 +4,6 @@ import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.MCClientHelper;
-import joshie.enchiridion.lib.EInfo;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;

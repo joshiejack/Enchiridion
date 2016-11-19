@@ -25,8 +25,8 @@ public class WriteableBookHandler implements IBookHandler {
     }
 
     @Override
-    public void handle(ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
-        player.openGui(Enchiridion.instance, GuiIDs.WRITEABLE, player.worldObj, slotID, 0, 0);
+    public void handle(EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
+        player.openGui(Enchiridion.instance, GuiIDs.WRITEABLE, player.world, slotID, 0, 0);
     }
 
     //Our own version for the writeable so that we send packets to the library instead of the hand
@@ -60,6 +60,8 @@ public class WriteableBookHandler implements IBookHandler {
                         this.bookObj.setTagInfo("pages", this.bookPages);
                     }
 
+                    ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
+
                     if (publish) {
                         this.bookObj.setTagInfo("author", new NBTTagString(this.editingPlayer.getName()));
                         this.bookObj.setTagInfo("title", new NBTTagString(this.bookTitle.trim()));
@@ -71,12 +73,12 @@ public class WriteableBookHandler implements IBookHandler {
                             this.bookPages.set(i, new NBTTagString(s1));
                         }
 
-                        this.bookObj.setItem(Items.WRITTEN_BOOK);
+                        stack.setTagCompound(this.bookObj.getTagCompound().copy());
                     }
 
                     //Set the book in the library
                     EnchiridionAPI.library.getLibraryInventory(editingPlayer).setInventorySlotContents(slot, bookObj);
-                    PacketHandler.sendToServer(new PacketSetLibraryBook(bookObj, slot));
+                    PacketHandler.sendToServer(new PacketSetLibraryBook(stack, slot));
                 }
             }
         }

@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.world.World;
+import net.minecraft.util.NonNullList;
 
 public class PacketSyncLibraryContents extends PacketNBT {
     private int currentBook;
@@ -36,23 +36,23 @@ public class PacketSyncLibraryContents extends PacketNBT {
     @Override
     public void handlePacket(EntityPlayer player) {
         //Reload the info in from the packet that was sent
-        ItemStack[] inventory = new ItemStack[LibraryInventory.MAX];
+        NonNullList<ItemStack> inventory = NonNullList.withSize(LibraryInventory.MAX, ItemStack.EMPTY);
         NBTTagList tagList = nbt.getTagList("Inventory", 10);
         for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
             byte slot = tag.getByte("Slot");
-            if (slot > inventory.length || slot < 0) continue;
+            if (slot > inventory.size() || slot < 0) continue;
             if (tag.getBoolean("NULLItemStack")) {
-                inventory[slot] = null;
-            } else if (slot >= 0 && slot < inventory.length) {
-                inventory[slot] = ItemStack.loadItemStackFromNBT(tag);
+                inventory.set(slot, ItemStack.EMPTY);
+            } else if (slot >= 0 && slot < inventory.size()) {
+                inventory.set(slot, new ItemStack(tag));
             }
         }
 
         //Set the client library
         LibraryHelper.getClientLibraryContents().setCurrentBook(currentBook);
-        for (int i = 0; i < inventory.length; i++) {
-            LibraryHelper.getClientLibraryContents().setInventorySlotContents(i, inventory[i]);
+        for (int i = 0; i < inventory.size(); i++) {
+            LibraryHelper.getClientLibraryContents().setInventorySlotContents(i, inventory.get(i));
         }
     }
 }

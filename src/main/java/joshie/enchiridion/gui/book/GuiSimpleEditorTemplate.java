@@ -6,8 +6,6 @@ import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.api.book.ITemplate;
 import joshie.enchiridion.data.book.Page;
 import joshie.enchiridion.helpers.MCClientHelper;
-import joshie.enchiridion.util.ELocation;
-import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,10 +15,6 @@ import java.util.stream.Collectors;
 
 public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
     public static final GuiSimpleEditorTemplate INSTANCE = new GuiSimpleEditorTemplate();
-    private static final ResourceLocation ARROW_RIGHT_ON = new ELocation("arrow_right_on");
-    private static final ResourceLocation ARROW_RIGHT_OFF = new ELocation("arrow_right_off");
-    private static final ResourceLocation ARROW_LEFT_ON = new ELocation("arrow_left_on");
-    private static final ResourceLocation ARROW_LEFT_OFF = new ELocation("arrow_left_off");
 
     private final HashMap<String, ITemplate> templates = new HashMap<>();
     private ArrayList<ITemplate> sorted = new ArrayList<>();

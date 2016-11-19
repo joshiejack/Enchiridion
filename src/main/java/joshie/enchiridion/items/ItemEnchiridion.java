@@ -1,7 +1,5 @@
 package joshie.enchiridion.items;
 
-import amerifrance.guideapi.api.IGuideItem;
-import amerifrance.guideapi.api.impl.Book;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
@@ -18,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -33,16 +32,16 @@ import static net.minecraft.util.text.TextFormatting.DARK_GREEN;
 import static net.minecraft.util.text.TextFormatting.RESET;
 
 @Optional.Interface(modid = "guideapi", iface = "amerifrance.guideapi.api.IGuideItem")
-public class ItemEnchiridion extends Item implements IGuideItem {
+public class ItemEnchiridion extends Item /*implements IGuideItem*/ {
     public ItemEnchiridion() {
         setHasSubtypes(true);
     }
 
-    @Optional.Method(modid = "guideapi")
+    /*@Optional.Method(modid = "guideapi")
     @Override
     public Book getBook(ItemStack stack) {
         return null;
-    }
+    }*/
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, @Nonnull ItemStack newStack, boolean slotChanged) {
@@ -74,7 +73,7 @@ public class ItemEnchiridion extends Item implements IGuideItem {
         if (stack.getItemDamage() == 1) {
             int currentBook = LibraryHelper.getLibraryContents(playerIn).getCurrentBook();
             ItemStack internal = LibraryHelper.getLibraryContents(playerIn).getStackInSlot(currentBook);
-            if (internal != null) {
+            if (!internal.isEmpty()) {
                 tooltip.addAll(internal.getTooltip(playerIn, advanced));
             }
         } else {
@@ -87,16 +86,17 @@ public class ItemEnchiridion extends Item implements IGuideItem {
 
     @Override
     @Nonnull
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, @Nonnull EnumHand hand) {
+        ItemStack stack = player.getHeldItem(hand);
         if (stack.getItemDamage() == 1) {
             if (player.isSneaking()) player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, hand.ordinal(), 0);
             else {
                 int currentBook = LibraryHelper.getLibraryContents(player).getCurrentBook();
                 ItemStack book = LibraryHelper.getLibraryContents(player).getStackInSlot(currentBook);
-                if (book != null) {
+                if (!book.isEmpty()) {
                     IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(book);
                     if (handler != null) {
-                        handler.handle(book, player, hand, currentBook, player.isSneaking());
+                        handler.handle(player, hand, currentBook, player.isSneaking());
                     }
                 } else player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, hand.ordinal(), 0);
             }
@@ -106,7 +106,7 @@ public class ItemEnchiridion extends Item implements IGuideItem {
     }
 
     @Override
-    public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
+    public void getSubItems(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
         if (EConfig.libraryAsItem) list.add(new ItemStack(item, 1, 1));
 
         list.add(new ItemStack(item));

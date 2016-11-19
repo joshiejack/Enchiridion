@@ -20,12 +20,11 @@ public class UUIDHelper {
      **/
     public static EntityPlayer getPlayerFromUUID(UUID uuid) {
         //Loops through every single player
-        for (EntityPlayer player : FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerList()) {
+        for (EntityPlayer player : FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers()) {
             if (getPlayerUUID(player).equals(uuid)) {
                 return player;
             }
         }
-
         return null;
     }
 }

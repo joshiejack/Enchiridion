@@ -5,18 +5,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import org.apache.logging.log4j.Level;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ItemListHelper {
-    private static ArrayList<ItemStack> items = null;
-    private static ArrayList<ItemStack> allItems = null;
+    private static NonNullList<ItemStack> items = NonNullList.withSize(0, ItemStack.EMPTY);
+    private static NonNullList<ItemStack> allItems = NonNullList.withSize(0, ItemStack.EMPTY);
 
-    public static List<ItemStack> init() {
-        items = new ArrayList<>();
-        allItems = new ArrayList<>();
+    public static NonNullList<ItemStack> init() {
+        items = NonNullList.create();
+        allItems = NonNullList.create();
 
         for (Item item : Item.REGISTRY) {
             if (item == null) {
@@ -37,17 +35,17 @@ public class ItemListHelper {
         return items;
     }
 
-    public static List<ItemStack> items() {
-        return items != null ? items : init();
+    public static NonNullList<ItemStack> items() {
+        return !items.isEmpty() ? items : init();
     }
 
-    public static List<ItemStack> allItems() {
-        return allItems != null ? allItems : init();
+    public static NonNullList<ItemStack> allItems() {
+        return !allItems.isEmpty() ? allItems : init();
     }
 
     public static void addInventory() {
-        for (ItemStack stack : Minecraft.getMinecraft().thePlayer.inventory.mainInventory) {
-            if (stack != null) {
+        for (ItemStack stack : Minecraft.getMinecraft().player.inventory.mainInventory) {
+            if (!stack.isEmpty()) {
                 if (!allItems().contains(stack)) {
                     allItems.add(stack);
                 }

@@ -11,6 +11,6 @@ public class PacketOpenLibrary extends PenguinPacket {
 
     @Override
     public void handlePacket(EntityPlayer player) {
-        player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, player.worldObj, 0, 0, 0);
+        player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, player.world, 0, 0, 0);
     }
 }

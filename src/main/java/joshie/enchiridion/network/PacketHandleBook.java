@@ -40,10 +40,10 @@ public class PacketHandleBook extends PenguinPacket {
     @Override
     public void handlePacket(EntityPlayer player) {
         ItemStack stack = EnchiridionAPI.library.getLibraryInventory(player).getStackInSlot(slot);
-        if (stack != null) {
+        if (!stack.isEmpty()) {
             IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(stack);
             if (handler != null) {
-                handler.handle(stack, player, hand, slot, isShiftPressed);
+                handler.handle(player, hand, slot, isShiftPressed);
             }
             LibraryHelper.getServerLibraryContents(player).setCurrentBook(slot);
         }

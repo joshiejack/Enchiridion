@@ -60,7 +60,7 @@ public class Enchiridion {
 
     @EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
-        LibraryHelper.resetServer(FMLCommonHandler.instance().getMinecraftServerInstance().worldServers[0]);
+        LibraryHelper.resetServer(FMLCommonHandler.instance().getMinecraftServerInstance().worlds[0]);
         SyncHelper.resetSyncing();
 
         //Register commands
@@ -76,7 +76,7 @@ public class Enchiridion {
         event.getMessages().stream().filter(message -> message.key.equalsIgnoreCase("registerBook")).forEach(message -> {
             NBTTagCompound tag = message.getNBTValue();
             String handlerType = tag.getString("handlerType");
-            ItemStack stack = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("stack"));
+            ItemStack stack = new ItemStack(tag.getCompoundTag("stack"));
             boolean matchDamage = tag.hasKey("matchDamage") && tag.getBoolean("matchDamage");
             boolean matchNBT = tag.hasKey("matchNBT") && tag.getBoolean("matchNBT");
             EnchiridionAPI.library.registerBookHandlerForStack(handlerType, stack, matchDamage, matchNBT);

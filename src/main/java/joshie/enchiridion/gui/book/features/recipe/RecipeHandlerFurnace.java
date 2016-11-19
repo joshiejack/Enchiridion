@@ -68,10 +68,6 @@ public class RecipeHandlerFurnace extends RecipeHandlerBase {
         return burnTime * scale / 2000;
     }
 
-    private double getHeightForScaled(int i1) {
-        return i1;
-    }
-
     protected void drawBackground() {
         Minecraft.getMinecraft().getTextureManager().bindTexture(LOCATION);
         EnchiridionAPI.draw.drawTexturedRectangle(55D, 38D, 1, 63, 20, 14, 1.75F);

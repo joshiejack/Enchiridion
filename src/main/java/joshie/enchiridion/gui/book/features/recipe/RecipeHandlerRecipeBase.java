@@ -2,7 +2,6 @@ package joshie.enchiridion.gui.book.features.recipe;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
-import minetweaker.api.item.IItemStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -87,7 +86,7 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
         for (IRecipe check : CraftingManager.getInstance().getRecipeList()) {
             ItemStack stack = check.getRecipeOutput();
             //CHECK -- > EXTENDS the class
-            if (stack == null || (!getRecipeClass().isAssignableFrom(check.getClass()))) continue;
+            if (stack.isEmpty() || (!getRecipeClass().isAssignableFrom(check.getClass()))) continue;
             if (stack.isItemEqual(output)) {
                 try {
                     list.add((IRecipeHandler) Class.forName(getHandlerClass().getName()).getConstructor(IRecipe.class).newInstance(check));
@@ -128,8 +127,8 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
         EnchiridionAPI.draw.drawTexturedRectangle(84D, 42D, 1, 63, 20, 14, 1F);
     }
 
-    protected ItemStack toStack(IItemStack iStack) {
+    /*protected ItemStack toStack(IItemStack iStack) {
         if (iStack == null) return null;
         return (ItemStack) iStack.getInternal();
-    }
+    }*/
 }

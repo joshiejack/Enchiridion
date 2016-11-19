@@ -108,8 +108,8 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessVanilla());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessOre());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerFurnace());
-        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShaped.class, "MineTweaker3");
-        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShapeless.class, "MineTweaker3");
+        //attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShaped.class, "MineTweaker3"); //TODO Re-implement when MT is updated
+        //attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShapeless.class, "MineTweaker3"); //TODO Re-implement when MT is updated
 
         //Register Button Template
         Template template = new Template("enchiridion_default_buttons", "Turn Page Arrows", new ELocation("default_buttons_thumbnail"), DefaultHelper.addArrows(new Page(0)));
@@ -153,7 +153,7 @@ public class EClientProxy extends ECommonProxy {
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) -> {
             if (stack.getItemDamage() == 1) {
                 ItemStack current = LibraryHelper.getLibraryContents(MCClientHelper.getPlayer()).getCurrentBookItem();
-                if (current != null) {
+                if (!current.isEmpty()) {
                     return Minecraft.getMinecraft().getItemColors().getColorFromItemstack(current, tintIndex);
                 }
             }

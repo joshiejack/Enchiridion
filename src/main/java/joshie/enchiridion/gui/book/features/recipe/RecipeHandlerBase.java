@@ -33,7 +33,7 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
         for (IItemStack stack : stackList) {
             if (stack == null || stack.getItemStack() == null) continue;
             if (EnchiridionAPI.draw.isMouseOverIItemStack(stack)) {
-                list.addAll(stack.getItemStack().getTooltip(Minecraft.getMinecraft().thePlayer, false));
+                list.addAll(stack.getItemStack().getTooltip(Minecraft.getMinecraft().player, false));
                 break; //Only permit one item to display
             }
         }
@@ -42,7 +42,7 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
     protected final Object getObject(ArrayList<Object> input, int i) {
         if (i >= input.size()) return null;
         input.stream().filter(o -> o instanceof ItemStack).forEach(o -> {
-            ((ItemStack) o).stackSize = 1;
+            ((ItemStack) o).setCount(1);
         });
 
         return input.get(i);

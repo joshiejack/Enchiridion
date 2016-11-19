@@ -4,7 +4,6 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.lib.EInfo;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -13,7 +12,7 @@ import javax.annotation.Nonnull;
 
 public class ECreativeTab extends CreativeTabs {
     public static final ECreativeTab ENCHIRIDION = new ECreativeTab(EInfo.MODID);
-    public final Item icon = Items.WRITABLE_BOOK;
+    public final ItemStack icon = new ItemStack(Items.WRITABLE_BOOK);
     public ItemStack itemstack;
 
     public ECreativeTab(String label) {
@@ -22,7 +21,7 @@ public class ECreativeTab extends CreativeTabs {
 
     @Override
     @Nonnull
-    public Item getTabIconItem() {
+    public ItemStack getTabIconItem() {
         return icon;
     }
 

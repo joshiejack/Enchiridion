@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 
 public class LibraryRegistry implements ILibraryRegistry {
@@ -49,8 +50,8 @@ public class LibraryRegistry implements ILibraryRegistry {
     }
 
     @Override
-    public IBookHandler getBookHandlerForStack(ItemStack stack) {
-        if (stack == null) return null; //Oi back away!
+    public IBookHandler getBookHandlerForStack(@Nonnull ItemStack stack) {
+        if (stack.isEmpty()) return null; //Oi back away!
 
         for (SafeStack safeStack : SafeStack.allInstances(stack)) {
             IBookHandler handler = allowedBookRegistry.get(safeStack);

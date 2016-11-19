@@ -63,11 +63,12 @@ public class ContainerLibrary extends Container {
     }
 
     @Override
+    @Nonnull
     public ItemStack transferStackInSlot(EntityPlayer player, int slotID) {
         int size = library.getSizeInventory();
         int low = size + 27;
         int high = low + 9;
-        ItemStack itemstack = null;
+        ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = inventorySlots.get(slotID);
 
         if (slot != null && slot.getHasStack()) {
@@ -75,33 +76,34 @@ public class ContainerLibrary extends Container {
             itemstack = stack.copy();
 
             if (slotID < size) {
-                if (!mergeItemStack(stack, size, high, true)) return null;
+                if (!mergeItemStack(stack, size, high, true)) return ItemStack.EMPTY;
                 slot.onSlotChange(stack, itemstack);
             } else if (slotID >= size) {
                 if (EnchiridionAPI.library.getBookHandlerForStack(stack) != null) {
-                    if (!mergeItemStack(stack, 0, 65, false)) return null; //Slots 0-64 for Books
+                    if (!mergeItemStack(stack, 0, 65, false)) return ItemStack.EMPTY; //Slots 0-64 for Books
                 } else if (slotID >= size && slotID < low) {
-                    if (!mergeItemStack(stack, low, high, false)) return null;
-                } else if (slotID >= low && slotID < high && !mergeItemStack(stack, high, low, false)) return null;
-            } else if (!mergeItemStack(stack, size, high, false)) return null;
+                    if (!mergeItemStack(stack, low, high, false)) return ItemStack.EMPTY;
+                } else if (slotID >= low && slotID < high && !mergeItemStack(stack, high, low, false))
+                    return ItemStack.EMPTY;
+            } else if (!mergeItemStack(stack, size, high, false)) return ItemStack.EMPTY;
 
-            if (stack.stackSize == 0) {
-                slot.putStack(null);
+            if (stack.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
             } else {
                 slot.onSlotChanged();
             }
 
-            if (stack.stackSize == itemstack.stackSize) return null;
+            if (stack.getCount() == itemstack.getCount()) return ItemStack.EMPTY;
 
-            slot.onPickupFromSlot(player, stack);
+            slot.onTake(player, stack);
         }
-
         return itemstack;
     }
 
     @Override
+    @Nonnull
     public ItemStack slotClick(int slotID, int mouseButton, ClickType type, EntityPlayer player) {
         Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : inventorySlots.get(slotID);
-        return slot instanceof SlotBook && ((SlotBook) slot).handle(player, mouseButton, slot) == null ? null : super.slotClick(slotID, mouseButton, type, player);
+        return slot instanceof SlotBook && ((SlotBook) slot).handle(player, mouseButton, slot).isEmpty() ? ItemStack.EMPTY : super.slotClick(slotID, mouseButton, type, player);
     }
 }
