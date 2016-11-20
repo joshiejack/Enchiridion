@@ -4,6 +4,7 @@ import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.helpers.ItemListHelper;
 import joshie.enchiridion.library.LibraryRecipe;
+import joshie.enchiridion.util.SafeStack;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
@@ -19,7 +20,7 @@ public class LibraryRecipeWrapper extends BlankRecipeWrapper implements IShapedC
     private final List<List<ItemStack>> inputs;
 
     LibraryRecipeWrapper() {
-        inputs = new ArrayList<>();
+        inputs = new ArrayList<List<ItemStack>>();
         output = Collections.singletonList(new ItemStack(ECommonProxy.book, 1, 1));
     }
 
@@ -32,10 +33,16 @@ public class LibraryRecipeWrapper extends BlankRecipeWrapper implements IShapedC
     private List<List<ItemStack>> buildOrGetInput() {
         if (inputs.size() != 0) return inputs;
         else {
-            List<ItemStack> wood = new ArrayList<>();
-            List<ItemStack> books = new ArrayList<>();
-            LibraryRecipe.validWoods.stream().forEach((l) -> wood.add(l.toStack()));
-            ItemListHelper.allItems().stream().filter((l) -> EnchiridionAPI.library.getBookHandlerForStack(l) != null).forEach((books::add));
+            List<ItemStack> wood = new ArrayList<ItemStack>();
+            List<ItemStack> books = new ArrayList<ItemStack>();
+            for (SafeStack safe : LibraryRecipe.validWoods) {
+                wood.add(safe.toStack());
+            }
+            for (ItemStack stack : ItemListHelper.allItems()) {
+                if (EnchiridionAPI.library.getBookHandlerForStack(stack) != null) {
+                    books.add(stack);
+                }
+            }
 
             //Build the list
             if (wood.size() > 0 && books.size() > 0) {
