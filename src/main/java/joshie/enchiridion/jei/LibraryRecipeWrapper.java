@@ -4,60 +4,56 @@ import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.helpers.ItemListHelper;
 import joshie.enchiridion.library.LibraryRecipe;
-import joshie.enchiridion.util.SafeStack;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class LibraryRecipeWrapper extends BlankRecipeWrapper implements IShapedCraftingRecipeWrapper {
-    private final int width = 3;
-    private final int height = 3;
-    private List<List<ItemStack>> inputs;
-    private ItemStack output;
+    private final ItemStack output;
+    private final List<List<ItemStack>> inputs;
 
-    public LibraryRecipeWrapper() {
+    LibraryRecipeWrapper() {
         inputs = new ArrayList<>();
-        inputs.add(Collections.singletonList(new ItemStack(Items.POTATO)));
-        inputs.add(getWoodsAsStacks());
-        inputs.add(getWoodsAsStacks());
-        inputs.add(getBooksAsStacks());
-        inputs.add(getBooksAsStacks());
-        inputs.add(getBooksAsStacks());
-        inputs.add(getWoodsAsStacks());
-        inputs.add(getWoodsAsStacks());
-        inputs.add(getWoodsAsStacks());
         output = new ItemStack(ECommonProxy.book, 1, 1);
-    }
-
-    private List<ItemStack> getWoodsAsStacks() {
-        return LibraryRecipe.VALID_WOODS.stream().map(SafeStack::toStack).collect(Collectors.toList());
-    }
-
-    private List<ItemStack> getBooksAsStacks() {
-        return ItemListHelper.allItems().stream().filter(stack -> EnchiridionAPI.library.getBookHandlerForStack(stack) != null).collect(Collectors.toList());
     }
 
     @Override
     public void getIngredients(@Nonnull IIngredients ingredients) {
-        ingredients.setInputLists(ItemStack.class, inputs);
+        ingredients.setInputLists(ItemStack.class, buildOrGetInput());
         ingredients.setOutput(ItemStack.class, output);
+    }
+
+    private List<List<ItemStack>> buildOrGetInput() {
+        if (inputs.size() != 0) return inputs;
+        else {
+            List<ItemStack> wood = new ArrayList<>();
+            List<ItemStack> books = new ArrayList<>();
+            LibraryRecipe.VALID_WOODS.forEach((l) -> wood.add(l.toStack()));
+            ItemListHelper.allItems().stream().filter((l) -> EnchiridionAPI.library.getBookHandlerForStack(l) != null).forEach((books::add));
+
+            //Build the list
+            if (wood.size() > 0 && books.size() > 0) {
+                for (int i = 0; i < 3; i++) inputs.add(wood);
+                for (int i = 0; i < 3; i++) inputs.add(books);
+                for (int i = 0; i < 3; i++) inputs.add(wood);
+            }
+
+            return inputs;
+        }
     }
 
     @Override
     public int getWidth() {
-        return width;
+        return 3;
     }
 
     @Override
     public int getHeight() {
-        return height;
+        return 3;
     }
 }

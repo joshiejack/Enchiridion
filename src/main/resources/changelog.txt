@@ -1,6 +1,9 @@
-Enchiridion - 3.1.14
+Enchiridion - 3.1.15
 • Updated to Minecraft 1.11
 • Now requires Java 8
+
+Enchiridion - 3.1.14
+• Fixed library recipe not showing up in JEI
 
 Enchiridion - 3.1.13
 • Fixed potiental crash with JEI

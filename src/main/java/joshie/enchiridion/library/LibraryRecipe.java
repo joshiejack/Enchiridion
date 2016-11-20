@@ -27,8 +27,7 @@ public class LibraryRecipe implements IRecipe {
     public boolean matches(@Nonnull InventoryCrafting inv, @Nonnull World world) {
         for (int i = 0; i < 3; i++) {
             ItemStack stack = inv.getStackInSlot(i);
-            if (stack.isEmpty()) return false;
-            if (!isWood(stack)) return false;
+            if (stack.isEmpty() || !isWood(stack)) return false;
         }
 
         for (int i = 0; i < 3; i++) {
