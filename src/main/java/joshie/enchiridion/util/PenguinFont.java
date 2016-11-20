@@ -60,7 +60,6 @@ public class PenguinFont extends FontRenderer {
     @Override
     public String wrapFormattedStringToWidth(String str, int wrapWidth) {
         if (str == null || wrapWidth <= 1) {
-            new Exception().printStackTrace();
             return "";
         } else return super.wrapFormattedStringToWidth(str, wrapWidth);
     }
