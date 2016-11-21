@@ -82,11 +82,11 @@ public class EConfig { //TODO Move to new Forge config (If stable)
         }
     }
 
-    private static ItemStack stack;
+    private static ItemStack stack = ItemStack.EMPTY;
 
     public static ItemStack getDefaultItem() {
-        if (stack == null) stack = StackHelper.getStackFromString(defaultItem);
-        if (stack == null) stack = new ItemStack(Items.IRON_SWORD);
+        if (stack.isEmpty()) stack = StackHelper.getStackFromString(defaultItem);
+        if (stack.isEmpty()) stack = new ItemStack(Items.IRON_SWORD);
         return stack;
     }
 }

@@ -20,7 +20,7 @@ public class EnchiridionBookHandler implements IBookHandler {
     @Override
     public void handle(@Nonnull ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
         if (player.world.isRemote) {
-            GuiBook.INSTANCE.setBook(BookRegistry.INSTANCE.getBook(player.getHeldItem(hand)), isShiftPressed);
+            GuiBook.INSTANCE.setBook(BookRegistry.INSTANCE.getBook(stack), isShiftPressed);
         }
 
         player.openGui(Enchiridion.instance, GuiIDs.BOOK_FORCE, player.world, 0, 0, 0);

@@ -28,7 +28,7 @@ public class ModSupport {
         for (ModdedBook book : books.getList()) {
             try {
                 ItemStack stack = StackHelper.getStackFromString(book.getItem());
-                if (stack != null) {
+                if (!stack.isEmpty()) {
                     if (book.getHandler().equals("customwood")) {
                         EnchiridionAPI.library.registerWood(stack, book.shouldMatchDamage(), book.shouldMatchNBT());
                     } else

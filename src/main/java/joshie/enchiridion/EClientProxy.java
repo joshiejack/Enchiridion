@@ -19,7 +19,7 @@ import joshie.enchiridion.items.SmartLibrary;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryHelper;
-import joshie.enchiridion.library.handlers.WriteableBookHandler.GuiScreenWriteable;
+import joshie.enchiridion.library.handlers.WritableBookHandler.GuiScreenWritable;
 import joshie.enchiridion.util.ECreativeTab;
 import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.EResourcePack;
@@ -173,8 +173,8 @@ public class EClientProxy extends ECommonProxy {
             //return WarpBookHandler.getWarplistGui(player, slotID);
         } else if (ID == GuiIDs.WARPBOOK) {
             //return WarpBookHandler.getWarpbookGui(player, slotID);
-        } else if (ID == GuiIDs.WRITEABLE) {
-            return new GuiScreenWriteable(player, slotID);
+        } else if (ID == GuiIDs.WRITABLE) {
+            return new GuiScreenWritable(player, slotID);
         } else if (ID == GuiIDs.LIBRARY) {
             return new GuiLibrary(player.inventory, LibraryHelper.getClientLibraryContents(), HeldHelper.getHandFromOrdinal(handOrdinal));
         } else if (ID == GuiIDs.BOOK_FORCE) {

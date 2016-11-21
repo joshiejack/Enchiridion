@@ -122,7 +122,7 @@ public class GuiSimpleEditorItem extends AbstractGuiOverlay {
             sorted = new ArrayList<>();
             for (ItemStack stack : ItemListHelper.allItems()) {
                 try {
-                    if (stack != null) {
+                    if (!stack.isEmpty()) {
                         if (stack.getDisplayName().toLowerCase().contains(search.toLowerCase())) {
                             sorted.add(stack);
                         }

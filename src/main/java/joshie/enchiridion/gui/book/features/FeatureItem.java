@@ -9,21 +9,22 @@ import joshie.enchiridion.helpers.StackHelper;
 import joshie.enchiridion.util.IItemSelectable;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class FeatureItem extends FeatureAbstract implements IItemSelectable {
-    public String item;
+    public String itemString;
     public boolean hideTooltip;
     public transient float size;
 
     public FeatureItem() {
     }
 
-    public FeatureItem(ItemStack item) {
-        setItemStack(item);
+    public FeatureItem(@Nonnull ItemStack stack) {
+        setItemStack(stack);
     }
-
-    public transient ItemStack stack;
+    @Nonnull
+    public transient ItemStack stack = ItemStack.EMPTY;
 
     @Override
     public FeatureItem copy() {
@@ -34,7 +35,7 @@ public class FeatureItem extends FeatureAbstract implements IItemSelectable {
 
     @Override
     public String getName() {
-        return stack == null ? super.getName() : stack.getDisplayName();
+        return stack.isEmpty() ? super.getName() : stack.getDisplayName();
     }
 
     @Override
@@ -47,20 +48,20 @@ public class FeatureItem extends FeatureAbstract implements IItemSelectable {
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        if (stack == null && item != null) {
-            stack = StackHelper.getStackFromString(item);
+        if (stack.isEmpty() && itemString != null) {
+            stack = StackHelper.getStackFromString(itemString);
         } else EnchiridionAPI.draw.drawStack(stack, position.getLeft(), position.getTop(), size);
     }
 
     @Override
-    public void setItemStack(ItemStack stack) {
+    public void setItemStack(@Nonnull ItemStack stack) {
         this.stack = stack;
-        this.item = StackHelper.getStringFromStack(stack);
+        this.itemString = StackHelper.getStringFromStack(stack);
     }
 
     @Override
     public void addTooltip(List<String> list, int mouseX, int mouseY) {
-        if (!hideTooltip && this.stack != null) {
+        if (!hideTooltip && !this.stack.isEmpty()) {
             list.addAll(stack.getTooltip(MCClientHelper.getPlayer(), false));
         }
     }

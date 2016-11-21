@@ -84,7 +84,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
 
     @Override
     public boolean isMouseOverIItemStack(IItemStack stack) {
-        if (stack == null || stack.getItemStack() == null) return false;
+        if (stack == null || stack.getItemStack().isEmpty()) return false;
         int left = getLeft(stack.getX());
         int top = getTop(stack.getY());
         int scaled = (int) (16 * stack.getScale() * renderSize);

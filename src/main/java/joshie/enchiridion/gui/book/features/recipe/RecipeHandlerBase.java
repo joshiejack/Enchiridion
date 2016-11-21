@@ -6,16 +6,16 @@ import joshie.enchiridion.api.recipe.IRecipeHandler;
 import joshie.enchiridion.util.ELocation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public abstract class RecipeHandlerBase implements IRecipeHandler {
     protected static final ResourceLocation LOCATION = new ELocation("guide_elements");
-    protected ArrayList<IItemStack> stackList = new ArrayList<>();
+    protected NonNullList<IItemStack> stackList = NonNullList.create();
     private String unique;
 
     public RecipeHandlerBase() {
@@ -39,14 +39,14 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
         }
     }
 
-    protected final Object getObject(ArrayList<Object> input, int i) {
-        if (i >= input.size()) return null;
+    protected final Object getObject(List<Object> input, int i) {
+        if (i >= input.size()) return ItemStack.EMPTY;
         input.stream().filter(o -> o instanceof ItemStack).forEach(o -> ((ItemStack) o).setCount(1));
 
         return input.get(i);
     }
 
-    protected final String getMostCommonName(ArrayList<ItemStack> stacks) {
+    protected final String getMostCommonName(List<ItemStack> stacks) {
         HashMap<String, Integer> map = new HashMap<>();
         for (ItemStack stack : stacks) {
             int[] ids = OreDictionary.getOreIDs(stack);

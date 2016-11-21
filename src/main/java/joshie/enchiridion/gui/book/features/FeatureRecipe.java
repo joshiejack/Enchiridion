@@ -6,6 +6,7 @@ import joshie.enchiridion.api.recipe.IRecipeHandler;
 import joshie.enchiridion.helpers.StackHelper;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class FeatureRecipe extends FeatureItem {
     public FeatureRecipe() {
     }
 
-    public FeatureRecipe(ItemStack item) {
-        setItemStack(item);
+    public FeatureRecipe(@Nonnull ItemStack stack) {
+        setItemStack(stack);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class FeatureRecipe extends FeatureItem {
         FeatureRecipe recipe = new FeatureRecipe();
         recipe.ingredients = ingredients;
         recipe.recipeType = recipeType;
-        recipe.item = item;
+        recipe.itemString = itemString;
         recipe.hideTooltip = hideTooltip;
         return recipe;
     }
@@ -78,7 +79,7 @@ public class FeatureRecipe extends FeatureItem {
     }
 
     @Override
-    public void setItemStack(ItemStack stack) {
+    public void setItemStack(@Nonnull ItemStack stack) {
         if (stack.isItemEqual(this.stack)) {
             index++;
         } else index = 0;
@@ -110,7 +111,7 @@ public class FeatureRecipe extends FeatureItem {
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        if (stack == null && item != null) stack = StackHelper.getStackFromString(item);
+        if (stack.isEmpty() && itemString != null) stack = StackHelper.getStackFromString(itemString);
         if (handler != null) {
             EnchiridionAPI.draw.setRenderData(position.getLeft(), position.getTop(), position.getWidth(), position.getHeight(), size);
             handler.draw();

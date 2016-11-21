@@ -17,7 +17,7 @@ public class RightClickBookHandler implements IBookHandler {
     @Override
     public void handle(@Nonnull ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
         try {
-            ItemStack ret = player.getHeldItem(hand).useItemRightClick(player.world, player, hand).getResult();
+            ItemStack ret = stack.useItemRightClick(player.world, player, hand).getResult();
             EnchiridionAPI.library.getLibraryInventory(player).setInventorySlotContents(slotID, ret);
         } catch (Exception ignored) {
         }

@@ -14,8 +14,9 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class StackHelper {
+    @Nonnull
     public static ItemStack getStackFromString(String str) {
-        if (str == null || str.equals("")) return null;
+        if (str == null || str.equals("")) return ItemStack.EMPTY;
         return getStackFromArray(str.trim().split(" "));
     }
 
@@ -33,7 +34,7 @@ public class StackHelper {
         } else return "";
     }
 
-    public static String getStringFromStack(ItemStack stack) {
+    public static String getStringFromStack(@Nonnull ItemStack stack) {
         String str = Item.REGISTRY.getNameForObject(stack.getItem()).toString().replace(" ", "%20");
         if (stack.getHasSubtypes() || stack.isItemStackDamageable()) {
             str = str + " " + stack.getItemDamage();

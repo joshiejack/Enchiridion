@@ -1,10 +1,10 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 public class RecipeHandlerShapelessOre extends RecipeHandlerRecipeBase {
     public RecipeHandlerShapelessOre() {
@@ -12,7 +12,7 @@ public class RecipeHandlerShapelessOre extends RecipeHandlerRecipeBase {
 
     public RecipeHandlerShapelessOre(IRecipe recipe) {
         try {
-            init(recipe.getRecipeOutput(), (ArrayList<Object>) input.get(recipe), 3);
+            init(recipe.getRecipeOutput(), (NonNullList<Object>) input.get(recipe), 3);
         } catch (Exception e) {
             e.printStackTrace();
         }

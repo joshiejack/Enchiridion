@@ -19,7 +19,7 @@ import net.minecraft.util.text.TextComponentString;
 import javax.annotation.Nonnull;
 import java.io.IOException;
 
-public class WriteableBookHandler implements IBookHandler {
+public class WritableBookHandler implements IBookHandler {
     @Override
     public String getName() {
         return "writeable";
@@ -27,14 +27,14 @@ public class WriteableBookHandler implements IBookHandler {
 
     @Override
     public void handle(@Nonnull ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
-        player.openGui(Enchiridion.instance, GuiIDs.WRITEABLE, player.world, slotID, 0, 0);
+        player.openGui(Enchiridion.instance, GuiIDs.WRITABLE, player.world, slotID, 0, 0);
     }
 
     //Our own version for the writeable so that we send packets to the library instead of the hand
-    public static class GuiScreenWriteable extends GuiScreenBook {
+    public static class GuiScreenWritable extends GuiScreenBook {
         private int slot;
 
-        public GuiScreenWriteable(EntityPlayer player, int slot) {
+        public GuiScreenWritable(EntityPlayer player, int slot) {
             super(player, EnchiridionAPI.library.getLibraryInventory(player).getStackInSlot(slot), true);
             this.slot = slot;
         }
