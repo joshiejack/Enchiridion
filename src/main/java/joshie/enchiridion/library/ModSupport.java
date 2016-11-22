@@ -31,8 +31,9 @@ public class ModSupport {
                 if (!stack.isEmpty()) {
                     if (book.getHandler().equals("customwood")) {
                         EnchiridionAPI.library.registerWood(stack, book.shouldMatchDamage(), book.shouldMatchNBT());
-                    } else
+                    } else {
                         LibraryRegistry.INSTANCE.registerBookHandlerForStackFromJSON(book.getHandler(), stack, book.shouldMatchDamage(), book.shouldMatchNBT());
+                    }
                 }
             } catch (Exception ignored) {
             }

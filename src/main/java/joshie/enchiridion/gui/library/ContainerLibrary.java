@@ -1,5 +1,6 @@
 package joshie.enchiridion.gui.library;
 
+import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.api.EnchiridionAPI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -104,6 +105,8 @@ public class ContainerLibrary extends Container {
     @Nonnull
     public ItemStack slotClick(int slotID, int mouseButton, ClickType type, EntityPlayer player) {
         Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : inventorySlots.get(slotID);
+        ItemStack inSlot = slot != null ? slot.getStack() : ItemStack.EMPTY;
+        if (inSlot.getItem() == ECommonProxy.book && inSlot.getItemDamage() == 1) return ItemStack.EMPTY;
         return slot instanceof SlotBook && ((SlotBook) slot).handle(player, mouseButton, slot).isEmpty() ? ItemStack.EMPTY : super.slotClick(slotID, mouseButton, type, player);
     }
 }

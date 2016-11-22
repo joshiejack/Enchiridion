@@ -21,6 +21,7 @@ import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SmartLibrary implements IBakedModel {
@@ -71,7 +72,7 @@ public class SmartLibrary implements IBakedModel {
     @Override
     @Nonnull
     public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

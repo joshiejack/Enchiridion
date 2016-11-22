@@ -2,9 +2,7 @@ package joshie.enchiridion.items;
 
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
-import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBook;
-import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryHelper;
@@ -33,6 +31,7 @@ import static net.minecraft.util.text.TextFormatting.RESET;
 
 @Optional.Interface(modid = "guideapi", iface = "amerifrance.guideapi.api.IGuideItem")
 public class ItemEnchiridion extends Item /*implements IGuideItem*/ {
+    public static final String IS_LIBRARY = "IsELibrary";
     public ItemEnchiridion() {
         setHasSubtypes(true);
     }
@@ -71,9 +70,8 @@ public class ItemEnchiridion extends Item /*implements IGuideItem*/ {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
         if (stack.getItemDamage() == 1) {
-            int currentBook = LibraryHelper.getLibraryContents(playerIn).getCurrentBook();
-            ItemStack internal = LibraryHelper.getLibraryContents(playerIn).getStackInSlot(currentBook);
-            if (!internal.isEmpty()) {
+            ItemStack internal = LibraryHelper.getLibraryContents(playerIn).getCurrentBookItem();
+            if (!internal.isEmpty() && (stack.getItem() != this || (stack.getItem() == this && getDamage(stack) == 0))) {
                 tooltip.addAll(internal.getTooltip(playerIn, advanced));
             }
         } else {
@@ -91,14 +89,14 @@ public class ItemEnchiridion extends Item /*implements IGuideItem*/ {
         if (stack.getItemDamage() == 1) {
             if (player.isSneaking()) player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, hand.ordinal(), 0);
             else {
-                int currentBook = LibraryHelper.getLibraryContents(player).getCurrentBook();
+                /* int currentBook = LibraryHelper.getLibraryContents(player).getCurrentBook();
                 ItemStack book = LibraryHelper.getLibraryContents(player).getStackInSlot(currentBook);
                 if (!book.isEmpty()) {
                     IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(book);
                     if (handler != null) {
                         handler.handle(book, player, hand, currentBook, player.isSneaking());
                     }
-                } else player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, hand.ordinal(), 0);
+                } else */player.openGui(Enchiridion.instance, GuiIDs.LIBRARY, world, 0, hand.ordinal(), 0);
             }
 
         } else player.openGui(Enchiridion.instance, GuiIDs.BOOK, world, 0, hand.ordinal(), 0);

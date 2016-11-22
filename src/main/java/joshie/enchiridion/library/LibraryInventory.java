@@ -15,11 +15,12 @@ import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class LibraryInventory extends InventoryStorage {
+    public static final int NO_SLOT = -1;
     public static final int MAX = 65;
     private EntityPlayer player; //No Direct calling, it's a cache value
     private UUID uuid; //SHOULD NOT BE CALLED, EXCEPT BY GET AND CREATE PLAYER
     private boolean receivedBooks;
-    private int currentBook;
+    private int currentBook = NO_SLOT;
 
     public LibraryInventory() {
         super(MAX); //Create the inventory
@@ -40,7 +41,7 @@ public class LibraryInventory extends InventoryStorage {
 
     @Nonnull
     public ItemStack getCurrentBookItem() {
-        return getStackInSlot(getCurrentBook());
+        return getCurrentBook() == NO_SLOT ? ItemStack.EMPTY : getStackInSlot(getCurrentBook());
     }
 
     public void setCurrentBook(int slot) {

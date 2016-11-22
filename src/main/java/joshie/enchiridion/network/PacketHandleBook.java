@@ -2,11 +2,12 @@ package joshie.enchiridion.network;
 
 import io.netty.buffer.ByteBuf;
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.api.book.IBookHandler;
+import joshie.enchiridion.items.ItemEnchiridion;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.network.core.PenguinPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 
 public class PacketHandleBook extends PenguinPacket {
@@ -41,11 +42,12 @@ public class PacketHandleBook extends PenguinPacket {
     public void handlePacket(EntityPlayer player) {
         ItemStack stack = EnchiridionAPI.library.getLibraryInventory(player).getStackInSlot(slot);
         if (!stack.isEmpty()) {
-            IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(stack);
-            if (handler != null) {
-                handler.handle(stack, player, hand, slot, isShiftPressed);
-            }
-            LibraryHelper.getServerLibraryContents(player).setCurrentBook(slot);
+            ItemStack clone = stack.copy();
+            if (!clone.hasTagCompound()) clone.setTagCompound(new NBTTagCompound());
+            clone.getTagCompound().setBoolean(ItemEnchiridion.IS_LIBRARY, true);
+            player.setHeldItem(hand, clone); //Copy the book out
+            ItemStack held = player.getHeldItem(hand);
+            LibraryHelper.getClientLibraryContents().setInventorySlotContents(slot, held);
         }
     }
 }
