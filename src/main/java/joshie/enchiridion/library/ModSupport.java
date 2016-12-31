@@ -44,16 +44,19 @@ public class ModSupport {
         books.add("rightclick", "minecraft:written_book", false, false);
         books.add("rightclick", "Thaumcraft:thaumonomicon", false, false);
         books.add("rightclick", "Botania:lexicon", false, false);
-        books.add("rightclick", "aura:lexicon", false, false);
-        books.add("rightclick", "totemic:totempedia", false, false);
-        books.add("rightclick", "openblocks:infoBook", false, false);
+        books.add("switchclick", "totemic:totempedia", false, false);
         books.add("rightclick", "opencomputers:tool 4", true, false);
-        books.add("rightclick", "rftools:rfToolsManualItem", false, false);
-        books.add("rightclick", "deepresonance:dr_manual", false, false);
+        books.add("switchclick", "rftools:rftools_manual", false, false);
+        books.add("switchclick", "rftoolsdim:rftoolsdim_manual", false, false);
+        books.add("switchclick", "rftoolscontrol:rftoolscontrol_manual", false, false);
+        books.add("switchclick", "deepresonance:dr_manual", false, false);
+        books.add("rightclick", "extrautils2:Book", false, false);
+        books.add("rightclick", "harvestfestival:cookbook", false, false);
+        books.add("rightclick", "harvestfestival:book", false, false);
+        books.add("rightclick", "theoneprobe:probenote", false, false);
+        books.add("rightclick", "actuallyadditions:itemBooklet", false, false);
         books.add("rightclick", "tconstruct:book", false, false);
-        books.add("computercraft", "computercraft:printout", false, false);
         books.add("switchclick", "ImmersiveEngineering:tool 3", true, false);
-        books.add("warpbook", "warpbook:warpbook", false, false);
         books.add("copynbt", "guideapi:ItemGuideBook", false, false);
         books.add("customwood", "minecraft:planks 1", true, false);
         books.add("customwood", "minecraft:planks 5", true, false);
@@ -66,6 +69,12 @@ public class ModSupport {
         books.add("customwood", "chisel:thinWood-spruce", false, false);
         books.add("customwood", "biomesoplenty:planks_0 14", true, false);
         books.add("customwood", "Botania:livingwood", false, false);
+
+        //Not updated to 1.10
+        books.add("computercraft", "computercraft:printout", false, false);
+        books.add("rightclick", "aura:lexicon", false, false);
+        books.add("rightclick", "openblocks:infoBook", false, false);
+        books.add("warpbook", "warpbook:warpbook", false, false);
 
         try {
             //Write the json
