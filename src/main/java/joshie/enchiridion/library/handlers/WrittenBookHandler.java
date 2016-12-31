@@ -1,25 +1,22 @@
 package joshie.enchiridion.library.handlers;
 
-import joshie.enchiridion.api.EnchiridionAPI;
+import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBookHandler;
+import joshie.enchiridion.lib.GuiIDs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
 import javax.annotation.Nonnull;
 
-public class RightClickBookHandler implements IBookHandler {
+public class WrittenBookHandler implements IBookHandler {
     @Override
     public String getName() {
-        return "rightclick";
+        return "written";
     }
 
     @Override
     public void handle(@Nonnull ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
-        try {
-            ItemStack ret = stack.useItemRightClick(player.world, player, hand).getResult();
-            EnchiridionAPI.library.getLibraryInventory(player).setInventorySlotContents(slotID, ret);
-        } catch (Exception ignored) {
-        }
+        player.openGui(Enchiridion.instance, GuiIDs.WRITTEN, player.world, slotID, 0, 0);
     }
 }

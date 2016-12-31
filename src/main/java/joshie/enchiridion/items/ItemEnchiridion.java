@@ -1,5 +1,7 @@
 package joshie.enchiridion.items;
 
+import amerifrance.guideapi.api.IGuideItem;
+import amerifrance.guideapi.api.impl.Book;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
@@ -32,16 +34,16 @@ import static net.minecraft.util.text.TextFormatting.DARK_GREEN;
 import static net.minecraft.util.text.TextFormatting.RESET;
 
 @Optional.Interface(modid = "guideapi", iface = "amerifrance.guideapi.api.IGuideItem")
-public class ItemEnchiridion extends Item /*implements IGuideItem*/ {
+public class ItemEnchiridion extends Item implements IGuideItem {
     public ItemEnchiridion() {
         setHasSubtypes(true);
     }
 
-    /*@Optional.Method(modid = "guideapi")
+    @Optional.Method(modid = "guideapi")
     @Override
     public Book getBook(ItemStack stack) {
         return null;
-    }*/
+    }
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, @Nonnull ItemStack newStack, boolean slotChanged) {

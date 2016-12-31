@@ -211,7 +211,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
             text = text.substring(0, text.length() - 1);
         }
 
-        return PenguinFont.INSTANCE.splitStringWidth(text, 155);
+        return PenguinFont.INSTANCE.getWordWrappedHeight(text, 155);
     }
 
     @Override

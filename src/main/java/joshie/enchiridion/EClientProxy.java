@@ -25,6 +25,7 @@ import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.EResourcePack;
 import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.IResourcePack;
@@ -175,6 +176,8 @@ public class EClientProxy extends ECommonProxy {
             //return WarpBookHandler.getWarpbookGui(player, slotID);
         } else if (ID == GuiIDs.WRITABLE) {
             return new GuiScreenWritable(player, slotID);
+        } else if (ID == GuiIDs.WRITTEN) {
+            return new GuiScreenBook(player, EnchiridionAPI.library.getLibraryInventory(player).getStackInSlot(slotID), false);
         } else if (ID == GuiIDs.LIBRARY) {
             return new GuiLibrary(player.inventory, LibraryHelper.getClientLibraryContents(), HeldHelper.getHandFromOrdinal(handOrdinal));
         } else if (ID == GuiIDs.BOOK_FORCE) {

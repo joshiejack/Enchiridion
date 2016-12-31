@@ -1,5 +1,5 @@
 Enchiridion - 3.1.15
-• Updated to Minecraft 1.11
+• Updated to Minecraft 1.11.x
 • Now requires Java 8
 
 Enchiridion - 3.1.14

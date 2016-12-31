@@ -21,6 +21,7 @@ import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class SmartLibrary implements IBakedModel {
@@ -49,7 +50,7 @@ public class SmartLibrary implements IBakedModel {
 
         @Override
         @Nonnull
-        public IBakedModel handleItemState(@Nonnull IBakedModel originalModel, ItemStack stack, @Nonnull World world, @Nonnull EntityLivingBase entity) {
+        public IBakedModel handleItemState(@Nonnull IBakedModel originalModel, ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
             IBakedModel ret;
             //Setup
             if (mesher == null) mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();

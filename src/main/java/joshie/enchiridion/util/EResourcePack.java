@@ -14,6 +14,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -73,7 +74,7 @@ public class EResourcePack implements IResourcePack {
     }
 
     @Override
-    @Nonnull
+    @Nullable
     public <T extends IMetadataSection> T getPackMetadata(@Nonnull MetadataSerializer serializer, @Nonnull String string) throws IOException {
         return null;
     }

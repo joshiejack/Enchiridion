@@ -41,8 +41,8 @@ public class ECommonProxy implements IGuiHandler {
         EnchiridionAPI.library = LibraryRegistry.INSTANCE;
         EnchiridionAPI.library.registerBookHandler(new EnchiridionBookHandler()); //Enchiridion
         EnchiridionAPI.library.registerBookHandler(new WritableBookHandler()); //Writeable Books
-        EnchiridionAPI.library.registerBookHandler(new RightClickBookHandler()); //Default Handler
-        EnchiridionAPI.library.registerBookHandler(new TemporarySwitchHandler()); //Switch Click Handler
+        EnchiridionAPI.library.registerBookHandler(new WrittenBookHandler()); //Written Books
+        EnchiridionAPI.library.registerBookHandler(new TemporarySwitchHandler()); //Default Handler
         EnchiridionAPI.library.registerBookHandler(new CopyNBTHandler()); //Copy NBT Handler
         //if (EConfig.loadComputercraft) attemptToRegisterModdedBookHandler(ComputerCraftHandler.class); //TODO Re-add when updated to 1.11
         //if (EConfig.loadWarpbook) attemptToRegisterModdedBookHandler(WarpBookHandler.class); // TODO Re-add when updated to 1.11
