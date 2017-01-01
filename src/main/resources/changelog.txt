@@ -1,6 +1,10 @@
-Enchiridion - 3.1.15
+Enchiridion - 3.1.16
 • Updated to Minecraft 1.11.x
 • Now requires Java 8
+
+Enchiridion - 3.1.15
+• Fixed library support for books from the following mods: Totemic, RFTools & Deep Resonance
+• Added library support for books from the following mods: RFTools Dimensions, RFTools Control, Extra Utilities 2, Harvest Festival, The One Probe & Actually Additions
 
 Enchiridion - 3.1.14
 • Fixed library recipe not showing up in JEI

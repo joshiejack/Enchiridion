@@ -167,7 +167,7 @@ public class EClientProxy extends ECommonProxy {
      * GUI HANDLING
      **/
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int slotID, int handOrdinal, int z) { //TODO Re-add mod support when updated CC of Warp Book is updated to 1.11
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int slotID, int handOrdinal, int z) {
         if (ID == GuiIDs.COMPUTERCRAFT) {
             //return ComputerCraftHandler.getComputercraftPrintoutGui(player, slotID);
         } else if (ID == GuiIDs.WARPLIST) {

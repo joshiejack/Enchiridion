@@ -46,8 +46,12 @@ public class ModSupport {
         books.add("enchiridion", "enchiridion:book", true, false);
         books.add("writeable", "minecraft:writable_book", false, false);
         books.add("written", "minecraft:written_book", false, false);
-        books.add("switchclick", "rftools:rftools_manual", false, false);
+        books.add("switchclick", "actuallyadditions:itemBooklet", false, false);
         books.add("switchclick", "deepresonance:dr_manual", false, false);
+        books.add("switchclick", "rftools:rftools_manual", false, false);
+        books.add("switchclick", "rftoolscontrol:rftoolscontrol_manual", false, false);
+        books.add("switchclick", "rftoolsdim:rftoolsdim_manual", false, false);
+        books.add("switchclick", "theoneprobe:probenote", false, false);
         if (EInfo.IS_GUIDEAPI_LOADED) {
             for (Book book : GuideAPI.BOOKS) {
                 books.add("copynbt", "guideapi:" + book.getRegistryName().toString().replace(":", "-"), false, false);
@@ -60,8 +64,9 @@ public class ModSupport {
         //Not updated to 1.11 yet, so might not work
         books.add("switchclick", "aura:lexicon", false, false);
         books.add("switchclick", "botania:lexicon", false, false);
-        books.add("switchclick", "harvestfestival:cookbook", false, false);
+        books.add("switchclick", "extrautils2:Book", false, false);
         books.add("switchclick", "harvestfestival:book", false, false);
+        books.add("switchclick", "harvestfestival:cookbook", false, false);
         books.add("switchclick", "openblocks:infoBook", false, false);
         books.add("switchclick", "opencomputers:tool 4", true, false);
         books.add("switchclick", "tconstruct:book", false, false);
