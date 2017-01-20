@@ -16,7 +16,7 @@ targetCompatibility = 1.8
 repositories {
     maven { url "http://tehnut.info/maven" }
     maven { url "http://dvs1.progwml6.com/files/maven" }
-    maven { url "http://blamejared.com/maven" }
+    maven { url "http://maven.blamejared.com" }
 }
 
 ext.buildnumber=""

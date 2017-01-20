@@ -48,6 +48,8 @@ public class ModSupport {
         books.add("written", "minecraft:written_book", false, false);
         books.add("switchclick", "actuallyadditions:itemBooklet", false, false);
         books.add("switchclick", "deepresonance:dr_manual", false, false);
+        books.add("switchclick", "environmentaltech:digital_guide", false, false);
+        books.add("switchclick", "pokecube:pokedex", false, false);
         books.add("switchclick", "rftools:rftools_manual", false, false);
         books.add("switchclick", "rftoolscontrol:rftoolscontrol_manual", false, false);
         books.add("switchclick", "rftoolsdim:rftoolsdim_manual", false, false);
@@ -69,9 +71,11 @@ public class ModSupport {
         books.add("switchclick", "harvestfestival:cookbook", false, false);
         books.add("switchclick", "openblocks:infoBook", false, false);
         books.add("switchclick", "opencomputers:tool 4", true, false);
+        books.add("switchclick", "simpleachievements:achievement_book", false, false);
         books.add("switchclick", "tconstruct:book", false, false);
         books.add("switchclick", "thaumcraft:thaumonomicon", false, false);
         books.add("switchclick", "totemic:totempedia", false, false);
+        books.add("switchclick", "villagebox:village_book", false, false);
         books.add("computercraft", "computercraft:printout", false, false);
         books.add("switchclick", "immersiveengineering:tool 3", true, false);
         books.add("warpbook", "warpbook:warpbook", false, false);

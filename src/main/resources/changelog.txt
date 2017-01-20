@@ -1,3 +1,6 @@
+Enchiridion - 3.1.17
+• Added support for books from the following mods: Environmental Tech, Simple Achievements, Village Box & Pokecube
+
 Enchiridion - 3.1.16
 • Updated to Minecraft 1.11.x
 • Now requires Java 8
