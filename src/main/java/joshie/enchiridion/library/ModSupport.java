@@ -57,6 +57,10 @@ public class ModSupport {
         books.add("rightclick", "actuallyadditions:itemBooklet", false, false);
         books.add("rightclick", "tconstruct:book", false, false);
         books.add("switchclick", "ImmersiveEngineering:tool 3", true, false);
+        books.add("switchclick", "environmentaltech:digital_guide", false, false);
+        books.add("switchclick", "simpleachievements:achievement_book", false, false);
+        books.add("switchclick", "villagebox:village_book", false, false);
+        books.add("switchclick", "pokecube:pokedex", false, false);
         books.add("copynbt", "guideapi:ItemGuideBook", false, false);
         books.add("customwood", "minecraft:planks 1", true, false);
         books.add("customwood", "minecraft:planks 5", true, false);

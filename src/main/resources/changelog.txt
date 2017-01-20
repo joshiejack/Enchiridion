@@ -1,3 +1,10 @@
+Enchiridion - 3.1.17
+• Added support for books from the following mods: Environmental Tech, Simple Achievements, Village Box & Pokecube
+
+Enchiridion - 3.1.16
+• Updated to Minecraft 1.11.x
+• Now requires Java 8
+
 Enchiridion - 3.1.15
 • Fixed library support for books from the following mods: Totemic, RFTools & Deep Resonance
 • Added library support for books from the following mods: RFTools Dimensions, RFTools Control, Extra Utilities 2, Harvest Festival, The One Probe & Actually Additions
