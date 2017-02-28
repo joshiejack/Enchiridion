@@ -61,6 +61,15 @@ public class ModSupport {
         books.add("switchclick", "simpleachievements:achievement_book", false, false);
         books.add("switchclick", "villagebox:village_book", false, false);
         books.add("switchclick", "pokecube:pokedex", false, false);
+        books.add("switchclick", "astralsorcery:ItemJournal", false, false);
+        books.add("switchclick", "bibliocraft:BiblioRedBook", false, false);
+        books.add("switchclick", "bibliocraft:BigBook", false, false);
+        books.add("switchclick", "bibliocraft:RecipeBook", false, false);
+        books.add("switchclick", "bibliocraft:StockroomCatalog", false, false);
+        books.add("switchclick", "guidebook:guideBook", false, false);
+        books.add("switchclick", "railcraft:routing_table", false, false);
+        books.add("switchclick", "refraction:book", false, false);
+        books.add("switchclick", "roots:runedTablet", false, false);
         books.add("copynbt", "guideapi:ItemGuideBook", false, false);
         books.add("customwood", "minecraft:planks 1", true, false);
         books.add("customwood", "minecraft:planks 5", true, false);

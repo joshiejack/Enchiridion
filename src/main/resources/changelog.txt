@@ -1,4 +1,7 @@
 Enchiridion - 3.1.17
+• Added support for books from the following mods: Astral Sorcery, Bibliocraft, Guidebook, Railcraft, Recraftion & Roots
+
+Enchiridion - 3.1.17
 • Added support for books from the following mods: Environmental Tech, Simple Achievements, Village Box & Pokecube
 
 Enchiridion - 3.1.16
