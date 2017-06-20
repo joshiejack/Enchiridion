@@ -55,7 +55,7 @@ public class ModSupport {
         books.add("switchclick", "rftoolsdim:rftoolsdim_manual", false, false);
         books.add("switchclick", "theoneprobe:probenote", false, false);
         if (EInfo.IS_GUIDEAPI_LOADED) {
-            for (Book book : GuideAPI.BOOKS) {
+            for (Book book : GuideAPI.getBooks().values()) {
                 books.add("copynbt", "guideapi:" + book.getRegistryName().toString().replace(":", "-"), false, false);
             }
         }
