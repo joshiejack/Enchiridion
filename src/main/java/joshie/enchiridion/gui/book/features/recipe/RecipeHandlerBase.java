@@ -5,6 +5,7 @@ import joshie.enchiridion.api.recipe.IItemStack;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
 import joshie.enchiridion.util.ELocation;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -33,7 +34,7 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
         for (IItemStack stack : stackList) {
             if (stack == null || stack.getItemStack().isEmpty()) continue;
             if (EnchiridionAPI.draw.isMouseOverIItemStack(stack)) {
-                list.addAll(stack.getItemStack().getTooltip(Minecraft.getMinecraft().player, false));
+                list.addAll(stack.getItemStack().getTooltip(Minecraft.getMinecraft().player, ITooltipFlag.TooltipFlags.NORMAL));
                 break; //Only permit one item to display
             }
         }

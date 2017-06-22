@@ -1,10 +1,12 @@
 package joshie.enchiridion.jei;
 
 import joshie.enchiridion.gui.library.GuiLibrary;
-import mezz.jei.api.BlankModPlugin;
+import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.gui.IAdvancedGuiHandler;
+import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,11 +16,11 @@ import java.util.Collections;
 import java.util.List;
 
 @JEIPlugin
-public class LibraryPlugin extends BlankModPlugin implements IAdvancedGuiHandler<GuiLibrary> {
+public class LibraryPlugin implements IModPlugin, IAdvancedGuiHandler<GuiLibrary> {
     @Override
     public void register(@Nonnull IModRegistry registry) {
-        registry.addRecipeHandlers(new LibraryRecipeHandler());
-        registry.addRecipes(Collections.singletonList(new LibraryRecipeWrapper()));
+        registry.handleRecipes(ShapedOreRecipe.class, recipe -> new LibraryRecipeWrapper(), VanillaRecipeCategoryUid.CRAFTING);
+        registry.addRecipes(Collections.singletonList(new LibraryRecipeWrapper()), VanillaRecipeCategoryUid.CRAFTING);
         registry.addAdvancedGuiHandlers(this);
     }
 

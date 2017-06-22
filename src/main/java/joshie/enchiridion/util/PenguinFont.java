@@ -2,9 +2,9 @@ package joshie.enchiridion.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.IReloadableResourceManager;
@@ -231,7 +231,7 @@ public class PenguinFont extends FontRenderer {
                 if (this.cursor && this.white) {
                     GlStateManager.pushMatrix();
                     Tessellator tessellator = Tessellator.getInstance();
-                    VertexBuffer buffer = tessellator.getBuffer();
+                    BufferBuilder buffer = tessellator.getBuffer();
                     GlStateManager.disableTexture2D();
                     buffer.begin(7, DefaultVertexFormats.POSITION);
                     buffer.pos((double) this.posX - 0.75F, (double) (this.posY + (float) (this.FONT_HEIGHT)), 0.0D).endVertex();
@@ -246,7 +246,7 @@ public class PenguinFont extends FontRenderer {
 
                 if (this.strikethroughStyle) {
                     Tessellator tessellator = Tessellator.getInstance();
-                    VertexBuffer buffer = tessellator.getBuffer();
+                    BufferBuilder buffer = tessellator.getBuffer();
                     GlStateManager.disableTexture2D();
                     buffer.begin(7, DefaultVertexFormats.POSITION);
                     buffer.pos((double) this.posX, (double) (this.posY + (float) (this.FONT_HEIGHT / 2)), 0.0D).endVertex();
@@ -259,7 +259,7 @@ public class PenguinFont extends FontRenderer {
 
                 if (this.underlineStyle) {
                     Tessellator tessellator = Tessellator.getInstance();
-                    VertexBuffer buffer = tessellator.getBuffer();
+                    BufferBuilder buffer = tessellator.getBuffer();
                     GlStateManager.disableTexture2D();
                     buffer.begin(7, DefaultVertexFormats.POSITION);
                     int l = this.underlineStyle ? -1 : 0;

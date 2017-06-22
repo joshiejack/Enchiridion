@@ -10,6 +10,8 @@ import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.library.LibraryHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -28,6 +30,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.minecraft.util.text.TextFormatting.DARK_GREEN;
@@ -41,7 +44,7 @@ public class ItemEnchiridion extends Item implements IGuideItem {
 
     @Optional.Method(modid = "guideapi")
     @Override
-    public Book getBook(ItemStack stack) {
+    public Book getBook(@Nonnull ItemStack stack) {
         return null;
     }
 
@@ -70,13 +73,15 @@ public class ItemEnchiridion extends Item implements IGuideItem {
         return book == null ? Enchiridion.format("new", DARK_GREEN, RESET) : book.getDisplayName();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
         if (stack.getItemDamage() == 1) {
-            int currentBook = LibraryHelper.getLibraryContents(playerIn).getCurrentBook();
-            ItemStack internal = LibraryHelper.getLibraryContents(playerIn).getStackInSlot(currentBook);
+            EntityPlayer player = Minecraft.getMinecraft().player;
+            int currentBook = LibraryHelper.getLibraryContents(player).getCurrentBook();
+            ItemStack internal = LibraryHelper.getLibraryContents(player).getStackInSlot(currentBook);
             if (!internal.isEmpty()) {
-                tooltip.addAll(internal.getTooltip(playerIn, advanced));
+                tooltip.addAll(internal.getTooltip(player, flag));
             }
         } else {
             IBook book = BookRegistry.INSTANCE.getBook(stack);
@@ -108,16 +113,18 @@ public class ItemEnchiridion extends Item implements IGuideItem {
     }
 
     @Override
-    public void getSubItems(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
-        if (EConfig.libraryAsItem) list.add(new ItemStack(item, 1, 1));
+    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
+        if (this.isInCreativeTab(tab)) {
+            if (EConfig.libraryAsItem) list.add(new ItemStack(this, 1, 1));
 
-        list.add(new ItemStack(item));
+            list.add(new ItemStack(this));
 
-        for (String book : BookRegistry.INSTANCE.getUniqueNames()) {
-            ItemStack stack = new ItemStack(item);
-            stack.setTagCompound(new NBTTagCompound());
-            stack.getTagCompound().setString("identifier", book);
-            list.add(stack);
+            for (String book : BookRegistry.INSTANCE.getUniqueNames()) {
+                ItemStack stack = new ItemStack(this);
+                stack.setTagCompound(new NBTTagCompound());
+                stack.getTagCompound().setString("identifier", book);
+                list.add(stack);
+            }
         }
     }
 

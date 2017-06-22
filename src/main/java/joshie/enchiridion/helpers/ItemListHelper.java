@@ -26,7 +26,7 @@ public class ItemListHelper {
             if (item.getCreativeTabs().length > 0) {
                 for (CreativeTabs tab : item.getCreativeTabs()) {
                     try {
-                        item.getSubItems(item, tab, items);
+                        item.getSubItems(tab, items);
                     } catch (Exception e) {
                         Enchiridion.log(Level.ERROR, "Enchiridion had an issue when trying to load the item: " + item.getClass());
                     }

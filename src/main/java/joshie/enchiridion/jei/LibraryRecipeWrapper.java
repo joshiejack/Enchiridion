@@ -5,7 +5,7 @@ import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.helpers.ItemListHelper;
 import joshie.enchiridion.library.LibraryRecipe;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.BlankRecipeWrapper;
+import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryRecipeWrapper extends BlankRecipeWrapper implements IShapedCraftingRecipeWrapper {
+public class LibraryRecipeWrapper implements IRecipeWrapper, IShapedCraftingRecipeWrapper {
     private final ItemStack output;
     private final List<List<ItemStack>> inputs;
 
