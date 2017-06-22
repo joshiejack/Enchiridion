@@ -1,11 +1,14 @@
 package joshie.enchiridion.library;
 
+import amerifrance.guideapi.api.GuideAPI;
+import amerifrance.guideapi.api.impl.Book;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.data.library.ModdedBooks;
 import joshie.enchiridion.data.library.ModdedBooks.ModdedBook;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonHelper;
 import joshie.enchiridion.helpers.StackHelper;
+import joshie.enchiridion.lib.EInfo;
 import net.minecraft.item.ItemStack;
 
 import java.io.File;
@@ -13,31 +16,49 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class ModSupport {
-    public static HashSet<String> supported = new HashSet();
     private static ModdedBooks books;
 
     public static void loadDataFromJson(String serverName, String json) {
-        if (json == null) {
-            setDefaults(serverName);
-        } else books = GsonHelper.getModifiedGson().fromJson(json, ModdedBooks.class);
+        books = getDefaults();
+        if (json != null) {
+            books.mergeIn(GsonHelper.getModifiedGson().fromJson(json, ModdedBooks.class));
+        } else {
+            try {
+                //Write the json
+                String defaultJson = GsonHelper.getModifiedGson().toJson(new ModdedBooks()); //Add a blank default
+                File toSave = FileHelper.getLibraryFile(serverName);
+                Writer writer = new OutputStreamWriter(new FileOutputStream(toSave), "UTF-8");
+                writer.write(defaultJson);
+                writer.close();
+            } catch (Exception ignored) {}
+        }
+
         //Now that we have loaded in the data we should convert it
         EnchiridionAPI.library.resetStacksAllowedInLibrary();
         for (ModdedBook book : books.getList()) {
             try {
                 ItemStack stack = StackHelper.getStackFromString(book.getItem());
-                if (stack != null) {
-                    if (book.getHandler().equals("customwood")) {
-                        EnchiridionAPI.library.registerWood(stack, book.shouldMatchDamage(), book.shouldMatchNBT());
-                    } else LibraryRegistry.INSTANCE.registerBookHandlerForStackFromJSON(book.getHandler(), stack, book.shouldMatchDamage(), book.shouldMatchNBT());
+                if (!stack.isEmpty()) {
+                    switch (book.getHandler()) {
+                        case "blacklist":
+                            LibraryRegistry.INSTANCE.unregisterBookHandlerForStackFromJSON(stack, book.shouldMatchDamage(), book.shouldMatchNBT());
+                            break;
+                        case "customwood":
+                            EnchiridionAPI.library.registerWood(stack, book.shouldMatchDamage(), book.shouldMatchNBT());
+                            break;
+                        default:
+                            LibraryRegistry.INSTANCE.registerBookHandlerForStackFromJSON(book.getHandler(), stack, book.shouldMatchDamage(), book.shouldMatchNBT());
+                            break;
+                    }
                 }
-            } catch (Exception e) {}
+            } catch (Exception ignored) {
+            }
         }
     }
 
-    private static void setDefaults(String serverName) {
+    private static ModdedBooks getDefaults() {
         books = new ModdedBooks(); //Create the books
         books.add("enchiridion", "enchiridion:book", true, false);
         books.add("writeable", "minecraft:writable_book", false, false);
@@ -80,6 +101,7 @@ public class ModSupport {
         books.add("customwood", "chisel:livingwood-raw", false, false);
         books.add("customwood", "chisel:thinWood-dark", false, false);
         books.add("customwood", "chisel:thinWood-spruce", false, false);
+<<<<<<< HEAD
         books.add("customwood", "biomesoplenty:planks_0 14", true, false);
         books.add("customwood", "Botania:livingwood", false, false);
 
@@ -89,33 +111,28 @@ public class ModSupport {
         books.add("rightclick", "openblocks:infoBook", false, false);
         books.add("warpbook", "warpbook:warpbook", false, false);
 
-        try {
-            //Write the json
-            String json = GsonHelper.getModifiedGson().toJson(books);
-            File toSave = FileHelper.getLibraryFile(serverName);
-            Writer writer = new OutputStreamWriter(new FileOutputStream(toSave), "UTF-8");
-            writer.write(json);
-            writer.close();
-        } catch (Exception e) {}
+
+        books.add("customwood", "botania:livingwood", false, false);
+        return books;
     }
 
     public static ItemStack[] getFreeBooks() {
         return books.getFreeBooks();
     }
 
-    private static HashMap<String, ModdedBooks> cache = new HashMap();
+    private static final HashMap<String, ModdedBooks> CACHE = new HashMap<>();
 
     public static void reset() {
-        cache.clear();
+        CACHE.clear();
     }
 
     public static int getHashcode(String serverName) {
-        if (cache.containsKey(serverName)) {
-            return cache.get(serverName).hashCode();
+        if (CACHE.containsKey(serverName)) {
+            return CACHE.get(serverName).hashCode();
         }
 
         loadDataFromJson(serverName, FileHelper.getLibraryJson(serverName)); //Load in any existing json files
-        cache.put(serverName, books);
+        CACHE.put(serverName, books);
         return books.hashCode();
     }
 }
