@@ -1,4 +1,3 @@
-/*
 package joshie.enchiridion.gui.book.features.recipe;
 
 import minetweaker.api.item.IIngredient;
@@ -7,7 +6,6 @@ import minetweaker.api.oredict.IOreDictEntry;
 import minetweaker.api.recipes.ShapelessRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.fml.common.Loader;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -53,11 +51,10 @@ public class RecipeHandlerMTAdvancedShapeless extends RecipeHandlerRecipeBase {
 
     static {
         try {
-            if (Loader.MC_VERSION.equals("1.11")) //TODO
-                clazz = Class.forName("minetweaker.mc111.recipes.ShapelessRecipeAdvanced");
+            clazz = Class.forName("minetweaker.mc1112.recipes.ShapelessRecipeAdvanced");
             shapeless = clazz.getDeclaredField("recipe");
             shapeless.setAccessible(true);
         } catch (Exception ignored) {
         }
     }
-}*/
+}

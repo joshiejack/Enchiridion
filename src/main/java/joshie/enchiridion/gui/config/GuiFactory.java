@@ -1,29 +1,38 @@
 package joshie.enchiridion.gui.config;
 
-import net.minecraft.client.Minecraft;
+import joshie.enchiridion.EConfig;
+import joshie.enchiridion.lib.EInfo;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.fml.client.IModGuiFactory;
+import net.minecraftforge.common.config.ConfigElement;
+import net.minecraftforge.fml.client.DefaultGuiFactory;
+import net.minecraftforge.fml.client.config.DummyConfigElement;
+import net.minecraftforge.fml.client.config.GuiConfig;
+import net.minecraftforge.fml.client.config.IConfigElement;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-public class GuiFactory implements IModGuiFactory {
+public class GuiFactory extends DefaultGuiFactory {
 
-    @Override
-    public void initialize(Minecraft minecraftInstance) {
+    public GuiFactory() {
+        super(EInfo.MODID, ".minecraft/config/enchiridion/enchiridion.cfg");
     }
 
     @Override
-    public Class<? extends GuiScreen> mainConfigGuiClass() {
-        return GuiEConfig.class;
+    public GuiScreen createConfigGui(GuiScreen parentScreen) {
+        return new GuiConfig(parentScreen, getConfigElements(), modid, false, false, title);
     }
 
-    @Override
-    public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {
-        return null;
-    }
+    private static List<IConfigElement> getConfigElements() {
+        List<IConfigElement> list = new ArrayList<>();
 
-    @Override
-    public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
-        return null;
+        List<IConfigElement> settings = new ConfigElement(EConfig.config.getCategory(EConfig.CATEGORY_SETTINGS.toLowerCase())).getChildElements();
+        List<IConfigElement> modSupport = new ConfigElement(EConfig.config.getCategory(EConfig.CATEGORY_MOD_SUPPORT.toLowerCase())).getChildElements();
+
+        list.add(new DummyConfigElement.DummyCategoryElement(EConfig.CATEGORY_SETTINGS, EInfo.MODID + ".config.category.settings", settings));
+        if (!EConfig.config.getCategory(EConfig.CATEGORY_MOD_SUPPORT).isEmpty()) {
+            list.add(new DummyConfigElement.DummyCategoryElement(EConfig.CATEGORY_MOD_SUPPORT, EInfo.MODID + ".config.category.modsupport", modSupport));
+        }
+        return list;
     }
 }

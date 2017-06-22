@@ -54,18 +54,18 @@ public class WritableBookHandler implements IBookHandler {
                         this.bookPages.removeTag(this.bookPages.tagCount() - 1);
                     }
 
-                    if (this.bookObj.hasTagCompound()) {
-                        NBTTagCompound nbttagcompound = this.bookObj.getTagCompound();
+                    if (this.book.hasTagCompound()) {
+                        NBTTagCompound nbttagcompound = this.book.getTagCompound();
                         nbttagcompound.setTag("pages", this.bookPages);
                     } else {
-                        this.bookObj.setTagInfo("pages", this.bookPages);
+                        this.book.setTagInfo("pages", this.bookPages);
                     }
 
                     ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
 
                     if (publish) {
-                        this.bookObj.setTagInfo("author", new NBTTagString(this.editingPlayer.getName()));
-                        this.bookObj.setTagInfo("title", new NBTTagString(this.bookTitle.trim()));
+                        this.book.setTagInfo("author", new NBTTagString(this.editingPlayer.getName()));
+                        this.book.setTagInfo("title", new NBTTagString(this.bookTitle.trim()));
 
                         for (int i = 0; i < this.bookPages.tagCount(); ++i) {
                             String s1 = this.bookPages.getStringTagAt(i);
@@ -74,11 +74,11 @@ public class WritableBookHandler implements IBookHandler {
                             this.bookPages.set(i, new NBTTagString(s1));
                         }
 
-                        stack.setTagCompound(this.bookObj.getTagCompound().copy());
+                        stack.setTagCompound(this.book.getTagCompound().copy());
                     }
 
                     //Set the book in the library
-                    EnchiridionAPI.library.getLibraryInventory(editingPlayer).setInventorySlotContents(slot, bookObj);
+                    EnchiridionAPI.library.getLibraryInventory(editingPlayer).setInventorySlotContents(slot, book);
                     PacketHandler.sendToServer(new PacketSetLibraryBook(stack, slot));
                 }
             }

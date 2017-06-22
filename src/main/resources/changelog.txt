@@ -1,3 +1,10 @@
+Enchiridion - 3.2.0
+• Library json is now only for addition of extra books, or blacklisting of books supported by Enchiridion by default
+• Added blacklist handlerType for library json, to blacklist any book supported by Enchiridion by default.
+• Added support for books from the following mods: Astral Sorcery, Bibliocraft, Guidebook, Railcraft, Recraftion & Roots
+• Fixed Guide API support
+• Reimplemented CraftTweaker/MineTweaker support
+
 Enchiridion - 3.1.17
 • Added support for books from the following mods: Environmental Tech, Simple Achievements, Village Box & Pokecube
 

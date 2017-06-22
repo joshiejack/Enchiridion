@@ -100,7 +100,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
             }
         }
 
-        drawHoveringText(TOOLTIP, x2, y2, mc.fontRendererObj);
+        drawHoveringText(TOOLTIP, x2, y2, mc.fontRenderer);
     }
 
     @Override

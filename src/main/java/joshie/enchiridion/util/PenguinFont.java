@@ -21,7 +21,7 @@ public class PenguinFont extends FontRenderer {
     public static void load() {
         Minecraft mc = Minecraft.getMinecraft();
         INSTANCE = new PenguinFont(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine, false);
-        INSTANCE.setUnicodeFlag(mc.fontRendererObj.getUnicodeFlag());
+        INSTANCE.setUnicodeFlag(mc.fontRenderer.getUnicodeFlag());
         INSTANCE.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
 
         ((IReloadableResourceManager) mc.getResourceManager()).registerReloadListener(INSTANCE);

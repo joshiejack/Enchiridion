@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Level;
 
 import java.io.File;
 
-public class EConfig { //TODO Move to new Forge config (If stable)
+public class EConfig {
     public static Configuration config;
     public static final String CATEGORY_SETTINGS = "Settings";
     public static final String CATEGORY_MOD_SUPPORT = "Mod Support";
@@ -23,8 +23,6 @@ public class EConfig { //TODO Move to new Forge config (If stable)
     public static boolean offlineMode;
     public static boolean libraryAsItem;
     public static boolean libraryAsHotkey;
-    //public static boolean loadWarpbook; //TODO Re-add when updated to 1.11
-    //public static boolean loadComputercraft; //TODO Re-add when updated to 1.11
     public static boolean addWrittenBookRecipeForLibrary;
     public static boolean addOreDictionaryRecipeForLibrary;
     public static String defaultText = "";
@@ -58,8 +56,6 @@ public class EConfig { //TODO Move to new Forge config (If stable)
             libraryAsHotkey = config.getBoolean("Enable Library as Hotkey", CATEGORY_SETTINGS, true, "The library can be opened with a hotkey if this is true");
             addWrittenBookRecipeForLibrary = config.getBoolean("Add a Recipe for the Library Item using Written Books", CATEGORY_SETTINGS, false, "Disabling this will not add the default recipe for the library in written book form");
             addOreDictionaryRecipeForLibrary = config.getBoolean("Add a Recipe for the Library Item using Any Books", CATEGORY_SETTINGS, true, "Disabling this will not add the default recipe for the library, note this overrides the other recipe");
-            //loadWarpbook = config.getBoolean("Load Warpbook Support", CATEGORY_MOD_SUPPORT, true, "");
-            //loadComputercraft = config.getBoolean("Load ComputerCraft Support", CATEGORY_MOD_SUPPORT, true, "");
             if (debugMode) {
                 allowDataAndImagesFromServers = true;
                 syncDataAndImagesToClients = true;

@@ -17,7 +17,7 @@ public class ClientStackHelper {
         RenderHelper.enableGUIStandardItemLighting();
         Minecraft mc = Minecraft.getMinecraft();
         mc.getRenderItem().renderItemAndEffectIntoGUI(stack, x, y);
-        mc.getRenderItem().renderItemOverlayIntoGUI(mc.fontRendererObj, stack, x, y, null);
+        mc.getRenderItem().renderItemOverlayIntoGUI(mc.fontRenderer, stack, x, y, null);
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableLighting();
         GlStateManager.enableAlpha();

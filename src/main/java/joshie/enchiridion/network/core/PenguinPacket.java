@@ -23,6 +23,6 @@ public abstract class PenguinPacket implements IMessage {
     }
 
     public void handleQueuedServer(NetHandlerPlayServer serverHandler) {
-        handlePacket(serverHandler.playerEntity);
+        handlePacket(serverHandler.player);
     }
 }

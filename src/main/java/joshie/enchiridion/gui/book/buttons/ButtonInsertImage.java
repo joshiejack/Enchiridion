@@ -24,7 +24,7 @@ public class ButtonInsertImage extends ButtonAbstract {
                 String folderName = EnchiridionAPI.book.getBook().getSaveName();
                 String modid = EnchiridionAPI.book.getBook().getModID();
                 IPage current = EnchiridionAPI.book.getPage();
-                String path = ""; //TODO Figure out what this was used for
+                String path = "";
                 if (modid == null || modid.equals("")) {
                     path = EInfo.MODID + ":images/" + folderName + "/" + file.getName();
                 } else {

@@ -109,8 +109,8 @@ public class EClientProxy extends ECommonProxy {
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessVanilla());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerShapelessOre());
         EnchiridionAPI.instance.registerRecipeHandler(new RecipeHandlerFurnace());
-        //attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShaped.class, "MineTweaker3"); //TODO Re-implement when MT is updated
-        //attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShapeless.class, "MineTweaker3"); //TODO Re-implement when MT is updated
+        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShaped.class, "crafttweaker");
+        attemptToRegisterRecipeHandler(RecipeHandlerMTAdvancedShapeless.class, "crafttweaker");
 
         //Register Button Template
         Template template = new Template("enchiridion_default_buttons", "Turn Page Arrows", new ELocation("default_buttons_thumbnail"), DefaultHelper.addArrows(new Page(0)));
@@ -168,13 +168,7 @@ public class EClientProxy extends ECommonProxy {
      **/
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int slotID, int handOrdinal, int z) {
-        if (ID == GuiIDs.COMPUTERCRAFT) {
-            //return ComputerCraftHandler.getComputercraftPrintoutGui(player, slotID);
-        } else if (ID == GuiIDs.WARPLIST) {
-            //return WarpBookHandler.getWarplistGui(player, slotID);
-        } else if (ID == GuiIDs.WARPBOOK) {
-            //return WarpBookHandler.getWarpbookGui(player, slotID);
-        } else if (ID == GuiIDs.WRITABLE) {
+        if (ID == GuiIDs.WRITABLE) {
             return new GuiScreenWritable(player, slotID);
         } else if (ID == GuiIDs.WRITTEN) {
             return new GuiScreenBook(player, EnchiridionAPI.library.getLibraryInventory(player).getStackInSlot(slotID), false);

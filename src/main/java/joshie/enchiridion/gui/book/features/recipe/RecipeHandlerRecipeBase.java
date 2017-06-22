@@ -2,6 +2,7 @@ package joshie.enchiridion.gui.book.features.recipe;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
+import minetweaker.api.item.IItemStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -128,8 +129,8 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
         EnchiridionAPI.draw.drawTexturedRectangle(84D, 42D, 1, 63, 20, 14, 1F);
     }
 
-    /*protected ItemStack toStack(IItemStack iStack) {
+    protected ItemStack toStack(IItemStack iStack) {
         if (iStack == null) return null;
         return (ItemStack) iStack.getInternal();
-    }*/
+    }
 }

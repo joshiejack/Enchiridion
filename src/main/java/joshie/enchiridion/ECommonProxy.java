@@ -45,8 +45,6 @@ public class ECommonProxy implements IGuiHandler {
         EnchiridionAPI.library.registerBookHandler(new TemporarySwitchHandler()); //Default Handler
         EnchiridionAPI.library.registerBookHandler(new RightClickHandler()); //Kept for backwards compatibility
         EnchiridionAPI.library.registerBookHandler(new CopyNBTHandler()); //Copy NBT Handler
-        //if (EConfig.loadComputercraft) attemptToRegisterModdedBookHandler(ComputerCraftHandler.class); //TODO Re-add when updated to 1.11
-        //if (EConfig.loadWarpbook) attemptToRegisterModdedBookHandler(WarpBookHandler.class); // TODO Re-add when updated to 1.11
 
         //Register events
         MinecraftForge.EVENT_BUS.register(new BookEvents());
@@ -98,9 +96,6 @@ public class ECommonProxy implements IGuiHandler {
      **/
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int integer1, int handOrdinal, int z) {
-        /*if (ID == GuiIDs.WARPBOOK) { //TODO Re-add when updated to 1.11
-            return WarpBookHandler.getWarpbookContainer(player, integer1);
-        } else */
         if (ID == GuiIDs.LIBRARY) {
             return new ContainerLibrary(player.inventory, LibraryHelper.getServerLibraryContents(player), HeldHelper.getHandFromOrdinal(handOrdinal));
         } else return null;
