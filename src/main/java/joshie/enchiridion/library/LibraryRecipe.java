@@ -12,10 +12,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class LibraryRecipe implements IRecipe {
-    public static Set<SafeStack> validWoods = new HashSet();
+    public static Set<SafeStack> validWoods = new HashSet<>();
 
     private boolean isWood(ItemStack stack) {
-        for (SafeStack safe: SafeStack.allInstances(stack)) {
+        for (SafeStack safe : SafeStack.allInstances(stack)) {
             if (validWoods.contains(safe)) return true;
         }
 
@@ -70,7 +70,6 @@ public class LibraryRecipe implements IRecipe {
 
     @Override
     public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-        return new ItemStack[] { null, null, null, getStackOfOne(inv, 3), getStackOfOne(inv, 4), getStackOfOne(inv, 5), null, null, null };
+        return new ItemStack[]{null, null, null, getStackOfOne(inv, 3), getStackOfOne(inv, 4), getStackOfOne(inv, 5), null, null, null};
     }
-
 }

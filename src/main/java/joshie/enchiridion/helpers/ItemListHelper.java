@@ -51,7 +51,7 @@ public class ItemListHelper {
     }
 
     public static void addInventory() {
-        for (ItemStack stack : Minecraft.getMinecraft().thePlayer.inventory.mainInventory) {
+        for (ItemStack stack : Minecraft.getMinecraft().player.inventory.mainInventory) {
             if (stack != null) {
                 if (!allItems().contains(stack)) {
                     allItems.add(stack);

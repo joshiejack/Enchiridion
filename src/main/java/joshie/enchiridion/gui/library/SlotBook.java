@@ -34,7 +34,7 @@ public class SlotBook extends Slot {
             ItemStack stack = slot.getStack();
             IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(stack);
             if (handler != null) {
-                if (player.worldObj.isRemote) {
+                if (player.world.isRemote) {
                     boolean isShiftPressed = MCClientHelper.isShiftPressed();
                     PacketHandler.sendToServer(new PacketHandleBook(slot.slotNumber, hand, isShiftPressed));
                     handler.handle(stack, player, hand, slot.slotNumber, isShiftPressed);

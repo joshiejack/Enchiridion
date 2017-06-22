@@ -8,54 +8,61 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryCommand implements ICommand {
     @Override
-    public int compareTo(ICommand o) {
-        return getCommandName().compareTo(o.getCommandName());
+    public int compareTo(@Nonnull ICommand command) {
+        return getName().compareTo(command.getName());
     }
 
     @Override
-    public String getCommandName() {
+    @Nonnull
+    public String getName() {
         return "enchiridion";
     }
 
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/enchiridion refresh";
     }
 
     @Override
-    public List getCommandAliases() {
-        return new ArrayList();
+    @Nonnull
+    public List<String> getAliases() {
+        return new ArrayList<>();
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] parameters) {
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] parameters) {
         if (parameters == null || parameters.length != 1) return;
         try {
             if (parameters[0].equals("refresh")) {
                 PacketHandler.sendToServer(new PacketLibraryCommand("refresh"));
-            } if (parameters[0].equals("resources")) {
+            }
+            if (parameters[0].equals("resources")) {
                 Minecraft.getMinecraft().scheduleResourcesRefresh();
             } else if (parameters[0].equals("reset")) {
                 PacketHandler.sendToServer(new PacketLibraryCommand("reset"));
             } else if (parameters[0].equals("clear")) {
                 PacketHandler.sendToServer(new PacketLibraryCommand("clear"));
             }
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {
+        }
     }
 
     @Override
-    public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
     @Override
-    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
-        ArrayList<String> string = new ArrayList();
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, BlockPos pos) {
+        ArrayList<String> string = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
             string.add("" + i);
         }
@@ -64,7 +71,7 @@ public class LibraryCommand implements ICommand {
     }
 
     @Override
-    public boolean isUsernameIndex(String[] parameter, int p_82358_2_) {
+    public boolean isUsernameIndex(@Nonnull String[] parameter, int index) {
         return false;
     }
 }

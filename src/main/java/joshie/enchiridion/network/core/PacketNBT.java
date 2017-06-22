@@ -36,7 +36,7 @@ public abstract class PacketNBT extends PenguinPacket {
     @Override
     public void toBytes(ByteBuf buffer) {
         try {
-            new PacketBuffer(buffer).writeNBTTagCompoundToBuffer(nbt);
+            new PacketBuffer(buffer).writeCompoundTag(nbt);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,7 +45,7 @@ public abstract class PacketNBT extends PenguinPacket {
     @Override
     public void fromBytes(ByteBuf buffer) {
         try {
-            nbt = new PacketBuffer(buffer).readNBTTagCompoundFromBuffer();
+            nbt = new PacketBuffer(buffer).readCompoundTag();
         } catch (Exception e) {
             e.printStackTrace();
         }

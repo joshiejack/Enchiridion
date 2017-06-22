@@ -22,7 +22,7 @@ public abstract class InventoryStorage implements IInventory {
 
     @Override
     public ITextComponent getDisplayName() {
-        return new TextComponentTranslation(getName(), new Object[0]);
+        return new TextComponentTranslation(getName());
     }
 
     @Override
@@ -82,7 +82,7 @@ public abstract class InventoryStorage implements IInventory {
     public void markDirty() {}
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(EntityPlayer player) {
         return true;
     }
 

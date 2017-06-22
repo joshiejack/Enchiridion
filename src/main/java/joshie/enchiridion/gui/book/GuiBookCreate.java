@@ -63,7 +63,7 @@ public class GuiBookCreate extends GuiScreen implements ITextEditable {
         super.keyTyped(character, key);
         TextEditor.INSTANCE.keyTyped(character, key);
         if (key == 28 || key == 156) {
-            mc.thePlayer.closeScreen();
+            mc.player.closeScreen();
         }
     }
     

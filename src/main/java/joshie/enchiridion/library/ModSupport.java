@@ -1,14 +1,11 @@
 package joshie.enchiridion.library;
 
-import amerifrance.guideapi.api.GuideAPI;
-import amerifrance.guideapi.api.impl.Book;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.data.library.ModdedBooks;
 import joshie.enchiridion.data.library.ModdedBooks.ModdedBook;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.GsonHelper;
 import joshie.enchiridion.helpers.StackHelper;
-import joshie.enchiridion.lib.EInfo;
 import net.minecraft.item.ItemStack;
 
 import java.io.File;
@@ -32,7 +29,8 @@ public class ModSupport {
                 Writer writer = new OutputStreamWriter(new FileOutputStream(toSave), "UTF-8");
                 writer.write(defaultJson);
                 writer.close();
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
 
         //Now that we have loaded in the data we should convert it
@@ -40,7 +38,7 @@ public class ModSupport {
         for (ModdedBook book : books.getList()) {
             try {
                 ItemStack stack = StackHelper.getStackFromString(book.getItem());
-                if (!stack.isEmpty()) {
+                if (stack != null) {
                     switch (book.getHandler()) {
                         case "blacklist":
                             LibraryRegistry.INSTANCE.unregisterBookHandlerForStackFromJSON(stack, book.shouldMatchDamage(), book.shouldMatchNBT());
@@ -63,56 +61,53 @@ public class ModSupport {
         books.add("enchiridion", "enchiridion:book", true, false);
         books.add("writeable", "minecraft:writable_book", false, false);
         books.add("rightclick", "minecraft:written_book", false, false);
-        books.add("rightclick", "Thaumcraft:thaumonomicon", false, false);
-        books.add("rightclick", "Botania:lexicon", false, false);
-        books.add("switchclick", "totemic:totempedia", false, false);
-        books.add("rightclick", "opencomputers:tool 4", true, false);
-        books.add("switchclick", "rftools:rftools_manual", false, false);
-        books.add("switchclick", "rftoolsdim:rftoolsdim_manual", false, false);
-        books.add("switchclick", "rftoolscontrol:rftoolscontrol_manual", false, false);
-        books.add("switchclick", "deepresonance:dr_manual", false, false);
-        books.add("rightclick", "extrautils2:Book", false, false);
-        books.add("rightclick", "harvestfestival:cookbook", false, false);
-        books.add("rightclick", "harvestfestival:book", false, false);
-        books.add("rightclick", "theoneprobe:probenote", false, false);
+        books.add("copynbt", "guideapi:ItemGuideBook", false, false);
         books.add("rightclick", "actuallyadditions:itemBooklet", false, false);
+        books.add("rightclick", "Botania:lexicon", false, false);
+        books.add("rightclick", "extrautils2:Book", false, false);
+        books.add("rightclick", "harvestfestival:book", false, false);
+        books.add("rightclick", "harvestfestival:cookbook", false, false);
+        books.add("rightclick", "opencomputers:tool 4", true, false);
         books.add("rightclick", "tconstruct:book", false, false);
-        books.add("switchclick", "ImmersiveEngineering:tool 3", true, false);
-        books.add("switchclick", "environmentaltech:digital_guide", false, false);
-        books.add("switchclick", "simpleachievements:achievement_book", false, false);
-        books.add("switchclick", "villagebox:village_book", false, false);
-        books.add("switchclick", "pokecube:pokedex", false, false);
+        books.add("rightclick", "theoneprobe:probenote", false, false);
         books.add("switchclick", "astralsorcery:ItemJournal", false, false);
+        books.add("switchclick", "aura:lexicon", false, false);
         books.add("switchclick", "bibliocraft:BiblioRedBook", false, false);
         books.add("switchclick", "bibliocraft:BigBook", false, false);
         books.add("switchclick", "bibliocraft:RecipeBook", false, false);
         books.add("switchclick", "bibliocraft:StockroomCatalog", false, false);
+        books.add("switchclick", "deepresonance:dr_manual", false, false);
+        books.add("switchclick", "environmentaltech:digital_guide", false, false);
         books.add("switchclick", "guidebook:guideBook", false, false);
+        books.add("switchclick", "ImmersiveEngineering:tool 3", true, false);
+        books.add("switchclick", "pokecube:pokedex", false, false);
         books.add("switchclick", "railcraft:routing_table", false, false);
         books.add("switchclick", "refraction:book", false, false);
+        books.add("switchclick", "rftools:rftools_manual", false, false);
+        books.add("switchclick", "rftoolscontrol:rftoolscontrol_manual", false, false);
+        books.add("switchclick", "rftoolsdim:rftoolsdim_manual", false, false);
         books.add("switchclick", "roots:runedTablet", false, false);
-        books.add("copynbt", "guideapi:ItemGuideBook", false, false);
-        books.add("customwood", "minecraft:planks 1", true, false);
-        books.add("customwood", "minecraft:planks 5", true, false);
-        books.add("customwood", "thaumcraft:plank 0", true, false);
-        books.add("customwood", "chisel:planks-dark-oak", false, false);
-        books.add("customwood", "chisel:planks-spruce", false, false);
-        books.add("customwood", "chisel:livingwood-planks", false, false);
-        books.add("customwood", "chisel:livingwood-raw", false, false);
-        books.add("customwood", "chisel:thinWood-dark", false, false);
-        books.add("customwood", "chisel:thinWood-spruce", false, false);
-<<<<<<< HEAD
+        books.add("switchclick", "simpleachievements:achievement_book", false, false);
+        books.add("switchclick", "totemic:totempedia", false, false);
+        books.add("switchclick", "villagebox:village_book", false, false);
+
         books.add("customwood", "biomesoplenty:planks_0 14", true, false);
         books.add("customwood", "Botania:livingwood", false, false);
+        books.add("customwood", "chisel:livingwood-planks", false, false);
+        books.add("customwood", "chisel:livingwood-raw", false, false);
+        books.add("customwood", "chisel:planks-dark-oak", false, false);
+        books.add("customwood", "chisel:planks-spruce", false, false);
+        books.add("customwood", "chisel:thinWood-dark", false, false);
+        books.add("customwood", "chisel:thinWood-spruce", false, false);
+        books.add("customwood", "minecraft:planks 1", true, false);
+        books.add("customwood", "minecraft:planks 5", true, false);
 
-        //Not updated to 1.10
-        books.add("computercraft", "computercraft:printout", false, false);
-        books.add("rightclick", "aura:lexicon", false, false);
+        //Not updated to 1.10. Not guaranteed to work.
+        books.add("customwood", "thaumcraft:plank 0", true, false);
         books.add("rightclick", "openblocks:infoBook", false, false);
+        books.add("rightclick", "Thaumcraft:thaumonomicon", false, false);
         books.add("warpbook", "warpbook:warpbook", false, false);
 
-
-        books.add("customwood", "botania:livingwood", false, false);
         return books;
     }
 

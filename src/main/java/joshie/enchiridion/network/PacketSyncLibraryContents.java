@@ -33,7 +33,7 @@ public class PacketSyncLibraryContents extends PacketNBT {
 
     @Override
     public void handlePacket(EntityPlayer player) {
-        World world = player.worldObj;
+        World world = player.world;
 
         //Reload the info in from the packet that was sent
         int length = nbt.getInteger("length");

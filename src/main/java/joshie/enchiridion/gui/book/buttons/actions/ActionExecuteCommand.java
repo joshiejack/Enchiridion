@@ -32,9 +32,9 @@ public class ActionExecuteCommand extends AbstractAction {
     public boolean performAction() {
         Minecraft mc = Minecraft.getMinecraft();
         try {
-            if (net.minecraftforge.client.ClientCommandHandler.instance.executeCommand(mc.thePlayer, command) != 0) return false;
-            mc.thePlayer.sendChatMessage(command);
-        } catch (Exception e) {}
+            if (net.minecraftforge.client.ClientCommandHandler.instance.executeCommand(mc.player, command) != 0) return false;
+            mc.player.sendChatMessage(command);
+        } catch (Exception ignored) {}
 
         if (close) {
             mc.displayGuiScreen((GuiScreen)null);

@@ -36,7 +36,7 @@ public class PacketSyncMD5 extends PacketSyncStringArray {
     @Override
     public void receivedStringLength(EntityPlayer player) {
         //Stop the system if no images are allowed
-        if (player.worldObj.isRemote && EConfig.allowDataAndImagesFromServers) { //Receive the md5 list from the server and build it
+        if (player.world.isRemote && EConfig.allowDataAndImagesFromServers) { //Receive the md5 list from the server and build it
             tempClient = new String[integer]; //Build up the string value from the name
             PacketHandler.sendToServer(new PacketSyncMD5(REQUEST_DATA));
             if (EConfig.debugMode) Enchiridion.log(Level.INFO, "Client received the length of the hash string");
@@ -50,7 +50,7 @@ public class PacketSyncMD5 extends PacketSyncStringArray {
 
     @Override
     public void receivedDataRequest(EntityPlayer player) {
-        if (player.worldObj.isRemote && EConfig.allowDataAndImagesFromServers) {
+        if (player.world.isRemote && EConfig.allowDataAndImagesFromServers) {
             if (EConfig.debugMode) Enchiridion.log(Level.INFO, "Client received this request for data");
             for (int i = 0; i < SyncHelper.md5requests.length; i++) {
                 PacketHandler.sendToServer(new PacketSyncMD5(SEND_DATA, SyncHelper.md5requests[i], i));
@@ -65,7 +65,7 @@ public class PacketSyncMD5 extends PacketSyncStringArray {
 
     @Override
     public void receivedData(EntityPlayer player) {
-        if (player.worldObj.isRemote && EConfig.allowDataAndImagesFromServers) {
+        if (player.world.isRemote && EConfig.allowDataAndImagesFromServers) {
             if (tempClient.length > integer) {
                 tempClient[integer] = text;
                 //Now check if any parts are null

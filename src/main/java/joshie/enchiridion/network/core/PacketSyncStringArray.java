@@ -42,7 +42,7 @@ public abstract class PacketSyncStringArray extends PenguinPacket {
     
     @Override
     public void handlePacket(EntityPlayer player) {
-        boolean isClient = player.worldObj.isRemote;
+        boolean isClient = player.world.isRemote;
         if (part == SEND_HASH) receivedHashcode(player);
         else if (part == REQUEST_SIZE) receivedLengthRequest(player);
         else if (part == SEND_SIZE) receivedStringLength(player);

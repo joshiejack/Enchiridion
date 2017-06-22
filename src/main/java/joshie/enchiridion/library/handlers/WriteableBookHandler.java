@@ -26,7 +26,7 @@ public class WriteableBookHandler implements IBookHandler {
 
     @Override
     public void handle(ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
-        player.openGui(Enchiridion.instance, GuiIDs.WRITEABLE, player.worldObj, slotID, 0, 0);
+        player.openGui(Enchiridion.instance, GuiIDs.WRITEABLE, player.world, slotID, 0, 0);
     }
 
     //Our own version for the writeable so that we send packets to the library instead of the hand

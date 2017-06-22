@@ -60,7 +60,7 @@ public class Enchiridion {
 
     @EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
-        LibraryHelper.resetServer(FMLCommonHandler.instance().getMinecraftServerInstance().worldServers[0]);
+        LibraryHelper.resetServer(FMLCommonHandler.instance().getMinecraftServerInstance().worlds[0]);
         SyncHelper.resetSyncing();
         //Register commands
         

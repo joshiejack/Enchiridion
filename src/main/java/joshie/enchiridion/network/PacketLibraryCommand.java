@@ -35,7 +35,7 @@ public class PacketLibraryCommand extends PenguinPacket {
         //Reset command resets whether players have received books or not
         //Clear command clears the inventory of all the players libraries
         if (command.equals("refresh")) {
-            if (!player.worldObj.isRemote) {
+            if (!player.world.isRemote) {
                 ModSupport.reset(); //Reset the modded data, then tell clients to reset it and request data
                 PacketHandler.sendToEveryone(new PacketLibraryCommand("refresh"));
             } else {
@@ -43,13 +43,13 @@ public class PacketLibraryCommand extends PenguinPacket {
                 PacketHandler.sendToServer(new PacketSyncLibraryAllowed(REQUEST_SIZE));
             }
         } else if (command.equals("reset")) {
-            if (!player.worldObj.isRemote) {
+            if (!player.world.isRemote) {
                 for (LibraryInventory inventory: LibraryHelper.getAllInventories()) {
                     inventory.reset();
                 }
             }
         } else if (command.equals("clear")) {
-            if (!player.worldObj.isRemote) {
+            if (!player.world.isRemote) {
                 for (LibraryInventory inventory: LibraryHelper.getAllInventories()) {
                     inventory.clear();
                 }
