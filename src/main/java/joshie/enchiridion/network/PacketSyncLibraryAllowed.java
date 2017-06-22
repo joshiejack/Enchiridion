@@ -74,6 +74,7 @@ public class PacketSyncLibraryAllowed extends PacketSyncStringArray {
                 for (String s : client) {
                     builder.append(s);
                 }
+
                 ModSupport.loadDataFromJson(serverNameClient, builder.toString()); //Load the data here
             }
         }

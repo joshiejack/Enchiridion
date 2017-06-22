@@ -20,6 +20,11 @@ public class LibraryRegistry implements ILibraryRegistry {
     private LibraryRegistry() {
     }
 
+    public void unregisterBookHandlerForStackFromJSON(ItemStack itemStack, boolean matchDamage, boolean matchNBT) {
+        SafeStack safeStack = SafeStack.newInstance("IGNORE", itemStack, "IGNORE", matchDamage, matchNBT);
+        allowedBookRegistry.remove(safeStack); //Remove the book
+    }
+
     public void registerBookHandlerForStackFromJSON(String handlerName, ItemStack itemStack, boolean matchDamage, boolean matchNBT) {
         SafeStack safeStack = SafeStack.newInstance("IGNORE", itemStack, "IGNORE", matchDamage, matchNBT);
         allowedBookRegistry.put(safeStack, handlers.get(handlerName));
