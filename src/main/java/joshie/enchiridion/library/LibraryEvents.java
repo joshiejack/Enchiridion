@@ -16,6 +16,7 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -24,11 +25,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
 import org.lwjgl.input.Keyboard;
 
+@EventBusSubscriber
 public class LibraryEvents {
     //Setup the Client
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onOpenGui(GuiOpenEvent event) {
+    public static void onOpenGui(GuiOpenEvent event) {
         if (event.getGui() instanceof GuiWorldSelection || event.getGui() instanceof GuiMultiplayer) {
             LibraryHelper.resetClient();
         }
@@ -36,7 +38,7 @@ public class LibraryEvents {
 
     //Sync the library
     @SubscribeEvent
-    public void onPlayerLogin(PlayerLoggedInEvent event) {
+    public static void onPlayerLogin(PlayerLoggedInEvent event) {
         EntityPlayer player = event.player;
         if (player instanceof EntityPlayerMP) { //Sync what's in the library
             EntityPlayerMP mp = (EntityPlayerMP) player;
@@ -62,7 +64,7 @@ public class LibraryEvents {
 
     //Opening the key binding
     @SubscribeEvent
-    public void onKeyPress(KeyInputEvent event) {
+    public static void onKeyPress(KeyInputEvent event) {
         if (EClientProxy.libraryKeyBinding == null) return; //If the keybinding was never created, skip this
         if (GameSettings.isKeyDown(EClientProxy.libraryKeyBinding) && Minecraft.getMinecraft().inGameHasFocus && !Keyboard.isKeyDown(Keyboard.KEY_F3)) {
             PacketHandler.sendToServer(new PacketOpenLibrary()); //Let the server know!

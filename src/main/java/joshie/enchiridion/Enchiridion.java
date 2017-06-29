@@ -10,7 +10,6 @@ import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -46,7 +45,6 @@ public class Enchiridion {
     public void preInit(FMLPreInitializationEvent event) {
         root = new File(event.getModConfigurationDirectory(), MODID);
         EConfig.init(FileHelper.getConfigFile());
-        MinecraftForge.EVENT_BUS.register(new EConfig());
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         proxy.preInit();

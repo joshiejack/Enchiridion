@@ -7,6 +7,7 @@ import joshie.enchiridion.lib.EInfo;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.nio.charset.Charset;
 
 public class FileHelper {
     public static File getConfigFile() {
@@ -39,7 +40,7 @@ public class FileHelper {
 
         if (file.exists()) {
             try {
-                text = FileUtils.readFileToString(file);
+                text = FileUtils.readFileToString(file, Charset.defaultCharset());
             } catch (Exception ignored) {
             }
         }

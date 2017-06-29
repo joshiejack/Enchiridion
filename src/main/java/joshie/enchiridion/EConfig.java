@@ -6,11 +6,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Level;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 
+@EventBusSubscriber
 public class EConfig {
     public static Configuration config;
     public static final String CATEGORY_SETTINGS = "Settings";
@@ -72,7 +75,7 @@ public class EConfig {
     }
 
     @SubscribeEvent
-    public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
+    public static void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
         if (event.getModID().equalsIgnoreCase(EInfo.MODID)) {
             loadConfiguration();
         }
@@ -80,6 +83,7 @@ public class EConfig {
 
     private static ItemStack stack = ItemStack.EMPTY;
 
+    @Nonnull
     public static ItemStack getDefaultItem() {
         if (stack.isEmpty()) stack = StackHelper.getStackFromString(defaultItem);
         if (stack.isEmpty()) stack = new ItemStack(Items.IRON_SWORD);

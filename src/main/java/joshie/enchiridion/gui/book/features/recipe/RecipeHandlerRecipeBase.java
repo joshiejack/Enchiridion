@@ -84,8 +84,8 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
     }
 
     @Override
-    public void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list) {
-        for (IRecipe check : CraftingManager.getInstance().getRecipeList()) {
+    public void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list) { //TODO Test
+        for (IRecipe check : CraftingManager.REGISTRY) {
             ItemStack stack = check.getRecipeOutput();
             //CHECK -- > EXTENDS the class
             if (stack.isEmpty() || (!getRecipeClass().isAssignableFrom(check.getClass()))) continue;
@@ -129,8 +129,9 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
         EnchiridionAPI.draw.drawTexturedRectangle(84D, 42D, 1, 63, 20, 14, 1F);
     }
 
+    @Nonnull
     protected ItemStack toStack(IItemStack iStack) {
-        if (iStack == null) return null;
+        if (iStack == null) return ItemStack.EMPTY;
         return (ItemStack) iStack.getInternal();
     }
 }

@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 public class ECreativeTab extends CreativeTabs {
     public static final ECreativeTab ENCHIRIDION = new ECreativeTab(EInfo.MODID);
     @Nonnull
-    public ItemStack itemstack;
+    public ItemStack itemstack = ItemStack.EMPTY;
 
     public ECreativeTab(String label) {
         super(label);
@@ -32,7 +32,7 @@ public class ECreativeTab extends CreativeTabs {
         else return itemstack;
     }
 
-    public void setItemStack(ItemStack stack) {
+    public void setItemStack(@Nonnull ItemStack stack) {
         itemstack = stack;
     }
 

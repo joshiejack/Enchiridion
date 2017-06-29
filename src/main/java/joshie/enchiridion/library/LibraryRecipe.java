@@ -8,12 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
-public class LibraryRecipe implements IRecipe {
+public class LibraryRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
     public static final Set<SafeStack> VALID_WOODS = new HashSet<>();
 
     private boolean isWood(@Nonnull ItemStack stack) {
@@ -54,21 +55,14 @@ public class LibraryRecipe implements IRecipe {
     }
 
     @Override
-    public int getRecipeSize() {
-        return 3;
+    public boolean canFit(int width, int height) {
+        return width * height >= 3;
     }
 
     @Override
     @Nonnull
     public ItemStack getRecipeOutput() {
         return new ItemStack(ECommonProxy.book, 1, 1);
-    }
-
-    @Nonnull
-    private ItemStack getStackOfOne(InventoryCrafting inv, int index) {
-        ItemStack ret = inv.getStackInSlot(index).copy();
-        ret.setCount(1);
-        return ret;
     }
 
     @Override
@@ -81,5 +75,12 @@ public class LibraryRecipe implements IRecipe {
         list.set(5, getStackOfOne(inv, 5));
 
         return list;
+    }
+
+    @Nonnull
+    private ItemStack getStackOfOne(InventoryCrafting inv, int index) {
+        ItemStack ret = inv.getStackInSlot(index).copy();
+        ret.setCount(1);
+        return ret;
     }
 }

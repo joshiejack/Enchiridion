@@ -9,7 +9,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,18 +17,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
+@EventBusSubscriber
 public class SmartLibrary implements IBakedModel {
     private static IBakedModel library;
 
     @SubscribeEvent
-    public void onCookery(ModelBakeEvent event) {
-        event.getModelRegistry().putObject(EClientProxy.libraryItem, this);
+    public static void onCookery(ModelBakeEvent event) {
+        event.getModelRegistry().putObject(EClientProxy.libraryItem, new SmartLibrary());
     }
 
     @Override
@@ -72,7 +74,7 @@ public class SmartLibrary implements IBakedModel {
     @Override
     @Nonnull
     public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -94,11 +96,5 @@ public class SmartLibrary implements IBakedModel {
     @Nonnull
     public TextureAtlasSprite getParticleTexture() {
         return library.getParticleTexture();
-    }
-
-    @Override
-    @Nonnull
-    public ItemCameraTransforms getItemCameraTransforms() {
-        return ItemCameraTransforms.DEFAULT;
     }
 }

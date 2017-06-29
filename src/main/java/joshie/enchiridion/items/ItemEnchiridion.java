@@ -2,6 +2,7 @@ package joshie.enchiridion.items;
 
 import amerifrance.guideapi.api.IGuideItem;
 import amerifrance.guideapi.api.impl.Book;
+import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
@@ -23,9 +24,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -37,6 +40,7 @@ import static net.minecraft.util.text.TextFormatting.DARK_GREEN;
 import static net.minecraft.util.text.TextFormatting.RESET;
 
 @Optional.Interface(modid = "guideapi", iface = "amerifrance.guideapi.api.IGuideItem")
+@EventBusSubscriber
 public class ItemEnchiridion extends Item implements IGuideItem {
     public ItemEnchiridion() {
         setHasSubtypes(true);
@@ -49,12 +53,12 @@ public class ItemEnchiridion extends Item implements IGuideItem {
     }
 
     @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, @Nonnull ItemStack newStack, boolean slotChanged) {
+    public boolean shouldCauseReequipAnimation(@Nonnull ItemStack oldStack, @Nonnull ItemStack newStack, boolean slotChanged) {
         return oldStack.getItem() != newStack.getItem() || oldStack.getItemDamage() != newStack.getItemDamage();
     }
 
     @Override
-    public int getItemStackLimit(ItemStack stack) {
+    public int getItemStackLimit(@Nonnull ItemStack stack) {
         return stack.getItemDamage() == 1 ? 1 : 16;
     }
 
@@ -76,12 +80,12 @@ public class ItemEnchiridion extends Item implements IGuideItem {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
+        super.addInformation(stack, world, tooltip, flag);
         if (stack.getItemDamage() == 1) {
-            EntityPlayer player = Minecraft.getMinecraft().player;
-            int currentBook = LibraryHelper.getLibraryContents(player).getCurrentBook();
-            ItemStack internal = LibraryHelper.getLibraryContents(player).getStackInSlot(currentBook);
+            int currentBook = LibraryHelper.getClientLibraryContents().getCurrentBook();
+            ItemStack internal = LibraryHelper.getClientLibraryContents().getStackInSlot(currentBook);
             if (!internal.isEmpty()) {
-                tooltip.addAll(internal.getTooltip(player, flag));
+                tooltip.addAll(internal.getTooltip(Minecraft.getMinecraft().player, flag));
             }
         } else {
             IBook book = BookRegistry.INSTANCE.getBook(stack);
@@ -133,7 +137,11 @@ public class ItemEnchiridion extends Item implements IGuideItem {
     public Item setUnlocalizedName(@Nonnull String unlocalizedName) {
         super.setUnlocalizedName(unlocalizedName);
         setRegistryName(unlocalizedName);
-        GameRegistry.register(this);
         return this;
+    }
+
+    @SubscribeEvent
+    public static void registerItem(RegistryEvent.Register<Item> event) {
+        event.getRegistry().register(ECommonProxy.book);
     }
 }

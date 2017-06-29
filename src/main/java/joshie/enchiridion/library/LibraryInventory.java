@@ -48,7 +48,7 @@ public class LibraryInventory extends InventoryStorage {
         markDirty();
     }
 
-    private boolean insertIntoNextFreeSlot(ItemStack stack) {
+    private boolean insertIntoNextFreeSlot(@Nonnull ItemStack stack) {
         for (int i = 0; i < inventory.size(); i++) {
             if (inventory.get(i).isEmpty()) {
                 inventory.set(i, stack);

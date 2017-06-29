@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -50,7 +51,7 @@ public class BookRegistry implements ItemMeshDefinition {
         for (File file : files) { //Grab a list of all the json files in the directory
             //Read all the json books from this directory
             try {
-                register(GsonHelper.getModifiedGson().fromJson(FileUtils.readFileToString(file), Book.class));
+                register(GsonHelper.getModifiedGson().fromJson(FileUtils.readFileToString(file, Charset.defaultCharset()), Book.class));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -61,7 +62,7 @@ public class BookRegistry implements ItemMeshDefinition {
         for (File file : files) { //Grab a list of all the json files in the directory
             //Read all the json books from this directory
             try {
-                GuiSimpleEditorTemplate.INSTANCE.registerTemplate(GsonHelper.getModifiedGson().fromJson(FileUtils.readFileToString(file), Template.class));
+                GuiSimpleEditorTemplate.INSTANCE.registerTemplate(GsonHelper.getModifiedGson().fromJson(FileUtils.readFileToString(file, Charset.defaultCharset()), Template.class));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -80,7 +81,7 @@ public class BookRegistry implements ItemMeshDefinition {
 
                 if (path1.startsWith(path2) && fileName.endsWith(".json")) {
                     try {
-                        String json = IOUtils.toString(zipfile.getInputStream(zipentry));
+                        String json = IOUtils.toString(zipfile.getInputStream(zipentry), Charset.defaultCharset());
                         IBook data = register(GsonHelper.getModifiedGson().fromJson(json, Book.class).setModID(modid));
                         Enchiridion.log(Level.INFO, "Successfully loaded in the book with the unique identifier: " + data.getUniqueName() + " for the language: " + data.getLanguageKey());
                     } catch (Exception ignored) {
