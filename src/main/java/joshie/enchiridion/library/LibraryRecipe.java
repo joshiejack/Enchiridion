@@ -1,21 +1,29 @@
 package joshie.enchiridion.library;
 
 import joshie.enchiridion.ECommonProxy;
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
+import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.util.SafeStack;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
+@EventBusSubscriber
 public class LibraryRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
     public static final Set<SafeStack> VALID_WOODS = new HashSet<>();
+
 
     private boolean isWood(@Nonnull ItemStack stack) {
         for (SafeStack safe : SafeStack.allInstances(stack)) {
@@ -51,7 +59,7 @@ public class LibraryRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements 
     @Override
     @Nonnull
     public ItemStack getCraftingResult(@Nonnull InventoryCrafting inv) {
-        return matches(inv, null) ? getRecipeOutput() : ItemStack.EMPTY;
+        return getRecipeOutput();
     }
 
     @Override
@@ -82,5 +90,14 @@ public class LibraryRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements 
         ItemStack ret = inv.getStackInSlot(index).copy();
         ret.setCount(1);
         return ret;
+    }
+
+    @SubscribeEvent
+    public static void registerRecipe(RegistryEvent.Register<IRecipe> event) {
+        LibraryRecipe recipe = new LibraryRecipe();
+        recipe.setRegistryName(new ResourceLocation(EInfo.MODID, "library"));
+        if (EConfig.addOreDictionaryRecipeForLibrary) {
+            event.getRegistry().register(recipe);
+        }
     }
 }

@@ -51,7 +51,7 @@ public class RecipeHandlerMTAdvancedShapeless extends RecipeHandlerRecipeBase {
 
     static {
         try {
-            clazz = Class.forName("minetweaker.mc1112.recipes.ShapelessRecipeAdvanced");
+            clazz = Class.forName("minetweaker.mc12.recipes.ShapelessRecipeAdvanced");
             shapeless = clazz.getDeclaredField("recipe");
             shapeless.setAccessible(true);
         } catch (Exception ignored) {

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "enchiridion:book",
+    "data": 1
+  },
+  "pattern": [
+    "WWW",
+    "BBB",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:planks",
+      "data": 1
+    },
+    "B": {
+      "item": "minecraft:writable_book"
+    }
+  }
+}

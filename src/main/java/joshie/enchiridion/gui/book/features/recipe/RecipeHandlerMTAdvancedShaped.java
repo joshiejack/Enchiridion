@@ -51,7 +51,7 @@ public class RecipeHandlerMTAdvancedShaped extends RecipeHandlerRecipeBase {
 
     static {
         try {
-            clazz = Class.forName("minetweaker.mc1112.recipes.ShapedRecipeAdvanced");
+            clazz = Class.forName("minetweaker.mc12.recipes.ShapedRecipeAdvanced");
             shaped = clazz.getDeclaredField("recipe");
             shaped.setAccessible(true);
         } catch (Exception ignored) {

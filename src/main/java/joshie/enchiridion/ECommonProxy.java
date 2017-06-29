@@ -49,14 +49,9 @@ public class ECommonProxy implements IGuiHandler {
         setupClient();
     }
 
-    //Adds the library recipe
-    public void addRecipe() { //TODO
-        if (EConfig.addOreDictionaryRecipeForLibrary) {
-            //RecipeSorter.register("enchiridion:library", LibraryRecipe.class, Category.SHAPED, "after:minecraft:shaped before:minecraft:shapeless");
-            //GameRegistry.addRecipe(new LibraryRecipe());
-        } else if (EConfig.addWrittenBookRecipeForLibrary) {
-            //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ECommonProxy.book, 1, 1), "WWW", "BBB", "WWW", new ItemStack(Blocks.PLANKS, 1, 1), new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Blocks.PLANKS, 1, 1)));
-            //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ECommonProxy.book, 1, 1), "WWW", "BBB", "WWW", new ItemStack(Blocks.PLANKS, 1, 1), new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Blocks.PLANKS, 1, 5)));
+    public void addRecipe() {
+        if (EConfig.addWrittenBookRecipeForLibrary) {
+            //TODO Config option is currently not possible. Forge plans to add a way to do this
         }
     }
 
