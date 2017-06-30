@@ -22,15 +22,10 @@ public class ItemListHelper {
             if (item == null) {
                 continue;
             }
-
-            if (item.getCreativeTabs().length > 0) {
-                for (CreativeTabs tab : item.getCreativeTabs()) {
-                    try {
-                        item.getSubItems(tab, items); //TODO Fix error with ItemEnchantedBook
-                    } catch (Exception e) {
-                        Enchiridion.log(Level.ERROR, "Enchiridion had an issue when trying to load the item: " + item.getClass());
-                    }
-                }
+            try {
+                item.getSubItems(CreativeTabs.SEARCH, items);
+            } catch (Exception e) {
+                Enchiridion.log(Level.ERROR, "Enchiridion had an issue when trying to load the item: " + item.getClass());
             }
         }
         allItems.addAll(items);
