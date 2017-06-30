@@ -52,7 +52,6 @@ public class Enchiridion {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        proxy.addRecipe();
         proxy.setupFont();
     }
 

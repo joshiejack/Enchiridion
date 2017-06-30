@@ -1,5 +1,6 @@
 package joshie.enchiridion.jei;
 
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.gui.library.GuiLibrary;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
@@ -19,8 +20,10 @@ import java.util.List;
 public class LibraryPlugin implements IModPlugin, IAdvancedGuiHandler<GuiLibrary> {
     @Override
     public void register(@Nonnull IModRegistry registry) {
-        registry.handleRecipes(ShapedOreRecipe.class, recipe -> new LibraryRecipeWrapper(), VanillaRecipeCategoryUid.CRAFTING);
-        registry.addRecipes(Collections.singletonList(new LibraryRecipeWrapper()), VanillaRecipeCategoryUid.CRAFTING);
+        if (EConfig.addOreDictionaryRecipeForLibrary) {
+            registry.handleRecipes(ShapedOreRecipe.class, recipe -> new LibraryRecipeWrapper(), VanillaRecipeCategoryUid.CRAFTING);
+            registry.addRecipes(Collections.singletonList(new LibraryRecipeWrapper()), VanillaRecipeCategoryUid.CRAFTING);
+        }
         registry.addAdvancedGuiHandlers(this);
     }
 

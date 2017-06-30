@@ -1,0 +1,5 @@
+{
+  "conditions": {
+    "library_writable_enabled": "joshie.enchiridion.library.LibraryConditionFactory"
+  }
+}

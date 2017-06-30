@@ -85,6 +85,11 @@ public class LibraryRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements 
         return list;
     }
 
+    @Override
+    public boolean isHidden() {
+        return true; //Hide recipe, since the recipe book can't handle custom IRecipes properly currently
+    }
+
     @Nonnull
     private ItemStack getStackOfOne(InventoryCrafting inv, int index) {
         ItemStack ret = inv.getStackInSlot(index).copy();

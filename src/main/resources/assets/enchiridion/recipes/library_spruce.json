@@ -1,4 +1,10 @@
 {
+  "conditions": [
+    {
+      "type": "enchiridion:library_writable_enabled",
+      "value": true
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "result": {
     "item": "enchiridion:book",

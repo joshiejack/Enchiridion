@@ -49,12 +49,6 @@ public class ECommonProxy implements IGuiHandler {
         setupClient();
     }
 
-    public void addRecipe() {
-        if (EConfig.addWrittenBookRecipeForLibrary) {
-            //TODO Config option is currently not possible. Forge plans to add a way to do this
-        }
-    }
-
     public void attemptToRegisterModdedBookHandler(Class clazz) {
         try {
             Object o = clazz.newInstance(); //Let's try this!

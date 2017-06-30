@@ -23,12 +23,11 @@ public class ItemListHelper {
                 continue;
             }
 
-            if (item.getCreativeTabs().length > 0 && item.getCreativeTab().setRelevantEnchantmentTypes()) {
+            if (item.getCreativeTabs().length > 0) {
                 for (CreativeTabs tab : item.getCreativeTabs()) {
                     try {
-                        item.getSubItems(tab, items);
+                        item.getSubItems(tab, items); //TODO Fix error with ItemEnchantedBook
                     } catch (Exception e) {
-                        System.out.println("Error Item: " + item.getRegistryName() + " Tab: " + tab.getTabLabel());
                         Enchiridion.log(Level.ERROR, "Enchiridion had an issue when trying to load the item: " + item.getClass());
                     }
                 }
