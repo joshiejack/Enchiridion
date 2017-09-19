@@ -1,9 +1,9 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import minetweaker.api.item.IIngredient;
-import minetweaker.api.item.IItemStack;
-import minetweaker.api.oredict.IOreDictEntry;
-import minetweaker.api.recipes.ShapedRecipe;
+import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.oredict.IOreDictEntry;
+import crafttweaker.api.recipes.ShapedRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
@@ -51,7 +51,7 @@ public class RecipeHandlerMTAdvancedShaped extends RecipeHandlerRecipeBase {
 
     static {
         try {
-            clazz = Class.forName("minetweaker.mc12.recipes.ShapedRecipeAdvanced");
+            clazz = Class.forName("crafttweaker.mc1120.recipes.ShapedRecipeAdvanced");
             shaped = clazz.getDeclaredField("recipe");
             shaped.setAccessible(true);
         } catch (Exception ignored) {

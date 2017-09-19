@@ -1,9 +1,9 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import minetweaker.api.item.IIngredient;
-import minetweaker.api.item.IItemStack;
-import minetweaker.api.oredict.IOreDictEntry;
-import minetweaker.api.recipes.ShapelessRecipe;
+import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.oredict.IOreDictEntry;
+import crafttweaker.api.recipes.ShapelessRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
@@ -51,7 +51,7 @@ public class RecipeHandlerMTAdvancedShapeless extends RecipeHandlerRecipeBase {
 
     static {
         try {
-            clazz = Class.forName("minetweaker.mc12.recipes.ShapelessRecipeAdvanced");
+            clazz = Class.forName("crafttweaker.mc1120.recipes.ShapelessRecipeAdvanced");
             shapeless = clazz.getDeclaredField("recipe");
             shapeless.setAccessible(true);
         } catch (Exception ignored) {

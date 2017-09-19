@@ -1,8 +1,8 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
+import crafttweaker.api.item.IItemStack;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
-import minetweaker.api.item.IItemStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

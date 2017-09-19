@@ -19,13 +19,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-@EventBusSubscriber
+@EventBusSubscriber(value = Side.CLIENT)
 public class SmartLibrary implements IBakedModel {
     private static IBakedModel library;
 
