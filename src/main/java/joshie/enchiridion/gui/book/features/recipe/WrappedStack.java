@@ -4,6 +4,7 @@ import joshie.enchiridion.api.recipe.IItemStack;
 import joshie.enchiridion.helpers.ItemListHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class WrappedStack implements IItemStack {
     protected static final Random RAND = new Random();
-    protected List<ItemStack> permutations = new ArrayList<>();
+    protected NonNullList<ItemStack> permutations = NonNullList.create();
     protected boolean hasPermutations = false;
     @Nonnull
     protected ItemStack stack;
@@ -35,14 +36,18 @@ public class WrappedStack implements IItemStack {
                 object = OreDictionary.getOres((String) object);
             }
             if (object instanceof Ingredient) {
-                Collections.addAll(permutations, ((Ingredient)object).getMatchingStacks());
+                if (object == Ingredient.EMPTY) {
+                    permutations.add(ItemStack.EMPTY);
+                } else {
+                    Collections.addAll(permutations, ((Ingredient) object).getMatchingStacks());
+                }
             } else if (object instanceof ItemStack) {
                 stack = ((ItemStack) object).copy();
                 if (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
                     permutations.addAll(ItemListHelper.items().stream().filter(aStack -> aStack.getItem() == stack.getItem()).collect(Collectors.toList()));
                 } else permutations.add(stack);
             } else if (object instanceof List) {
-                Object first = ((List)object).get(0);
+                Object first = ((List) object).get(0);
                 if (first instanceof Ingredient) {
                     List<Ingredient> ingredients = new ArrayList<Ingredient>((List) object);
                     for (Ingredient stacky : ingredients) {

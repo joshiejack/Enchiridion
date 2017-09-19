@@ -84,7 +84,7 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
     }
 
     @Override
-    public void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list) { //TODO Test
+    public void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list) {
         for (IRecipe check : CraftingManager.REGISTRY) {
             ItemStack stack = check.getRecipeOutput();
             //CHECK -- > EXTENDS the class
