@@ -4,7 +4,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class RecipeHandlerShapedVanilla extends RecipeHandlerRecipeBase {
     public RecipeHandlerShapedVanilla() {
@@ -13,7 +12,7 @@ public class RecipeHandlerShapedVanilla extends RecipeHandlerRecipeBase {
     public RecipeHandlerShapedVanilla(IRecipe recipe) {
         try {
             ShapedRecipes shaped = (ShapedRecipes) recipe;
-            init(recipe.getRecipeOutput(), new ArrayList<>(Collections.singletonList(shaped.recipeItems)), shaped.recipeWidth);
+            init(recipe.getRecipeOutput(), new ArrayList<>(shaped.recipeItems), shaped.recipeWidth);
         } catch (Exception e) {
             e.printStackTrace();
         }

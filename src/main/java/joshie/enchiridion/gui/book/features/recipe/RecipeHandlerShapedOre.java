@@ -1,11 +1,12 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class RecipeHandlerShapedOre extends RecipeHandlerRecipeBase {
     public RecipeHandlerShapedOre() {
@@ -13,7 +14,7 @@ public class RecipeHandlerShapedOre extends RecipeHandlerRecipeBase {
 
     public RecipeHandlerShapedOre(IRecipe recipe) {
         try {
-            init(recipe.getRecipeOutput(), new ArrayList<>(Arrays.asList((Object[]) input.get(recipe))), width.getInt(recipe));
+            init(recipe.getRecipeOutput(), new ArrayList<>((NonNullList<Ingredient>)input.get(recipe)), width.getInt(recipe));
         } catch (Exception e) {
             e.printStackTrace();
         }
