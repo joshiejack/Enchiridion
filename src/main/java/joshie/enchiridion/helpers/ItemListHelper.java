@@ -41,6 +41,9 @@ public class ItemListHelper {
     }
 
     public static void addInventory() {
-        allItems.addAll(Minecraft.getMinecraft().player.inventory.mainInventory.stream().filter(stack -> !stack.isEmpty()).filter(stack -> !allItems().contains(stack)).collect(Collectors.toList()));
+        try {
+            allItems.addAll(Minecraft.getMinecraft().player.inventory.mainInventory.stream().filter(stack -> !stack.isEmpty()).filter(stack -> !allItems().contains(stack)).collect(Collectors.toList()));
+        } catch (Exception ignored) {
+        }
     }
 }
