@@ -70,7 +70,7 @@ publishing {
     tasks.publish.dependsOn 'build'
     publications {
         mavenJava(MavenPublication) {
-            artifactId 'Enchiridion'
+            artifactId "enchiridion_${minecraft_version}"
             artifact jar
         }
     }
