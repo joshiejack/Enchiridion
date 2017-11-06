@@ -18,8 +18,8 @@ repositories {
 
 dependencies {
   // compile against Enchiridion
-  deobfCompile "joshie.enchiridion:enchiridion${mc_version}:${mc_version}-${enchiridion_version}"
+  deobfCompile "uk.joshie.enchiridion:enchiridion${mc_version}:${mc_version}-${enchiridion_version}"
 }
 ```
 
-`${mc_version}` & `${enchiridion_version}` can be found [here](http://girafi.dk/maven/com/girafi/enchiridion/), check the file name of the version you want.
+`${mc_version}` & `${enchiridion_version}` can be found [here](http://girafi.dk/maven/uk/joshie/enchiridion/), check the file name of the version you want.
