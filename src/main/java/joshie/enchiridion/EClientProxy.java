@@ -3,6 +3,7 @@ package joshie.enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
+import joshie.enchiridion.data.book.BookMeshDefinition;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.data.book.Page;
 import joshie.enchiridion.data.book.Template;
@@ -66,7 +67,7 @@ public class EClientProxy extends ECommonProxy {
         BookRegistry.INSTANCE.loadBooksFromConfig();
         ModelBakery.registerItemVariants(ECommonProxy.book, BOOK_RESOURCE);
         MinecraftForge.EVENT_BUS.register(new SmartLibrary());
-        ModelLoader.setCustomMeshDefinition(ECommonProxy.book, BookRegistry.INSTANCE);
+        ModelLoader.setCustomMeshDefinition(ECommonProxy.book, BookMeshDefinition.INSTANCE);
         EnchiridionAPI.book = GuiBook.INSTANCE;
         EnchiridionAPI.draw = GuiBook.INSTANCE;
         EnchiridionAPI.editor = new EditHelper();

@@ -1,6 +1,5 @@
 package joshie.enchiridion.data.book;
 
-import joshie.enchiridion.EClientProxy;
 import joshie.enchiridion.ECommonProxy;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
@@ -16,7 +15,6 @@ import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.json.BookIconTemplate;
 import joshie.enchiridion.json.BookIconTemplate.Icons;
 import joshie.enchiridion.lib.EInfo;
-import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
@@ -25,7 +23,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Level;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -37,7 +34,7 @@ import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-public class BookRegistry implements ItemMeshDefinition {
+public class BookRegistry {
     public static final BookRegistry INSTANCE = new BookRegistry();
 
     private BookRegistry() {
@@ -95,8 +92,8 @@ public class BookRegistry implements ItemMeshDefinition {
     }
 
     private final HashMap<String, HashMap<String, IBook>> books = new HashMap<>();
-    private final HashMap<String, ModelResourceLocation> locations = new HashMap<>();
-    private static final ModelResourceLocation DFLT = new ModelResourceLocation("minecraft:book", "inventory");
+    public final HashMap<String, ModelResourceLocation> locations = new HashMap<>();
+    public final ModelResourceLocation DFLT = new ModelResourceLocation("minecraft:book", "inventory");
 
     public Collection<ModelResourceLocation> getModels() {
         return locations.values();
@@ -217,16 +214,5 @@ public class BookRegistry implements ItemMeshDefinition {
         IBook translated = translations.get(language);
         if (translated != null) return translated;
         else return translations.get("en_US");
-    }
-
-    @Override
-    @Nonnull
-    public ModelResourceLocation getModelLocation(@Nonnull ItemStack stack) {
-        if (stack.getItemDamage() == 1) return EClientProxy.libraryItem;
-        else {
-            IBook book = getBook(stack);
-            if (book == null) return DFLT;
-            else return locations.get(book.getUniqueName());
-        }
     }
 }

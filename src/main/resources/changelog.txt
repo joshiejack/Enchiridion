@@ -1,3 +1,6 @@
+Enchiridion - 3.3.3
+• Fixed server startup crash with CraftTweaker
+
 Enchiridion - 3.3.2
 • Fixed crash when clicking an item or recipe in the book
 

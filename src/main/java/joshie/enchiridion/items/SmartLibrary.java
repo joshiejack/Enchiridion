@@ -2,7 +2,7 @@ package joshie.enchiridion.items;
 
 import com.google.common.collect.ImmutableList;
 import joshie.enchiridion.EClientProxy;
-import joshie.enchiridion.data.book.BookRegistry;
+import joshie.enchiridion.data.book.BookMeshDefinition;
 import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -59,7 +59,7 @@ public class SmartLibrary implements IBakedModel {
             if (mesher == null) mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
             library = mesher.getModelManager().getModel(EClientProxy.library);
             if (stack.getItemDamage() == 0) { //If we're a book
-                ret = mesher.getModelManager().getModel(BookRegistry.INSTANCE.getModelLocation(stack));
+                ret = mesher.getModelManager().getModel(BookMeshDefinition.INSTANCE.getModelLocation(stack));
             } else {
                 ItemStack book = LibraryHelper.getClientLibraryContents().getCurrentBookItem();
                 ret = book.isEmpty() ? library : mesher.getItemModel(book);
