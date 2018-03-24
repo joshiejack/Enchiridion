@@ -20,4 +20,4 @@ dependencies {
 }
 ```
 
-`${mc_version}` & `${enchiridion_version}` can be found [here](http://girafi.dk/maven/uk/joshie/enchiridion/), check the file name of the version you want.
+`${mc_version}` & `${enchiridion_version}` can be found [here](http://girafi.dk/maven/uk/joshiejack/enchiridion/), check the file name of the version you want.
