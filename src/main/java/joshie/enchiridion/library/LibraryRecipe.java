@@ -86,7 +86,7 @@ public class LibraryRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements 
     }
 
     @Override
-    public boolean isHidden() {
+    public boolean isDynamic() {
         return true; //Hide recipe, since the recipe book can't handle custom IRecipes properly currently
     }
 

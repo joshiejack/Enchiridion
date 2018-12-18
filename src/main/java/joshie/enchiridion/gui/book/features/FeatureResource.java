@@ -33,7 +33,7 @@ public class FeatureResource extends FeatureAbstract {
     }
 
     public void setResource(ResourceLocation resource) {
-        this.resource = new ResourceLocation(resource.getResourceDomain(), resource.getResourcePath());
+        this.resource = new ResourceLocation(resource.getPath(), resource.getPath());
         this.path = resource.toString();
     }
 

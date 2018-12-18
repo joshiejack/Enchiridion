@@ -7,7 +7,6 @@ import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.gui.IAdvancedGuiHandler;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,7 +20,6 @@ public class LibraryPlugin implements IModPlugin, IAdvancedGuiHandler<GuiLibrary
     @Override
     public void register(@Nonnull IModRegistry registry) {
         if (EConfig.addOreDictionaryRecipeForLibrary) {
-            registry.handleRecipes(ShapedOreRecipe.class, recipe -> new LibraryRecipeWrapper(), VanillaRecipeCategoryUid.CRAFTING);
             registry.addRecipes(Collections.singletonList(new LibraryRecipeWrapper()), VanillaRecipeCategoryUid.CRAFTING);
         }
         registry.addAdvancedGuiHandlers(this);

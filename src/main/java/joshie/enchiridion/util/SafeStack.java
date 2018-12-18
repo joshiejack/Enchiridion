@@ -89,7 +89,7 @@ public class SafeStack {
             super(stack);
 
             ResourceLocation key = Item.REGISTRY.getNameForObject(stack.getItem());
-            modid = key.getResourceDomain();
+            modid = key.getPath();
         }
 
         @Override

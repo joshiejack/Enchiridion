@@ -30,7 +30,7 @@ public class EResourcePack implements IResourcePack {
     private static final Set<String> DOMAINS = ImmutableSet.of(EInfo.MODID);
 
     private File getFileLocationFromResource(ResourceLocation location) {
-        String path = location.getResourcePath();
+        String path = location.getPath();
         String name = path.startsWith("templates") ? path.substring(10) : path.startsWith("images") ? path.substring(7) : path.startsWith("textures") ? path.substring(14) : path.substring(12);
         File directory = path.startsWith("templates") ? FileHelper.getTemplatesDirectory() : path.startsWith("images") ? FileHelper.getImagesDirectory() : FileHelper.getIconsDirectory();
         return new File(directory, name);
@@ -39,21 +39,21 @@ public class EResourcePack implements IResourcePack {
     @Override
     @Nonnull
     public InputStream getInputStream(@Nonnull ResourceLocation location) throws IOException {
-        if (location.getResourcePath().equals("textures/wiki/enchiridion_logo.png")) //special case the logo
+        if (location.getPath().equals("textures/wiki/enchiridion_logo.png")) //special case the logo
             return EResourcePack.class.getResourceAsStream("/assets/enchiridion/textures/books/enchiridion_logo.png");
         return FileUtils.openInputStream(getFileLocationFromResource(location));
     }
 
     //If the texture folder is the one enchiridion uses itself, use the normal loading
     public boolean isValidLocation(ResourceLocation location) {
-        String path = location.getResourcePath();
+        String path = location.getPath();
         return !path.startsWith("textures/books") && !path.contains("enchiridion.json") && !path.contains("library.json");
     }
 
     @Override
     public boolean resourceExists(@Nonnull ResourceLocation location) {
         if (!isValidLocation(location)) return false;
-        String path = location.getResourcePath();
+        String path = location.getPath();
         if (path.startsWith("models") || path.startsWith("textures") || path.startsWith("images") || path.startsWith("templates")) {
             File file = getFileLocationFromResource(location);
             if (EConfig.debugMode && !path.equals("textures/wiki/enchiridion_logo.png"))

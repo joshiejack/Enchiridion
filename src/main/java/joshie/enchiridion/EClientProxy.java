@@ -156,7 +156,7 @@ public class EClientProxy extends ECommonProxy {
             if (stack.getItemDamage() == 1) {
                 ItemStack current = LibraryHelper.getLibraryContents(MCClientHelper.getPlayer()).getCurrentBookItem();
                 if (!current.isEmpty()) {
-                    return Minecraft.getMinecraft().getItemColors().getColorFromItemstack(current, tintIndex);
+                    return Minecraft.getMinecraft().getItemColors().colorMultiplier(current, tintIndex);
                 }
             }
 

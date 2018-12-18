@@ -134,8 +134,8 @@ public class ItemEnchiridion extends Item implements IGuideItem {
 
     @Override
     @Nonnull
-    public Item setUnlocalizedName(@Nonnull String unlocalizedName) {
-        super.setUnlocalizedName(unlocalizedName);
+    public Item setTranslationKey(@Nonnull String unlocalizedName) {
+        super.setTranslationKey(unlocalizedName);
         setRegistryName(unlocalizedName);
         return this;
     }

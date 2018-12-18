@@ -2,6 +2,7 @@ package joshie.enchiridion.items;
 
 import com.google.common.collect.ImmutableList;
 import joshie.enchiridion.EClientProxy;
+import joshie.enchiridion.EConfig;
 import joshie.enchiridion.data.book.BookMeshDefinition;
 import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.block.state.IBlockState;
@@ -32,7 +33,9 @@ public class SmartLibrary implements IBakedModel {
 
     @SubscribeEvent
     public static void onCookery(ModelBakeEvent event) {
-        event.getModelRegistry().putObject(EClientProxy.libraryItem, new SmartLibrary());
+        if (EConfig.libraryAsItem) {
+            event.getModelRegistry().putObject(EClientProxy.libraryItem, new SmartLibrary());
+        }
     }
 
     @Override

@@ -21,14 +21,15 @@ public class ECreativeTab extends CreativeTabs {
 
     @Override
     @Nonnull
-    public ItemStack getTabIconItem() {
+    public ItemStack createIcon() {
         return new ItemStack(Items.WRITABLE_BOOK);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     @Nonnull
-    public ItemStack getIconItemStack() {
-        if (itemstack.isEmpty()) return super.getIconItemStack();
+    public ItemStack getIcon() {
+        if (itemstack.isEmpty()) return super.getIcon();
         else return itemstack;
     }
 
@@ -39,7 +40,7 @@ public class ECreativeTab extends CreativeTabs {
     @Override
     @SideOnly(Side.CLIENT)
     @Nonnull
-    public String getTranslatedTabLabel() {
+    public String getTranslationKey() {
         return Enchiridion.translate("creative");
     }
 }
