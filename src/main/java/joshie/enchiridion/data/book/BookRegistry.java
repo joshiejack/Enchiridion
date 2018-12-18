@@ -174,14 +174,8 @@ public class BookRegistry {
 
         //Now that all that is done, let's go through and remove all the errored features
         for (IPage page : book.getPages()) {
-            Iterator<IFeatureProvider> feature = page.getFeatures().iterator();
-            while (feature.hasNext()) {
-                if (feature.next().getFeature() instanceof FeatureError) {
-                    feature.remove();
-                }
-            }
+            page.getFeatures().removeIf(iFeatureProvider -> iFeatureProvider.getFeature() instanceof FeatureError);
         }
-
         return book;
     }
 
@@ -198,7 +192,7 @@ public class BookRegistry {
     public IBook getBook(ItemStack held) {
         if (held == null) return null;
         if (!held.hasTagCompound()) return null;
-        String identifier = held.getTagCompound().getString("identifier");
+        String identifier = Objects.requireNonNull(held.getTagCompound()).getString("identifier");
         return getBookByName(identifier);
     }
 
