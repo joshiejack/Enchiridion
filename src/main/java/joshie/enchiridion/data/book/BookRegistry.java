@@ -207,6 +207,6 @@ public class BookRegistry {
         String language = MCClientHelper.getLang();
         IBook translated = translations.get(language);
         if (translated != null) return translated;
-        else return translations.get("en_US");
+        else return translations.get("en_us");
     }
 }

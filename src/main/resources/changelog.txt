@@ -1,3 +1,7 @@
+Enchiridion - 3.3.4
+• Fixed startup crash when disabling library item
+• Fixed language related crashes and issues
+
 Enchiridion - 3.3.3
 • Fixed server startup crash with CraftTweaker
 
