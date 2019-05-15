@@ -52,16 +52,16 @@ public class GuiLayers extends AbstractGuiOverlay {
             int color2 = 0x5579725A;
 
             if (feature.isFromTemplate()) {
-                color1 = 0xFF31C754;
-                color2 = 0xFF258C3E;
+                color1 = 0xFFDEAE3B;
+                color2 = 0xFF785820;
             }
 
             //Switch over to the hover if it applies
             if (mouseX >= EConfig.layersXPos + 4 && mouseX <= EConfig.layersXPos + 9 && mouseY >= EConfig.toolbarYPos - 1 + layerY && mouseY <= EConfig.toolbarYPos + layerY + 5) {
                 resource = LOCK_HOVER;
                 if (feature.isFromTemplate()) {
-                    color1 = 0xFF269941;
-                    color2 = 0xFF217732;
+                    color1 = 0xFFA5812C;
+                    color2 = 0xFF543D16;
                 } else {
                     color1 = 0xFFB0A483;
                     color2 = 0xFF48453C;
@@ -79,8 +79,8 @@ public class GuiLayers extends AbstractGuiOverlay {
             //Reset
             resource = VISIBLE_DFLT;
             if (feature.isFromTemplate()) {
-                color1 = 0xFF31C754;
-                color2 = 0xFF258C3E;
+                color1 = 0xFFDEAE3B;
+                color2 = 0xFF785820;
             } else {
                 color1 = 0xFFE4D6AE;
                 color2 = 0x5579725A;
@@ -89,8 +89,8 @@ public class GuiLayers extends AbstractGuiOverlay {
             if (mouseX > EConfig.layersXPos + 9 && mouseX < EConfig.layersXPos + 20 && mouseY >= EConfig.toolbarYPos - 1 + layerY && mouseY <= EConfig.toolbarYPos + layerY + 5) {
                 resource = VISIBLE_HOVER;
                 if (feature.isFromTemplate()) {
-                    color1 = 0xFF269941;
-                    color2 = 0xFF217732;
+                    color1 = 0xFFA5812C;
+                    color2 = 0xFF543D16;
                 } else {
                     color1 = 0xFFB0A483;
                     color2 = 0xFF48453C;
@@ -98,8 +98,9 @@ public class GuiLayers extends AbstractGuiOverlay {
             }
 
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 11, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 20, EConfig.toolbarYPos + 7 + layerY, color1, color2);
-            if (feature.isVisible())
+            if (feature.isVisible()) {
                 EnchiridionAPI.draw.drawImage(resource, EConfig.layersXPos + 12, EConfig.toolbarYPos - 1 + layerY, EConfig.layersXPos + 19, EConfig.toolbarYPos + layerY + 5);
+            }
             /* END VISIBILITY ICON */
 
             /* Layer itself */
@@ -108,8 +109,8 @@ public class GuiLayers extends AbstractGuiOverlay {
             if (isOverLayer(layerY, mouseX, mouseY) || EnchiridionAPI.book.isGroupSelected(feature)) {
                 hoverY = layerY;
                 if (feature.isFromTemplate()) {
-                    color1 = 0xFF269941;
-                    color2 = 0xFF217732;
+                    color1 = 0xFFA5812C;
+                    color2 = 0xFF543D16;
                 } else {
                     color1 = 0xFFB0A483;
                     color2 = 0xFF48453C;
