@@ -83,7 +83,7 @@ public class TextEditor {
     private void updateColor() {
         if (editable == null) return;
         tick++;
-        if (tick % 60 == 0) {
+        if (tick % 30 == 0) {
             white = !white;
         }
     }
