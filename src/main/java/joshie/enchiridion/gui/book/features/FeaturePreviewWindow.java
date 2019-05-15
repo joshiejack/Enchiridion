@@ -43,7 +43,7 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
 
     @Override
     public String getName() {
-        return "Scroll: " + page;
+        return "Scroll: " + page.getPageNumber();
     }
 
     @Override

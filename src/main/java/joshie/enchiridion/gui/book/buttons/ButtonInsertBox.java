@@ -13,6 +13,6 @@ public class ButtonInsertBox extends ButtonAbstract {
     public void performAction() {
         IPage current = EnchiridionAPI.book.getPage();
         FeatureBox feature = new FeatureBox("ff000000");
-        current.addFeature(feature, 0, current.getScroll(), 50D, 5D, false, false);
+        current.addFeature(feature, 0, current.getScroll(), 50D, 5D, false, false, false);
     }
 }

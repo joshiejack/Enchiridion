@@ -54,21 +54,15 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
 
     private boolean isOverAction(int xPos, int yPos, int mouseX, int mouseY) {
         if (mouseX >= EConfig.editorXPos + xPos && mouseX <= EConfig.editorXPos + xPos + 9) {
-            if (mouseY >= EConfig.toolbarYPos + yPos + 7 && mouseY <= EConfig.toolbarYPos + yPos + 17) {
-                return true;
-            }
+            return mouseY >= EConfig.toolbarYPos + yPos + 7 && mouseY <= EConfig.toolbarYPos + yPos + 17;
         }
-
         return false;
     }
 
     private boolean isOverPosition(int x1, int y1, int x2, int y2, int mouseX, int mouseY) {
         if (mouseX >= EConfig.editorXPos + x1 && mouseX <= EConfig.editorXPos + x2) {
-            if (mouseY >= EConfig.toolbarYPos + y1 && mouseY <= EConfig.toolbarYPos + y2) {
-                return true;
-            }
+            return mouseY >= EConfig.toolbarYPos + y1 && mouseY <= EConfig.toolbarYPos + y2;
         }
-
         return false;
     }
 

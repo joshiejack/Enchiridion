@@ -46,7 +46,7 @@ public class FeatureRecipe extends FeatureItem {
             //Loop 1, Exact Match
             for (IRecipeHandler handler : recipes) {
                 if (recipeType.equals(handler.getRecipeName())) {
-                    if (ingredients.equals(handler.getUniqueName())) {
+                    if (!ingredients.isEmpty() && ingredients.equals(handler.getUniqueName())) {
                         this.handler = handler;
                         return true;
                     }

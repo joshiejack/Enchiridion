@@ -15,6 +15,7 @@ public interface IFeatureProvider {
     boolean isLocked();
     int getLayerIndex();
     long getTimeChanged();
+    boolean isFromTemplate();
 
     //Setters
     void setX(int x);
@@ -24,6 +25,7 @@ public interface IFeatureProvider {
     void setVisible(boolean value);
     void setLocked(boolean value);
     void setLayerIndex(int i);
+    void setFromTemplate(boolean b);
 
     //Rendering and functions
     void update(IPage page);

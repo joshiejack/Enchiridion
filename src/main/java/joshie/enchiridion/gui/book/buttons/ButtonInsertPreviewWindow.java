@@ -14,7 +14,7 @@ public class ButtonInsertPreviewWindow extends ButtonAbstract {
     public void performAction() {
         IPage current = EnchiridionAPI.book.getPage();
         FeaturePreviewWindow feature = new FeaturePreviewWindow(0);
-        current.addFeature(feature, 0, current.getScroll(), 100D, 100D, false, false);
+        current.addFeature(feature, 0, current.getScroll(), 100D, 100D, false, false, false);
         GuiSimpleEditor.INSTANCE.setEditor(null);
     }
 }

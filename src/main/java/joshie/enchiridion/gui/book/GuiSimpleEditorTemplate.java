@@ -38,11 +38,8 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
 
     private boolean isOverPosition(int x1, int y1, int x2, int y2, int mouseX, int mouseY) {
         if (mouseX >= EConfig.editorXPos + x1 && mouseX <= EConfig.editorXPos + x2) {
-            if (mouseY >= EConfig.toolbarYPos + y1 && mouseY <= EConfig.toolbarYPos + y2) {
-                return true;
-            }
+            return mouseY >= EConfig.toolbarYPos + y1 && mouseY <= EConfig.toolbarYPos + y2;
         }
-
         return false;
     }
 
@@ -145,6 +142,9 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
         int yPlus = 0;
         int xPlus = 0;
         for (ITemplate template : sorted) {
+            for (IFeatureProvider provider : template.getFeatures()) {
+                provider.setFromTemplate(true);
+            }
             if (count < position || count > position + 17) {
                 count++;
                 continue;
@@ -155,7 +155,7 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
                     switchDefaulthood(template);
                 } else {
                     for (IFeatureProvider provider : template.getFeatures()) {
-                        GuiBook.INSTANCE.getPage().addFeature(provider.getFeature(), provider.getLeft(), provider.getTop(), provider.getWidth(), provider.getHeight(), provider.isLocked(), !provider.isVisible());
+                        GuiBook.INSTANCE.getPage().addFeature(provider.getFeature(), provider.getLeft(), provider.getTop(), provider.getWidth(), provider.getHeight(), provider.isLocked(), !provider.isVisible(), provider.isFromTemplate());
                     }
                 }
                 return true;

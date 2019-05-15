@@ -35,7 +35,7 @@ public class ButtonInsertImage extends ButtonAbstract {
                 BufferedImage buffered = ImageIO.read(file);
                 int width = buffered.getWidth();
                 int height = buffered.getHeight();
-                EnchiridionAPI.book.getPage().addFeature(feature, 0, current.getScroll(), width, height, false, false);
+                EnchiridionAPI.book.getPage().addFeature(feature, 0, current.getScroll(), width, height, false, false, false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

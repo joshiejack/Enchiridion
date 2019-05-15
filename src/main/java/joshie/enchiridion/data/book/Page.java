@@ -85,10 +85,11 @@ public class Page implements IPage {
     }
 
     @Override
-    public void addFeature(IFeature feature, int x, int y, double width, double height, boolean isLocked, boolean isHidden) {
+    public void addFeature(IFeature feature, int x, int y, double width, double height, boolean isLocked, boolean isHidden, boolean isFromTemplate) {
         FeatureProvider provider = new FeatureProvider(feature, x, y, width, height);
         provider.isLocked = isLocked;
         provider.isHidden = isHidden;
+        provider.isFromTemplate = isFromTemplate;
         provider.update(this);
         provider.layerIndex = features.size();
         features.add(provider);

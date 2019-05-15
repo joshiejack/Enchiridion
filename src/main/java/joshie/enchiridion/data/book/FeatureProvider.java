@@ -20,6 +20,7 @@ public class FeatureProvider implements IFeatureProvider {
     public IFeature feature;
     public boolean isLocked;
     public boolean isHidden;
+    public boolean isFromTemplate;
     public int layerIndex;
 
     public transient int right;
@@ -49,6 +50,7 @@ public class FeatureProvider implements IFeatureProvider {
         this.height = height;
         this.isLocked = true;
         this.isHidden = false;
+        this.isFromTemplate = false;
     }
 
     @Override
@@ -69,6 +71,7 @@ public class FeatureProvider implements IFeatureProvider {
         copy.setLocked(isLocked);
         copy.setVisible(!isHidden);
         copy.setLayerIndex(layerIndex);
+        copy.setFromTemplate(isFromTemplate);
         return copy;
     }
 
@@ -142,13 +145,11 @@ public class FeatureProvider implements IFeatureProvider {
             }
 
             //Perform clicks
-            if (!EnchiridionAPI.book.isEditMode() || (EnchiridionAPI.book.isEditMode() && button != 0)) {
+            if (!EnchiridionAPI.book.isEditMode() || button != 0) {
                 if (feature.performClick(mouseX, mouseY, button)) return true;
             }
 
-            if (!isLocked) {
-                return true;
-            }
+            return !isLocked;
         }
         return false;
     }
@@ -338,6 +339,11 @@ public class FeatureProvider implements IFeatureProvider {
     }
 
     @Override
+    public boolean isFromTemplate() {
+        return isFromTemplate;
+    }
+
+    @Override
     public int getLayerIndex() {
         return layerIndex;
     }
@@ -381,5 +387,10 @@ public class FeatureProvider implements IFeatureProvider {
     public void setLayerIndex(int i) {
         layerIndex = i;
         timestamp = System.currentTimeMillis();
+    }
+
+    @Override
+    public void setFromTemplate(boolean b) {
+        this.isFromTemplate = b;
     }
 }

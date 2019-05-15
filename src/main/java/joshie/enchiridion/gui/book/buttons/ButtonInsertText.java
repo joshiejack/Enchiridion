@@ -14,6 +14,6 @@ public class ButtonInsertText extends ButtonAbstract {
     public void performAction() {
         IPage current = EnchiridionAPI.book.getPage();
         FeatureText feature = new FeatureText(EConfig.defaultText);
-        current.addFeature(feature, 0, current.getScroll(), 200D, 80D, false, false);
+        current.addFeature(feature, 0, current.getScroll(), 200D, 80D, false, false, false);
     }
 }

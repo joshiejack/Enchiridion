@@ -18,7 +18,7 @@ public interface IPage {
     void setPageNumber(int number);
 
     /** Add a new feature to this page with the default stats **/
-    void addFeature(IFeature feature, int x, int y, double width, double height, boolean isLocked, boolean isHidden);
+    void addFeature(IFeature feature, int x, int y, double width, double height, boolean isLocked, boolean isHidden, boolean isFromTemplate);
 
     /** Removes a feature from the page **/
     void removeFeature(IFeatureProvider selected);

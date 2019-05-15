@@ -275,4 +275,9 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
         if (hovered != null) object.addProperty("hoveredResource", hovered.toString());
         if (unhovered != null) object.addProperty("unhoveredResource", unhovered.toString());
     }
+
+    @Override
+    public String getName() {
+        return action != null && action.isVisible() ? this.getAction().getName().replace(" ", "") : super.getName();
+    }
 }

@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IPage;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,9 +29,7 @@ public class ButtonDeletePage extends ButtonAbstract {
 
     public int getPreviousPage() {
         List<IPage> pages = EnchiridionAPI.book.getBook().getPages();
-        List<Integer> numbersTemp = pages.stream().map(IPage::getPageNumber).collect(Collectors.toList());
-
-        Collections.sort(numbersTemp, Integer::compareTo);
+        List<Integer> numbersTemp = pages.stream().map(IPage::getPageNumber).sorted(Integer::compareTo).collect(Collectors.toList());
 
         List<Integer> numbers = Lists.reverse(numbersTemp);
         int number = EnchiridionAPI.book.getPage().getPageNumber();

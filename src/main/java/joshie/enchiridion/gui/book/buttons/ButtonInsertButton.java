@@ -14,6 +14,6 @@ public class ButtonInsertButton extends ButtonAbstract {
     public void performAction() {
         IPage current = EnchiridionAPI.book.getPage();
         FeatureButton feature = new FeatureButton(new ActionJumpPage().create());
-        current.addFeature(feature, 0, current.getScroll(), 18D, 10D, false, false);
+        current.addFeature(feature, 0, current.getScroll(), 18D, 10D, false, false, false);
     }
 }
