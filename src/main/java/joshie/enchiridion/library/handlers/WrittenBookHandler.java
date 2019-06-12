@@ -17,6 +17,6 @@ public class WrittenBookHandler implements IBookHandler {
 
     @Override
     public void handle(@Nonnull ItemStack stack, ServerPlayerEntity player, Hand hand, int slotID, boolean isShiftPressed) {
-        NetworkHooks.openGui(GuiIDs.WRITTEN, slotID);
+        //NetworkHooks.openGui(GuiIDs.WRITTEN, slotID); //TODO
     }
 }

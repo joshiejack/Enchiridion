@@ -24,7 +24,7 @@ public class WritableBookHandler implements IBookHandler {
 
     @Override
     public void handle(@Nonnull ItemStack stack, ServerPlayerEntity player, Hand hand, int slotID, boolean isShiftPressed) {
-        NetworkHooks.openGui(GuiIDs.WRITABLE, slotID);
+        //NetworkHooks.openGui(GuiIDs.WRITABLE, slotID); //TODO
     }
 
     //Our own version for the writeable so that we send packets to the library instead of the hand

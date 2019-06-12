@@ -3,11 +3,9 @@ package joshie.enchiridion.library.handlers;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.GuiBook;
-import joshie.enchiridion.lib.GuiIDs;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
@@ -23,6 +21,6 @@ public class EnchiridionBookHandler implements IBookHandler {
             GuiBook.INSTANCE.setBook(BookRegistry.INSTANCE.getBook(stack), isShiftPressed);
         }
 
-        NetworkHooks.openGui(GuiIDs.BOOK_FORCE);
+        player.openBook(stack, hand);
     }
 }

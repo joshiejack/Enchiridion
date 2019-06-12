@@ -74,7 +74,7 @@ public class LibraryEvents {
         long handle = Minecraft.getInstance().mainWindow.getHandle();
         if (EClientHandler.libraryKeyBinding.isKeyDown() && Minecraft.getInstance().isGameFocused() && !InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_F3)) {
             PacketHandler.sendToServer(new PacketOpenLibrary()); //Let the server know!
-            NetworkHooks.openGui(GuiIDs.LIBRARY);
+            //NetworkHooks.openGui(GuiIDs.LIBRARY); //TODO
         }
     }
 }

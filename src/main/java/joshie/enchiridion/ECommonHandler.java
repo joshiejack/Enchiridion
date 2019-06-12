@@ -59,14 +59,4 @@ public class ECommonHandler {
     public static void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
         event.getRegistry().register(IForgeContainerType.create(ContainerLibrary::new).setRegistryName(GuiIDs.LIBRARY));
     }
-
-    /**
-     * GUI HANDLING
-     **/
-    /*@Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int integer1, int handOrdinal, int z) {
-        if (ID == GuiIDs.LIBRARY) {
-            return new ContainerLibrary(player.inventory, LibraryHelper.getServerLibraryContents(player), HeldHelper.getHandFromOrdinal(handOrdinal));
-        } else return null;
-    }*/ //TODO
 }
