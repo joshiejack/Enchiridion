@@ -1,81 +1,69 @@
 package joshie.enchiridion;
 
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.SyncHelper;
 import joshie.enchiridion.library.LibraryCommand;
 import joshie.enchiridion.library.LibraryHelper;
-import net.minecraft.command.ICommandManager;
-import net.minecraft.command.ServerCommandManager;
+import joshie.enchiridion.network.PacketHandler;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ForgeI18n;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-import static joshie.enchiridion.lib.EInfo.*;
+import static joshie.enchiridion.lib.EInfo.MODID;
+import static joshie.enchiridion.lib.EInfo.MODNAME;
 
-@Mod(modid = MODID, name = MODNAME, version = VERSION, dependencies = DEPENDENCIES, guiFactory = GUI_FACTORY_CLASS)
+@Mod(value = MODID)
 public class Enchiridion {
-    @SidedProxy(clientSide = JAVAPATH + INITIALS + "ClientProxy", serverSide = JAVAPATH + INITIALS + "CommonProxy")
-    public static ECommonProxy proxy;
-
-    @Instance(MODID)
-    public static Enchiridion instance;
-    public static File root;
-
     private static final Logger LOGGER = LogManager.getLogger(MODNAME);
+    public static File root = new File(FMLPaths.CONFIGDIR.get().toFile(), MODID);
 
-    @EventHandler
-    public void onConstruction(FMLConstructionEvent event) {
-        proxy.onConstruction();
+    public Enchiridion() {
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        eventBus.addListener(this::setupCommon);
+        eventBus.addListener(this::setupClient);
+        eventBus.addListener(this::handleIMCMessages);
+        eventBus.addListener(this::onServerStarting);
+        //EConfig.SETTINGS.init(FileHelper.getConfigFile()); //TODO Config
     }
 
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        root = new File(event.getModConfigurationDirectory(), MODID);
-        EConfig.init(FileHelper.getConfigFile());
-
-        NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
-        proxy.preInit();
+    public void setupCommon(final FMLCommonSetupEvent event) {
+        ECommonHandler.init();
+        PacketHandler.registerPackets();
     }
 
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        proxy.setupFont();
+    public void setupClient(final FMLClientSetupEvent event) {
+        EClientHandler.setupClient();
     }
 
-    @EventHandler
-    public void onServerStarting(FMLServerStartingEvent event) {
-        LibraryHelper.resetServer(FMLCommonHandler.instance().getMinecraftServerInstance().worlds[0]);
+    public void onServerStarting(final FMLServerStartingEvent event) {
+        LibraryHelper.resetServer(ServerLifecycleHooks.getCurrentServer().getWorlds().iterator().next()); //TODO Test
         SyncHelper.resetSyncing();
 
         //Register commands
-        ICommandManager manager = event.getServer().getCommandManager();
-        if (manager instanceof ServerCommandManager) {
-            ServerCommandManager serverCommandManager = ((ServerCommandManager) manager);
-            serverCommandManager.registerCommand(new LibraryCommand());
-        }
+        LibraryCommand.register(event.getCommandDispatcher());
     }
 
-    @EventHandler
-    public void handleIMCMessages(FMLInterModComms.IMCEvent event) {
-        event.getMessages().stream().filter(message -> message.key.equalsIgnoreCase("registerBook")).forEach(message -> {
-            NBTTagCompound tag = message.getNBTValue();
+    public void handleIMCMessages(final InterModProcessEvent event) {
+        event.getIMCStream().filter(message -> message.getMethod().equalsIgnoreCase("registerBook")).forEach(message -> {
+            CompoundNBT tag = new CompoundNBT();
             String handlerType = tag.getString("handlerType");
-            ItemStack stack = new ItemStack(tag.getCompoundTag("stack"));
-            boolean matchDamage = tag.hasKey("matchDamage") && tag.getBoolean("matchDamage");
-            boolean matchNBT = tag.hasKey("matchNBT") && tag.getBoolean("matchNBT");
+            ItemStack stack = ItemStack.read(tag.getCompound("stack"));
+            boolean matchDamage = tag.contains("matchDamage") && tag.getBoolean("matchDamage");
+            boolean matchNBT = tag.contains("matchNBT") && tag.getBoolean("matchNBT");
             EnchiridionAPI.library.registerBookHandlerForStack(handlerType, stack, matchDamage, matchNBT);
         });
     }
@@ -86,11 +74,7 @@ public class Enchiridion {
     }
 
     //Universal helper translation
-    public static String translate(String string) {
-        return I18n.translateToLocal("enchiridion." + string);
-    }
-
     public static String format(String string, Object... format) {
-        return I18n.translateToLocalFormatted("enchiridion." + string, format);
+        return ForgeI18n.parseFormat("enchiridion." + string, format);
     }
 }

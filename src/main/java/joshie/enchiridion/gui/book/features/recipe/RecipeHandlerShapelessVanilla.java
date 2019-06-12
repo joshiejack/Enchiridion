@@ -1,7 +1,7 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.item.crafting.ShapelessRecipe;
 
 import java.util.ArrayList;
 
@@ -11,8 +11,8 @@ public class RecipeHandlerShapelessVanilla extends RecipeHandlerRecipeBase {
 
     public RecipeHandlerShapelessVanilla(IRecipe recipe) {
         try {
-            ShapelessRecipes shapeless = (ShapelessRecipes) recipe;
-            init(recipe.getRecipeOutput(), new ArrayList<>(shapeless.recipeItems), 3);
+            ShapelessRecipe shapeless = (ShapelessRecipe) recipe;
+            init(recipe.getRecipeOutput(), new ArrayList<>(shapeless.getIngredients()), 3);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -25,6 +25,6 @@ public class RecipeHandlerShapelessVanilla extends RecipeHandlerRecipeBase {
 
     @Override
     protected Class getRecipeClass() {
-        return ShapelessRecipes.class;
+        return ShapelessRecipe.class;
     }
 }

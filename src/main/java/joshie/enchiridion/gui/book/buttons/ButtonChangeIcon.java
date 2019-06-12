@@ -21,7 +21,7 @@ public class ButtonChangeIcon extends ButtonAbstract {
     }
 
     public static void refreshResources() {
-        if (EConfig.resourceReload) Minecraft.getMinecraft().scheduleResourcesRefresh();
+        if (EConfig.SETTINGS.resourceReload.get()) Minecraft.getInstance().getResourcePackList().reloadPacksFromFinders();
     }
 
     @Override

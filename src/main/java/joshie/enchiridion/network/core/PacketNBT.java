@@ -1,53 +1,50 @@
 package joshie.enchiridion.network.core;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
 
-public abstract class PacketNBT extends PenguinPacket {
-    public NBTTagCompound nbt;
+public class PacketNBT {
+    public CompoundNBT nbt;
 
     public PacketNBT() {
     }
 
     public PacketNBT(NonNullList<ItemStack> inventory) {
-        nbt = new NBTTagCompound();
-        nbt.setInteger("length", inventory.size());
-        NBTTagList itemList = new NBTTagList();
+        nbt = new CompoundNBT();
+        nbt.putInt("length", inventory.size());
+        ListNBT itemList = new ListNBT();
         for (int i = 0; i < inventory.size(); i++) {
             ItemStack stack = inventory.get(i);
             if (!stack.isEmpty()) {
-                NBTTagCompound tag = new NBTTagCompound();
-                tag.setByte("Slot", (byte) i);
-                tag.setBoolean("NULLItemStack", false);
-                stack.writeToNBT(tag);
-                itemList.appendTag(tag);
+                CompoundNBT tag = new CompoundNBT();
+                tag.putByte("Slot", (byte) i);
+                tag.putBoolean("NULLItemStack", false);
+                stack.write(tag);
+                itemList.add(tag);
             } else {
-                NBTTagCompound tag = new NBTTagCompound();
-                tag.setByte("Slot", (byte) i);
-                tag.setBoolean("NULLItemStack", true);
-                itemList.appendTag(tag);
+                CompoundNBT tag = new CompoundNBT();
+                tag.putByte("Slot", (byte) i);
+                tag.putBoolean("NULLItemStack", true);
+                itemList.add(tag);
             }
         }
-        nbt.setTag("Inventory", itemList);
+        nbt.put("Inventory", itemList);
     }
 
-    @Override
-    public void toBytes(ByteBuf buffer) {
+    public static void toBytes(PacketNBT packet, PacketBuffer buf) {
         try {
-            new PacketBuffer(buffer).writeCompoundTag(nbt);
+            new PacketBuffer(buf).writeCompoundTag(packet.nbt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void fromBytes(ByteBuf buffer) {
+    public static void fromBytes(PacketNBT packet, PacketBuffer buf) {
         try {
-            nbt = new PacketBuffer(buffer).readCompoundTag();
+            packet.nbt = buf.readCompoundTag();
         } catch (Exception e) {
             e.printStackTrace();
         }

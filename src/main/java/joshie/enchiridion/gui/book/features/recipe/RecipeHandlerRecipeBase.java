@@ -1,13 +1,12 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
-import crafttweaker.api.item.IItemStack;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -77,8 +76,7 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
             if (o instanceof List) {
                 addToUnique(getMostCommonName(new ArrayList((List) o)));
             } else if (o instanceof ItemStack) {
-                addToUnique(Item.REGISTRY.getNameForObject(((ItemStack) o).getItem()));
-                addToUnique(((ItemStack) o).getItemDamage());
+                addToUnique(ForgeRegistries.ITEMS.getKey(((ItemStack) o).getItem()));
             }
         }
     }
@@ -124,14 +122,14 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
 
     @Override
     protected void drawBackground() {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(LOCATION);
+        Minecraft.getInstance().getTextureManager().bindTexture(LOCATION);
         EnchiridionAPI.draw.drawTexturedRectangle(0D, 0D, 0, 0, 58, 58, 1F);
         EnchiridionAPI.draw.drawTexturedRectangle(84D, 42D, 1, 63, 20, 14, 1F);
     }
 
-    @Nonnull
-    protected ItemStack toStack(IItemStack iStack) {
+    /*@Nonnull
+    protected ItemStack toStack(IItemStack iStack) { //TODO CraftTweaker support
         if (iStack == null) return ItemStack.EMPTY;
         return (ItemStack) iStack.getInternal();
-    }
+    }*/
 }

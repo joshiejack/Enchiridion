@@ -1,4 +1,4 @@
-package joshie.enchiridion.gui.book.features.recipe;
+/*package joshie.enchiridion.gui.book.features.recipe;
 
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
@@ -6,6 +6,7 @@ import crafttweaker.api.oredict.IOreDictEntry;
 import crafttweaker.api.recipes.ShapelessRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapelessRecipe;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -57,4 +58,4 @@ public class RecipeHandlerMTAdvancedShapeless extends RecipeHandlerRecipeBase {
         } catch (Exception ignored) {
         }
     }
-}
+}*/

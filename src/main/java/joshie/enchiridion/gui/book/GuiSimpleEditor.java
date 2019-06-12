@@ -33,11 +33,11 @@ public class GuiSimpleEditor extends AbstractGuiOverlay implements ITextEditable
 
         if (editor != null) {
             /* Draw the Background */
-            EnchiridionAPI.draw.drawImage(SIDEBAR, EConfig.editorXPos - 3, EConfig.toolbarYPos - 7, EConfig.editorXPos + 87, EConfig.timelineYPos + 13);
-            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.editorXPos, EConfig.toolbarYPos + 7, EConfig.editorXPos + 85, EConfig.timelineYPos + 11, 0xFF312921, 0xFF191511);
-            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.editorXPos + 2, EConfig.toolbarYPos + 9, EConfig.editorXPos + 83, EConfig.timelineYPos + 9, 0xFFE4D6AE, 0x5579725A);
-            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.editorXPos, EConfig.toolbarYPos - 3, EConfig.editorXPos + 84, EConfig.toolbarYPos + 7, 0xFF312921, 0xFF191511);
-            EnchiridionAPI.draw.drawSplitScaledString(TextEditor.INSTANCE.getText(this), EConfig.editorXPos + 5, EConfig.toolbarYPos, 250, 0xFFFFFFFF, 0.5F);
+            EnchiridionAPI.draw.drawImage(SIDEBAR, EConfig.SETTINGS.editorXPos - 3, EConfig.SETTINGS.toolbarYPos.get() - 7, EConfig.SETTINGS.editorXPos + 87, EConfig.SETTINGS.timelineYPos.get() + 13);
+            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.editorXPos, EConfig.SETTINGS.toolbarYPos.get() + 7, EConfig.SETTINGS.editorXPos + 85, EConfig.SETTINGS.timelineYPos.get() + 11, 0xFF312921, 0xFF191511);
+            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.editorXPos + 2, EConfig.SETTINGS.toolbarYPos.get() + 9, EConfig.SETTINGS.editorXPos + 83, EConfig.SETTINGS.timelineYPos.get() + 9, 0xFFE4D6AE, 0x5579725A);
+            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.editorXPos, EConfig.SETTINGS.toolbarYPos.get() - 3, EConfig.SETTINGS.editorXPos + 84, EConfig.SETTINGS.toolbarYPos.get() + 7, 0xFF312921, 0xFF191511);
+            EnchiridionAPI.draw.drawSplitScaledString(TextEditor.INSTANCE.getText(this), EConfig.SETTINGS.editorXPos + 5, EConfig.SETTINGS.toolbarYPos.get(), 250, 0xFFFFFFFF, 0.5F);
             editor.draw(mouseX, mouseY);
         }
     }
@@ -52,7 +52,7 @@ public class GuiSimpleEditor extends AbstractGuiOverlay implements ITextEditable
     @Override
     public boolean mouseClicked(int mouseX, int mouseY) {
         if (editor != null) {
-            if (mouseX >= EConfig.editorXPos && mouseX <= EConfig.editorXPos + 84 && mouseY >= EConfig.toolbarYPos - 3 && mouseY <= EConfig.toolbarYPos + 7) {
+            if (mouseX >= EConfig.SETTINGS.editorXPos && mouseX <= EConfig.SETTINGS.editorXPos + 84 && mouseY >= EConfig.SETTINGS.toolbarYPos.get() - 3 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + 7) {
                 TextEditor.INSTANCE.setEditable(this);
                 return true;
             } else {

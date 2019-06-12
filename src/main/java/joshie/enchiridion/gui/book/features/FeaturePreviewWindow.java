@@ -1,6 +1,7 @@
 package joshie.enchiridion.gui.book.features;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.platform.GlStateManager;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IFeatureProvider;
@@ -10,7 +11,7 @@ import joshie.enchiridion.gui.book.GuiBook;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
 import joshie.enchiridion.gui.book.GuiSimpleEditorGeneric;
 import joshie.enchiridion.helpers.JumpHelper;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.GL_SCISSOR_TEST;
@@ -114,9 +115,9 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
             }
 
             GlStateManager.pushMatrix();
-            int scale = GuiBook.INSTANCE.getRes().getScaleFactor();
+            int scale = (int) Minecraft.getInstance().mainWindow.getGuiScaleFactor();
             GL11.glEnable(GL_SCISSOR_TEST);
-            GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
+            GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT, false);
             GL11.glScissor((GuiBook.INSTANCE.x + position.getLeft()) * scale, (int) (GuiBook.INSTANCE.y + 217 - position.getTop() - position.getHeight()) * scale, (int) position.getWidth() * scale, (int) position.getHeight() * scale);
 
             for (IFeatureProvider feature : Lists.reverse(page.getFeatures())) {
@@ -141,14 +142,14 @@ public class FeaturePreviewWindow extends FeatureAbstract implements ISimpleEdit
                 }
 
                 GuiBook.INSTANCE.y = y;
-                GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
+                GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT, false);
             }
 
 
             glDisable(GL_SCISSOR_TEST);
             GlStateManager.popMatrix();
 
-            GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
+            GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT, false);
             int minY = Short.MAX_VALUE;
             for (IFeatureProvider provider : page.getFeatures()) {
                 if (provider.getTop() < minY) {

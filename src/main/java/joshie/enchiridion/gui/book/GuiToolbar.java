@@ -3,6 +3,8 @@ package joshie.enchiridion.gui.book;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.gui.IToolbarButton;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class GuiToolbar extends AbstractGuiOverlay {
     }
 
     private boolean isOverButton(int xPos, int mouseX, int mouseY) {
-        return mouseX >= xPos && mouseX <= xPos + 8 && mouseY >= EConfig.toolbarYPos + 2 && mouseY <= EConfig.toolbarYPos + 10;
+        return mouseX >= xPos && mouseX <= xPos + 8 && mouseY >= EConfig.SETTINGS.toolbarYPos.get() + 2 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + 10;
     }
 
     private static final int X_START = -3;
@@ -29,16 +31,16 @@ public class GuiToolbar extends AbstractGuiOverlay {
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        EnchiridionAPI.draw.drawImage(TOOLBAR, -10, EConfig.toolbarYPos - 5, 441, EConfig.toolbarYPos + 17);
-        EnchiridionAPI.draw.drawBorderedRectangle(-6, EConfig.toolbarYPos, 437, EConfig.toolbarYPos + 12, 0xFFE4D6AE, 0x5579725A);
+        EnchiridionAPI.draw.drawImage(TOOLBAR, -10, EConfig.SETTINGS.toolbarYPos.get() - 5, 441, EConfig.SETTINGS.toolbarYPos.get() + 17);
+        EnchiridionAPI.draw.drawBorderedRectangle(-6, EConfig.SETTINGS.toolbarYPos.get(), 437, EConfig.SETTINGS.toolbarYPos.get() + 12, 0xFFE4D6AE, 0x5579725A);
 
         //Draw the left hand buttons first
         int x = X_START;
         for (IToolbarButton button : leftButtons) {
             if (!isOverButton(x, mouseX, mouseY)) {
-                EnchiridionAPI.draw.drawImage(button.getResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
+                EnchiridionAPI.draw.drawImage(button.getResource(), x, EConfig.SETTINGS.toolbarYPos.get() + 2, x + 8, EConfig.SETTINGS.toolbarYPos.get() + 10);
             } else {
-                EnchiridionAPI.draw.drawImage(button.getHoverResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
+                EnchiridionAPI.draw.drawImage(button.getHoverResource(), x, EConfig.SETTINGS.toolbarYPos.get() + 2, x + 8, EConfig.SETTINGS.toolbarYPos.get() + 10);
             }
             x += 12;
         }
@@ -47,20 +49,20 @@ public class GuiToolbar extends AbstractGuiOverlay {
         x = X_END;
         for (IToolbarButton button : rightButtons) {
             if (!isOverButton(x, mouseX, mouseY)) {
-                EnchiridionAPI.draw.drawImage(button.getResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
+                EnchiridionAPI.draw.drawImage(button.getResource(), x, EConfig.SETTINGS.toolbarYPos.get() + 2, x + 8, EConfig.SETTINGS.toolbarYPos.get() + 10);
             } else {
-                EnchiridionAPI.draw.drawImage(button.getHoverResource(), x, EConfig.toolbarYPos + 2, x + 8, EConfig.toolbarYPos + 10);
+                EnchiridionAPI.draw.drawImage(button.getHoverResource(), x, EConfig.SETTINGS.toolbarYPos.get() + 2, x + 8, EConfig.SETTINGS.toolbarYPos.get() + 10);
             }
             x -= 12;
         }
     }
 
     @Override
-    public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
+    public void addToolTip(List<ITextComponent> tooltip, int mouseX, int mouseY) {
         int x = X_START;
         for (IToolbarButton button : leftButtons) {
             if (isOverButton(x, mouseX, mouseY)) {
-                tooltip.add(button.getTooltip());
+                tooltip.add(new StringTextComponent(button.getTooltip()));
             }
             x += 12;
         }
@@ -69,7 +71,7 @@ public class GuiToolbar extends AbstractGuiOverlay {
         x = X_END;
         for (IToolbarButton button : rightButtons) {
             if (isOverButton(x, mouseX, mouseY)) {
-                tooltip.add(button.getTooltip());
+                tooltip.add(new StringTextComponent(button.getTooltip()));
             }
             x -= 12;
         }

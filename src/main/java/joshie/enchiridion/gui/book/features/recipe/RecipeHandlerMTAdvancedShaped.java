@@ -1,4 +1,4 @@
-package joshie.enchiridion.gui.book.features.recipe;
+/*package joshie.enchiridion.gui.book.features.recipe;
 
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
@@ -57,4 +57,4 @@ public class RecipeHandlerMTAdvancedShaped extends RecipeHandlerRecipeBase {
         } catch (Exception ignored) {
         }
     }
-}
+}*/

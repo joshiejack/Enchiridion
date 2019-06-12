@@ -1,7 +1,7 @@
 package joshie.enchiridion.library;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 
 public abstract class LibraryProxy {
-    public abstract LibraryInventory getLibraryInventory(EntityPlayer player);
+    public abstract LibraryInventory getLibraryInventory(PlayerEntity player);
 }

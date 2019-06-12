@@ -1,25 +1,26 @@
 package joshie.enchiridion.library;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.common.thread.EffectiveSide;
 
 import java.util.Collection;
 
 public class LibraryHelper {
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static LibraryProxy theClient;
     private static LibraryProxyServer theServer;
 
-    public static void resetServer(World world) {
+    public static void resetServer(ServerWorld world) {
         if (world != null) {
             theServer = (new LibraryProxyServer(world));
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void resetClient() {
         theClient = new LibraryProxyClient();
     }
@@ -29,19 +30,19 @@ public class LibraryHelper {
     }
 
     private static boolean isServer() {
-        return FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER;
+        return EffectiveSide.get() == LogicalSide.SERVER;
     }
 
-    public static LibraryInventory getLibraryContents(EntityPlayer player) {
+    public static LibraryInventory getLibraryContents(PlayerEntity player) {
         return getHandler().getLibraryInventory(player);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static LibraryInventory getClientLibraryContents() {
         return theClient.getLibraryInventory(null);
     }
 
-    public static LibraryInventory getServerLibraryContents(EntityPlayer player) {
+    public static LibraryInventory getServerLibraryContents(PlayerEntity player) {
         return theServer.getLibraryInventory(player);
     }
 

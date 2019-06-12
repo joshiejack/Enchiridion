@@ -25,10 +25,9 @@ public class ModdedBooks {
         private boolean matchNBT;
 
         private ModdedBook() {}
-        public ModdedBook(String item, String handlerType, boolean matchDamage, boolean matchNBT) {
+        public ModdedBook(String item, String handlerType, boolean matchNBT) {
             this.item = item;
             this.handlerType = handlerType;
-            this.matchDamage = matchDamage;
             this.matchNBT = matchNBT;
         }
 
@@ -38,10 +37,6 @@ public class ModdedBooks {
 
         public String getHandler() {
             return handlerType;
-        }
-
-        public boolean shouldMatchDamage() {
-            return matchDamage;
         }
 
         public boolean shouldMatchNBT() {
@@ -69,8 +64,8 @@ public class ModdedBooks {
         }
     }
 
-    public void add(String handlerType, String itemString, boolean matchDamage, boolean matchNBT) {
-        books.add(new ModdedBook(itemString, handlerType, matchDamage, matchNBT));
+    public void add(String handlerType, String itemString, boolean matchNBT) {
+        books.add(new ModdedBook(itemString, handlerType, matchNBT));
     }
 
     public List<ModdedBook> getList() {

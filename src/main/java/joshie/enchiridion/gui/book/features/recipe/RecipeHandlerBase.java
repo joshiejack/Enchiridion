@@ -9,6 +9,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.HashMap;
@@ -30,11 +31,11 @@ public abstract class RecipeHandlerBase implements IRecipeHandler {
     }
 
     @Override
-    public void addTooltip(List<String> list) {
+    public void addTooltip(List<ITextComponent> list) {
         for (IItemStack stack : stackList) {
             if (stack == null || stack.getItemStack().isEmpty()) continue;
             if (EnchiridionAPI.draw.isMouseOverIItemStack(stack)) {
-                list.addAll(stack.getItemStack().getTooltip(Minecraft.getMinecraft().player, ITooltipFlag.TooltipFlags.NORMAL));
+                list.addAll(stack.getItemStack().getTooltip(Minecraft.getInstance().player, ITooltipFlag.TooltipFlags.NORMAL));
                 break; //Only permit one item to display
             }
         }

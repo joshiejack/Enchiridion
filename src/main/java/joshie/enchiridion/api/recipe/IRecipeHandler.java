@@ -1,6 +1,7 @@
 package joshie.enchiridion.api.recipe;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -30,5 +31,5 @@ public interface IRecipeHandler {
     String getRecipeName();
 
     /** Add Tooltip **/
-    void addTooltip(List<String> list);
+    void addTooltip(List<ITextComponent> list);
 }

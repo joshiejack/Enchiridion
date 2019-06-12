@@ -1,12 +1,14 @@
-package joshie.enchiridion.network;
+package joshie.enchiridion.network.packet;
 
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.MCServerHelper;
 import joshie.enchiridion.helpers.SplitHelper;
 import joshie.enchiridion.library.ModSupport;
+import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.core.PacketPart;
 import joshie.enchiridion.network.core.PacketSyncStringArray;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.PacketBuffer;
 
 import static joshie.enchiridion.network.core.PacketPart.*;
 
@@ -25,8 +27,18 @@ public class PacketSyncLibraryAllowed extends PacketSyncStringArray {
         super(part, text, index);
     }
 
+    public static void encode(PacketSyncLibraryAllowed packet, PacketBuffer buf) {
+        fromBytes(packet, buf);
+    }
+
+    public static PacketSyncLibraryAllowed decode(PacketBuffer buf) {
+        PacketSyncLibraryAllowed libraryAllowed = new PacketSyncLibraryAllowed();
+        toBytes(libraryAllowed, buf);
+        return libraryAllowed;
+    }
+
     @Override
-    public void receivedHashcode(EntityPlayer player) {
+    public void receivedHashcode(ServerPlayerEntity player) {
         int clientHash = ModSupport.getHashcode(text);
         if (integer != clientHash) {
             PacketHandler.sendToServer(new PacketSyncLibraryAllowed(REQUEST_SIZE));
@@ -34,7 +46,7 @@ public class PacketSyncLibraryAllowed extends PacketSyncStringArray {
     }
 
     @Override
-    public void receivedLengthRequest(EntityPlayer player) {
+    public void receivedLengthRequest(ServerPlayerEntity player) {
         String json = FileHelper.getLibraryJson(MCServerHelper.getHostName());
         int length = SplitHelper.splitStringEvery(json, 5000).length;
         String serverName = MCServerHelper.getHostName();
@@ -42,14 +54,14 @@ public class PacketSyncLibraryAllowed extends PacketSyncStringArray {
     }
 
     @Override
-    public void receivedStringLength(EntityPlayer player) {
+    public void receivedStringLength(ServerPlayerEntity player) {
         client = new String[integer]; //Build up the string value from the name
         serverNameClient = text; //Receive the server name
         PacketHandler.sendToServer(new PacketSyncLibraryAllowed(REQUEST_DATA));
     }
 
     @Override
-    public void receivedDataRequest(EntityPlayer player) {
+    public void receivedDataRequest(ServerPlayerEntity player) {
         //Grab the data and send it
         String json = FileHelper.getLibraryJson(MCServerHelper.getHostName());
         String[] server = SplitHelper.splitStringEvery(json, 5000);
@@ -59,7 +71,7 @@ public class PacketSyncLibraryAllowed extends PacketSyncStringArray {
     }
 
     @Override
-    public void receivedData(EntityPlayer player) {
+    public void receivedData(ServerPlayerEntity player) {
         if (client.length > integer) {
             client[integer] = text;
             //Now check if any parts are null

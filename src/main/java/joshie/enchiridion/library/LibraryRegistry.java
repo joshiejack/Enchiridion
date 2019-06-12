@@ -3,7 +3,7 @@ package joshie.enchiridion.library;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.api.library.ILibraryRegistry;
 import joshie.enchiridion.util.SafeStack;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
@@ -20,13 +20,13 @@ public class LibraryRegistry implements ILibraryRegistry {
     private LibraryRegistry() {
     }
 
-    public void unregisterBookHandlerForStackFromJSON(ItemStack itemStack, boolean matchDamage, boolean matchNBT) {
-        SafeStack safeStack = SafeStack.newInstance("IGNORE", itemStack, "IGNORE", matchDamage, matchNBT);
+    public void unregisterBookHandlerForStackFromJSON(@Nonnull ItemStack stack, boolean matchNBT) {
+        SafeStack safeStack = SafeStack.newInstance("IGNORE", stack, matchNBT);
         allowedBookRegistry.remove(safeStack); //Remove the book
     }
 
-    public void registerBookHandlerForStackFromJSON(String handlerName, ItemStack itemStack, boolean matchDamage, boolean matchNBT) {
-        SafeStack safeStack = SafeStack.newInstance("IGNORE", itemStack, "IGNORE", matchDamage, matchNBT);
+    public void registerBookHandlerForStackFromJSON(String handlerName, @Nonnull ItemStack stack, boolean matchNBT) {
+        SafeStack safeStack = SafeStack.newInstance("IGNORE", stack, matchNBT);
         allowedBookRegistry.put(safeStack, handlers.get(handlerName));
     }
 
@@ -44,13 +44,13 @@ public class LibraryRegistry implements ILibraryRegistry {
     }
 
     @Override
-    public IInventory getLibraryInventory(EntityPlayer player) {
+    public IInventory getLibraryInventory(PlayerEntity player) {
         return LibraryHelper.getLibraryContents(player);
     }
 
     @Override
-    public void registerBookHandlerForStack(String handlerName, @Nonnull ItemStack itemStack, boolean matchDamage, boolean matchNBT) {
-        SafeStack safeStack = SafeStack.newInstance("IGNORE", itemStack, "IGNORE", matchDamage, matchNBT);
+    public void registerBookHandlerForStack(String handlerName, @Nonnull ItemStack stack, boolean matchNBT) {
+        SafeStack safeStack = SafeStack.newInstance("IGNORE", stack, matchNBT);
         bookHandlerRegistry.put(safeStack, handlers.get(handlerName));
     }
 
@@ -67,7 +67,7 @@ public class LibraryRegistry implements ILibraryRegistry {
     }
 
     @Override
-    public void registerWood(@Nonnull ItemStack stack, boolean matchDamage, boolean matchNBT) {
-        LibraryRecipe.VALID_WOODS.add(SafeStack.newInstance("IGNORE", stack, "IGNORE", matchDamage, matchNBT));
+    public void registerWood(@Nonnull ItemStack stack, boolean matchNBT) {
+        LibraryRecipe.VALID_WOODS.add(SafeStack.newInstance("IGNORE", stack, matchNBT));
     }
 }

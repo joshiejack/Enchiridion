@@ -1,29 +1,25 @@
 package joshie.enchiridion.gui.library;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import joshie.enchiridion.util.ELocation;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiLibrary extends GuiContainer {
     private static final ResourceLocation LOCATION = new ELocation("library");
-    private ScaledResolution scaledresolution;
     public final int xSize = 430;
     public final int ySize = 217;
     public IInventory library;
     public int x, y;
 
-    public GuiLibrary(InventoryPlayer playerInventory, IInventory library, EnumHand hand) {
+    public GuiLibrary(PlayerInventory playerInventory, IInventory library, Hand hand) {
         super(new ContainerLibrary(playerInventory, library, hand));
-        scaledresolution = new ScaledResolution(Minecraft.getMinecraft());
     }
 
     @Override
@@ -45,7 +41,7 @@ public class GuiLibrary extends GuiContainer {
         GlStateManager.enableBlend();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
-        Minecraft.getMinecraft().getTextureManager().bindTexture(resource);
+        Minecraft.getInstance().getTextureManager().bindTexture(resource);
         buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
         buffer.pos((double) (x + left), (double) (y + bottom), (double) zLevel).tex(0, 1).color(1F, 1F, 1F, 1F).endVertex();
         buffer.pos((double) (x + right), (double) (y + bottom), (double) zLevel).tex(1, 1).color(1F, 1F, 1F, 1F).endVertex();

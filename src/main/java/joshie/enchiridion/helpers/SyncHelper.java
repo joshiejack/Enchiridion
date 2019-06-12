@@ -3,9 +3,8 @@ package joshie.enchiridion.helpers;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.network.PacketHandler;
-import joshie.enchiridion.network.PacketSyncFile;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import joshie.enchiridion.network.packet.PacketSyncFile;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
@@ -20,7 +19,7 @@ import java.util.HashSet;
 import static joshie.enchiridion.network.core.PacketPart.SEND_SIZE;
 
 public class SyncHelper {
-    public volatile static HashSet<EntityPlayerMP> playersSynced = new HashSet<>();
+    public volatile static HashSet<ServerPlayerEntity> playersSynced = new HashSet<>();
     public volatile static String[] servermd5;
     public volatile static String[] md5requests;
 
@@ -85,7 +84,7 @@ public class SyncHelper {
     public static HashMap<String, byte[][]> bytesClient = new HashMap<>();
 
     //These md5 matching files should be sent to the client
-    public static void sendFilesToClient(EntityPlayer player, String[] temp) {
+    public static void sendFilesToClient(ServerPlayerEntity player, String[] temp) {
         File root = FileHelper.getBooksDirectory();
         Collection<File> files = FileUtils.listFiles(root, new String[]{"json", "png", "jpg", "jpeg", "gif"}, true);
         for (String s : temp) {
@@ -94,7 +93,7 @@ public class SyncHelper {
                     String md5 = DigestUtils.md5Hex(new FileInputStream(file));
                     if (md5.equals(s)) {
                         String directory = file.toString().replace(root.toString(), "");
-                        if (EConfig.debugMode) Enchiridion.log(Level.INFO, "Sending a file to the client");
+                        if (EConfig.SETTINGS.debugMode) Enchiridion.log(Level.INFO, "Sending a file to the client");
                         //Send the length of the array of bytes
                         byte[] original = new byte[(int) file.length()];
                         try {

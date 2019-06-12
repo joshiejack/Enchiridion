@@ -1,4 +1,4 @@
-package joshie.enchiridion.jei;
+/*package joshie.enchiridion.jei;
 
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.gui.library.GuiLibrary;
@@ -19,7 +19,7 @@ import java.util.List;
 public class LibraryPlugin implements IModPlugin, IAdvancedGuiHandler<GuiLibrary> {
     @Override
     public void register(@Nonnull IModRegistry registry) {
-        if (EConfig.addOreDictionaryRecipeForLibrary) {
+        if (EConfig.SETTINGS.addOreDictionaryRecipeForLibrary) {
             registry.addRecipes(Collections.singletonList(new LibraryRecipeWrapper()), VanillaRecipeCategoryUid.CRAFTING);
         }
         registry.addAdvancedGuiHandlers(this);
@@ -43,4 +43,4 @@ public class LibraryPlugin implements IModPlugin, IAdvancedGuiHandler<GuiLibrary
     public Object getIngredientUnderMouse(@Nonnull GuiLibrary guiContainer, int mouseX, int mouseY) {
         return null;
     }
-}
+}*/

@@ -4,11 +4,13 @@ import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.MCClientHelper;
+import net.minecraft.client.resources.Language;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 public class Book implements IBook {
@@ -21,10 +23,10 @@ public class Book implements IBook {
     private String saveName;
 
     //Display Information
-    private String displayName;
+    private ITextComponent displayName;
     private String displayInfo;
     private String colorHex;
-    private String language;
+    private Language language;
     private boolean hasCustomIcon;
 
     //Background, with default texture
@@ -55,7 +57,7 @@ public class Book implements IBook {
     //Cached information
     private transient ResourceLocation resourceLocation;
     private transient boolean convertedColor;
-    private transient List<String> information;
+    private transient List<ITextComponent> information;
 
     /**
      * CONSTRUCTOR
@@ -64,7 +66,7 @@ public class Book implements IBook {
     }
 
     public Book(String name, String display) {
-        this.displayName = display;
+        this.displayName = new StringTextComponent(display);
         this.uniqueName = name;
         this.saveName = name;
         this.colorHex = "FFFFFFFF";
@@ -96,7 +98,7 @@ public class Book implements IBook {
     }
 
     @Override
-    public String getDisplayName() {
+    public ITextComponent getDisplayName() {
         return displayName;
     }
 
@@ -113,7 +115,7 @@ public class Book implements IBook {
     }
 
     @Override
-    public String getLanguageKey() {
+    public Language getLanguageKey() {
         return language;
     }
 
@@ -202,7 +204,7 @@ public class Book implements IBook {
     }
 
     @Override
-    public void setDisplayName(String name) {
+    public void setDisplayName(ITextComponent name) {
         displayName = name;
     }
 
@@ -213,7 +215,7 @@ public class Book implements IBook {
     }
 
     @Override
-    public void setLanguageKey(String language) {
+    public void setLanguageKey(Language language) {
         this.language = language;
     }
 
@@ -256,22 +258,17 @@ public class Book implements IBook {
 
     @Override
     public void removePage(IPage page) {
-        Iterator<IPage> it = book.iterator();
-        while (it.hasNext()) {
-            if (it.next().getPageNumber() == page.getPageNumber()) {
-                it.remove();
-            }
-        }
+        book.removeIf(iPage -> iPage.getPageNumber() == page.getPageNumber());
     }
 
     @Override
-    public void addInformation(List<String> tooltip) {
+    public void addInformation(List<ITextComponent> tooltip) {
         if (information == null) {
             if (displayInfo == null) displayInfo = "";
             String[] split = displayInfo.split("/n");
             information = new ArrayList<>();
             for (String s : split) {
-                if (!s.equals("")) information.add(s);
+                if (!s.equals("")) information.add(new StringTextComponent(s));
             }
         }
         tooltip.addAll(information);

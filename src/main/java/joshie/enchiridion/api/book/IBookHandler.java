@@ -1,8 +1,8 @@
 package joshie.enchiridion.api.book;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 
 import javax.annotation.Nonnull;
 
@@ -19,5 +19,5 @@ public interface IBookHandler {
      *  @param isShiftPressed whether the shift key is being held down on this book while right clicking
      *          you can use #EnchiridionAPI.library.getInventory to grab a the iinventory for the library
      *          which will allow you to get the stacks or set the stacks**/
-    void handle(@Nonnull ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed);
+    void handle(@Nonnull ItemStack stack, PlayerEntity player, Hand hand, int slotID, boolean isShiftPressed);
 }

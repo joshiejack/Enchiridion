@@ -63,12 +63,9 @@ public class GuiSimpleEditorColor extends GuiSimpleEditorAbstract {
     }
 
     private boolean isOverColor(int x, int y, int mouseX, int mouseY) {
-        if (mouseX >= EConfig.editorXPos + (y * 5) + 5 && mouseX <= EConfig.editorXPos + (y * 5) + 10) {
-            if (mouseY >= EConfig.toolbarYPos + (x * 5) + 11 && mouseY <= EConfig.toolbarYPos + (x * 5) + 16) {
-                return true;
-            }
+        if (mouseX >= EConfig.SETTINGS.editorXPos + (y * 5) + 5 && mouseX <= EConfig.SETTINGS.editorXPos + (y * 5) + 10) {
+            return mouseY >= EConfig.SETTINGS.toolbarYPos.get() + (x * 5) + 11 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + (x * 5) + 16;
         }
-
         return false;
     }
 

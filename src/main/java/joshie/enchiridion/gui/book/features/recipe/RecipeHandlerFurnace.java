@@ -3,9 +3,9 @@ package joshie.enchiridion.gui.book.features.recipe;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.crafting.FurnaceRecipe;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -23,13 +23,12 @@ public class RecipeHandlerFurnace extends RecipeHandlerBase {
 
         if (fuels == null) fuels = new WrappedFuelStack(0D, 65D, 2.5F);
         stackList.add(fuels);
-        addToUnique(Item.REGISTRY.getNameForObject(input.getItem()));
-        addToUnique(input.getItemDamage());
+        addToUnique(ForgeRegistries.ITEMS.getKey(input.getItem()));
     }
 
     @Override
     public void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list) {
-        Map<ItemStack, ItemStack> smeltingList = FurnaceRecipes.instance().getSmeltingList();
+        Map<ItemStack, ItemStack> smeltingList = FurnaceRecipe.instance().getSmeltingList();
         for (ItemStack key : smeltingList.keySet()) {
             ItemStack stack = smeltingList.get(key);
             if (stack.isEmpty()) continue;
@@ -70,7 +69,7 @@ public class RecipeHandlerFurnace extends RecipeHandlerBase {
     }
 
     protected void drawBackground() {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(LOCATION);
+        Minecraft.getInstance().getTextureManager().bindTexture(LOCATION);
         EnchiridionAPI.draw.drawTexturedRectangle(55D, 38D, 1, 63, 20, 14, 1.75F);
         int i1 = getBurnTimeRemainingScaled(13);
         EnchiridionAPI.draw.drawTexturedReversedRectangle(44D, 56D, 0, 85, 14, 14, 1.75F);

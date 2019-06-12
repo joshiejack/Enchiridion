@@ -28,17 +28,17 @@ public class GuiLayers extends AbstractGuiOverlay {
     }
 
     private boolean isOverLayer(int layerY, int mouseX, int mouseY) {
-        if (mouseX > EConfig.layersXPos + 20 && mouseX <= EConfig.layersXPos + 83) {
-            return mouseY >= EConfig.toolbarYPos - 3 + layerY && mouseY <= EConfig.toolbarYPos + 8 + layerY;
+        if (mouseX > EConfig.SETTINGS.layersXPos.get() + 20 && mouseX <= EConfig.SETTINGS.layersXPos.get() + 83) {
+            return mouseY >= EConfig.SETTINGS.toolbarYPos.get() - 3 + layerY && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + 8 + layerY;
         }
         return false;
     }
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        EnchiridionAPI.draw.drawImage(SIDEBAR, EConfig.layersXPos - 3, EConfig.toolbarYPos - 7, EConfig.layersXPos + 87, EConfig.timelineYPos + 13);
-        EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos, EConfig.toolbarYPos + 7, EConfig.layersXPos + 85, EConfig.timelineYPos + 11, 0xFF312921, 0xFF191511);
-        EnchiridionAPI.draw.drawSplitScaledString("[b]" + Enchiridion.translate("layers") + "[/b]", EConfig.layersXPos + 20, EConfig.toolbarYPos - 2, 250, 0xFFFFFFFF, 1F);
+        EnchiridionAPI.draw.drawImage(SIDEBAR, EConfig.SETTINGS.layersXPos.get() - 3, EConfig.SETTINGS.toolbarYPos.get() - 7, EConfig.SETTINGS.layersXPos.get() + 87, EConfig.SETTINGS.timelineYPos.get() + 13);
+        EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.layersXPos.get(), EConfig.SETTINGS.toolbarYPos.get() + 7, EConfig.SETTINGS.layersXPos.get() + 85, EConfig.SETTINGS.timelineYPos.get() + 11, 0xFF312921, 0xFF191511);
+        EnchiridionAPI.draw.drawSplitScaledString("[b]" + Enchiridion.format("layers") + "[/b]", EConfig.SETTINGS.layersXPos.get() + 20, EConfig.SETTINGS.toolbarYPos.get() - 2, 250, 0xFFFFFFFF, 1F);
         int layerY = 0;
         int hoverY = 0;
         ArrayList<IFeatureProvider> features = EnchiridionAPI.book.getPage().getFeatures();
@@ -57,7 +57,7 @@ public class GuiLayers extends AbstractGuiOverlay {
             }
 
             //Switch over to the hover if it applies
-            if (mouseX >= EConfig.layersXPos + 4 && mouseX <= EConfig.layersXPos + 9 && mouseY >= EConfig.toolbarYPos - 1 + layerY && mouseY <= EConfig.toolbarYPos + layerY + 5) {
+            if (mouseX >= EConfig.SETTINGS.layersXPos.get() + 4 && mouseX <= EConfig.SETTINGS.layersXPos.get() + 9 && mouseY >= EConfig.SETTINGS.toolbarYPos.get() - 1 + layerY && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + layerY + 5) {
                 resource = LOCK_HOVER;
                 if (feature.isFromTemplate()) {
                     color1 = 0xFFA5812C;
@@ -69,9 +69,9 @@ public class GuiLayers extends AbstractGuiOverlay {
             }
 
             //Draw the lock icons
-            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 2, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 11, EConfig.toolbarYPos + 7 + layerY, color1, color2);
+            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.layersXPos.get() + 2, EConfig.SETTINGS.toolbarYPos.get() - 3 + layerY, EConfig.SETTINGS.layersXPos.get() + 11, EConfig.SETTINGS.toolbarYPos.get() + 7 + layerY, color1, color2);
             if (feature.isLocked()) {
-                EnchiridionAPI.draw.drawImage(resource, EConfig.layersXPos + 4, EConfig.toolbarYPos - 1 + layerY, EConfig.layersXPos + 9, EConfig.toolbarYPos + layerY + 5);
+                EnchiridionAPI.draw.drawImage(resource, EConfig.SETTINGS.layersXPos.get() + 4, EConfig.SETTINGS.toolbarYPos.get() - 1 + layerY, EConfig.SETTINGS.layersXPos.get() + 9, EConfig.SETTINGS.toolbarYPos.get() + layerY + 5);
             }
             /* END LOCK ICON */
 
@@ -86,7 +86,7 @@ public class GuiLayers extends AbstractGuiOverlay {
                 color2 = 0x5579725A;
             }
 
-            if (mouseX > EConfig.layersXPos + 9 && mouseX < EConfig.layersXPos + 20 && mouseY >= EConfig.toolbarYPos - 1 + layerY && mouseY <= EConfig.toolbarYPos + layerY + 5) {
+            if (mouseX > EConfig.SETTINGS.layersXPos.get() + 9 && mouseX < EConfig.SETTINGS.layersXPos.get() + 20 && mouseY >= EConfig.SETTINGS.toolbarYPos.get() - 1 + layerY && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + layerY + 5) {
                 resource = VISIBLE_HOVER;
                 if (feature.isFromTemplate()) {
                     color1 = 0xFFA5812C;
@@ -97,14 +97,14 @@ public class GuiLayers extends AbstractGuiOverlay {
                 }
             }
 
-            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 11, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 20, EConfig.toolbarYPos + 7 + layerY, color1, color2);
+            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.layersXPos.get() + 11, EConfig.SETTINGS.toolbarYPos.get() - 3 + layerY, EConfig.SETTINGS.layersXPos.get() + 20, EConfig.SETTINGS.toolbarYPos.get() + 7 + layerY, color1, color2);
             if (feature.isVisible()) {
-                EnchiridionAPI.draw.drawImage(resource, EConfig.layersXPos + 12, EConfig.toolbarYPos - 1 + layerY, EConfig.layersXPos + 19, EConfig.toolbarYPos + layerY + 5);
+                EnchiridionAPI.draw.drawImage(resource, EConfig.SETTINGS.layersXPos.get() + 12, EConfig.SETTINGS.toolbarYPos.get() - 1 + layerY, EConfig.SETTINGS.layersXPos.get() + 19, EConfig.SETTINGS.toolbarYPos.get() + layerY + 5);
             }
             /* END VISIBILITY ICON */
 
             /* Layer itself */
-            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 20, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 83, EConfig.toolbarYPos + 7 + layerY, color1, color2);
+            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.layersXPos.get() + 20, EConfig.SETTINGS.toolbarYPos.get() - 3 + layerY, EConfig.SETTINGS.layersXPos.get() + 83, EConfig.SETTINGS.toolbarYPos.get() + 7 + layerY, color1, color2);
 
             if (isOverLayer(layerY, mouseX, mouseY) || EnchiridionAPI.book.isGroupSelected(feature)) {
                 hoverY = layerY;
@@ -115,13 +115,13 @@ public class GuiLayers extends AbstractGuiOverlay {
                     color1 = 0xFFB0A483;
                     color2 = 0xFF48453C;
                 }
-                EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 20, EConfig.toolbarYPos - 3 + layerY, EConfig.layersXPos + 83, EConfig.toolbarYPos + 7 + layerY, color1, color2);
+                EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.layersXPos.get() + 20, EConfig.SETTINGS.toolbarYPos.get() - 3 + layerY, EConfig.SETTINGS.layersXPos.get() + 83, EConfig.SETTINGS.toolbarYPos.get() + 7 + layerY, color1, color2);
             }
             /* End Layer */
 
             String name = feature.getFeature().getName();
             String truncated = (name.substring(0, Math.min(name.length(), 20))).replace("\n", " ");
-            EnchiridionAPI.draw.drawSplitScaledString(truncated, EConfig.layersXPos + 25, EConfig.toolbarYPos + layerY, 250, 0xFF000000, 0.5F);
+            EnchiridionAPI.draw.drawSplitScaledString(truncated, EConfig.SETTINGS.layersXPos.get() + 25, EConfig.SETTINGS.toolbarYPos.get() + layerY, 250, 0xFF000000, 0.5F);
         }
 
 
@@ -132,8 +132,8 @@ public class GuiLayers extends AbstractGuiOverlay {
             } else {
                 String name = dragged.getFeature().getName();
                 String truncated = name.substring(0, Math.min(name.length(), 20));
-                EnchiridionAPI.draw.drawBorderedRectangle(EConfig.layersXPos + 20, EConfig.toolbarYPos - 3 + hoverY, EConfig.layersXPos + 83, EConfig.toolbarYPos + 7 + hoverY, 0xFFEEEEEE, 0xFF48453C);
-                EnchiridionAPI.draw.drawSplitScaledString(truncated, EConfig.layersXPos + 25, EConfig.toolbarYPos + hoverY, 250, 0xFF000000, 0.5F);
+                EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.layersXPos.get() + 20, EConfig.SETTINGS.toolbarYPos.get() - 3 + hoverY, EConfig.SETTINGS.layersXPos.get() + 83, EConfig.SETTINGS.toolbarYPos.get() + 7 + hoverY, 0xFFEEEEEE, 0xFF48453C);
+                EnchiridionAPI.draw.drawSplitScaledString(truncated, EConfig.SETTINGS.layersXPos.get() + 25, EConfig.SETTINGS.toolbarYPos.get() + hoverY, 250, 0xFF000000, 0.5F);
             }
         }
     }
@@ -190,15 +190,15 @@ public class GuiLayers extends AbstractGuiOverlay {
                     selected.mouseReleased(mouseX, mouseY, 0);
                 }
             }
-            
+
             /* LOCK */
-            if (mouseX >= EConfig.layersXPos + 4 && mouseX <= EConfig.layersXPos + 9 && mouseY >= EConfig.toolbarYPos - 1 + layerY && mouseY <= EConfig.toolbarYPos + layerY + 5) {
+            if (mouseX >= EConfig.SETTINGS.layersXPos.get() + 4 && mouseX <= EConfig.SETTINGS.layersXPos.get() + 9 && mouseY >= EConfig.SETTINGS.toolbarYPos.get() - 1 + layerY && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + layerY + 5) {
                 IFeatureProvider feature = features.get(i);
                 feature.setLocked(!feature.isLocked());
             }
             /* END LOCK */
             /* VISIBLE */
-            if (mouseX > EConfig.layersXPos + 9 && mouseX < EConfig.layersXPos + 20 && mouseY >= EConfig.toolbarYPos - 1 + layerY && mouseY <= EConfig.toolbarYPos + layerY + 5) {
+            if (mouseX > EConfig.SETTINGS.layersXPos.get() + 9 && mouseX < EConfig.SETTINGS.layersXPos.get() + 20 && mouseY >= EConfig.SETTINGS.toolbarYPos.get() - 1 + layerY && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + layerY + 5) {
                 IFeatureProvider feature = features.get(i);
                 feature.setVisible(!feature.isVisible());
             }
@@ -214,7 +214,7 @@ public class GuiLayers extends AbstractGuiOverlay {
 
     @Override
     public void scroll(boolean down, int mouseX, int mouseY) {
-        if (mouseX >= EConfig.layersXPos) {
+        if (mouseX >= EConfig.SETTINGS.layersXPos.get()) {
             if (down) {
                 this.layerPosition++;
             } else {

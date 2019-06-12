@@ -13,7 +13,7 @@ public class ButtonInsertText extends ButtonAbstract {
     @Override
     public void performAction() {
         IPage current = EnchiridionAPI.book.getPage();
-        FeatureText feature = new FeatureText(EConfig.defaultText);
+        FeatureText feature = new FeatureText(EConfig.SETTINGS.defaultText.get());
         current.addFeature(feature, 0, current.getScroll(), 200D, 80D, false, false, false);
     }
 }

@@ -1,6 +1,7 @@
 package joshie.enchiridion.gui.book;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.platform.GlStateManager;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBook;
@@ -13,13 +14,14 @@ import joshie.enchiridion.gui.book.features.FeaturePreviewWindow;
 import joshie.enchiridion.helpers.*;
 import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.TextEditor;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -55,23 +57,24 @@ public class GuiBook extends GuiBase implements IBookHelper {
     public void drawScreen(int x2, int y2, float partialTicks) {
         super.drawScreen(x2, y2, partialTicks);
 
+        Minecraft mc = Minecraft.getInstance();
         if (book.isBackgroundVisible()) {
             //Display the left side
             if (book.isBackgroundLegacy()) {
-                GlStateManager.color(red, green, blue);
+                GlStateManager.color3f(red, green, blue);
                 mc.getTextureManager().bindTexture(LEGACY_COVER_L);
-                drawTexturedModalRect(x - 9, y, 35, 0, 212 + 9, ySize);
-                GlStateManager.color(1F, 1F, 1F);
+                blit(x - 9, y, 35, 0, 212 + 9, ySize);
+                GlStateManager.color3f(1F, 1F, 1F);
                 mc.getTextureManager().bindTexture(LEGACY_LEFT);
-                drawTexturedModalRect(x, y, 44, 0, 212, ySize);
+                blit(x, y, 44, 0, 212, ySize);
 
                 //Display the right side
-                GlStateManager.color(red, green, blue);
+                GlStateManager.color3f(red, green, blue);
                 mc.getTextureManager().bindTexture(LEGACY_COVER_R);
-                drawTexturedModalRect(x + 212, y, 0, 0, 218 + 9, ySize);
-                GlStateManager.color(1F, 1F, 1F);
+                blit(x + 212, y, 0, 0, 218 + 9, ySize);
+                GlStateManager.color3f(1F, 1F, 1F);
                 mc.getTextureManager().bindTexture(LEGACY_RIGHT);
-                drawTexturedModalRect(x + 212, y, 0, 0, 218, ySize);
+                blit(x + 212, y, 0, 0, 218, ySize);
             } else
                 EnchiridionAPI.draw.drawImage(book.getBackgroundResource(), book.getBackgroundStartX(), book.getBackgroundStartY(), book.getBackgroundEndX(), book.getBackgroundEndY());
         }
@@ -89,7 +92,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
             feature.addTooltip(TOOLTIP, mouseX, mouseY);
             this.mouseY = prevMouseY;
             this.y = y;
-            GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
+            GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT, false);
         }
 
         //Draw all the overlays
@@ -104,15 +107,15 @@ public class GuiBook extends GuiBase implements IBookHelper {
     }
 
     @Override
-    public void initGui() {
-        Keyboard.enableRepeatEvents(true);
+    public void init() {
+        Minecraft.getInstance().keyboardListener.enableRepeatEvents(true);
         GuiSimpleEditor.INSTANCE.setEditor(null); //Reset the editor
         TextEditor.INSTANCE.clearEditable();
     }
 
     @Override
-    public void onGuiClosed() {
-        Keyboard.enableRepeatEvents(false);
+    public void removed() {
+        Minecraft.getInstance().keyboardListener.enableRepeatEvents(false);
         if (!book.doesBookForgetClose() && page != null) pageCache.put(book.getUniqueName(), page.getPageNumber());
         if (isEditMode) {
             if (selected != null) selected.deselect();
@@ -120,7 +123,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
             try {
                 book.setMadeIn189(); //Force it to a mc189book with new formatting
                 File toSave = FileHelper.getSaveJSONForBook(book);
-                Writer writer = new OutputStreamWriter(new FileOutputStream(toSave), "UTF-8");
+                Writer writer = new OutputStreamWriter(new FileOutputStream(toSave), StandardCharsets.UTF_8);
                 writer.write(GsonHelper.getModifiedGson().toJson(book));
                 writer.close();
             } catch (Exception e) {
@@ -132,7 +135,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
     @Override
     protected void keyTyped(char character, int key) throws IOException {
         if (!Keyboard.areRepeatEventsEnabled()) {
-            Keyboard.enableRepeatEvents(true);
+            Minecraft.getInstance().keyboardListener.enableRepeatEvents(true);
         }
 
         super.keyTyped(character, key);
@@ -144,7 +147,8 @@ public class GuiBook extends GuiBase implements IBookHelper {
             });
 
             //Copy to clipboard
-            if (MCClientHelper.isCtrlPressed() && (Keyboard.isKeyDown(Keyboard.KEY_C) || Keyboard.isKeyDown(Keyboard.KEY_X))) {
+            long handle = Minecraft.getInstance().mainWindow.getHandle();
+            if (MCClientHelper.isCtrlPressed() && (InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_C) || InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_X))) {
                 clipboard.clear();
                 for (IFeatureProvider provider : group) {
                     IFeatureProvider copy = provider.copy();
@@ -152,12 +156,12 @@ public class GuiBook extends GuiBase implements IBookHelper {
                     clipboard.add(copy);
                 }
 
-                if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+                if (InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_X)) {
                     for (IFeatureProvider provider : group) {
                         page.removeFeature(provider);
                     }
                 }
-            } else if (MCClientHelper.isCtrlPressed() && Keyboard.isKeyDown(Keyboard.KEY_V)) { //Paste features
+            } else if (MCClientHelper.isCtrlPressed() && InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_V)) { //Paste features
                 for (IFeatureProvider provider : clipboard) {
                     page.addFeature(provider.getFeature().copy(), provider.getLeft(), provider.getTop(), provider.getWidth(), provider.getHeight(), provider.isLocked(), !provider.isVisible(), provider.isFromTemplate());
                 }
@@ -309,7 +313,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
         }
 
         //If the config allows editing, and the book isn't locked, enable edit mode
-        isEditMode = EConfig.enableEditing && !book.isLocked() && playerSneaked;
+        isEditMode = EConfig.SETTINGS.enableEditing.get() && !book.isLocked() && playerSneaked;
 
         Integer number = pageCache.get(book.getUniqueName());
         if (number == null) number = book.getDefaultPage();

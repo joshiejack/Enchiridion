@@ -1,6 +1,6 @@
 package joshie.enchiridion.data.book;
 
-import joshie.enchiridion.ECommonProxy;
+import joshie.enchiridion.ECommonHandler;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBook;
@@ -15,10 +15,12 @@ import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.json.BookIconTemplate;
 import joshie.enchiridion.json.BookIconTemplate.Icons;
 import joshie.enchiridion.lib.EInfo;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.client.resources.Language;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Level;
@@ -28,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -101,7 +104,7 @@ public class BookRegistry {
 
     public IBook register(IBook book) {
         if (book == null || book.getUniqueName() == null) return null;
-        if (EConfig.debugMode) {
+        if (EConfig.SETTINGS.debugMode) {
             Enchiridion.log(Level.INFO, "==== Start Logging of: " + book.getUniqueName());
             Enchiridion.log(Level.INFO, "Language: " + book.getLanguageKey());
             Enchiridion.log(Level.INFO, "Locked: " + book.isLocked());
@@ -126,7 +129,7 @@ public class BookRegistry {
 
                     page.setPageNumber(i);
                     if (book.getDisplayName() == null || book.getDisplayName().equals("")) {
-                        book.setDisplayName(book.getUniqueName());
+                        book.setDisplayName(new StringTextComponent(book.getUniqueName()));
                     }
                 }
 
@@ -146,7 +149,7 @@ public class BookRegistry {
 
         String id = book.getModID() == null || book.getModID().equals("") ? EInfo.MODID : book.getModID();
         ModelResourceLocation location = new ModelResourceLocation(new ResourceLocation(id, book.getUniqueName()), "inventory");
-        ModelBakery.registerItemVariants(ECommonProxy.book, location);
+        ModelBakery.registerItemVariants(ECommonHandler.BOOK, location);
         locations.put(book.getUniqueName(), location);
 
         //Now that the book has been registered, we should go and check if the it has a corresponding json for it's icon,
@@ -163,7 +166,7 @@ public class BookRegistry {
                         template.textures.layer0 = "enchiridion:items/" + book.getIconPass1().replace(".png", "");
                     } else template.textures.layer0 = "enchiridion:items/book";
 
-                    Writer writer = new OutputStreamWriter(new FileOutputStream(iconJson), "UTF-8");
+                    Writer writer = new OutputStreamWriter(new FileOutputStream(iconJson), StandardCharsets.UTF_8);
                     writer.write(GsonHelper.getModifiedGson().toJson(template));
                     writer.close();
                 } catch (Exception e) {
@@ -191,8 +194,8 @@ public class BookRegistry {
 
     public IBook getBook(ItemStack held) {
         if (held == null) return null;
-        if (!held.hasTagCompound()) return null;
-        String identifier = Objects.requireNonNull(held.getTagCompound()).getString("identifier");
+        if (!held.hasTag()) return null;
+        String identifier = Objects.requireNonNull(held.getTag()).getString("identifier");
         return getBookByName(identifier);
     }
 
@@ -204,8 +207,8 @@ public class BookRegistry {
         if (identifier.equals("")) return null;
         HashMap<String, IBook> translations = books.get(identifier);
         if (translations == null) return null;
-        String language = MCClientHelper.getLang();
-        IBook translated = translations.get(language);
+        Language language = MCClientHelper.getLang();
+        IBook translated = translations.get(language.getName());
         if (translated != null) return translated;
         else return translations.get("en_us");
     }

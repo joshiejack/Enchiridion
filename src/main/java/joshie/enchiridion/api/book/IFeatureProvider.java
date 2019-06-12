@@ -1,5 +1,7 @@
 package joshie.enchiridion.api.book;
 
+import net.minecraft.util.text.ITextComponent;
+
 import java.util.List;
 
 public interface IFeatureProvider {
@@ -30,7 +32,7 @@ public interface IFeatureProvider {
     //Rendering and functions
     void update(IPage page);
     void draw(int mouseX, int mouseY);
-    void addTooltip(List<String> tooltip, int mouseX, int mouseY);
+    void addTooltip(List<ITextComponent> tooltip, int mouseX, int mouseY);
     boolean mouseClicked(int mouseX, int mouseY, int button);
     void mouseReleased(int mouseX, int mouseY, int button);
     void select(int mouseX, int mouseY);

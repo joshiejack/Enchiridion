@@ -16,10 +16,11 @@ import joshie.enchiridion.gui.book.GuiToolbar;
 import joshie.enchiridion.gui.book.features.FeatureRecipe;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.network.PacketHandler;
-import joshie.enchiridion.network.PacketOpenBook;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ModContainer;
+import joshie.enchiridion.network.packet.PacketOpenBook;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 import org.apache.logging.log4j.Level;
 
 import java.io.File;
@@ -37,10 +38,10 @@ public class EAPIHandler implements IEnchiridionAPI {
         }
 
         /* Find this mods container */
-        ModContainer mod = null;
-        for (ModContainer container : Loader.instance().getActiveModList()) {
-            if (container.getModId().equals(modid)) {
-                mod = container;
+        ModInfo mod = null;
+        for (ModInfo info : ModList.get().getMods()) {
+            if (info.getModId().equals(modid)) {
+                mod = info;
                 break;
             }
         }
@@ -49,7 +50,7 @@ public class EAPIHandler implements IEnchiridionAPI {
         if (mod == null) {
             Enchiridion.log(Level.ERROR, "When attempting to register books with Enchiridion a mod with the modid " + modid + " could not be found");
         } else {
-            String jar = mod.getSource().toString();
+            String jar = mod.getOwningFile().toString(); //TODO Test
             BookRegistry.INSTANCE.registerMod(assetsPath, new File(jar));
         }
     }
@@ -81,15 +82,17 @@ public class EAPIHandler implements IEnchiridionAPI {
     }
 
     @Override
-    public void openBook(EntityPlayer player, String bookID, int page) {
+    public void openBook(PlayerEntity player, String bookID, int page) {
         if (player.world.isRemote) {
             IBook book = BookRegistry.INSTANCE.getBookByName(bookID);
             if (book != null) {
                 GuiBook.INSTANCE.setBook(book, false);
                 EnchiridionAPI.book.jumpToPageIfExists(page - 1);
-                player.openGui(Enchiridion.instance, GuiIDs.BOOK_FORCE, player.world, 0, 0, 0);
+                player.openGui(GuiIDs.BOOK_FORCE);
             }
-        } else PacketHandler.sendToClient(new PacketOpenBook(bookID, page), player);
+        } else {
+            PacketHandler.sendToClient(new PacketOpenBook(bookID, page), (ServerPlayerEntity) player);
+        }
     }
 
     @Override

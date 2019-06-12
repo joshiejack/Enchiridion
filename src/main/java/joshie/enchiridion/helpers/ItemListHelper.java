@@ -2,10 +2,11 @@ package joshie.enchiridion.helpers;
 
 import joshie.enchiridion.Enchiridion;
 import net.minecraft.client.Minecraft;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Level;
 
 import java.util.stream.Collectors;
@@ -18,12 +19,12 @@ public class ItemListHelper {
         items = NonNullList.create();
         allItems = NonNullList.create();
 
-        for (Item item : Item.REGISTRY) {
+        for (Item item : ForgeRegistries.ITEMS) {
             if (item == null) {
                 continue;
             }
             try {
-                item.getSubItems(CreativeTabs.SEARCH, items);
+                item.fillItemGroup(ItemGroup.SEARCH, items);
             } catch (Exception e) {
                 Enchiridion.log(Level.ERROR, "Enchiridion had an issue when trying to load the item: " + item.getClass());
             }
@@ -42,7 +43,7 @@ public class ItemListHelper {
 
     public static void addInventory() {
         try {
-            allItems.addAll(Minecraft.getMinecraft().player.inventory.mainInventory.stream().filter(stack -> !stack.isEmpty()).filter(stack -> !allItems().contains(stack)).collect(Collectors.toList()));
+            allItems.addAll(Minecraft.getInstance().player.inventory.mainInventory.stream().filter(stack -> !stack.isEmpty()).filter(stack -> !allItems().contains(stack)).collect(Collectors.toList()));
         } catch (Exception ignored) {
         }
     }

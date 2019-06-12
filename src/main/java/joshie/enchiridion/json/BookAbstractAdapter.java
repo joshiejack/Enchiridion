@@ -6,6 +6,8 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.data.book.Book;
 import joshie.enchiridion.helpers.JSONHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.text.StringTextComponent;
 import org.apache.logging.log4j.Level;
 
 import java.lang.reflect.Field;
@@ -36,7 +38,7 @@ public class BookAbstractAdapter implements JsonDeserializer<Book> {
 
         //Add in the book data
         book.create();
-        if (EConfig.debugMode)
+        if (EConfig.SETTINGS.debugMode)
             Enchiridion.log(Level.INFO, "=== Preparing to read the book : " + book.getDisplayName() + " ===");
         JsonArray array = jsonObject.get("book").getAsJsonArray();
         for (int i = 0; i < array.size(); i++) {
@@ -52,8 +54,9 @@ public class BookAbstractAdapter implements JsonDeserializer<Book> {
             book.setColorAsInt(JSONHelper.getIntegerIfExists(jsonObject, "color"));
         } else book.setMadeIn189();
 
-        if (book.getDisplayName() == null) book.setDisplayName(book.getUniqueName());
-        if (book.getLanguageKey() == null) book.setLanguageKey("en_US");
+        if (book.getDisplayName() == null) book.setDisplayName(new StringTextComponent(book.getUniqueName()));
+        if (book.getLanguageKey() == null)
+            book.setLanguageKey(Minecraft.getInstance().getLanguageManager().getLanguage("en_us"));
         if (book.getSaveName() == null) book.setSaveName(book.getUniqueName());
 
         return book;

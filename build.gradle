@@ -1,24 +1,21 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'maven-publish'
 
-repositories {
-    maven { url "http://tehnut.info/maven" }
-    maven { url "http://dvs1.progwml6.com/files/maven" }
-    maven { url "http://maven.blamejared.com" }
-}
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 ext.buildnumber=""
 if (System.getenv().BUILD_NUMBER) {
-    ext.buildnumber = "-" + System.getenv().BUILD_NUMBER
+    ext.buildnumber="-" + System.getenv().BUILD_NUMBER
 }
 
 version = "${minecraft_version}-${mod_version}${buildnumber}"
@@ -26,41 +23,32 @@ group= "uk.joshiejack.enchiridion"
 archivesBaseName = "Enchiridion"
 
 minecraft {
-    version = "${minecraft_version}-${forge_version}"
-    runDir = "run"
-    mappings = "${mappings_version}"
+    mappings channel: 'snapshot', version: '20190612-1.14.2'
+	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    runs {
+        client {
+            workingDirectory project.file('run')
 
-    replace "@VERSION@", "${mod_version}"
-    replaceIn "EInfo.java"
+            mods {
+                waddles {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            workingDirectory project.file('run')
+
+            mods {
+                waddles {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
 dependencies {
-    deobfProvided "mezz.jei:jei_${minecraft_version}:${jei_version}:api"
-    runtime "mezz.jei:jei_${minecraft_version}:${jei_version}"
-    deobfProvided "info.amerifrance.guideapi:Guide-API:1.12-${guideapi_version}"
-    deobfProvided "CraftTweaker2:CraftTweaker2-MC1120-Main:${crafttweaker_version}"
-}
-
-processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-
-        expand 'version': project.version, 'mcversion': project.minecraft.version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
-
-jar {
-    classifier = ''
-    manifest {
-        attributes 'FMLAT': 'enchiridion_at.cfg'
-    }
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 }
 
 publishing {
@@ -79,5 +67,3 @@ publishing {
         }
     }
 }
-
-idea { module { inheritOutputDirs = true } }

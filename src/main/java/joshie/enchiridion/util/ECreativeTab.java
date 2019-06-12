@@ -2,15 +2,15 @@ package joshie.enchiridion.util;
 
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.lib.EInfo;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.item.Items;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 
-public class ECreativeTab extends CreativeTabs {
+public class ECreativeTab extends ItemGroup {
     public static final ECreativeTab ENCHIRIDION = new ECreativeTab(EInfo.MODID);
     @Nonnull
     public ItemStack itemstack = ItemStack.EMPTY;
@@ -26,7 +26,7 @@ public class ECreativeTab extends CreativeTabs {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Nonnull
     public ItemStack getIcon() {
         if (itemstack.isEmpty()) return super.getIcon();
@@ -38,9 +38,9 @@ public class ECreativeTab extends CreativeTabs {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Nonnull
     public String getTranslationKey() {
-        return Enchiridion.translate("creative");
+        return Enchiridion.format("creative");
     }
 }

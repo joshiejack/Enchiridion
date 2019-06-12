@@ -1,25 +1,26 @@
 package joshie.enchiridion.util;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.lib.EInfo;
-import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.client.resources.IResourcePack;
-import net.minecraft.client.resources.data.IMetadataSection;
-import net.minecraft.client.resources.data.MetadataSerializer;
+import net.minecraft.resources.IResourcePack;
+import net.minecraft.resources.ResourcePackType;
+import net.minecraft.resources.data.IMetadataSectionSerializer;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.Set;
+import java.util.function.Predicate;
 
 public class EResourcePack implements IResourcePack {
     public static final EResourcePack INSTANCE = new EResourcePack();
@@ -38,10 +39,38 @@ public class EResourcePack implements IResourcePack {
 
     @Override
     @Nonnull
-    public InputStream getInputStream(@Nonnull ResourceLocation location) throws IOException {
+    public InputStream getRootResourceStream(@Nonnull String fileName) throws IOException {
+        return FileUtils.openInputStream(getFileLocationFromResource(new ResourceLocation(fileName)));
+    }
+
+    @Override
+    @Nonnull
+    public InputStream getResourceStream(@Nonnull ResourcePackType type, @Nonnull ResourceLocation location) throws IOException {
         if (location.getPath().equals("textures/wiki/enchiridion_logo.png")) //special case the logo
             return EResourcePack.class.getResourceAsStream("/assets/enchiridion/textures/books/enchiridion_logo.png");
         return FileUtils.openInputStream(getFileLocationFromResource(location));
+    }
+
+    @Override
+    @Nonnull
+    public Collection<ResourceLocation> getAllResourceLocations(@Nonnull ResourcePackType type, @Nonnull String path, int maxDepth, @Nonnull Predicate<String> filter) {
+        return Sets.newHashSet();
+    }
+
+    @Override
+    public boolean resourceExists(@Nonnull ResourcePackType type, @Nonnull ResourceLocation location) {
+        if (!isValidLocation(location)) return false;
+        String path = location.getPath();
+        if (path.startsWith("models") || path.startsWith("textures") || path.startsWith("images") || path.startsWith("templates")) {
+            File file = getFileLocationFromResource(location);
+            if (EConfig.SETTINGS.debugMode && !path.equals("textures/wiki/enchiridion_logo.png"))
+                Enchiridion.log(Level.INFO, "Checking for file at: " + file);
+            if (file.exists() || path.equals("textures/wiki/enchiridion_logo.png")) {
+                if (EConfig.SETTINGS.debugMode) Enchiridion.log(Level.INFO, "Passed file exists check");
+                return true;
+            }
+        }
+        return false;
     }
 
     //If the texture folder is the one enchiridion uses itself, use the normal loading
@@ -51,43 +80,30 @@ public class EResourcePack implements IResourcePack {
     }
 
     @Override
-    public boolean resourceExists(@Nonnull ResourceLocation location) {
-        if (!isValidLocation(location)) return false;
-        String path = location.getPath();
-        if (path.startsWith("models") || path.startsWith("textures") || path.startsWith("images") || path.startsWith("templates")) {
-            File file = getFileLocationFromResource(location);
-            if (EConfig.debugMode && !path.equals("textures/wiki/enchiridion_logo.png"))
-                Enchiridion.log(Level.INFO, "Checking for file at: " + file);
-            if (file.exists() || path.equals("textures/wiki/enchiridion_logo.png")) {
-                if (EConfig.debugMode) Enchiridion.log(Level.INFO, "Passed file exists check");
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    @Override
     @Nonnull
-    public Set<String> getResourceDomains() {
+    public Set<String> getResourceNamespaces(@Nonnull ResourcePackType type) {
         return DOMAINS;
     }
 
     @Override
     @Nullable
-    public <T extends IMetadataSection> T getPackMetadata(@Nonnull MetadataSerializer serializer, @Nonnull String string) throws IOException {
+    public <T> T getMetadata(@Nonnull IMetadataSectionSerializer<T> deserializer) {
         return null;
     }
 
-    @Override
+    /*@Override
     @Nonnull
     public BufferedImage getPackImage() throws IOException {
         return TextureUtil.readBufferedImage(EResourcePack.class.getResourceAsStream("/assets/enchiridion/textures/books/enchiridion_logo.png"));
-    }
+    }*/
 
     @Override
     @Nonnull
-    public String getPackName() {
+    public String getName() {
         return EInfo.MODID;
+    }
+
+    @Override
+    public void close() {
     }
 }

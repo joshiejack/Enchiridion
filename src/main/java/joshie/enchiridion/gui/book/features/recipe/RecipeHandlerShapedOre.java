@@ -1,4 +1,4 @@
-package joshie.enchiridion.gui.book.features.recipe;
+/*package joshie.enchiridion.gui.book.features.recipe;
 
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -33,7 +33,7 @@ public class RecipeHandlerShapedOre extends RecipeHandlerRecipeBase {
     /**
      * Setup Reflection for grabbing the input and recipe width
      **/
-    private static Field input;
+    /*private static Field input;
     private static Field width;
 
     static {
@@ -45,4 +45,4 @@ public class RecipeHandlerShapedOre extends RecipeHandlerRecipeBase {
         } catch (Exception ignored) {
         }
     }
-}
+}*/

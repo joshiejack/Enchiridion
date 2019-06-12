@@ -1,12 +1,15 @@
 package joshie.enchiridion.network.core;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 import static joshie.enchiridion.network.core.PacketPart.*;
 
-public abstract class PacketSyncStringArray extends PenguinPacket {
+public class PacketSyncStringArray implements IPacketArray {
     protected PacketPart part;
     protected String text = "";
     protected int integer = -1;
@@ -24,55 +27,32 @@ public abstract class PacketSyncStringArray extends PenguinPacket {
         this.integer = index;
     }
 
-    @Override
-    public void toBytes(ByteBuf to) {
-        to.writeByte(part.ordinal());
-        if (part.sends()) {
-            to.writeInt(integer);
-            ByteBufUtils.writeUTF8String(to, text);
+    public static void toBytes(PacketSyncStringArray packet, PacketBuffer buf) {
+        buf.writeByte(packet.part.ordinal());
+        if (packet.part.sends()) {
+            buf.writeInt(packet.integer);
+            buf.writeString(packet.text);
         }
     }
 
-    @Override
-    public void fromBytes(ByteBuf from) {
-        part = PacketPart.values()[from.readByte()];
-        if (part.sends()) {
-            integer = from.readInt();
-            text = ByteBufUtils.readUTF8String(from);
+    public static void fromBytes(PacketSyncStringArray packet, PacketBuffer buf) {
+        packet.part = PacketPart.values()[buf.readByte()];
+        if (packet.part.sends()) {
+            packet.integer = buf.readInt();
+            packet.text = buf.readString(32767);
         }
     }
 
-    @Override
-    public void handlePacket(EntityPlayer player) {
-        if (part == SEND_HASH) receivedHashcode(player);
-        else if (part == REQUEST_SIZE) receivedLengthRequest(player);
-        else if (part == SEND_SIZE) receivedStringLength(player);
-        else if (part == REQUEST_DATA) receivedDataRequest(player);
-        else if (part == SEND_DATA) receivedData(player);
+    public static class Handler {
+        public static void handle(PacketSyncStringArray message, Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayerEntity playerMP = ctx.get().getSender();
+            if (playerMP != null && !(playerMP instanceof FakePlayer)) {
+                if (message.part == SEND_HASH) message.receivedHashcode(playerMP);
+                else if (message.part == REQUEST_SIZE) message.receivedLengthRequest(playerMP);
+                else if (message.part == SEND_SIZE) message.receivedStringLength(playerMP);
+                else if (message.part == REQUEST_DATA) message.receivedDataRequest(playerMP);
+                else if (message.part == SEND_DATA) message.receivedData(playerMP);
+            }
+        }
     }
-
-    /**
-     * Client should do nothing or send a packet to request data
-     **/
-    public abstract void receivedHashcode(EntityPlayer player);
-
-    /**
-     * Server should now send the string length
-     **/
-    public abstract void receivedLengthRequest(EntityPlayer player);
-
-    /**
-     * Client should now send a received size packet
-     **/
-    public abstract void receivedStringLength(EntityPlayer player);
-
-    /**
-     * Server should now send the data for the string
-     **/
-    public abstract void receivedDataRequest(EntityPlayer player);
-
-    /**
-     * Client should try to build a list of the data after received all the data
-     **/
-    public abstract void receivedData(EntityPlayer player);
 }

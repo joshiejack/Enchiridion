@@ -29,8 +29,8 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
     }
 
     private boolean isOverPosition(int x1, int y1, int x2, int y2, int mouseX, int mouseY) {
-        if (mouseX >= EConfig.editorXPos + x1 && mouseX <= EConfig.editorXPos + x2) {
-            if (mouseY >= EConfig.toolbarYPos + y1 && mouseY <= EConfig.toolbarYPos + y2) {
+        if (mouseX >= EConfig.SETTINGS.editorXPos + x1 && mouseX <= EConfig.SETTINGS.editorXPos + x2) {
+            if (mouseY >= EConfig.SETTINGS.toolbarYPos.get() + y1 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + y2) {
                 return true;
             }
         }
@@ -49,11 +49,11 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
         int yPos = -11;
 
         //Draw the extra information for the actions
-        drawBoxLabel(Enchiridion.translate("fields.extra"), yPos + 20);
+        drawBoxLabel(Enchiridion.format("fields.extra"), yPos + 20);
         for (String f : getFieldNames()) {
             if (isTransient(f)) continue;
             drawBorderedRectangle(2, yPos + 30, 83, yPos + 37, 0xFF312921, 0xFF191511);
-            String name = Enchiridion.translate("button.action.field." + f);
+            String name = Enchiridion.format("button.action.field." + f);
             drawSplitScaledString("[b]" + name + "[/b]", 4, yPos + 32, 0xFFFFFFFF, 0.5F);
 
             WrappedEditable editable;

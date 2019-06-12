@@ -1,7 +1,7 @@
 package joshie.enchiridion.util;
 
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ChatAllowedCharacters;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.SharedConstants;
 
 import java.util.HashMap;
 
@@ -49,14 +49,14 @@ public class TextEditor {
             } else if (key == 205) {
                 cursorRight(1);
             } else if (character == 22) {
-                add(GuiScreen.getClipboardString());
+                add(Minecraft.getInstance().keyboardListener.getClipboardString());
             } else if (key == 14) {
                 delete(-1);
             } else if (key == 211) {
                 delete(0);
             } else if (key == 28 || key == 156) {
                 add("\n");
-            } else if (ChatAllowedCharacters.isAllowedCharacter(character)) {
+            } else if (SharedConstants.isAllowedCharacter(character)) {
                 add(Character.toString(character));
             }
 

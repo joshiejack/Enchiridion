@@ -1,35 +1,36 @@
 package joshie.enchiridion.gui.library;
 
 import joshie.enchiridion.api.EnchiridionAPI;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 
 import javax.annotation.Nonnull;
 
 public class ContainerLibrary extends Container {
     public IInventory library;
 
-    public ContainerLibrary(InventoryPlayer playerInventory, IInventory library, EnumHand hand) {
+    public ContainerLibrary(PlayerInventory playerInventory, IInventory library, Hand hand) {
+        super();
         //Set the library
         this.library = library;
 
         //Left hand side slots
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 3; j++) {
-                addSlotToContainer(new SlotBook(library, hand, j + (i * 3), -51 + (j * 18), 22 + (i * 23)));
+                addSlot(new SlotBook(library, hand, j + (i * 3), -51 + (j * 18), 22 + (i * 23)));
             }
         }
 
         //Right hand side slots
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 3; j++) {
-                addSlotToContainer(new SlotBook(library, hand, 15 + j + (i * 3), 175 + (j * 18), 22 + (i * 23)));
+                addSlot(new SlotBook(library, hand, 15 + j + (i * 3), 175 + (j * 18), 22 + (i * 23)));
             }
         }
 
@@ -37,7 +38,7 @@ public class ContainerLibrary extends Container {
         for (int i = 0; i < 5; i++) {
             int y = i == 0 ? 1 : 0;
             for (int j = 0; j < 7; j++) {
-                addSlotToContainer(new SlotBook(library, hand, 30 + j + (i * 7), 26 + (j * 18), -1 + (i * 23) - y));
+                addSlot(new SlotBook(library, hand, 30 + j + (i * 7), 26 + (j * 18), -1 + (i * 23) - y));
             }
         }
 
@@ -45,26 +46,26 @@ public class ContainerLibrary extends Container {
         bindPlayerInventory(playerInventory, 30);
     }
 
-    protected void bindPlayerInventory(InventoryPlayer inventory, int yOffset) {
+    protected void bindPlayerInventory(PlayerInventory inventory, int yOffset) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18 + yOffset));
+                addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18 + yOffset));
             }
         }
 
         for (int i = 0; i < 9; i++) {
-            addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 142 + yOffset));
+            addSlot(new Slot(inventory, i, 8 + i * 18, 142 + yOffset));
         }
     }
 
     @Override
-    public boolean canInteractWith(@Nonnull EntityPlayer player) {
+    public boolean canInteractWith(@Nonnull PlayerEntity player) {
         return true;
     }
 
     @Override
     @Nonnull
-    public ItemStack transferStackInSlot(EntityPlayer player, int slotID) {
+    public ItemStack transferStackInSlot(PlayerEntity player, int slotID) {
         int size = library.getSizeInventory();
         int low = size + 27;
         int high = low + 9;
@@ -102,7 +103,7 @@ public class ContainerLibrary extends Container {
 
     @Override
     @Nonnull
-    public ItemStack slotClick(int slotID, int mouseButton, ClickType type, EntityPlayer player) {
+    public ItemStack slotClick(int slotID, int mouseButton, ClickType type, PlayerEntity player) {
         Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : inventorySlots.get(slotID);
         return slot instanceof SlotBook && ((SlotBook) slot).handle(player, mouseButton, slot).isEmpty() ? ItemStack.EMPTY : super.slotClick(slotID, mouseButton, type, player);
     }

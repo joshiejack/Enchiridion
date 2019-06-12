@@ -1,40 +1,41 @@
 package joshie.enchiridion.items;
 
-import com.google.common.collect.ImmutableList;
-import joshie.enchiridion.EClientProxy;
+import joshie.enchiridion.EClientHandler;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.data.book.BookMeshDefinition;
+import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.library.LibraryHelper;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemOverrideList;
+import net.minecraft.client.renderer.model.BakedQuad;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Items;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.item.Items;
+import net.minecraft.util.Direction;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-@EventBusSubscriber(value = Side.CLIENT)
+@EventBusSubscriber(modid = EInfo.MODID, value = Dist.CLIENT)
 public class SmartLibrary implements IBakedModel {
     private static IBakedModel library;
 
     @SubscribeEvent
     public static void onCookery(ModelBakeEvent event) {
-        if (EConfig.libraryAsItem) {
-            event.getModelRegistry().putObject(EClientProxy.libraryItem, new SmartLibrary());
+        if (EConfig.SETTINGS.libraryAsItem.get()) {
+            event.getModelRegistry().put(EClientHandler.libraryItem, new SmartLibrary());
         }
     }
 
@@ -51,17 +52,17 @@ public class SmartLibrary implements IBakedModel {
         private ItemModelMesher mesher;
 
         public LibraryOverride() {
-            super(ImmutableList.of());
+            super();
         }
 
         @Override
         @Nonnull
-        public IBakedModel handleItemState(@Nonnull IBakedModel originalModel, ItemStack stack, @Nullable World world, @Nullable EntityLivingBase entity) {
+        public IBakedModel getModelWithOverrides(@Nonnull IBakedModel originalModel, @Nonnull ItemStack stack, @Nullable World world, @Nullable LivingEntity entity) {
             IBakedModel ret;
             //Setup
-            if (mesher == null) mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
-            library = mesher.getModelManager().getModel(EClientProxy.library);
-            if (stack.getItemDamage() == 0) { //If we're a book
+            if (mesher == null) mesher = Minecraft.getInstance().getItemRenderer().getItemModelMesher();
+            library = mesher.getModelManager().getModel(EClientHandler.library);
+            if (stack.getDamage() == 0) { //If we're a book
                 ret = mesher.getModelManager().getModel(BookMeshDefinition.INSTANCE.getModelLocation(stack));
             } else {
                 ItemStack book = LibraryHelper.getClientLibraryContents().getCurrentBookItem();
@@ -77,7 +78,7 @@ public class SmartLibrary implements IBakedModel {
      **/
     @Override
     @Nonnull
-    public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @Nonnull Random rand) {
         return new ArrayList<>();
     }
 

@@ -6,6 +6,8 @@ import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.api.book.ITemplate;
 import joshie.enchiridion.data.book.Page;
 import joshie.enchiridion.helpers.MCClientHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,8 +39,8 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
     }
 
     private boolean isOverPosition(int x1, int y1, int x2, int y2, int mouseX, int mouseY) {
-        if (mouseX >= EConfig.editorXPos + x1 && mouseX <= EConfig.editorXPos + x2) {
-            return mouseY >= EConfig.toolbarYPos + y1 && mouseY <= EConfig.toolbarYPos + y2;
+        if (mouseX >= EConfig.SETTINGS.editorXPos + x1 && mouseX <= EConfig.SETTINGS.editorXPos + x2) {
+            return mouseY >= EConfig.SETTINGS.toolbarYPos.get() + y1 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + y2;
         }
         return false;
     }
@@ -87,8 +89,8 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
 
     @Override
     public void scroll(boolean down, int mouseX, int mouseY) {
-        if (mouseX >= EConfig.editorXPos + 7 && mouseX <= EConfig.editorXPos + 91) {
-            if (mouseY >= EConfig.toolbarYPos + 14 && mouseY <= EConfig.toolbarYPos + 302) {
+        if (mouseX >= EConfig.SETTINGS.editorXPos + 7 && mouseX <= EConfig.SETTINGS.editorXPos + 91) {
+            if (mouseY >= EConfig.SETTINGS.toolbarYPos.get() + 14 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + 302) {
                 if (down) {
                     position = Math.min(((sorted.size() + 1) / 2), position + 2);
                 } else {
@@ -99,7 +101,7 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
     }
 
     @Override
-    public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
+    public void addToolTip(List<ITextComponent> tooltip, int mouseX, int mouseY) {
         int count = 0;
         int yPlus = 0;
         int xPlus = 0;
@@ -110,9 +112,9 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
             }
 
             if (isOverPosition(2 + xPlus, 11 + yPlus, 42 + xPlus, 34 + yPlus, mouseX, mouseY)) {
-                tooltip.add(template.getTemplateName());
-                tooltip.add("");
-                tooltip.add(Enchiridion.translate("template.click"));
+                tooltip.add(new StringTextComponent(template.getTemplateName()));
+                tooltip.add(new StringTextComponent(""));
+                tooltip.add(new StringTextComponent(Enchiridion.format("template.click")));
                 return;
             }
 

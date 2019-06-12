@@ -29,11 +29,10 @@ public class ActionExecuteCommand extends AbstractAction {
 
     @Override
     public boolean performAction() {
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         try {
-            if (net.minecraftforge.client.ClientCommandHandler.instance.executeCommand(mc.player, command) != 0)
-                return false;
-            mc.player.sendChatMessage(command);
+            String parsedCommand = command.replace("@p", mc.player.getName().getString());
+            mc.player.sendChatMessage(parsedCommand);
         } catch (Exception ignored) {
         }
 

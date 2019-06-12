@@ -46,14 +46,14 @@ public class GuiTimeLine extends AbstractGuiOverlay {
     }
 
     private boolean isOverTimeLine(int xPos, int mouseX, int mouseY) {
-        return mouseX >= xPos && mouseX <= xPos + 3 && mouseY >= EConfig.timelineYPos && mouseY <= EConfig.timelineYPos + 10;
+        return mouseX >= xPos && mouseX <= xPos + 3 && mouseY >= EConfig.SETTINGS.timelineYPos.get() && mouseY <= EConfig.SETTINGS.timelineYPos.get() + 10;
     }
 
     @Override
     public void draw(int mouseX, int mouseY) {
-        EnchiridionAPI.draw.drawImage(TOOLBAR, -9, EConfig.timelineYPos - 9, 440, EConfig.timelineYPos + 13);
-        //EnchiridionAPI.draw.drawBorderedRectangle(-6, EConfig.timelineYPos - 7, 437, EConfig.timelineYPos, 0xFF312921, 0xFF191511);
-        EnchiridionAPI.draw.drawBorderedRectangle(-6, EConfig.timelineYPos, 437, EConfig.timelineYPos + 11, 0x00000000, 0xFF191511);
+        EnchiridionAPI.draw.drawImage(TOOLBAR, -9, EConfig.SETTINGS.timelineYPos.get() - 9, 440, EConfig.SETTINGS.timelineYPos.get() + 13);
+        //EnchiridionAPI.draw.drawBorderedRectangle(-6, EConfig.SETTINGS.timelineYPos - 7, 437, EConfig.SETTINGS.timelineYPos, 0xFF312921, 0xFF191511);
+        EnchiridionAPI.draw.drawBorderedRectangle(-6, EConfig.SETTINGS.timelineYPos.get(), 437, EConfig.SETTINGS.timelineYPos.get() + 11, 0x00000000, 0xFF191511);
         int currentPageNumber = EnchiridionAPI.book.getPage().getPageNumber();
         int hoverX = 0;
 
@@ -66,7 +66,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
             if (exists) fill = 0xFFFFFFFF;
 
             if (isValid(j, thisNumber + 1)) {
-                EnchiridionAPI.draw.drawSplitScaledString("" + (thisNumber + 1), positionX + getOffsetX(j, thisNumber + 1), EConfig.timelineYPos - 5, 199, 0xFFDDDDDD, 0.5F);
+                EnchiridionAPI.draw.drawSplitScaledString("" + (thisNumber + 1), positionX + getOffsetX(j, thisNumber + 1), EConfig.SETTINGS.timelineYPos.get() - 5, 199, 0xFFDDDDDD, 0.5F);
                 fill = exists ? 0xFFEEEEEE : 0xFFB0A483;
             }
 
@@ -76,7 +76,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
                 fill = 0xFFFFFF00;
             }
 
-            EnchiridionAPI.draw.drawRectangle(positionX, EConfig.timelineYPos, positionX + 5, EConfig.timelineYPos + 10, fill);
+            EnchiridionAPI.draw.drawRectangle(positionX, EConfig.SETTINGS.timelineYPos.get(), positionX + 5, EConfig.SETTINGS.timelineYPos.get() + 10, fill);
         }
 
         //Dragging!
@@ -84,7 +84,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
             if (held < 30) {
                 held++;
             } else
-                EnchiridionAPI.draw.drawRectangle(hoverX, EConfig.timelineYPos, hoverX + 4, EConfig.timelineYPos + 10, 0xFFFF9326);
+                EnchiridionAPI.draw.drawRectangle(hoverX, EConfig.SETTINGS.timelineYPos.get(), hoverX + 4, EConfig.SETTINGS.timelineYPos.get() + 10, 0xFFFF9326);
         }
     }
 
@@ -130,7 +130,7 @@ public class GuiTimeLine extends AbstractGuiOverlay {
 
     @Override
     public void scroll(boolean down, int mouseX, int mouseY) {
-        if (mouseX >= -5 && mouseX <= 431 && mouseY >= EConfig.timelineYPos && mouseY <= EConfig.timelineYPos + 10) {
+        if (mouseX >= -5 && mouseX <= 431 && mouseY >= EConfig.SETTINGS.timelineYPos.get() && mouseY <= EConfig.SETTINGS.timelineYPos.get() + 10) {
             if (down) {
                 startPage += 5;
             } else {

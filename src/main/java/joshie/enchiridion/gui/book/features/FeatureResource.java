@@ -60,7 +60,7 @@ public class FeatureResource extends FeatureAbstract {
     protected void readImage(String[] split) throws IOException {
         double splitX = split.length >= 3 ? Double.parseDouble(split[2]) : 1D;
         double splitY = split.length == 4 ? Double.parseDouble(split[3]) : 1D;
-        BufferedImage image = ImageIO.read(Minecraft.getMinecraft().getResourceManager().getResource(resource).getInputStream());
+        BufferedImage image = ImageIO.read(Minecraft.getInstance().getResourceManager().getResource(resource).getInputStream());
         img_width = (int) (image.getWidth() / splitX);
         img_height = (int) (image.getHeight() / splitY);
     }

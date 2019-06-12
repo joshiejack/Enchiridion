@@ -6,7 +6,6 @@ import joshie.enchiridion.helpers.GsonHelper;
 import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.util.TextEditor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
@@ -15,6 +14,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 public class GuiSimpleEditorTemplateSave extends GuiSimpleEditorAbstract implements ITextEditable {
     public static final GuiSimpleEditorTemplateSave INSTANCE = new GuiSimpleEditorTemplateSave();
@@ -38,12 +38,11 @@ public class GuiSimpleEditorTemplateSave extends GuiSimpleEditorAbstract impleme
 
     private void saveScreenshot(String name) {
         GL11.glReadBuffer(GL11.GL_FRONT);
-        Minecraft mc = Minecraft.getMinecraft();
-        ScaledResolution res = new ScaledResolution(mc);
-        int screenWidth = mc.displayWidth;
-        int screenHeight = mc.displayHeight;
+        Minecraft mc = Minecraft.getInstance();
+        int screenWidth = mc.mainWindow.getWidth();
+        int screenHeight = mc.mainWindow.getHeight();
 
-        int scale = res.getScaleFactor();
+        int scale = (int) mc.mainWindow.getGuiScaleFactor();
         int width = 450 * scale;
         int height = 255 * scale;
 
@@ -87,7 +86,7 @@ public class GuiSimpleEditorTemplateSave extends GuiSimpleEditorAbstract impleme
     private void saveTemplate(String name, Template template) {
         try {
             File toSave = new File(FileHelper.getTemplatesDirectory(), name + ".json");
-            Writer writer = new OutputStreamWriter(new FileOutputStream(toSave), "UTF-8");
+            Writer writer = new OutputStreamWriter(new FileOutputStream(toSave), StandardCharsets.UTF_8);
             writer.write(GsonHelper.getModifiedGson().toJson(template));
             writer.close();
         } catch (Exception e) {

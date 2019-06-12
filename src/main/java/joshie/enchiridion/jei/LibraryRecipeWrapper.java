@@ -1,6 +1,6 @@
-package joshie.enchiridion.jei;
+/*package joshie.enchiridion.jei;
 
-import joshie.enchiridion.ECommonProxy;
+import joshie.enchiridion.ECommonHandler;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.helpers.ItemListHelper;
 import joshie.enchiridion.library.LibraryRecipe;
@@ -20,7 +20,7 @@ public class LibraryRecipeWrapper implements IRecipeWrapper, IShapedCraftingReci
 
     LibraryRecipeWrapper() {
         inputs = new ArrayList<>();
-        output = new ItemStack(ECommonProxy.book, 1, 1);
+        output = new ItemStack(ECommonHandler.book, 1, 1);
     }
 
     @Override
@@ -57,4 +57,4 @@ public class LibraryRecipeWrapper implements IRecipeWrapper, IShapedCraftingReci
     public int getHeight() {
         return 3;
     }
-}
+}*/

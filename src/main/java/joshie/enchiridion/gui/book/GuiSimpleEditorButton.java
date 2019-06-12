@@ -14,6 +14,8 @@ import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.PenguinFont;
 import joshie.enchiridion.util.TextEditor;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -53,15 +55,15 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     }
 
     private boolean isOverAction(int xPos, int yPos, int mouseX, int mouseY) {
-        if (mouseX >= EConfig.editorXPos + xPos && mouseX <= EConfig.editorXPos + xPos + 9) {
-            return mouseY >= EConfig.toolbarYPos + yPos + 7 && mouseY <= EConfig.toolbarYPos + yPos + 17;
+        if (mouseX >= EConfig.SETTINGS.editorXPos + xPos && mouseX <= EConfig.SETTINGS.editorXPos + xPos + 9) {
+            return mouseY >= EConfig.SETTINGS.toolbarYPos.get() + yPos + 7 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + yPos + 17;
         }
         return false;
     }
 
     private boolean isOverPosition(int x1, int y1, int x2, int y2, int mouseX, int mouseY) {
-        if (mouseX >= EConfig.editorXPos + x1 && mouseX <= EConfig.editorXPos + x2) {
-            return mouseY >= EConfig.toolbarYPos + y1 && mouseY <= EConfig.toolbarYPos + y2;
+        if (mouseX >= EConfig.SETTINGS.editorXPos + x1 && mouseX <= EConfig.SETTINGS.editorXPos + x2) {
+            return mouseY >= EConfig.SETTINGS.toolbarYPos.get() + y1 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + y2;
         }
         return false;
     }
@@ -102,7 +104,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     public void draw(int mouseX, int mouseY) {
         if (button == null || button.getAction() == null) return;
         //NO WORK!!!
-        drawBoxLabel(Enchiridion.translate("select.action"), 9);
+        drawBoxLabel(Enchiridion.format("select.action"), 9);
         int xPos = xPosStart;
         int yPos = 13;
         for (IButtonAction action : sorted) {
@@ -121,7 +123,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         //Draw the unhovered button selector
         int colorI = 0x00000000;
         int colorB = 0xFFB0A483;
-        drawBoxLabel(Enchiridion.translate("select.unhover"), yPos + 20);
+        drawBoxLabel(Enchiridion.format("select.unhover"), yPos + 20);
         drawImage(ARROW_LEFT_OFF, 4, yPos + 32, 22, yPos + 42);
         drawImage(ARROW_RIGHT_OFF, 24, yPos + 32, 42, yPos + 42);
         if (ARROW_LEFT_OFF.equals(button.getResource(false)))
@@ -135,13 +137,13 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         }
 
         drawBorderedRectangle(45, yPos + 31, 80, yPos + 43, colorI, colorB);
-        drawSplitScaledString("[b]" + Enchiridion.translate("select.custom") + "[/b]", 53, yPos + 35, 0xFFFFFFFF, 0.5F);
+        drawSplitScaledString("[b]" + Enchiridion.format("select.custom") + "[/b]", 53, yPos + 35, 0xFFFFFFFF, 0.5F);
 
         //Draw the hovered button selector
         yPos += 25;
         colorI = 0x00000000;
         colorB = 0xFFB0A483;
-        drawBoxLabel(Enchiridion.translate("select.hover"), yPos + 20);
+        drawBoxLabel(Enchiridion.format("select.hover"), yPos + 20);
         drawImage(ARROW_LEFT_ON, 4, yPos + 32, 22, yPos + 42);
         drawImage(ARROW_RIGHT_ON, 24, yPos + 32, 42, yPos + 42);
         if (ARROW_LEFT_ON.equals(button.getResource(true)))
@@ -155,7 +157,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         }
 
         drawBorderedRectangle(45, yPos + 31, 80, yPos + 43, colorI, colorB);
-        drawSplitScaledString("[b]" + Enchiridion.translate("select.custom") + "[/b]", 53, yPos + 35, 0xFFFFFFFF, 0.5F);
+        drawSplitScaledString("[b]" + Enchiridion.format("select.custom") + "[/b]", 53, yPos + 35, 0xFFFFFFFF, 0.5F);
 
         yPos += 25;
         //Draw the extra information for the actions
@@ -176,7 +178,7 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
         for (String f : getFieldNames(object)) {
             if (isTransient(object, f)) continue;
             drawBorderedRectangle(2, yPos + 30, 83, yPos + 37, 0xFF312921, 0xFF191511);
-            String name = Enchiridion.translate("button.action.field." + f);
+            String name = Enchiridion.format("button.action.field." + f);
             drawSplitScaledString("[b]" + name + "[/b]", 4, yPos + 32, 0xFFFFFFFF, 0.5F);
 
             WrappedEditable editable;
@@ -209,12 +211,12 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     }
 
     @Override
-    public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
+    public void addToolTip(List<ITextComponent> tooltip, int mouseX, int mouseY) {
         int xPos = xPosStart;
         int yPos = 13;
         for (IButtonAction action : sorted) {
             if (isOverAction(xPos, yPos, mouseX, mouseY)) {
-                tooltip.add(action.getName());
+                tooltip.add(new StringTextComponent(action.getName()));
             }
 
             xPos += 10;

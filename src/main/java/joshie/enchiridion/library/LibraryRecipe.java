@@ -1,6 +1,6 @@
 package joshie.enchiridion.library;
 
-import joshie.enchiridion.ECommonProxy;
+import joshie.enchiridion.ECommonHandler;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.lib.EInfo;
@@ -70,7 +70,7 @@ public class LibraryRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements 
     @Override
     @Nonnull
     public ItemStack getRecipeOutput() {
-        return new ItemStack(ECommonProxy.book, 1, 1);
+        return new ItemStack(ECommonHandler.book, 1, 1);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class LibraryRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements 
     public static void registerRecipe(RegistryEvent.Register<IRecipe> event) {
         LibraryRecipe recipe = new LibraryRecipe();
         recipe.setRegistryName(new ResourceLocation(EInfo.MODID, "library"));
-        if (EConfig.addOreDictionaryRecipeForLibrary) {
+        if (EConfig.SETTINGS.addOreDictionaryRecipeForLibrary) {
             event.getRegistry().register(recipe);
         }
     }

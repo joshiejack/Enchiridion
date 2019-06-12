@@ -32,23 +32,23 @@ public class GuiSimpleEditorItem extends AbstractGuiOverlay {
     public void draw(int mouseX, int mouseY) {
         int backgroundColor = 0xFFB0A483; //0xFF48453C
         int fontColor = 0xCE48433D;
-        if (mouseX >= EConfig.editorXPos + 2 && mouseX <= EConfig.editorXPos + 83) {
-            if (mouseY >= EConfig.toolbarYPos + 9 && mouseY <= EConfig.toolbarYPos + 23) {
+        if (mouseX >= EConfig.SETTINGS.editorXPos + 2 && mouseX <= EConfig.SETTINGS.editorXPos + 83) {
+            if (mouseY >= EConfig.SETTINGS.toolbarYPos.get() + 9 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + 23) {
                 fontColor = 0xFFB0A483;
                 backgroundColor = 0xCE48433D;
             }
         }
 
-        EnchiridionAPI.draw.drawBorderedRectangle(EConfig.editorXPos + 2, EConfig.toolbarYPos + 9, EConfig.editorXPos + 83, EConfig.toolbarYPos + 23, backgroundColor, 0xCE48433D);
-        EnchiridionAPI.draw.drawSplitScaledString("[b]" + Enchiridion.translate("tooltips") + ": [/b]", EConfig.editorXPos + 4, EConfig.toolbarYPos + 14, 200, fontColor, 0.5F);
-        EnchiridionAPI.draw.drawSplitScaledString("[b]" + selectable.getTooltipsEnabled() + "[/b]", EConfig.editorXPos + 4 + 55, EConfig.toolbarYPos + 14, 200, fontColor, 0.5F);
+        EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.editorXPos + 2, EConfig.SETTINGS.toolbarYPos.get() + 9, EConfig.SETTINGS.editorXPos + 83, EConfig.SETTINGS.toolbarYPos.get() + 23, backgroundColor, 0xCE48433D);
+        EnchiridionAPI.draw.drawSplitScaledString("[b]" + Enchiridion.format("tooltips") + ": [/b]", EConfig.SETTINGS.editorXPos + 4, EConfig.SETTINGS.toolbarYPos.get() + 14, 200, fontColor, 0.5F);
+        EnchiridionAPI.draw.drawSplitScaledString("[b]" + selectable.getTooltipsEnabled() + "[/b]", EConfig.SETTINGS.editorXPos + 4 + 55, EConfig.SETTINGS.toolbarYPos.get() + 14, 200, fontColor, 0.5F);
         if (sorted != null) {
             int j = 0;
             int k = 0;
             for (int i = position; i < position + 132; i++) {
                 if (i >= 0 && i < sorted.size()) {
-                    //1F > 0.75F, 4 > 5, 16 > 13 + EConfig.editorXPos + 4, -30 > + EConfig. toolBarYPos + 12
-                    EnchiridionAPI.draw.drawStack(sorted.get(i), (j * 12) + EConfig.editorXPos + 7, (k * 12) + EConfig.toolbarYPos + 26, 0.75F);
+                    //1F > 0.75F, 4 > 5, 16 > 13 + EConfig.SETTINGS.editorXPos + 4, -30 > + EConfig.SETTINGS. toolBarYPos + 12
+                    EnchiridionAPI.draw.drawStack(sorted.get(i), (j * 12) + EConfig.SETTINGS.editorXPos + 7, (k * 12) + EConfig.SETTINGS.toolbarYPos.get() + 26, 0.75F);
 
                     j++;
 
@@ -63,8 +63,8 @@ public class GuiSimpleEditorItem extends AbstractGuiOverlay {
 
     @Override
     public boolean mouseClicked(int mouseX, int mouseY) {
-        if (mouseX >= EConfig.editorXPos + 2 && mouseX <= EConfig.editorXPos + 83) {
-            if (mouseY >= EConfig.toolbarYPos + 9 && mouseY <= EConfig.toolbarYPos + 23) {
+        if (mouseX >= EConfig.SETTINGS.editorXPos + 2 && mouseX <= EConfig.SETTINGS.editorXPos + 83) {
+            if (mouseY >= EConfig.SETTINGS.toolbarYPos.get() + 9 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + 23) {
                 selectable.setTooltips(!selectable.getTooltipsEnabled());
 
                 return true;
@@ -76,8 +76,8 @@ public class GuiSimpleEditorItem extends AbstractGuiOverlay {
             int k = 0;
             for (int i = position; i < position + 132; i++) {
                 if (i >= 0 && i < sorted.size()) {
-                    if (mouseX >= (j * 12) + EConfig.editorXPos + 7 && mouseX <= (j * 12) + EConfig.editorXPos + 19) {
-                        if (mouseY >= (k * 12) + EConfig.toolbarYPos + 26 && mouseY <= (k * 12) + EConfig.toolbarYPos + 38) {
+                    if (mouseX >= (j * 12) + EConfig.SETTINGS.editorXPos + 7 && mouseX <= (j * 12) + EConfig.SETTINGS.editorXPos + 19) {
+                        if (mouseY >= (k * 12) + EConfig.SETTINGS.toolbarYPos.get() + 26 && mouseY <= (k * 12) + EConfig.SETTINGS.toolbarYPos.get() + 38) {
                             if (selectable != null) {
                                 selectable.setItemStack(sorted.get(i));
 
@@ -100,8 +100,8 @@ public class GuiSimpleEditorItem extends AbstractGuiOverlay {
 
     @Override
     public void scroll(boolean down, int mouseX, int mouseY) {
-        if (mouseX >= EConfig.editorXPos + 7 && mouseX <= EConfig.editorXPos + 91) {
-            if (mouseY >= EConfig.toolbarYPos + 14 && mouseY <= EConfig.toolbarYPos + 302) {
+        if (mouseX >= EConfig.SETTINGS.editorXPos + 7 && mouseX <= EConfig.SETTINGS.editorXPos + 91) {
+            if (mouseY >= EConfig.SETTINGS.toolbarYPos.get() + 14 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + 302) {
                 if (down) {
                     position = Math.min(sorted.size() - 200, position + 6);
                 } else {
@@ -123,7 +123,7 @@ public class GuiSimpleEditorItem extends AbstractGuiOverlay {
             for (ItemStack stack : ItemListHelper.allItems()) {
                 try {
                     if (!stack.isEmpty()) {
-                        if (stack.getDisplayName().toLowerCase().contains(search.toLowerCase())) {
+                        if (stack.getDisplayName().getFormattedText().toLowerCase().contains(search.toLowerCase())) {
                             sorted.add(stack);
                         }
                     }

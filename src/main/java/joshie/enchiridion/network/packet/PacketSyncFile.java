@@ -1,12 +1,12 @@
-package joshie.enchiridion.network;
+package joshie.enchiridion.network.packet;
 
-import io.netty.buffer.ByteBuf;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.helpers.SyncHelper;
+import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.core.PacketPart;
 import joshie.enchiridion.network.core.PacketSyncByteArray;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.PacketBuffer;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 
 import java.io.File;
@@ -16,15 +16,8 @@ import static joshie.enchiridion.network.core.PacketPart.REQUEST_DATA;
 import static joshie.enchiridion.network.core.PacketPart.SEND_DATA;
 
 public class PacketSyncFile extends PacketSyncByteArray {
-    public static class ByteWrapper {
-        public byte[][] bites;
-    }
-
     private String directory;
     private int length;
-
-    public PacketSyncFile() {
-    }
 
     public PacketSyncFile(String directory, PacketPart type) {
         super(type);
@@ -44,37 +37,27 @@ public class PacketSyncFile extends PacketSyncByteArray {
         this.bites = bites;
     }
 
-    @Override
-    public void toBytes(ByteBuf to) {
-        ByteBufUtils.writeUTF8String(to, directory);
-        to.writeInt(length);
-        super.toBytes(to);
+    public static void encode(PacketSyncFile packet, PacketBuffer buf) {
+        buf.writeString(packet.directory);
+        buf.writeInt(packet.length);
+        toBytes(packet, buf);
+    }
+
+    public static PacketSyncFile decode(PacketBuffer buf) {
+        PacketSyncFile syncFile = new PacketSyncFile(buf.readString(32767), PacketPart.SEND_SIZE, buf.readInt());
+        fromBytes(syncFile, buf);
+        return syncFile;
     }
 
     @Override
-    public void fromBytes(ByteBuf from) {
-        directory = ByteBufUtils.readUTF8String(from);
-        length = from.readInt();
-        super.fromBytes(from);
-    }
-
-    @Override
-    public void receivedHashcode(EntityPlayer player) {
-    }
-
-    @Override
-    public void receivedLengthRequest(EntityPlayer player) {
-    }
-
-    @Override
-    public void receivedStringLength(EntityPlayer player) {
+    public void receivedStringLength(ServerPlayerEntity player) {
         byte[][] bites = new byte[length][];
         SyncHelper.bytesClient.put(directory, bites);
         PacketHandler.sendToServer(new PacketSyncFile(directory, REQUEST_DATA));
     }
 
     @Override
-    public void receivedDataRequest(EntityPlayer player) {
+    public void receivedDataRequest(ServerPlayerEntity player) {
         byte[][] bites = SyncHelper.bytesServer.get(directory);
         for (int index = 0; index < bites.length; index++) {
             PacketHandler.sendToClient(new PacketSyncFile(directory, SEND_DATA, index, bites[index]), player);
@@ -82,7 +65,7 @@ public class PacketSyncFile extends PacketSyncByteArray {
     }
 
     @Override
-    public void receivedData(EntityPlayer player) {
+    public void receivedData(ServerPlayerEntity player) {
         byte[][] bites = SyncHelper.bytesClient.get(directory);
         bites[length] = this.bites;
 

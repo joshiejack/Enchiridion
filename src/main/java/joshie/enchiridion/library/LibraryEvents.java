@@ -1,37 +1,42 @@
 package joshie.enchiridion.library;
 
-import joshie.enchiridion.EClientProxy;
+import joshie.enchiridion.EClientHandler;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.helpers.MCServerHelper;
 import joshie.enchiridion.helpers.SyncHelper;
+import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.lib.GuiIDs;
-import joshie.enchiridion.network.*;
+import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.core.PacketPart;
+import joshie.enchiridion.network.packet.PacketOpenLibrary;
+import joshie.enchiridion.network.packet.PacketSyncLibraryAllowed;
+import joshie.enchiridion.network.packet.PacketSyncLibraryContents;
+import joshie.enchiridion.network.packet.PacketSyncMD5;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.gui.GuiWorldSelection;
-import net.minecraft.client.settings.GameSettings;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.client.gui.screen.MultiplayerScreen;
+import net.minecraft.client.gui.screen.WorldSelectionScreen;
+import net.minecraft.client.util.InputMappings;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
-import org.lwjgl.input.Keyboard;
+import org.lwjgl.glfw.GLFW;
 
-@EventBusSubscriber
+@EventBusSubscriber(modid = EInfo.MODID)
 public class LibraryEvents {
     //Setup the Client
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void onOpenGui(GuiOpenEvent event) {
-        if (event.getGui() instanceof GuiWorldSelection || event.getGui() instanceof GuiMultiplayer) {
+        if (event.getGui() instanceof WorldSelectionScreen || event.getGui() instanceof MultiplayerScreen) {
             LibraryHelper.resetClient();
         }
     }
@@ -39,11 +44,11 @@ public class LibraryEvents {
     //Sync the library
     @SubscribeEvent
     public static void onPlayerLogin(PlayerLoggedInEvent event) {
-        EntityPlayer player = event.player;
-        if (player instanceof EntityPlayerMP) { //Sync what's in the library
-            EntityPlayerMP mp = (EntityPlayerMP) player;
+        PlayerEntity player = event.getPlayer();
+        if (player instanceof ServerPlayerEntity) { //Sync what's in the library
+            ServerPlayerEntity mp = (ServerPlayerEntity) player;
             if (!SyncHelper.playersSynced.contains(mp)) {
-                if (EConfig.debugMode) Enchiridion.log(Level.INFO, "Did you call me?");
+                if (EConfig.SETTINGS.debugMode) Enchiridion.log(Level.INFO, "Did you call me?");
                 //Sync what's allowed in the library
                 String serverName = MCServerHelper.getHostName();
                 PacketHandler.sendToClient(new PacketSyncLibraryAllowed(PacketPart.SEND_HASH, serverName, ModSupport.getHashcode(serverName)), mp);
@@ -54,7 +59,7 @@ public class LibraryEvents {
                 PacketHandler.sendToClient(new PacketSyncLibraryContents(inventory), mp);
 
                 //Start the md5 process
-                if (EConfig.syncDataAndImagesToClients) {
+                if (EConfig.SETTINGS.syncDataAndImagesToClients.get()) {
                     PacketHandler.sendToClient(new PacketSyncMD5(PacketPart.SEND_SIZE, "", SyncHelper.servermd5.length), mp);
                 }
                 SyncHelper.playersSynced.add(mp);
@@ -64,11 +69,12 @@ public class LibraryEvents {
 
     //Opening the key binding
     @SubscribeEvent
-    public static void onKeyPress(KeyInputEvent event) {
-        if (EClientProxy.libraryKeyBinding == null) return; //If the keybinding was never created, skip this
-        if (GameSettings.isKeyDown(EClientProxy.libraryKeyBinding) && Minecraft.getMinecraft().inGameHasFocus && !Keyboard.isKeyDown(Keyboard.KEY_F3)) {
+    public static void onKeyPress(InputEvent.KeyInputEvent event) {
+        if (EClientHandler.libraryKeyBinding == null) return; //If the keybinding was never created, skip this
+        long handle = Minecraft.getInstance().mainWindow.getHandle();
+        if (EClientHandler.libraryKeyBinding.isKeyDown() && Minecraft.getInstance().isGameFocused() && !InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_F3)) {
             PacketHandler.sendToServer(new PacketOpenLibrary()); //Let the server know!
-            MCClientHelper.getPlayer().openGui(Enchiridion.instance, GuiIDs.LIBRARY, MCClientHelper.getWorld(), 0, 0, 0);
+            MCClientHelper.getPlayer().openGui(GuiIDs.LIBRARY);
         }
     }
 }

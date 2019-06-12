@@ -35,6 +35,6 @@ public abstract class ButtonAbstract implements IToolbarButton {
 
     @Override
     public String getTooltip() {
-        return Enchiridion.translate(translate);
+        return Enchiridion.format(translate);
     }
 }

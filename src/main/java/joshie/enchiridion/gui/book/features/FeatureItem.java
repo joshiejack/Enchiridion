@@ -9,6 +9,7 @@ import joshie.enchiridion.helpers.StackHelper;
 import joshie.enchiridion.util.IItemSelectable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -36,7 +37,7 @@ public class FeatureItem extends FeatureAbstract implements IItemSelectable {
 
     @Override
     public String getName() {
-        return stack.isEmpty() ? super.getName() : stack.getDisplayName();
+        return stack.isEmpty() ? super.getName() : stack.getDisplayName().getFormattedText();
     }
 
     @Override
@@ -61,7 +62,7 @@ public class FeatureItem extends FeatureAbstract implements IItemSelectable {
     }
 
     @Override
-    public void addTooltip(List<String> list, int mouseX, int mouseY) {
+    public void addTooltip(List<ITextComponent> list, int mouseX, int mouseY) {
         if (!hideTooltip && !this.stack.isEmpty()) {
             list.addAll(stack.getTooltip(MCClientHelper.getPlayer(), ITooltipFlag.TooltipFlags.NORMAL));
         }

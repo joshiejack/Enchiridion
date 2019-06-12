@@ -1,29 +1,32 @@
 package joshie.enchiridion.helpers;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.resources.Language;
+import net.minecraft.client.util.InputMappings;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import org.lwjgl.input.Keyboard;
+import org.lwjgl.glfw.GLFW;
 
 public class MCClientHelper {
     public static boolean isShiftPressed() {
-        return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+        long handle = Minecraft.getInstance().mainWindow.getHandle();
+        return InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_LEFT_SHIFT) || InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_RIGHT_SHIFT);
     }
 
-    public static String getLang() {
-        return FMLClientHandler.instance().getCurrentLanguage();
+    public static Language getLang() {
+        return Minecraft.getInstance().getLanguageManager().getCurrentLanguage();
     }
 
     public static boolean isCtrlPressed() {
-        return Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
+        long handle = Minecraft.getInstance().mainWindow.getHandle();
+        return InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_LEFT_CONTROL) || InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_RIGHT_CONTROL);
     }
 
-    public static EntityPlayer getPlayer() {
-        return Minecraft.getMinecraft().player;
+    public static PlayerEntity getPlayer() {
+        return Minecraft.getInstance().player;
     }
 
     public static World getWorld() {
-        return Minecraft.getMinecraft().world;
+        return Minecraft.getInstance().world;
     }
 }

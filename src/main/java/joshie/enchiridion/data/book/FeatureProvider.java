@@ -8,7 +8,10 @@ import joshie.enchiridion.gui.book.GuiGrid;
 import joshie.enchiridion.gui.book.GuiSimpleEditor;
 import joshie.enchiridion.helpers.EventHelper;
 import joshie.enchiridion.util.TextEditor;
-import org.lwjgl.input.Keyboard;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.InputMappings;
+import net.minecraft.util.text.ITextComponent;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
@@ -113,7 +116,7 @@ public class FeatureProvider implements IFeatureProvider {
     }
 
     @Override
-    public void addTooltip(List<String> tooltip, int mouseX, int mouseY) {
+    public void addTooltip(List<ITextComponent> tooltip, int mouseX, int mouseY) {
         if (isOverFeature(mouseX, mouseY)) {
             feature.addTooltip(tooltip, mouseX, mouseY);
         }
@@ -261,7 +264,7 @@ public class FeatureProvider implements IFeatureProvider {
                 updateHeight(changeY);
             }
 
-            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+            if (InputMappings.isKeyDown(Minecraft.getInstance().mainWindow.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT)) {
                 if (dragBottomLeft || dragBottomRight) height = (width * originalHeight) / originalWidth;
                 else if (dragTopRight) width = (height * originalWidth) / originalHeight;
                 else if (dragTopLeft) {

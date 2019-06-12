@@ -1,7 +1,7 @@
 package joshie.enchiridion.gui.book.features.recipe;
 
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.item.crafting.ShapedRecipe;
 
 import java.util.ArrayList;
 
@@ -11,8 +11,8 @@ public class RecipeHandlerShapedVanilla extends RecipeHandlerRecipeBase {
 
     public RecipeHandlerShapedVanilla(IRecipe recipe) {
         try {
-            ShapedRecipes shaped = (ShapedRecipes) recipe;
-            init(recipe.getRecipeOutput(), new ArrayList<>(shaped.recipeItems), shaped.recipeWidth);
+            ShapedRecipe shaped = (ShapedRecipe) recipe;
+            init(recipe.getRecipeOutput(), new ArrayList<>(shaped.getIngredients()), shaped.getWidth());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -25,6 +25,6 @@ public class RecipeHandlerShapedVanilla extends RecipeHandlerRecipeBase {
 
     @Override
     protected Class getRecipeClass() {
-        return ShapedRecipes.class;
+        return ShapedRecipe.class;
     }
 }

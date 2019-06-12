@@ -1,6 +1,8 @@
 package joshie.enchiridion.api.book;
 
+import net.minecraft.client.resources.Language;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,14 +23,14 @@ public interface IBook {
     String getSaveName();
 
     /** Return the display name for this book **/
-    String getDisplayName();
+    ITextComponent getDisplayName();
 
     /** Return the hex color for this book **/
     int getColorAsInt();
 
     /** Return the language key for this book,
      *  for example en_US **/
-    String getLanguageKey();
+    Language getLanguageKey();
 
     /** Whether or not this book displays it's background **/
     boolean isBackgroundVisible();
@@ -82,16 +84,16 @@ public interface IBook {
     void setSaveName(String name);
 
     /** Set the display name for this book **/
-    void setDisplayName(String name);
+    void setDisplayName(ITextComponent name);
 
     /** Adds tooltip info **/
-    void addInformation(List<String> tooltip);
+    void addInformation(List<ITextComponent> tooltip);
 
     /** Set the color of this book **/
     void setColorAsInt(int color);
 
     /** Set the language key for this book **/
-    void setLanguageKey(String language);
+    void setLanguageKey(Language language);
 
     /** Sets the books background **/
     void setBackgroundResource(String string);

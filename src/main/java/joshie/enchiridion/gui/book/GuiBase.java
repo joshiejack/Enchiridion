@@ -1,34 +1,33 @@
 package joshie.enchiridion.gui.book;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import joshie.enchiridion.api.gui.IDrawHelper;
 import joshie.enchiridion.api.recipe.IItemStack;
 import joshie.enchiridion.helpers.ClientStackHelper;
 import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.input.Mouse;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiBase extends GuiScreen implements IDrawHelper {
+public class GuiBase extends Screen implements IDrawHelper {
     public static final GuiBase INSTANCE = new GuiBase();
     protected final int xSize = 430;
     protected final int ySize = 217;
-    protected ScaledResolution res;
 
-    public final List<String> TOOLTIP = new ArrayList<>();
+    public final List<ITextComponent> TOOLTIP = new ArrayList<>();
     public int mouseX = 0;
     public int mouseY = 0;
     public int x;
@@ -40,24 +39,21 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
     private float renderSize;
 
     protected GuiBase() {
+        super(new TranslationTextComponent("enchiridion.guiBase.title"));
     }
 
     @Override
     public void drawScreen(int x2, int y2, float partialTicks) {
         x = (width - xSize) / 2;
         y = (height - ySize) / 2;
-        res = new ScaledResolution(mc);
         TOOLTIP.clear();
-    }
-
-    public ScaledResolution getRes() {
-        return res;
     }
 
     @Override
     public void handleMouseInput() throws IOException {
-        int x = Mouse.getEventX() * width / mc.displayWidth;
-        int y = height - Mouse.getEventY() * height / mc.displayHeight - 1;
+        Minecraft mc = Minecraft.getInstance()
+        int x = (int) (mc.mouseHelper.getMouseX() * ((double) mc.mainWindow.getScaledWidth() / mc.mainWindow.getWidth()));
+        int y = (int) (mc.mouseHelper.getMouseY() * ((double) mc.mainWindow.getScaledHeight() / mc.mainWindow.getHeight()));
 
         mouseX = x - (width - xSize) / 2;
         mouseY = y - (height - ySize) / 2;
@@ -118,10 +114,10 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
 
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
-        GlStateManager.color(1F, 1F, 1F, 1F);
-        GlStateManager.enableAlpha();
-        GlStateManager.scale(size, size, 1.0F);
-        drawTexturedModalRect(x2, y2, u, v, w, h);
+        GlStateManager.color4f(1F, 1F, 1F, 1F);
+        GlStateManager.enableAlphaTest();
+        GlStateManager.scalef(size, size, 1.0F);
+        blit(x2, y2, u, v, w, h);
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
@@ -134,10 +130,9 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
 
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
-        GlStateManager.color(1F, 1F, 1F, 1F);
-        GlStateManager.enableAlpha();
-        GlStateManager.scale(size, size, 1.0F);
-        drawTexturedModalRect(x2, y2, u, v, w, h);
+        GlStateManager.color4f(1F, 1F, 1F, 1F);
+        GlStateManager.scalef(size, size, 1.0F);
+        blit(x2, y2, u, v, w, h);
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
@@ -145,7 +140,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
     @Override
     public void drawSplitScaledString(String text, int xPos, int yPos, int wrap, int color, float scale) {
         GlStateManager.pushMatrix();
-        GlStateManager.scale(scale, scale, scale);
+        GlStateManager.scalef(scale, scale, scale);
         PenguinFont.INSTANCE.drawSplitString(text, (int) ((x + xPos) / scale), (int) ((y + yPos) / scale), wrap, color);
         GlStateManager.popMatrix();
     }
@@ -153,7 +148,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
     @Override
     public void drawRectangle(int left, int top, int right, int bottom, int colorI) {
         drawRect(x + left, y + top, x + right, y + bottom, colorI);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     @Override
@@ -171,9 +166,9 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
         GlStateManager.enableBlend();
-        GlStateManager.disableTexture2D();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.color(f, f1, f2, f3);
+        GlStateManager.disableTexture();
+        GlStateManager.blendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.color4f(f, f1, f2, f3);
 
         int posX;
         if (right > left) {
@@ -203,7 +198,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
         buffer.pos((double) left, (double) top + 5, 0.0D).color(f, f1, f2, f3).endVertex();
         tessellator.draw();
 
-        GlStateManager.enableTexture2D();
+        GlStateManager.enableTexture();
         GlStateManager.disableBlend();
     }
 
@@ -214,7 +209,7 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
         drawRect(x + left, y + bottom - 1, x + right, y + bottom, colorB);
         drawRect(x + left, y + top, x + left + 1, y + bottom, colorB);
         drawRect(x + right - 1, y + top, x + right, y + bottom, colorB);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     @Override
@@ -229,10 +224,10 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
     public void drawResource(ResourceLocation resource, int left, int top, int width, int height, float scaleX, float scaleY) {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
-        GlStateManager.color(1F, 1F, 1F);
-        mc.getTextureManager().bindTexture(resource);
-        GlStateManager.scale(scaleX, scaleY, 1.0F);
-        drawTexturedModalRect((int) ((x + left) / scaleX), (int) ((y + top) / scaleY), 0, 0, width, height);
+        GlStateManager.color3f(1F, 1F, 1F);
+        minecraft.getTextureManager().bindTexture(resource);
+        GlStateManager.scalef(scaleX, scaleY, 1.0F);
+        blit((int) ((x + left) / scaleX), (int) ((y + top) / scaleY), 0, 0, width, height);
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
@@ -247,28 +242,28 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
         GlStateManager.enableBlend();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
-        Minecraft.getMinecraft().getTextureManager().bindTexture(resource);
+        Minecraft.getInstance().getTextureManager().bindTexture(resource);
         buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        buffer.pos((double) (x + left), (double) (y + bottom), (double) zLevel).tex(0, 1).color(1F, 1F, 1F, 1F).endVertex();
-        buffer.pos((double) (x + right), (double) (y + bottom), (double) zLevel).tex(1, 1).color(1F, 1F, 1F, 1F).endVertex();
-        buffer.pos((double) (x + right), (double) (y + top), (double) zLevel).tex(1, 0).color(1F, 1F, 1F, 1F).endVertex();
-        buffer.pos((double) (x + left), (double) (y + top), (double) zLevel).tex(0, 0).color(1F, 1F, 1F, 1F).endVertex();
+        buffer.pos((double) (x + left), (double) (y + bottom), (double) blitOffset).tex(0, 1).color(1F, 1F, 1F, 1F).endVertex();
+        buffer.pos((double) (x + right), (double) (y + bottom), (double) blitOffset).tex(1, 1).color(1F, 1F, 1F, 1F).endVertex();
+        buffer.pos((double) (x + right), (double) (y + top), (double) blitOffset).tex(1, 0).color(1F, 1F, 1F, 1F).endVertex();
+        buffer.pos((double) (x + left), (double) (y + top), (double) blitOffset).tex(0, 0).color(1F, 1F, 1F, 1F).endVertex();
         tessellator.draw();
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
 
     @Override //From vanilla, switching to my font renderer though
-    protected void drawHoveringText(List<String> textLines, int x, int y, @Nonnull FontRenderer font) {
+    protected void drawHoveringText(List<ITextComponent> textLines, int x, int y, @Nonnull FontRenderer font) {
         if (!textLines.isEmpty()) {
             GlStateManager.disableRescaleNormal();
             RenderHelper.disableStandardItemLighting();
             GlStateManager.disableLighting();
-            GlStateManager.disableDepth();
+            GlStateManager.disableDepthTest();
             int i = 0;
 
-            for (String s : textLines) {
-                int j = PenguinFont.INSTANCE.getStringWidth(s);
+            for (ITextComponent s : textLines) {
+                int j = PenguinFont.INSTANCE.getStringWidth(s.getString());
 
                 if (j > i) {
                     i = j;
@@ -291,23 +286,23 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
                 i2 = this.height - k - 6;
             }
 
-            this.zLevel = 300.0F;
-            this.itemRender.zLevel = 300.0F;
+            this.blitOffset = 300;
+            this.itemRenderer.zLevel = 300.0F;
             int l = 0xCC312921;
-            this.drawGradientRect(l1 - 3, i2 - 4, l1 + i + 3, i2 - 3, l, l);
-            this.drawGradientRect(l1 - 3, i2 + k + 3, l1 + i + 3, i2 + k + 4, l, l);
-            this.drawGradientRect(l1 - 3, i2 - 3, l1 + i + 3, i2 + k + 3, l, l);
-            this.drawGradientRect(l1 - 4, i2 - 3, l1 - 3, i2 + k + 3, l, l);
-            this.drawGradientRect(l1 + i + 3, i2 - 3, l1 + i + 4, i2 + k + 3, l, l);
+            this.blit(l1 - 3, i2 - 4, l1 + i + 3, i2 - 3, l, l);
+            this.blit(l1 - 3, i2 + k + 3, l1 + i + 3, i2 + k + 4, l, l);
+            this.blit(l1 - 3, i2 - 3, l1 + i + 3, i2 + k + 3, l, l);
+            this.blit(l1 - 4, i2 - 3, l1 - 3, i2 + k + 3, l, l);
+            this.blit(l1 + i + 3, i2 - 3, l1 + i + 4, i2 + k + 3, l, l);
             int i1 = 0xFF191511;
             int j1 = (i1 & 16711422) >> 1 | i1 & -16777216;
-            this.drawGradientRect(l1 - 3, i2 - 3 + 1, l1 - 3 + 1, i2 + k + 3 - 1, i1, j1);
-            this.drawGradientRect(l1 + i + 2, i2 - 3 + 1, l1 + i + 3, i2 + k + 3 - 1, i1, j1);
-            this.drawGradientRect(l1 - 3, i2 - 3, l1 + i + 3, i2 - 3 + 1, i1, i1);
-            this.drawGradientRect(l1 - 3, i2 + k + 2, l1 + i + 3, i2 + k + 3, j1, j1);
+            this.blit(l1 - 3, i2 - 3 + 1, l1 - 3 + 1, i2 + k + 3 - 1, i1, j1);
+            this.blit(l1 + i + 2, i2 - 3 + 1, l1 + i + 3, i2 + k + 3 - 1, i1, j1);
+            this.blit(l1 - 3, i2 - 3, l1 + i + 3, i2 - 3 + 1, i1, i1);
+            this.blit(l1 - 3, i2 + k + 2, l1 + i + 3, i2 + k + 3, j1, j1);
 
             for (int k1 = 0; k1 < textLines.size(); ++k1) {
-                String s1 = textLines.get(k1);
+                String s1 = textLines.get(k1).getString();
                 PenguinFont.INSTANCE.drawStringWithShadow(s1, (float) l1, (float) i2, -1);
 
                 if (k1 == 0) {
@@ -317,10 +312,10 @@ public class GuiBase extends GuiScreen implements IDrawHelper {
                 i2 += 10;
             }
 
-            this.zLevel = 0.0F;
-            this.itemRender.zLevel = 0.0F;
+            this.blitOffset = 0;
+            this.itemRenderer.zLevel = 0.0F;
             GlStateManager.enableLighting();
-            GlStateManager.enableDepth();
+            GlStateManager.enableDepthTest();
             RenderHelper.enableStandardItemLighting();
             GlStateManager.enableRescaleNormal();
         }

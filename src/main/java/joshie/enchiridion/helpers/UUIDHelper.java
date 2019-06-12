@@ -1,26 +1,22 @@
 package joshie.enchiridion.helpers;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 import java.util.UUID;
 
 public class UUIDHelper {
-    public static UUID getPlayerUUID(EntityPlayer player) {
-        return EntityPlayer.getUUID(player.getGameProfile());
-    }
-
-    public static UUID getEntityUUID(Entity entity) {
-        return entity.getPersistentID();
+    public static UUID getPlayerUUID(PlayerEntity player) {
+        return PlayerEntity.getUUID(player.getGameProfile());
     }
 
     /**
      * Gets the player from the uuid
      **/
-    public static EntityPlayer getPlayerFromUUID(UUID uuid) {
+    public static ServerPlayerEntity getPlayerFromUUID(UUID uuid) {
         //Loops through every single player
-        for (EntityPlayer player : FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers()) {
+        for (ServerPlayerEntity player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
             if (getPlayerUUID(player).equals(uuid)) {
                 return player;
             }

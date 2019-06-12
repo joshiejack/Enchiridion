@@ -1,6 +1,7 @@
 package joshie.enchiridion.api.book;
 
 import com.google.gson.JsonObject;
+import net.minecraft.util.text.ITextComponent;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface IFeature {
     
     void update(IFeatureProvider position);
     void draw(int mouseX, int mouseY);
-    void addTooltip(List<String> tooltip, int mouseX, int mouseY);
+    void addTooltip(List<ITextComponent> tooltip, int mouseX, int mouseY);
     void keyTyped(char character, int key);
     
     /** @return true if this feature should display yellow squares instead of blue

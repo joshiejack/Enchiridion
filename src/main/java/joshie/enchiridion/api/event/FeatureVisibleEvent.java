@@ -1,6 +1,6 @@
 package joshie.enchiridion.api.event;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class FeatureVisibleEvent extends PlayerEvent {
@@ -9,7 +9,7 @@ public class FeatureVisibleEvent extends PlayerEvent {
     public final int layer;
     public boolean isVisible;
 
-    public FeatureVisibleEvent(EntityPlayer player, boolean isVisible, String bookID, int page, int layer) {
+    public FeatureVisibleEvent(PlayerEntity player, boolean isVisible, String bookID, int page, int layer) {
         super(player);
         this.isVisible = isVisible;
         this.bookID = bookID;

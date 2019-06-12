@@ -1,3 +1,12 @@
+Enchiridion - 3.4.0
+• Updated to 1.14.2
+
+Enchiridion - 3.3.4
+• Layers from template now have a different background color, so it's easier to determine what you've added yourself
+• Increased cursor blink speed
+• Button layer names now reflects what kind of action the button does
+• Some other minor fixes
+
 Enchiridion - 3.3.4
 • Fixed startup crash when disabling library item
 • Fixed language related crashes and issues

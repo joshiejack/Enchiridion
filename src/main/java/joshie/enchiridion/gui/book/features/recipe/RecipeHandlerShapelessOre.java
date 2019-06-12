@@ -1,4 +1,4 @@
-package joshie.enchiridion.gui.book.features.recipe;
+/*package joshie.enchiridion.gui.book.features.recipe;
 
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
@@ -37,4 +37,4 @@ public class RecipeHandlerShapelessOre extends RecipeHandlerRecipeBase {
         } catch (Exception ignored) {
         }
     }
-}
+}*/

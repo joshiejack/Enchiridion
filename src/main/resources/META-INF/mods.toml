@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[26,)"
+
+[[mods]]
+    modId="enchiridion"
+    displayName="Enchiridion"
+    version="${file.jarVersion}"
+    displayURL="https://minecraft.curseforge.com/projects/enchiridion"
+    issueTrackerURL="https://github.com/PenguinSquad/Enchiridion/issues"
+    authors="joshie, Girafi"
+    description='''
+    Books mod for Minecraft
+    '''

@@ -1,34 +1,30 @@
 package joshie.enchiridion.util;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.fonts.Font;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.resources.IReloadableResourceManager;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 import java.util.Locale;
 
-public class PenguinFont extends FontRenderer {
+public class PenguinFont extends Font {
     public static PenguinFont INSTANCE = null;
     private boolean resetColor = false;
 
     public static void load() {
-        Minecraft mc = Minecraft.getMinecraft();
-        INSTANCE = new PenguinFont(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine, false);
-        INSTANCE.setUnicodeFlag(mc.fontRenderer.getUnicodeFlag());
-        INSTANCE.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
+        Minecraft mc = Minecraft.getInstance();
+        INSTANCE = new PenguinFont(mc.textureManager, new ResourceLocation("textures/font/ascii.png"));
 
-        ((IReloadableResourceManager) mc.getResourceManager()).registerReloadListener(INSTANCE);
+        //((IReloadableResourceManager) mc.getResourceManager()).addReloadListener(INSTANCE);
     }
 
-    private PenguinFont(GameSettings gameSettingsIn, ResourceLocation location, TextureManager textureManagerIn, boolean unicode) {
-        super(gameSettingsIn, location, textureManagerIn, unicode);
+    private PenguinFont(TextureManager textureManager, ResourceLocation location) {
+        super(textureManager, location);
     }
 
     public String stripFormatting(String text) {

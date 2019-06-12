@@ -1,23 +1,18 @@
 package joshie.enchiridion.library.handlers;
 
-import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.network.PacketHandler;
-import joshie.enchiridion.network.PacketSetLibraryBook;
-import net.minecraft.client.gui.GuiScreenBook;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
+import joshie.enchiridion.network.packet.PacketSetLibraryBook;
+import net.minecraft.client.gui.screen.EditBookScreen;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagString;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
+import net.minecraft.util.Hand;
 
 import javax.annotation.Nonnull;
-import java.io.IOException;
 
 public class WritableBookHandler implements IBookHandler {
     @Override
@@ -26,61 +21,38 @@ public class WritableBookHandler implements IBookHandler {
     }
 
     @Override
-    public void handle(@Nonnull ItemStack stack, EntityPlayer player, EnumHand hand, int slotID, boolean isShiftPressed) {
-        player.openGui(Enchiridion.instance, GuiIDs.WRITABLE, player.world, slotID, 0, 0);
+    public void handle(@Nonnull ItemStack stack, PlayerEntity player, Hand hand, int slotID, boolean isShiftPressed) {
+        player.openGui(GuiIDs.WRITABLE, slotID);
     }
 
     //Our own version for the writeable so that we send packets to the library instead of the hand
-    public static class GuiScreenWritable extends GuiScreenBook {
+    public static class GuiScreenWritable extends EditBookScreen {
         private int slot;
 
-        public GuiScreenWritable(EntityPlayer player, int slot) {
-            super(player, EnchiridionAPI.library.getLibraryInventory(player).getStackInSlot(slot), true);
+        public GuiScreenWritable(PlayerEntity player, int slot, Hand hand) {
+            super(player, EnchiridionAPI.library.getLibraryInventory(player).getStackInSlot(slot), hand);
             this.slot = slot;
         }
 
         //Overwrite mc behaviour and send a custom packet instead
         @Override
-        public void sendBookToServer(boolean publish) throws IOException {
-            if (this.bookIsUnsigned && this.bookIsModified) {
-                if (this.bookPages != null) {
-                    while (this.bookPages.tagCount() > 1) {
-                        String s = this.bookPages.getStringTagAt(this.bookPages.tagCount() - 1);
-
-                        if (s.length() != 0) {
-                            break;
-                        }
-
-                        this.bookPages.removeTag(this.bookPages.tagCount() - 1);
-                    }
-
-                    if (this.book.hasTagCompound()) {
-                        NBTTagCompound nbttagcompound = this.book.getTagCompound();
-                        nbttagcompound.setTag("pages", this.bookPages);
-                    } else {
-                        this.book.setTagInfo("pages", this.bookPages);
-                    }
-
-                    ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
-
-                    if (publish) {
-                        this.book.setTagInfo("author", new NBTTagString(this.editingPlayer.getName()));
-                        this.book.setTagInfo("title", new NBTTagString(this.bookTitle.trim()));
-
-                        for (int i = 0; i < this.bookPages.tagCount(); ++i) {
-                            String s1 = this.bookPages.getStringTagAt(i);
-                            ITextComponent textComponent = new TextComponentString(s1);
-                            s1 = ITextComponent.Serializer.componentToJson(textComponent);
-                            this.bookPages.set(i, new NBTTagString(s1));
-                        }
-
-                        stack.setTagCompound(this.book.getTagCompound().copy());
-                    }
-
-                    //Set the book in the library
-                    EnchiridionAPI.library.getLibraryInventory(editingPlayer).setInventorySlotContents(slot, book);
-                    PacketHandler.sendToServer(new PacketSetLibraryBook(stack, slot));
+        public void sendBookToServer(boolean publish) {
+            if (this.field_214234_c) {
+                this.func_214213_e();
+                ListNBT nbtList = new ListNBT();
+                this.field_214238_g.stream().map(StringNBT::new).forEach(nbtList::add);
+                if (!this.field_214238_g.isEmpty()) {
+                    this.field_214233_b.setTagInfo("pages", nbtList);
                 }
+
+                if (publish) {
+                    this.field_214233_b.setTagInfo("author", new StringNBT(this.field_214232_a.getGameProfile().getName()));
+                    this.field_214233_b.setTagInfo("title", new StringNBT(this.field_214239_h.trim()));
+                }
+
+                //Set the book in the library
+                EnchiridionAPI.library.getLibraryInventory(this.field_214232_a).setInventorySlotContents(slot, this.field_214233_b);
+                PacketHandler.sendToServer(new PacketSetLibraryBook(this.field_214233_b, slot));
             }
         }
     }

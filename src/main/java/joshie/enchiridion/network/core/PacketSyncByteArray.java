@@ -1,11 +1,15 @@
 package joshie.enchiridion.network.core;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 import static joshie.enchiridion.network.core.PacketPart.*;
 
-public abstract class PacketSyncByteArray extends PenguinPacket {
+public class PacketSyncByteArray implements IPacketArray {
     protected PacketPart part;
     protected byte[] bites;
 
@@ -21,64 +25,42 @@ public abstract class PacketSyncByteArray extends PenguinPacket {
         this.bites = bites;
     }
 
-    @Override
-    public void toBytes(ByteBuf to) {
-        to.writeByte(part.ordinal());
-        if (part.sends()) {
-            if (bites != null && bites.length > 0) {
-                to.writeInt(bites.length);
-                for (byte b : bites) {
-                    to.writeByte(b);
+    protected static void toBytes(PacketSyncByteArray packet, PacketBuffer buf) {
+        buf.writeByte(packet.part.ordinal());
+        if (packet.part.sends()) {
+            if (packet.bites != null && packet.bites.length > 0) {
+                buf.writeInt(packet.bites.length);
+                for (byte b : packet.bites) {
+                    buf.writeByte(b);
                 }
-            } else to.writeInt(0);
+            } else buf.writeInt(0);
         }
     }
 
-    @Override
-    public void fromBytes(ByteBuf from) {
-        part = PacketPart.values()[from.readByte()];
-        if (part.sends()) {
-            int length = from.readInt();
+    protected static void fromBytes(PacketSyncByteArray packet, PacketBuffer buf) {
+        packet.part = PacketPart.values()[buf.readByte()];
+        if (packet.part.sends()) {
+            int length = buf.readInt();
             if (length != 0) {
-                bites = new byte[length];
+                packet.bites = new byte[length];
                 for (int i = 0; i < length; i++) {
-                    bites[i] = from.readByte();
+                    packet.bites[i] = buf.readByte();
                 }
             }
         }
     }
 
-    @Override
-    public void handlePacket(EntityPlayer player) {
-        if (part == SEND_HASH) receivedHashcode(player);
-        else if (part == REQUEST_SIZE) receivedLengthRequest(player);
-        else if (part == SEND_SIZE) receivedStringLength(player);
-        else if (part == REQUEST_DATA) receivedDataRequest(player);
-        else if (part == SEND_DATA) receivedData(player);
+    public static class Handler {
+        public static void handle(PacketSyncByteArray message, Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayerEntity playerMP = ctx.get().getSender();
+            if (playerMP != null && !(playerMP instanceof FakePlayer)) {
+                if (message.part == SEND_HASH) message.receivedHashcode(playerMP);
+                else if (message.part == REQUEST_SIZE) message.receivedLengthRequest(playerMP);
+                else if (message.part == SEND_SIZE) message.receivedStringLength(playerMP);
+                else if (message.part == REQUEST_DATA) message.receivedDataRequest(playerMP);
+                else if (message.part == SEND_DATA) message.receivedData(playerMP);
+                ctx.get().setPacketHandled(true);
+            }
+        }
     }
-
-    /**
-     * Client should do nothing or send a packet to request data
-     **/
-    public abstract void receivedHashcode(EntityPlayer player);
-
-    /**
-     * Server should now send the byte length
-     **/
-    public abstract void receivedLengthRequest(EntityPlayer player);
-
-    /**
-     * Client should now send a received size packet
-     **/
-    public abstract void receivedStringLength(EntityPlayer player);
-
-    /**
-     * Server should now send the data for the string
-     **/
-    public abstract void receivedDataRequest(EntityPlayer player);
-
-    /**
-     * Client should try to build a list of the data after received all the data
-     **/
-    public abstract void receivedData(EntityPlayer player);
 }

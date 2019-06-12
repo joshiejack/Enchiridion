@@ -1,80 +1,40 @@
 package joshie.enchiridion.library;
 
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import joshie.enchiridion.network.PacketHandler;
-import joshie.enchiridion.network.PacketLibraryCommand;
+import joshie.enchiridion.network.packet.PacketLibraryCommand;
 import net.minecraft.client.Minecraft;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.command.CommandSource;
+import net.minecraft.command.Commands;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
+public class LibraryCommand {
 
-public class LibraryCommand implements ICommand {
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return getName().compareTo(o.getName());
+    public static void register(CommandDispatcher<CommandSource> dispatcher) {
+        dispatcher.register((LiteralArgumentBuilder) ((LiteralArgumentBuilder) Commands.literal("enchiridion").requires((command) -> command.hasPermissionLevel(0)))
+                .then(Commands.literal("refresh").executes((command) -> refresh()))
+                .then(Commands.literal("resources").executes((command) -> resources()))
+                .then(Commands.literal("reset").executes((command) -> reset()))
+                .then(Commands.literal("clear").executes((command) -> clear())));
     }
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "enchiridion";
+    private static int refresh() {
+        PacketHandler.sendToServer(new PacketLibraryCommand("refresh"));
+        return 0;
     }
 
-    @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/enchiridion refresh";
+    private static int resources() {
+        Minecraft.getInstance().getResourcePackList().reloadPacksFromFinders();
+        return 0;
     }
 
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return new ArrayList<>();
+    private static int reset() {
+        PacketHandler.sendToServer(new PacketLibraryCommand("reset"));
+        return 0;
     }
 
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        if (args.length != 1) return;
-        try {
-            if (args[0].equals("refresh")) {
-                PacketHandler.sendToServer(new PacketLibraryCommand("refresh"));
-            }
-            switch (args[0]) {
-                case "resources":
-                    Minecraft.getMinecraft().scheduleResourcesRefresh();
-                    break;
-                case "reset":
-                    PacketHandler.sendToServer(new PacketLibraryCommand("reset"));
-                    break;
-                case "clear":
-                    PacketHandler.sendToServer(new PacketLibraryCommand("clear"));
-                    break;
-            }
-        } catch (NumberFormatException ignored) {
-        }
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, BlockPos pos) {
-        ArrayList<String> string = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            string.add("" + i);
-        }
-        return string;
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] parameter, int index) {
-        return false;
+    private static int clear() {
+        PacketHandler.sendToServer(new PacketLibraryCommand("clear"));
+        return 0;
     }
 }

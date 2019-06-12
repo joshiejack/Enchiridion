@@ -35,7 +35,7 @@ public abstract class AbstractAction implements IButtonAction {
 
     @Override
     public String getName() {
-        return Enchiridion.translate("action." + name);
+        return Enchiridion.format("action." + name);
     }
 
     @Override

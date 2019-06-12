@@ -10,6 +10,8 @@ import joshie.enchiridion.helpers.JSONHelper;
 import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.util.ELocation;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 import java.util.List;
 
@@ -117,13 +119,13 @@ public class FeatureButton extends FeatureJump implements IButtonActionProvider 
     }
 
     @Override
-    public void addTooltip(List<String> tooltip, int mouseX, int mouseY) {
+    public void addTooltip(List<ITextComponent> tooltip, int mouseX, int mouseY) {
         if (action != null && action.isVisible()) {
             String[] title = getTooltip().split("\n");
             boolean first = false;
             for (String t : title) {
                 if (first || !t.equals("")) {
-                    tooltip.add(t);
+                    tooltip.add(new StringTextComponent(t));
                 } else first = true;
             }
         }

@@ -3,6 +3,7 @@ package joshie.enchiridion.gui.book.features;
 import com.google.gson.JsonObject;
 import joshie.enchiridion.api.book.IFeature;
 import joshie.enchiridion.api.book.IFeatureProvider;
+import net.minecraft.util.text.ITextComponent;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public abstract class FeatureAbstract implements IFeature {
     }
 
     @Override
-    public void addTooltip(List<String> tooltip, int mouseX, int mouseY) {
+    public void addTooltip(List<ITextComponent> tooltip, int mouseX, int mouseY) {
     }
 
     @Override
