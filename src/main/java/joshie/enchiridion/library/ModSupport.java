@@ -44,9 +44,6 @@ public class ModSupport {
                         case "blacklist":
                             LibraryRegistry.INSTANCE.unregisterBookHandlerForStackFromJSON(stack, book.shouldMatchNBT());
                             break;
-                        case "customwood":
-                            EnchiridionAPI.library.registerWood(stack, book.shouldMatchNBT());
-                            break;
                         default:
                             LibraryRegistry.INSTANCE.registerBookHandlerForStackFromJSON(book.getHandler(), stack, book.shouldMatchNBT());
                             break;
@@ -80,19 +77,6 @@ public class ModSupport {
             }
         }*/
 
-        books.add("customwood", "minecraft:planks 1", false);
-        books.add("customwood", "minecraft:planks 5", false);
-        books.add("customwood", "biomesoplenty:planks_0 14", false);
-
-        //Not updated to 1.12 yet. Support not guaranteed.
-        books.add("customwood", "botania:livingwood", false);
-        books.add("customwood", "chisel:livingwood-planks", false);
-        books.add("customwood", "chisel:livingwood-raw", false);
-        books.add("customwood", "chisel:planks-dark-oak", false);
-        books.add("customwood", "chisel:planks-spruce", false);
-        books.add("customwood", "chisel:thinWood-dark", false);
-        books.add("customwood", "chisel:thinWood-spruce", false);
-        books.add("customwood", "thaumcraft:plank 0", false);
         books.add("switchclick", "aura:lexicon", false);
         books.add("switchclick", "botania:lexicon", false);
         books.add("switchclick", "deepresonance:dr_manual", false);

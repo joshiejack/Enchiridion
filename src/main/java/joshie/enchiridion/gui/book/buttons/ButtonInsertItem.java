@@ -13,7 +13,7 @@ public class ButtonInsertItem extends ButtonAbstract {
     @Override
     public void performAction() {
         IPage current = EnchiridionAPI.book.getPage();
-        FeatureItem feature = new FeatureItem(EConfig.SETTINGS.getDefaultItem());
+        FeatureItem feature = new FeatureItem(EConfig.getDefaultItem());
         current.addFeature(feature, 0, current.getScroll(), 16D, 16D, false, false, false);
     }
 }

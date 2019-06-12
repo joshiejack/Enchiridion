@@ -1,6 +1,5 @@
 package joshie.enchiridion.data.book;
 
-import joshie.enchiridion.ECommonHandler;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBook;
@@ -15,7 +14,7 @@ import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.json.BookIconTemplate;
 import joshie.enchiridion.json.BookIconTemplate.Icons;
 import joshie.enchiridion.lib.EInfo;
-import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.resources.Language;
 import net.minecraft.item.ItemStack;
@@ -94,7 +93,7 @@ public class BookRegistry {
         }
     }
 
-    private final HashMap<String, HashMap<String, IBook>> books = new HashMap<>();
+    private final HashMap<String, HashMap<Language, IBook>> books = new HashMap<>();
     public final HashMap<String, ModelResourceLocation> locations = new HashMap<>();
     public final ModelResourceLocation DFLT = new ModelResourceLocation("minecraft:book", "inventory");
 
@@ -143,13 +142,12 @@ public class BookRegistry {
             }
         }
 
-        HashMap<String, IBook> translations = getTranslations(book.getUniqueName());
-        String language = book.getLanguageKey() == null ? "en_US" : book.getLanguageKey();
+        HashMap<Language, IBook> translations = getTranslations(book.getUniqueName());
+        Language language = book.getLanguageKey() == null ? Minecraft.getInstance().getLanguageManager().getLanguage("en_us") : book.getLanguageKey();
         translations.put(language, book);
 
         String id = book.getModID() == null || book.getModID().equals("") ? EInfo.MODID : book.getModID();
         ModelResourceLocation location = new ModelResourceLocation(new ResourceLocation(id, book.getUniqueName()), "inventory");
-        ModelBakery.registerItemVariants(ECommonHandler.BOOK, location);
         locations.put(book.getUniqueName(), location);
 
         //Now that the book has been registered, we should go and check if the it has a corresponding json for it's icon,
@@ -182,8 +180,8 @@ public class BookRegistry {
         return book;
     }
 
-    public HashMap<String, IBook> getTranslations(String identifier) {
-        HashMap<String, IBook> translations = books.get(identifier);
+    public HashMap<Language, IBook> getTranslations(String identifier) {
+        HashMap<Language, IBook> translations = books.get(identifier);
         if (translations != null) return translations;
         else {
             translations = new HashMap<>();
@@ -205,11 +203,11 @@ public class BookRegistry {
 
     public IBook getBookByName(String identifier) {
         if (identifier.equals("")) return null;
-        HashMap<String, IBook> translations = books.get(identifier);
+        HashMap<Language, IBook> translations = books.get(identifier);
         if (translations == null) return null;
         Language language = MCClientHelper.getLang();
-        IBook translated = translations.get(language.getName());
+        IBook translated = translations.get(language);
         if (translated != null) return translated;
-        else return translations.get("en_us");
+        else return translations.get(Minecraft.getInstance().getLanguageManager().getLanguage("en_us"));
     }
 }

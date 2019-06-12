@@ -7,6 +7,7 @@ import joshie.enchiridion.api.gui.ISimpleEditorFieldProvider;
 import joshie.enchiridion.util.ITextEditable;
 import joshie.enchiridion.util.PenguinFont;
 import joshie.enchiridion.util.TextEditor;
+import net.minecraft.client.Minecraft;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -82,7 +83,7 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
             text = text.substring(0, text.length() - 1);
         }
 
-        return PenguinFont.INSTANCE.getWordWrappedHeight(text, 155);
+        return Minecraft.getInstance().fontRenderer.getWordWrappedHeight(text, 155);
     }
 
     public String[] getFieldNames() {

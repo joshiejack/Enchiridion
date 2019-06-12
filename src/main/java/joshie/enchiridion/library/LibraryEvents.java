@@ -3,7 +3,6 @@ package joshie.enchiridion.library;
 import joshie.enchiridion.EClientHandler;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.Enchiridion;
-import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.helpers.MCServerHelper;
 import joshie.enchiridion.helpers.SyncHelper;
 import joshie.enchiridion.lib.EInfo;
@@ -27,6 +26,7 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.network.NetworkHooks;
 import org.apache.logging.log4j.Level;
 import org.lwjgl.glfw.GLFW;
 
@@ -74,7 +74,7 @@ public class LibraryEvents {
         long handle = Minecraft.getInstance().mainWindow.getHandle();
         if (EClientHandler.libraryKeyBinding.isKeyDown() && Minecraft.getInstance().isGameFocused() && !InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_F3)) {
             PacketHandler.sendToServer(new PacketOpenLibrary()); //Let the server know!
-            MCClientHelper.getPlayer().openGui(GuiIDs.LIBRARY);
+            NetworkHooks.openGui(GuiIDs.LIBRARY);
         }
     }
 }

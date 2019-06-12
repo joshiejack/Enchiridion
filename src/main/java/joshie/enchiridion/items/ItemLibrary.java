@@ -7,6 +7,7 @@ import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -52,8 +53,8 @@ public class ItemLibrary extends Item { //WAS METADATA 1 BEFORE
             ItemStack book = LibraryHelper.getLibraryContents(player).getStackInSlot(currentBook);
             if (!book.isEmpty()) {
                 IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(book);
-                if (handler != null) {
-                    handler.handle(book, player, hand, currentBook, player.isSneaking());
+                if (handler != null && player instanceof ServerPlayerEntity) {
+                    handler.handle(book, (ServerPlayerEntity) player, hand, currentBook, player.isSneaking());
                 }
             } else {
                 //NetworkHooks.openGui(player, GuiIDs.LIBRARY, buf -> buf.writeInt(hand.ordinal())); //TODO

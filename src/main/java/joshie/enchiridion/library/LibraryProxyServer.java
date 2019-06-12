@@ -3,6 +3,7 @@ package joshie.enchiridion.library;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.ServerWorld;
+import net.minecraft.world.storage.DimensionSavedDataManager;
 
 import java.util.Collection;
 
@@ -10,10 +11,11 @@ public class LibraryProxyServer extends LibraryProxy {
     private LibrarySavedData data;
 
     public LibraryProxyServer(ServerWorld world) {
-        data = (LibrarySavedData) world.loadData(LibrarySavedData.class, LibrarySavedData.DATA_NAME);
+        DimensionSavedDataManager storage = world.getSavedData();
+        data = storage.get(() -> new LibrarySavedData(LibrarySavedData.DATA_NAME), LibrarySavedData.DATA_NAME);
         if (data == null) {
             data = new LibrarySavedData(LibrarySavedData.DATA_NAME);
-            world.setData(LibrarySavedData.DATA_NAME, data);
+            storage.set(data);
         }
     }
 

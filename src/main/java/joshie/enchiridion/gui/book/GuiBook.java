@@ -20,7 +20,10 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -54,8 +57,8 @@ public class GuiBook extends GuiBase implements IBookHelper {
     }
 
     @Override
-    public void drawScreen(int x2, int y2, float partialTicks) {
-        super.drawScreen(x2, y2, partialTicks);
+    public void render(int x2, int y2, float partialTicks) {
+        super.render(x2, y2, partialTicks);
 
         Minecraft mc = Minecraft.getInstance();
         if (book.isBackgroundVisible()) {
@@ -103,7 +106,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
             }
         }
 
-        drawHoveringText(TOOLTIP, x2, y2, mc.fontRenderer);
+        renderTooltip(TOOLTIP, x2, y2, mc.fontRenderer);
     }
 
     @Override
@@ -133,12 +136,10 @@ public class GuiBook extends GuiBase implements IBookHelper {
     }
 
     @Override
-    protected void keyTyped(char character, int key) throws IOException {
-        if (!Keyboard.areRepeatEventsEnabled()) {
-            Minecraft.getInstance().keyboardListener.enableRepeatEvents(true);
-        }
+    public boolean charTyped(char character, int key) {
+        Minecraft.getInstance().keyboardListener.enableRepeatEvents(true);
 
-        super.keyTyped(character, key);
+        super.charTyped(character, key);
 
         if (isEditMode) {
             group.stream().filter(g -> g.keyTyped(character, key)).forEach(g -> {
@@ -175,6 +176,8 @@ public class GuiBook extends GuiBase implements IBookHelper {
                 overlay.keyTyped(character, key);
             }
         }
+        Minecraft.getInstance().keyboardListener.enableRepeatEvents(false);
+        return true;
     }
 
     private transient boolean wasControlPressedBefore = false;
@@ -203,13 +206,13 @@ public class GuiBook extends GuiBase implements IBookHelper {
     }
 
     @Override
-    protected void mouseClicked(int x, int y, int mouseButton) throws IOException {
+    public boolean mouseClicked(double x, double y, int mouseButton) {
         super.mouseClicked(x, y, mouseButton);
         //Perform clicks for the overlays
         if (isEditMode) {
             for (IBookEditorOverlay overlay : overlays) {
                 if (overlay.mouseClicked(mouseX, mouseY)) {
-                    return;
+                    return false;
                 }
             }
         }
@@ -218,7 +221,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
         for (IFeatureProvider feature : page.getFeatures()) {
             if (feature.mouseClicked(mouseX, mouseY + page.getScroll(), mouseButton)) {
                 if (isEditMode && mouseButton == 0) selectLayer(feature);
-                return;
+                return false;
             }
         }
 
@@ -228,12 +231,11 @@ public class GuiBook extends GuiBase implements IBookHelper {
         group.forEach(IFeatureProvider::deselect);
 
         group = new HashSet<>();
+        return true;
     }
 
     @Override
-    public void mouseReleased(int x, int y, int button) {
-        super.mouseReleased(x, y, button);
-
+    public boolean mouseReleased(double x, double y, int button) {
         isGroupMoveMode = false;
         for (IFeatureProvider provider : page.getFeatures()) {
             provider.mouseReleased(mouseX, mouseY + page.getScroll(), button);
@@ -245,12 +247,11 @@ public class GuiBook extends GuiBase implements IBookHelper {
                 overlay.mouseReleased(mouseX, mouseY);
             }
         }
+        return super.mouseReleased(x, y, button);
     }
 
     @Override
-    public void handleMouseInput() throws IOException {
-        super.handleMouseInput();
-        int wheel = Mouse.getDWheel();
+    public boolean mouseScrolled(double mX, double mY, double wheel) {
         if (wheel != 0) {
             boolean down = wheel < 0;
             if (isEditMode) {
@@ -272,6 +273,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
                 provider.follow(mouseX, mouseY + page.getScroll(), isGroupMoveMode);
             }
         }
+        return super.mouseScrolled(mX, mY, wheel);
     }
 
     // Helper methods

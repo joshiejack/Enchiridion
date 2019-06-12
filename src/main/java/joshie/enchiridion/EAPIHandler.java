@@ -21,6 +21,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
+import net.minecraftforge.fml.network.NetworkHooks;
 import org.apache.logging.log4j.Level;
 
 import java.io.File;
@@ -88,7 +89,7 @@ public class EAPIHandler implements IEnchiridionAPI {
             if (book != null) {
                 GuiBook.INSTANCE.setBook(book, false);
                 EnchiridionAPI.book.jumpToPageIfExists(page - 1);
-                player.openGui(GuiIDs.BOOK_FORCE);
+                NetworkHooks.openGui(GuiIDs.BOOK_FORCE);
             }
         } else {
             PacketHandler.sendToClient(new PacketOpenBook(bookID, page), (ServerPlayerEntity) player);

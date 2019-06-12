@@ -11,10 +11,6 @@ import java.util.List;
 public class GuiSimpleEditor extends AbstractGuiOverlay implements ITextEditable {
     public static final GuiSimpleEditor INSTANCE = new GuiSimpleEditor();
     private String text = "";
-    private boolean clicked = true;
-    private int held = 0;
-    private int yStart = 0;
-    private int layerPosition = 0;
     private IBookEditorOverlay editor = null;
 
     private GuiSimpleEditor() {

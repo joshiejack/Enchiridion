@@ -14,8 +14,6 @@ import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.PenguinFont;
 import joshie.enchiridion.util.TextEditor;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -211,12 +209,12 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     }
 
     @Override
-    public void addToolTip(List<ITextComponent> tooltip, int mouseX, int mouseY) {
+    public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
         int xPos = xPosStart;
         int yPos = 13;
         for (IButtonAction action : sorted) {
             if (isOverAction(xPos, yPos, mouseX, mouseY)) {
-                tooltip.add(new StringTextComponent(action.getName()));
+                tooltip.add(action.getName());
             }
 
             xPos += 10;

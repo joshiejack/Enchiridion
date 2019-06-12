@@ -13,7 +13,7 @@ public class ButtonInsertRecipe extends ButtonAbstract {
     @Override
     public void performAction() {
         IPage current = EnchiridionAPI.book.getPage();
-        FeatureRecipe feature = new FeatureRecipe(EConfig.SETTINGS.getDefaultItem());
+        FeatureRecipe feature = new FeatureRecipe(EConfig.getDefaultItem());
         current.addFeature(feature, 0, current.getScroll(), 160D, 80D, false, false, false);
     }
 }

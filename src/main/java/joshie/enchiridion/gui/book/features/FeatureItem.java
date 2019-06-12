@@ -62,9 +62,11 @@ public class FeatureItem extends FeatureAbstract implements IItemSelectable {
     }
 
     @Override
-    public void addTooltip(List<ITextComponent> list, int mouseX, int mouseY) {
+    public void addTooltip(List<String> list, int mouseX, int mouseY) {
         if (!hideTooltip && !this.stack.isEmpty()) {
-            list.addAll(stack.getTooltip(MCClientHelper.getPlayer(), ITooltipFlag.TooltipFlags.NORMAL));
+            for (ITextComponent textComponent : stack.getTooltip(MCClientHelper.getPlayer(), ITooltipFlag.TooltipFlags.NORMAL)) {
+                list.add(textComponent.getString());
+            }
         }
     }
 

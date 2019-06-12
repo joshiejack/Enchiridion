@@ -4,15 +4,15 @@ import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
+
     protected void init(@Nonnull ItemStack output, List<Object> input, int width) {
         int length = input.size();
         stackList.add(new WrappedStack(output, 115D, 31D, 1.75F));
@@ -73,17 +73,15 @@ public abstract class RecipeHandlerRecipeBase extends RecipeHandlerBase {
         }
 
         for (Object o : input) {
-            if (o instanceof List) {
-                addToUnique(getMostCommonName(new ArrayList((List) o)));
-            } else if (o instanceof ItemStack) {
+            if (o instanceof ItemStack) {
                 addToUnique(ForgeRegistries.ITEMS.getKey(((ItemStack) o).getItem()));
             }
         }
     }
 
     @Override
-    public void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list) {
-        for (IRecipe check : CraftingManager.REGISTRY) {
+    public void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list, World world) {
+        for (IRecipe check : world.getRecipeManager().getRecipes()) {
             ItemStack stack = check.getRecipeOutput();
             //CHECK -- > EXTENDS the class
             if (stack.isEmpty() || (!getRecipeClass().isAssignableFrom(check.getClass()))) continue;

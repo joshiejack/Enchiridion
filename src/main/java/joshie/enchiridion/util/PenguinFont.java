@@ -2,17 +2,22 @@ package joshie.enchiridion.util;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.fonts.Font;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.resources.IReloadableResourceManager;
+import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.resource.IResourceType;
+import net.minecraftforge.resource.ISelectiveResourceReloadListener;
 
 import javax.annotation.Nonnull;
 import java.util.Locale;
+import java.util.function.Predicate;
 
-public class PenguinFont extends Font {
+public class PenguinFont extends FontRenderer implements ISelectiveResourceReloadListener { //TODO
     public static PenguinFont INSTANCE = null;
     private boolean resetColor = false;
 
@@ -20,7 +25,7 @@ public class PenguinFont extends Font {
         Minecraft mc = Minecraft.getInstance();
         INSTANCE = new PenguinFont(mc.textureManager, new ResourceLocation("textures/font/ascii.png"));
 
-        //((IReloadableResourceManager) mc.getResourceManager()).addReloadListener(INSTANCE);
+        ((IReloadableResourceManager) mc.getResourceManager()).addReloadListener(INSTANCE);
     }
 
     private PenguinFont(TextureManager textureManager, ResourceLocation location) {
@@ -69,6 +74,11 @@ public class PenguinFont extends Font {
     @Override
     public int drawStringWithShadow(@Nonnull String text, float x, float y, int color) {
         return super.drawStringWithShadow(replaceFormatting(text), x, y, color);
+    }
+
+    @Override
+    public void onResourceManagerReload(@Nonnull IResourceManager manager, @Nonnull Predicate<IResourceType> predicate) {
+        //TODO
     }
 
     private enum CharReplace {
@@ -228,14 +238,14 @@ public class PenguinFont extends Font {
                     GlStateManager.pushMatrix();
                     Tessellator tessellator = Tessellator.getInstance();
                     BufferBuilder buffer = tessellator.getBuffer();
-                    GlStateManager.disableTexture2D();
+                    GlStateManager.disableTexture();
                     buffer.begin(7, DefaultVertexFormats.POSITION);
                     buffer.pos((double) this.posX - 0.75F, (double) (this.posY + (float) (this.FONT_HEIGHT)), 0.0D).endVertex();
                     buffer.pos((double) (this.posX - 0.25F), (double) (this.posY + (float) (this.FONT_HEIGHT)), 0.0D).endVertex();
                     buffer.pos((double) (this.posX - 0.25F), (double) (this.posY + this.FONT_HEIGHT - 10F), 0.0D).endVertex();
                     buffer.pos((double) this.posX - 0.75F, (double) (this.posY + this.FONT_HEIGHT - 10F), 0.0D).endVertex();
                     tessellator.draw();
-                    GlStateManager.enableTexture2D();
+                    GlStateManager.enableTexture();
                     GlStateManager.popMatrix();
                     this.cursor = false;
                 }
@@ -243,14 +253,14 @@ public class PenguinFont extends Font {
                 if (this.strikethroughStyle) {
                     Tessellator tessellator = Tessellator.getInstance();
                     BufferBuilder buffer = tessellator.getBuffer();
-                    GlStateManager.disableTexture2D();
+                    GlStateManager.disableTexture();
                     buffer.begin(7, DefaultVertexFormats.POSITION);
                     buffer.pos((double) this.posX, (double) (this.posY + (float) (this.FONT_HEIGHT / 2)), 0.0D).endVertex();
                     buffer.pos((double) (this.posX + f), (double) (this.posY + (float) (this.FONT_HEIGHT / 2)), 0.0D).endVertex();
                     buffer.pos((double) (this.posX + f), (double) (this.posY + (float) (this.FONT_HEIGHT / 2) - 1.0F), 0.0D).endVertex();
                     buffer.pos((double) this.posX, (double) (this.posY + (float) (this.FONT_HEIGHT / 2) - 1.0F), 0.0D).endVertex();
                     tessellator.draw();
-                    GlStateManager.enableTexture2D();
+                    GlStateManager.enableTexture();
                 }
 
                 if (this.underlineStyle) {
@@ -264,7 +274,7 @@ public class PenguinFont extends Font {
                     buffer.pos((double) (this.posX + f), (double) (this.posY + (float) this.FONT_HEIGHT - 1.0F), 0.0D).endVertex();
                     buffer.pos((double) (this.posX + (float) l), (double) (this.posY + (float) this.FONT_HEIGHT - 1.0F), 0.0D).endVertex();
                     tessellator.draw();
-                    GlStateManager.enableTexture2D();
+                    GlStateManager.enableTexture();
                 }
 
                 this.posX += (float) ((int) f);

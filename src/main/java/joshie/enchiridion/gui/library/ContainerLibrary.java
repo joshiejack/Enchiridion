@@ -1,13 +1,16 @@
 package joshie.enchiridion.gui.library;
 
+import joshie.enchiridion.ECommonHandler;
 import joshie.enchiridion.api.EnchiridionAPI;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 
 import javax.annotation.Nonnull;
@@ -15,8 +18,12 @@ import javax.annotation.Nonnull;
 public class ContainerLibrary extends Container {
     public IInventory library;
 
-    public ContainerLibrary(PlayerInventory playerInventory, IInventory library, Hand hand) {
-        super();
+    public ContainerLibrary(int windowID, PlayerInventory playerInventory, PacketBuffer extraData) {
+        this(windowID, playerInventory, Hand.valueOf(extraData.readString(128)));
+    }
+
+    public ContainerLibrary(int windowID, PlayerInventory playerInventory, Hand hand) {
+        super(ECommonHandler.LIBRARY_CONTAINER, windowID);
         //Set the library
         this.library = library;
 
@@ -105,6 +112,7 @@ public class ContainerLibrary extends Container {
     @Nonnull
     public ItemStack slotClick(int slotID, int mouseButton, ClickType type, PlayerEntity player) {
         Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : inventorySlots.get(slotID);
-        return slot instanceof SlotBook && ((SlotBook) slot).handle(player, mouseButton, slot).isEmpty() ? ItemStack.EMPTY : super.slotClick(slotID, mouseButton, type, player);
+        if (!(player instanceof ServerPlayerEntity)) return ItemStack.EMPTY;
+        return slot instanceof SlotBook && ((SlotBook) slot).handle((ServerPlayerEntity) player, mouseButton, slot).isEmpty() ? ItemStack.EMPTY : super.slotClick(slotID, mouseButton, type, player);
     }
 }

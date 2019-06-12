@@ -3,8 +3,6 @@ package joshie.enchiridion.gui.book;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.gui.IToolbarButton;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +56,11 @@ public class GuiToolbar extends AbstractGuiOverlay {
     }
 
     @Override
-    public void addToolTip(List<ITextComponent> tooltip, int mouseX, int mouseY) {
+    public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
         int x = X_START;
         for (IToolbarButton button : leftButtons) {
             if (isOverButton(x, mouseX, mouseY)) {
-                tooltip.add(new StringTextComponent(button.getTooltip()));
+                tooltip.add(button.getTooltip());
             }
             x += 12;
         }
@@ -71,7 +69,7 @@ public class GuiToolbar extends AbstractGuiOverlay {
         x = X_END;
         for (IToolbarButton button : rightButtons) {
             if (isOverButton(x, mouseX, mouseY)) {
-                tooltip.add(new StringTextComponent(button.getTooltip()));
+                tooltip.add(button.getTooltip());
             }
             x -= 12;
         }

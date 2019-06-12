@@ -7,10 +7,12 @@ import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.packet.PacketSetLibraryBook;
 import net.minecraft.client.gui.screen.EditBookScreen;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.Hand;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
@@ -21,8 +23,8 @@ public class WritableBookHandler implements IBookHandler {
     }
 
     @Override
-    public void handle(@Nonnull ItemStack stack, PlayerEntity player, Hand hand, int slotID, boolean isShiftPressed) {
-        player.openGui(GuiIDs.WRITABLE, slotID);
+    public void handle(@Nonnull ItemStack stack, ServerPlayerEntity player, Hand hand, int slotID, boolean isShiftPressed) {
+        NetworkHooks.openGui(GuiIDs.WRITABLE, slotID);
     }
 
     //Our own version for the writeable so that we send packets to the library instead of the hand

@@ -14,11 +14,9 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nonnull;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class GuiBase extends Screen implements IDrawHelper {
     protected final int xSize = 430;
     protected final int ySize = 217;
 
-    public final List<ITextComponent> TOOLTIP = new ArrayList<>();
+    public final List<String> TOOLTIP = new ArrayList<>();
     public int mouseX = 0;
     public int mouseY = 0;
     public int x;
@@ -43,23 +41,23 @@ public class GuiBase extends Screen implements IDrawHelper {
     }
 
     @Override
-    public void drawScreen(int x2, int y2, float partialTicks) {
+    public void render(int x2, int y2, float partialTicks) {
         x = (width - xSize) / 2;
         y = (height - ySize) / 2;
         TOOLTIP.clear();
     }
 
+
     @Override
-    public void handleMouseInput() throws IOException {
-        Minecraft mc = Minecraft.getInstance()
+    public boolean mouseScrolled(double mX, double mY, double wheel) {
+        Minecraft mc = Minecraft.getInstance();
         int x = (int) (mc.mouseHelper.getMouseX() * ((double) mc.mainWindow.getScaledWidth() / mc.mainWindow.getWidth()));
         int y = (int) (mc.mouseHelper.getMouseY() * ((double) mc.mainWindow.getScaledHeight() / mc.mainWindow.getHeight()));
 
         mouseX = x - (width - xSize) / 2;
         mouseY = y - (height - ySize) / 2;
-        super.handleMouseInput(); //Call the super
+        return false;
     }
-
 
     @Override
     public void setRenderData(int xPos, int yPos, double width, double height, float size) {
@@ -147,7 +145,7 @@ public class GuiBase extends Screen implements IDrawHelper {
 
     @Override
     public void drawRectangle(int left, int top, int right, int bottom, int colorI) {
-        drawRect(x + left, y + top, x + right, y + bottom, colorI);
+        fill(x + left, y + top, x + right, y + bottom, colorI);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
@@ -204,11 +202,11 @@ public class GuiBase extends Screen implements IDrawHelper {
 
     @Override
     public void drawBorderedRectangle(int left, int top, int right, int bottom, int colorI, int colorB) {
-        drawRect(x + left, y + top, x + right, y + bottom, colorI);
-        drawRect(x + left, y + top, x + right, y + top + 1, colorB);
-        drawRect(x + left, y + bottom - 1, x + right, y + bottom, colorB);
-        drawRect(x + left, y + top, x + left + 1, y + bottom, colorB);
-        drawRect(x + right - 1, y + top, x + right, y + bottom, colorB);
+        fill(x + left, y + top, x + right, y + bottom, colorI);
+        fill(x + left, y + top, x + right, y + top + 1, colorB);
+        fill(x + left, y + bottom - 1, x + right, y + bottom, colorB);
+        fill(x + left, y + top, x + left + 1, y + bottom, colorB);
+        fill(x + right - 1, y + top, x + right, y + bottom, colorB);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
@@ -225,7 +223,7 @@ public class GuiBase extends Screen implements IDrawHelper {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.color3f(1F, 1F, 1F);
-        minecraft.getTextureManager().bindTexture(resource);
+        Minecraft.getInstance().getTextureManager().bindTexture(resource);
         GlStateManager.scalef(scaleX, scaleY, 1.0F);
         blit((int) ((x + left) / scaleX), (int) ((y + top) / scaleY), 0, 0, width, height);
         GlStateManager.disableBlend();
@@ -254,7 +252,7 @@ public class GuiBase extends Screen implements IDrawHelper {
     }
 
     @Override //From vanilla, switching to my font renderer though
-    protected void drawHoveringText(List<ITextComponent> textLines, int x, int y, @Nonnull FontRenderer font) {
+    public void renderTooltip(List<String> textLines, int x, int y, @Nonnull FontRenderer font) {
         if (!textLines.isEmpty()) {
             GlStateManager.disableRescaleNormal();
             RenderHelper.disableStandardItemLighting();
@@ -262,8 +260,8 @@ public class GuiBase extends Screen implements IDrawHelper {
             GlStateManager.disableDepthTest();
             int i = 0;
 
-            for (ITextComponent s : textLines) {
-                int j = PenguinFont.INSTANCE.getStringWidth(s.getString());
+            for (String s : textLines) {
+                int j = PenguinFont.INSTANCE.getStringWidth(s);
 
                 if (j > i) {
                     i = j;
@@ -302,7 +300,7 @@ public class GuiBase extends Screen implements IDrawHelper {
             this.blit(l1 - 3, i2 + k + 2, l1 + i + 3, i2 + k + 3, j1, j1);
 
             for (int k1 = 0; k1 < textLines.size(); ++k1) {
-                String s1 = textLines.get(k1).getString();
+                String s1 = textLines.get(k1);
                 PenguinFont.INSTANCE.drawStringWithShadow(s1, (float) l1, (float) i2, -1);
 
                 if (k1 == 0) {

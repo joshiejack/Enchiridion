@@ -65,9 +65,4 @@ public class LibraryRegistry implements ILibraryRegistry {
 
         return null;
     }
-
-    @Override
-    public void registerWood(@Nonnull ItemStack stack, boolean matchNBT) {
-        LibraryRecipe.VALID_WOODS.add(SafeStack.newInstance("IGNORE", stack, matchNBT));
-    }
 }

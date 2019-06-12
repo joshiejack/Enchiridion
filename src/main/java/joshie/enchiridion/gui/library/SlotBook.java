@@ -7,7 +7,7 @@ import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.packet.PacketHandleBook;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -32,7 +32,7 @@ public class SlotBook extends Slot {
     }
 
     @Nonnull
-    public ItemStack handle(PlayerEntity player, int mouseButton, Slot slot) {
+    public ItemStack handle(ServerPlayerEntity player, int mouseButton, Slot slot) {
         if (mouseButton == 1) {
             ItemStack stack = slot.getStack();
             IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(stack);

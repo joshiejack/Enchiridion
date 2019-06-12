@@ -4,12 +4,11 @@ import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
+import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.Map;
 
 public class RecipeHandlerFurnace extends RecipeHandlerBase {
     private static WrappedFuelStack fuels;
@@ -27,15 +26,15 @@ public class RecipeHandlerFurnace extends RecipeHandlerBase {
     }
 
     @Override
-    public void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list) {
-        Map<ItemStack, ItemStack> smeltingList = FurnaceRecipe.instance().getSmeltingList();
+    public void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list, World world) {
+        /*Map<ItemStack, ItemStack> smeltingList = FurnaceRecipe.instance().getSmeltingList(); //TODO
         for (ItemStack key : smeltingList.keySet()) {
             ItemStack stack = smeltingList.get(key);
             if (stack.isEmpty()) continue;
             if (stack.isItemEqual(output)) {
                 list.add(new RecipeHandlerFurnace(stack, key));
             }
-        }
+        }*/
     }
 
     @Override

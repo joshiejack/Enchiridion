@@ -1,14 +1,14 @@
 package joshie.enchiridion.api.recipe;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface IRecipeHandler {
     /** Add recipes that are valid for this output item **/
-    void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list);
+    void addRecipes(@Nonnull ItemStack output, List<IRecipeHandler> list, World world);
 
     /** Draw this recipe in the book, You can make use of the
      *  the helper functions in @IDrawHelper with access to an instance
@@ -31,5 +31,5 @@ public interface IRecipeHandler {
     String getRecipeName();
 
     /** Add Tooltip **/
-    void addTooltip(List<ITextComponent> list);
+    void addTooltip(List<String> list);
 }

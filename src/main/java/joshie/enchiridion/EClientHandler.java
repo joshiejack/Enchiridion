@@ -2,7 +2,6 @@ package joshie.enchiridion;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
-import joshie.enchiridion.data.book.BookMeshDefinition;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.data.book.Page;
 import joshie.enchiridion.data.book.Template;
@@ -12,6 +11,7 @@ import joshie.enchiridion.gui.book.buttons.actions.*;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerFurnace;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapedVanilla;
 import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessVanilla;
+import joshie.enchiridion.gui.library.GuiLibrary;
 import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.EditHelper;
 import joshie.enchiridion.helpers.MCClientHelper;
@@ -23,31 +23,24 @@ import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.EResourcePack;
 import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.model.ModelBakery;
-import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
 
 public class EClientHandler {
-    public static final ModelResourceLocation BOOK_RESOURCE = new ModelResourceLocation(new ResourceLocation(EInfo.MODID, "book"), "inventory");
     public static KeyBinding libraryKeyBinding;
-    public static ModelResourceLocation library;
-    public static ModelResourceLocation libraryItem;
 
     public static void setupClient() {
         Minecraft.getInstance().getResourceManager().addResourcePack(EResourcePack.INSTANCE);
+        ScreenManager.registerFactory(ECommonHandler.LIBRARY_CONTAINER, GuiLibrary::new);
         LibraryHelper.resetClient();
         BookRegistry.INSTANCE.loadBooksFromConfig();
-        ModelBakery.registerItemVariants(ECommonHandler.BOOK, BOOK_RESOURCE);
         MinecraftForge.EVENT_BUS.register(new SmartLibrary());
-        ModelLoader.setCustomMeshDefinition(ECommonHandler.BOOK, BookMeshDefinition.INSTANCE);
         EnchiridionAPI.book = GuiBook.INSTANCE;
         EnchiridionAPI.draw = GuiBook.INSTANCE;
         EnchiridionAPI.editor = new EditHelper();
@@ -99,12 +92,6 @@ public class EClientHandler {
 
         //Register the Enchiridion Book
         EnchiridionAPI.instance.registerModWithBooks(EInfo.MODID);
-        //Setup the models for the library
-        if (EConfig.SETTINGS.libraryAsItem.get()) {
-            library = new ModelResourceLocation(new ResourceLocation(EInfo.MODID, "library"), "inventory");
-            ModelBakery.registerItemVariants(ECommonHandler.BOOK, library); //Load in the library texture
-            libraryItem = new ModelResourceLocation(new ResourceLocation(EInfo.MODID, "libraryitem"), "inventory");
-        }
 
         //Register the keybinding
         if (EConfig.SETTINGS.libraryAsHotkey.get()) {

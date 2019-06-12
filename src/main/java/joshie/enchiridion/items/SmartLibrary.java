@@ -1,12 +1,8 @@
 package joshie.enchiridion.items;
 
-import joshie.enchiridion.EClientHandler;
-import joshie.enchiridion.EConfig;
-import joshie.enchiridion.data.book.BookMeshDefinition;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.model.BakedQuad;
 import net.minecraft.client.renderer.model.IBakedModel;
@@ -18,8 +14,6 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import javax.annotation.Nonnull;
@@ -31,13 +25,6 @@ import java.util.Random;
 @EventBusSubscriber(modid = EInfo.MODID, value = Dist.CLIENT)
 public class SmartLibrary implements IBakedModel {
     private static IBakedModel library;
-
-    @SubscribeEvent
-    public static void onCookery(ModelBakeEvent event) {
-        if (EConfig.SETTINGS.libraryAsItem.get()) {
-            event.getModelRegistry().put(EClientHandler.libraryItem, new SmartLibrary());
-        }
-    }
 
     @Override
     @Nonnull
@@ -60,14 +47,14 @@ public class SmartLibrary implements IBakedModel {
         public IBakedModel getModelWithOverrides(@Nonnull IBakedModel originalModel, @Nonnull ItemStack stack, @Nullable World world, @Nullable LivingEntity entity) {
             IBakedModel ret;
             //Setup
-            if (mesher == null) mesher = Minecraft.getInstance().getItemRenderer().getItemModelMesher();
+            /*if (mesher == null) mesher = Minecraft.getInstance().getItemRenderer().getItemModelMesher(); //TODO
             library = mesher.getModelManager().getModel(EClientHandler.library);
             if (stack.getDamage() == 0) { //If we're a book
                 ret = mesher.getModelManager().getModel(BookMeshDefinition.INSTANCE.getModelLocation(stack));
-            } else {
+            } else {*/
                 ItemStack book = LibraryHelper.getClientLibraryContents().getCurrentBookItem();
                 ret = book.isEmpty() ? library : mesher.getItemModel(book);
-            }
+
 
             return ret == null ? mesher.getItemModel(broken) : ret;
         }

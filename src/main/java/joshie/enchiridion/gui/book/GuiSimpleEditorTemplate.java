@@ -6,8 +6,6 @@ import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.api.book.ITemplate;
 import joshie.enchiridion.data.book.Page;
 import joshie.enchiridion.helpers.MCClientHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,7 +99,7 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
     }
 
     @Override
-    public void addToolTip(List<ITextComponent> tooltip, int mouseX, int mouseY) {
+    public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
         int count = 0;
         int yPlus = 0;
         int xPlus = 0;
@@ -112,9 +110,9 @@ public class GuiSimpleEditorTemplate extends GuiSimpleEditorAbstract {
             }
 
             if (isOverPosition(2 + xPlus, 11 + yPlus, 42 + xPlus, 34 + yPlus, mouseX, mouseY)) {
-                tooltip.add(new StringTextComponent(template.getTemplateName()));
-                tooltip.add(new StringTextComponent(""));
-                tooltip.add(new StringTextComponent(Enchiridion.format("template.click")));
+                tooltip.add(template.getTemplateName());
+                tooltip.add("");
+                tooltip.add(Enchiridion.format("template.click"));
                 return;
             }
 

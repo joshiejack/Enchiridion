@@ -9,7 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ForgeI18n;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -37,7 +39,8 @@ public class Enchiridion {
         eventBus.addListener(this::setupClient);
         eventBus.addListener(this::handleIMCMessages);
         eventBus.addListener(this::onServerStarting);
-        //EConfig.SETTINGS.init(FileHelper.getConfigFile()); //TODO Config
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EConfig.spec);
+        
     }
 
     public void setupCommon(final FMLCommonSetupEvent event) {
@@ -62,9 +65,8 @@ public class Enchiridion {
             CompoundNBT tag = new CompoundNBT();
             String handlerType = tag.getString("handlerType");
             ItemStack stack = ItemStack.read(tag.getCompound("stack"));
-            boolean matchDamage = tag.contains("matchDamage") && tag.getBoolean("matchDamage");
             boolean matchNBT = tag.contains("matchNBT") && tag.getBoolean("matchNBT");
-            EnchiridionAPI.library.registerBookHandlerForStack(handlerType, stack, matchDamage, matchNBT);
+            EnchiridionAPI.library.registerBookHandlerForStack(handlerType, stack, matchNBT);
         });
     }
 

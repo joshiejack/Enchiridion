@@ -5,7 +5,8 @@ import joshie.enchiridion.api.book.IFeatureProvider;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
 import joshie.enchiridion.helpers.StackHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class FeatureRecipe extends FeatureItem {
     private boolean buildRecipe(boolean isLoading) {
         ArrayList<IRecipeHandler> recipes = new ArrayList<>();
         for (IRecipeHandler handler : HANDLERS) {
-            handler.addRecipes(stack, recipes);
+            handler.addRecipes(stack, recipes, ServerLifecycleHooks.getCurrentServer().getWorld(DimensionType.OVERWORLD)); //TODO Test
         }
 
         //Basic loop checking type and recipe
@@ -123,7 +124,7 @@ public class FeatureRecipe extends FeatureItem {
     }
 
     @Override
-    public void addTooltip(List<ITextComponent> list, int mouseX, int mouseY) {
+    public void addTooltip(List<String> list, int mouseX, int mouseY) {
         if (!hideTooltip && handler != null) {
             EnchiridionAPI.draw.setRenderData(position.getLeft(), position.getTop(), position.getWidth(), position.getHeight(), size);
             handler.addTooltip(list);

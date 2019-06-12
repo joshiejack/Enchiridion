@@ -3,7 +3,6 @@ package joshie.enchiridion.gui.book;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.util.ELocation;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ public abstract class AbstractGuiOverlay implements IBookEditorOverlay {
     protected static final ResourceLocation SIDEBAR = new ELocation("sidebar");
 
     @Override
-    public void addToolTip(List<ITextComponent> tooltip, int mouseX, int mouseY) {
+    public void addToolTip(List<String> tooltip, int mouseX, int mouseY) {
     }
 
     @Override
