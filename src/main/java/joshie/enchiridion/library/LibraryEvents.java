@@ -6,11 +6,9 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.helpers.MCServerHelper;
 import joshie.enchiridion.helpers.SyncHelper;
 import joshie.enchiridion.lib.EInfo;
-import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.core.PacketPart;
 import joshie.enchiridion.network.packet.PacketOpenLibrary;
-import joshie.enchiridion.network.packet.PacketSyncLibraryAllowed;
 import joshie.enchiridion.network.packet.PacketSyncLibraryContents;
 import joshie.enchiridion.network.packet.PacketSyncMD5;
 import net.minecraft.client.Minecraft;
@@ -26,7 +24,6 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.fml.network.NetworkHooks;
 import org.apache.logging.log4j.Level;
 import org.lwjgl.glfw.GLFW;
 
@@ -51,12 +48,14 @@ public class LibraryEvents {
                 if (EConfig.SETTINGS.debugMode) Enchiridion.log(Level.INFO, "Did you call me?");
                 //Sync what's allowed in the library
                 String serverName = MCServerHelper.getHostName();
-                PacketHandler.sendToClient(new PacketSyncLibraryAllowed(PacketPart.SEND_HASH, serverName, ModSupport.getHashcode(serverName)), mp);
+                //PacketHandler.sendToClient(new PacketSyncLibraryAllowed(PacketPart.SEND_HASH, serverName, ModSupport.getHashcode(serverName)), mp); //TODO
 
                 //Sync what is in the library
                 LibraryInventory inventory = LibraryHelper.getServerLibraryContents(player);
-                inventory.addDefaultBooks();
-                PacketHandler.sendToClient(new PacketSyncLibraryContents(inventory), mp);
+                if (inventory != null) {
+                    inventory.addDefaultBooks();
+                    PacketHandler.sendToClient(new PacketSyncLibraryContents(inventory), mp);
+                }
 
                 //Start the md5 process
                 if (EConfig.SETTINGS.syncDataAndImagesToClients.get()) {

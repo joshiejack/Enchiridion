@@ -1,11 +1,9 @@
 package joshie.enchiridion.library.handlers;
 
 import joshie.enchiridion.api.book.IBookHandler;
-import joshie.enchiridion.lib.GuiIDs;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 

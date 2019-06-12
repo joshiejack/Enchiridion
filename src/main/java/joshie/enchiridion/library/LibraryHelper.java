@@ -7,6 +7,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 
 public class LibraryHelper {
@@ -42,8 +43,9 @@ public class LibraryHelper {
         return theClient.getLibraryInventory(null);
     }
 
+    @Nullable
     public static LibraryInventory getServerLibraryContents(PlayerEntity player) {
-        return theServer.getLibraryInventory(player);
+        return theServer != null ? theServer.getLibraryInventory(player) : null;
     }
 
     public static Collection<LibraryInventory> getAllInventories() {

@@ -2,17 +2,14 @@ package joshie.enchiridion.library.handlers;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
-import joshie.enchiridion.lib.GuiIDs;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.packet.PacketSetLibraryBook;
 import net.minecraft.client.gui.screen.EditBookScreen;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.Hand;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
@@ -31,7 +28,7 @@ public class WritableBookHandler implements IBookHandler {
     public static class GuiScreenWritable extends EditBookScreen {
         private int slot;
 
-        public GuiScreenWritable(PlayerEntity player, int slot, Hand hand) {
+        public GuiScreenWritable(ServerPlayerEntity player, int slot, Hand hand) {
             super(player, EnchiridionAPI.library.getLibraryInventory(player).getStackInSlot(slot), hand);
             this.slot = slot;
         }

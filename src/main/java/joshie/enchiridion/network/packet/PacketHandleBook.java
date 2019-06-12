@@ -3,6 +3,7 @@ package joshie.enchiridion.network.packet;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.library.LibraryHelper;
+import joshie.enchiridion.library.LibraryInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -43,8 +44,11 @@ public class PacketHandleBook {
                     if (handler != null) {
                         handler.handle(stack, playerMP, message.hand, message.slot, message.isShiftPressed);
                     }
-                    LibraryHelper.getServerLibraryContents(playerMP).setCurrentBook(message.slot);
-                    ctx.get().setPacketHandled(true);
+                    LibraryInventory libraryServer = LibraryHelper.getServerLibraryContents(playerMP);
+                    if (libraryServer != null) {
+                        libraryServer.setCurrentBook(message.slot);
+                        ctx.get().setPacketHandled(true);
+                    }
                 }
             }
         }

@@ -5,6 +5,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 
 public class LibraryProxyServer extends LibraryProxy {
@@ -20,7 +21,9 @@ public class LibraryProxyServer extends LibraryProxy {
     }
 
     @Override
+    @Nullable
     public LibraryInventory getLibraryInventory(PlayerEntity player) {
+        if (!(player instanceof ServerPlayerEntity)) return null;
         return data.getLibraryContents((ServerPlayerEntity) player);
     }
 

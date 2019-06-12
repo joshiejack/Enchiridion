@@ -1,34 +1,52 @@
 package joshie.enchiridion.util;
 
+import com.google.common.collect.Lists;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.fonts.Font;
+import net.minecraft.client.gui.fonts.IGlyph;
+import net.minecraft.client.gui.fonts.TexturedGlyph;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.resources.IReloadableResourceManager;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.resource.IResourceType;
 import net.minecraftforge.resource.ISelectiveResourceReloadListener;
 
 import javax.annotation.Nonnull;
-import java.util.Locale;
+import java.util.List;
 import java.util.function.Predicate;
 
 @OnlyIn(Dist.CLIENT)
-public class PenguinFont extends FontRenderer implements ISelectiveResourceReloadListener { //TODO
+public class PenguinFont extends FontRenderer implements ISelectiveResourceReloadListener { //TODO Check
     public static PenguinFont INSTANCE = null;
     private boolean resetColor = false;
 
     public static void load() {
         Minecraft mc = Minecraft.getInstance();
-        INSTANCE = new PenguinFont(mc.textureManager, new ResourceLocation("textures/font/ascii.png"));
+        INSTANCE = new PenguinFont(mc.textureManager, new Font(mc.textureManager, new ResourceLocation("textures/font/ascii.png")));
 
         ((IReloadableResourceManager) mc.getResourceManager()).addReloadListener(INSTANCE);
     }
 
-    private PenguinFont(TextureManager textureManager, ResourceLocation location) {
-        super(textureManager, location);
+    private PenguinFont(TextureManager textureManager, Font font) {
+        super(textureManager, font);
+    }
+
+    public String stripFormatting(String text) {
+        String ret = text;
+        for (CharReplace c : CharReplace.values()) {
+            ret = ret.replace(c.search, "");
+        }
+
+        return ret;
     }
 
     private final static String start = "\u00a7";
@@ -62,13 +80,122 @@ public class PenguinFont extends FontRenderer implements ISelectiveResourceReloa
     }
 
     @Override
-    public int drawStringWithShadow(@Nonnull String text, float x, float y, int color) {
+    public int drawStringWithShadow(String text, float x, float y, int color) {
         return super.drawStringWithShadow(replaceFormatting(text), x, y, color);
     }
 
     @Override
     public void onResourceManagerReload(@Nonnull IResourceManager manager, @Nonnull Predicate<IResourceType> predicate) {
         //TODO
+    }
+
+    private int originalColor;
+
+    @Override
+    public float renderStringAtPos(String text, float x, float y, int textColor, boolean hasShadow) { //Copied from FontRenderer. Changes made is commented
+        float shadow = hasShadow ? 0.25F : 1.0F;
+        float red = (float) (textColor >> 16 & 255) / 255.0F * shadow;
+        float green = (float) (textColor >> 8 & 255) / 255.0F * shadow;
+        float blue = (float) (textColor & 255) / 255.0F * shadow;
+        float redCached = red;
+        float greenCached = green;
+        float blueCached = blue;
+        float color = (float) (textColor >> 24 & 255) / 255.0F;
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder builder = tessellator.getBuffer();
+        ResourceLocation texture = null;
+        builder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+        boolean isObfuscated = false;
+        boolean isBold = false;
+        boolean isItalic = false;
+        boolean isUnderline = false;
+        boolean isStrikethrough = false;
+        boolean cursor = false; //Enchiridion
+        boolean white = false; //Enchiridion
+        List<PenguinFont.Entry> fontEntry = Lists.newArrayList();
+
+        for (int size = 0; size < text.length(); ++size) {
+            char character = text.charAt(size);
+            if (character == 167 && size + 1 < text.length()) {
+                TextFormatting textFormatting = TextFormatting.fromFormattingCode(text.charAt(size + 1));
+                if (textFormatting != null) {
+                    if (textFormatting.isNormalStyle()) {
+                        isObfuscated = false;
+                        isBold = false;
+                        isStrikethrough = false;
+                        isUnderline = false;
+                        isItalic = false;
+                        cursor = false; //Enchiridion
+                        this.resetColor = true; //Enchiridion
+                        textColor = originalColor; //Enchiridion
+                        redCached = red;
+                        greenCached = green;
+                        blueCached = blue;
+                    }
+
+                    if (textFormatting.getColor() != null) {
+                        int formatedColor = textFormatting.getColor();
+                        redCached = (float) (formatedColor >> 16 & 255) / 255.0F * shadow;
+                        greenCached = (float) (formatedColor >> 8 & 255) / 255.0F * shadow;
+                        blueCached = (float) (formatedColor & 255) / 255.0F * shadow;
+                    } else if (textFormatting == TextFormatting.OBFUSCATED) {
+                        isObfuscated = true;
+                    } else if (textFormatting == TextFormatting.BOLD) {
+                        isBold = true;
+                    } else if (textFormatting == TextFormatting.STRIKETHROUGH) {
+                        isStrikethrough = true;
+                    } else if (textFormatting == TextFormatting.UNDERLINE) {
+                        isUnderline = true;
+                    } else if (textFormatting == TextFormatting.ITALIC) {
+                        isItalic = true;
+                    }
+                }
+                ++size;
+            } else {
+                IGlyph glyph = this.font.findGlyph(character);
+                TexturedGlyph texturedGlyph = isObfuscated && character != ' ' ? this.font.obfuscate(glyph) : this.font.getGlyph(character);
+                ResourceLocation glyphTexture = texturedGlyph.getTextureLocation();
+                float boldOffset;
+                float shadowOffset;
+                if (glyphTexture != null) {
+                    if (texture != glyphTexture) {
+                        tessellator.draw();
+                        this.textureManager.bindTexture(glyphTexture);
+                        builder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+                        texture = glyphTexture;
+                    }
+
+                    boldOffset = isBold ? glyph.getBoldOffset() : 0.0F;
+                    shadowOffset = hasShadow ? glyph.getShadowOffset() : 0.0F;
+                    this.func_212452_a(texturedGlyph, isBold, isItalic, boldOffset, x + shadowOffset, y + shadowOffset, builder, redCached, greenCached, blueCached, color);
+                }
+
+                boldOffset = glyph.getAdvance(isBold);
+                shadowOffset = hasShadow ? 1.0F : 0.0F;
+                if (isStrikethrough) {
+                    fontEntry.add(new PenguinFont.Entry(x + shadowOffset - 1.0F, y + shadowOffset + 4.5F, x + shadowOffset + boldOffset, y + shadowOffset + 4.5F - 1.0F, redCached, greenCached, blueCached, color));
+                }
+
+                if (isUnderline) {
+                    fontEntry.add(new PenguinFont.Entry(x + shadowOffset - 1.0F, y + shadowOffset + 9.0F, x + shadowOffset + boldOffset, y + shadowOffset + 9.0F - 1.0F, redCached, greenCached, blueCached, color));
+                }
+
+                x += boldOffset;
+            }
+        }
+
+        tessellator.draw();
+        if (!fontEntry.isEmpty()) {
+            GlStateManager.disableTexture();
+            builder.begin(7, DefaultVertexFormats.POSITION_COLOR);
+
+            for (Entry font : fontEntry) { //Changed from while loop to for loop
+                font.pipe(builder);
+            }
+            tessellator.draw();
+            GlStateManager.enableTexture();
+        }
+        return x;
     }
 
     private enum CharReplace {
@@ -101,151 +228,33 @@ public class PenguinFont extends FontRenderer implements ISelectiveResourceReloa
         }
     }
 
-    private boolean cursor = false;
-    private boolean white = false;
-    private int originalColor;
+    @OnlyIn(Dist.CLIENT)
+    static class Entry { //Whole static class copied from FontRenderer
+        final float x1;
+        final float y1;
+        final float x2;
+        final float y2;
+        final float red;
+        final float green;
+        final float blue;
+        final float alpha;
 
-    @Override
-    public void resetStyles() {
-        super.resetStyles();
-        this.cursor = false;
-        this.resetColor = false;
-    }
+        private Entry(float x1, float y1, float x2, float y2, float red, float green, float blue, float alpha) {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+            this.red = red;
+            this.green = green;
+            this.blue = blue;
+            this.alpha = alpha;
+        }
 
-    @Override
-    public float renderStringAtPos(String text, float p_211843_2_, float p_211843_3_, int p_211843_4_, boolean shadow) {
-        for (int i = 0; i < text.length(); ++i)
-        {
-            char c0 = text.charAt(i);
-
-            if (c0 == 167 && i + 1 < text.length())
-            {
-                int i1 = "0123456789abcdefklmnor".indexOf(String.valueOf(text.charAt(i + 1)).toLowerCase(Locale.ROOT).charAt(0));
-
-                if (i1 < 16)
-                {
-                    this.randomStyle = false;
-                    this.boldStyle = false;
-                    this.strikethroughStyle = false;
-                    this.underlineStyle = false;
-                    this.italicStyle = false;
-                    this.cursor = false; //Enchiridion
-
-                    if (i1 < 0 || i1 > 15)
-                    {
-                        i1 = 15;
-                    }
-
-                    if (shadow)
-                    {
-                        i1 += 16;
-                    }
-
-                    int j1 = this.colorCode[i1];
-                    this.textColor = j1;
-                    setColor((float)(j1 >> 16) / 255.0F, (float)(j1 >> 8 & 255) / 255.0F, (float)(j1 & 255) / 255.0F, this.alpha);
-                }
-                else if (i1 == 16)
-                {
-                    this.randomStyle = true;
-                }
-                else if (i1 == 17)
-                {
-                    this.boldStyle = true;
-                }
-                else if (i1 == 18)
-                {
-                    this.strikethroughStyle = true;
-                }
-                else if (i1 == 19)
-                {
-                    this.underlineStyle = true;
-                }
-                else if (i1 == 20)
-                {
-                    this.italicStyle = true;
-                } else if (i1 == 22 || i1 == 23) { //Enchiridion
-                    this.cursor = true;
-                    this.white = i1 == 22;
-                }
-                else if (i1 == 21)
-                {
-                    this.cursor = false; //Enchiridion
-                    this.randomStyle = false;
-                    this.boldStyle = false;
-                    this.strikethroughStyle = false;
-                    this.underlineStyle = false;
-                    this.italicStyle = false;
-                    this.resetColor = true; //Enchiridion
-                    this.textColor = originalColor; //Enchiridion
-                    setColor(this.red, this.blue, this.green, this.alpha);
-                }
-
-                ++i;
-            }
-            else
-            {
-                int j = "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000".indexOf(c0);
-
-                if (this.randomStyle && j != -1)
-                {
-                    int k = this.getCharWidth(c0);
-                    char c1;
-
-                    while (true)
-                    {
-                        j = this.fontRandom.nextInt("\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000".length());
-                        c1 = "\u00c0\u00c1\u00c2\u00c8\u00ca\u00cb\u00cd\u00d3\u00d4\u00d5\u00da\u00df\u00e3\u00f5\u011f\u0130\u0131\u0152\u0153\u015e\u015f\u0174\u0175\u017e\u0207\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000\u00c7\u00fc\u00e9\u00e2\u00e4\u00e0\u00e5\u00e7\u00ea\u00eb\u00e8\u00ef\u00ee\u00ec\u00c4\u00c5\u00c9\u00e6\u00c6\u00f4\u00f6\u00f2\u00fb\u00f9\u00ff\u00d6\u00dc\u00f8\u00a3\u00d8\u00d7\u0192\u00e1\u00ed\u00f3\u00fa\u00f1\u00d1\u00aa\u00ba\u00bf\u00ae\u00ac\u00bd\u00bc\u00a1\u00ab\u00bb\u2591\u2592\u2593\u2502\u2524\u2561\u2562\u2556\u2555\u2563\u2551\u2557\u255d\u255c\u255b\u2510\u2514\u2534\u252c\u251c\u2500\u253c\u255e\u255f\u255a\u2554\u2569\u2566\u2560\u2550\u256c\u2567\u2568\u2564\u2565\u2559\u2558\u2552\u2553\u256b\u256a\u2518\u250c\u2588\u2584\u258c\u2590\u2580\u03b1\u03b2\u0393\u03c0\u03a3\u03c3\u03bc\u03c4\u03a6\u0398\u03a9\u03b4\u221e\u2205\u2208\u2229\u2261\u00b1\u2265\u2264\u2320\u2321\u00f7\u2248\u00b0\u2219\u00b7\u221a\u207f\u00b2\u25a0\u0000".charAt(j);
-
-                        if (k == this.getCharWidth(c1))
-                        {
-                            break;
-                        }
-                    }
-
-                    c0 = c1;
-                }
-
-                float f1 = j == -1 || this.unicodeFlag ? 0.5f : 1f;
-                boolean flag = (c0 == 0 || j == -1 || this.unicodeFlag) && shadow;
-
-                if (flag)
-                {
-                    this.posX -= f1;
-                    this.posY -= f1;
-                }
-
-                float f = this.renderChar(c0, this.italicStyle);
-
-                if (flag)
-                {
-                    this.posX += f1;
-                    this.posY += f1;
-                }
-
-                if (this.boldStyle)
-                {
-                    this.posX += f1;
-
-                    if (flag)
-                    {
-                        this.posX -= f1;
-                        this.posY -= f1;
-                    }
-
-                    this.renderChar(c0, this.italicStyle);
-                    this.posX -= f1;
-
-                    if (flag)
-                    {
-                        this.posX += f1;
-                        this.posY += f1;
-                    }
-
-                    ++f;
-                }
-                doDraw(f);
-            }
+        void pipe(BufferBuilder builder) {
+            builder.pos((double) this.x1, (double) this.y1, 0.0D).color(this.red, this.green, this.blue, this.alpha).endVertex();
+            builder.pos((double) this.x2, (double) this.y1, 0.0D).color(this.red, this.green, this.blue, this.alpha).endVertex();
+            builder.pos((double) this.x2, (double) this.y2, 0.0D).color(this.red, this.green, this.blue, this.alpha).endVertex();
+            builder.pos((double) this.x1, (double) this.y2, 0.0D).color(this.red, this.green, this.blue, this.alpha).endVertex();
         }
     }
 }

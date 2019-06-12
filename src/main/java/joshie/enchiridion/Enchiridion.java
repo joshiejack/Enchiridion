@@ -1,12 +1,9 @@
 package joshie.enchiridion;
 
-import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.helpers.SyncHelper;
 import joshie.enchiridion.library.LibraryCommand;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.network.PacketHandler;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ForgeI18n;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -39,8 +36,7 @@ public class Enchiridion {
         eventBus.addListener(this::setupClient);
         eventBus.addListener(this::handleIMCMessages);
         eventBus.addListener(this::onServerStarting);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EConfig.spec);
-        
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EConfig.spec, root.getPath()  + MODID +".toml");
     }
 
     public void setupCommon(final FMLCommonSetupEvent event) {
@@ -61,13 +57,13 @@ public class Enchiridion {
     }
 
     public void handleIMCMessages(final InterModProcessEvent event) {
-        event.getIMCStream().filter(message -> message.getMethod().equalsIgnoreCase("registerBook")).forEach(message -> {
+        /*event.getIMCStream().filter(message -> message.getMethod().equalsIgnoreCase("registerBook")).forEach(message -> { //TODO Test and fix
             CompoundNBT tag = new CompoundNBT();
             String handlerType = tag.getString("handlerType");
             ItemStack stack = ItemStack.read(tag.getCompound("stack"));
             boolean matchNBT = tag.contains("matchNBT") && tag.getBoolean("matchNBT");
             EnchiridionAPI.library.registerBookHandlerForStack(handlerType, stack, matchNBT);
-        });
+        });*/
     }
 
     //Universal log helper

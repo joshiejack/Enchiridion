@@ -14,7 +14,6 @@ import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessVanilla
 import joshie.enchiridion.gui.library.GuiLibrary;
 import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.EditHelper;
-import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.items.SmartLibrary;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.library.LibraryHelper;
@@ -121,13 +120,13 @@ public class EClientHandler {
     public static void setupFont() {
         PenguinFont.load();
         /* Colorize the books */
-        Minecraft.getInstance().getItemColors().register((stack, tintIndex) -> {
+        /*Minecraft.getInstance().getItemColors().register((stack, tintIndex) -> { //TODO
                 ItemStack current = LibraryHelper.getLibraryContents(MCClientHelper.getPlayer()).getCurrentBookItem();
                 if (!current.isEmpty()) {
                     return Minecraft.getInstance().getItemColors().getColor(current, tintIndex);
                 }
             return -1;
-        }, ECommonHandler.LIBRARY);
+        }, ECommonHandler.LIBRARY);*/
     }
 
     /*@Override

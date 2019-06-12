@@ -49,16 +49,19 @@ public class ItemLibrary extends Item { //WAS METADATA 1 BEFORE
         if (player.isSneaking()) {
             //NetworkHooks.openGui(player, GuiIDs.LIBRARY, buf -> buf.writeInt(hand.ordinal())); //TODO
         } else {
-            int currentBook = LibraryHelper.getLibraryContents(player).getCurrentBook();
-            ItemStack book = LibraryHelper.getLibraryContents(player).getStackInSlot(currentBook);
-            if (!book.isEmpty()) {
-                IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(book);
-                if (handler != null && player instanceof ServerPlayerEntity) {
-                    handler.handle(book, (ServerPlayerEntity) player, hand, currentBook, player.isSneaking());
+            if (player instanceof ServerPlayerEntity) {
+                ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+                int currentBook = LibraryHelper.getLibraryContents(serverPlayer).getCurrentBook();
+                ItemStack book = LibraryHelper.getLibraryContents(serverPlayer).getStackInSlot(currentBook);
+                if (!book.isEmpty()) {
+                    IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(book);
+                    if (handler != null) {
+                        handler.handle(book, serverPlayer, hand, currentBook, player.isSneaking());
+                    }
+                } else {
+                    //NetworkHooks.openGui(player, GuiIDs.LIBRARY, buf -> buf.writeInt(hand.ordinal())); //TODO
+                    return new ActionResult<>(ActionResultType.SUCCESS, stack);
                 }
-            } else {
-                //NetworkHooks.openGui(player, GuiIDs.LIBRARY, buf -> buf.writeInt(hand.ordinal())); //TODO
-                return new ActionResult<>(ActionResultType.SUCCESS, stack);
             }
         }
         return new ActionResult<>(ActionResultType.PASS, stack);
