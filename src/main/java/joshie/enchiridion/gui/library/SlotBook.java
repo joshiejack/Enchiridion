@@ -1,9 +1,9 @@
 package joshie.enchiridion.gui.library;
 
-import joshie.enchiridion.ECommonHandler;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.helpers.MCClientHelper;
+import joshie.enchiridion.items.EItems;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.packet.PacketHandleBook;
@@ -28,7 +28,7 @@ public class SlotBook extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         //FORBID LIBRARIES
-        return stack.getItem() != ECommonHandler.LIBRARY;
+        return stack.getItem() != EItems.LIBRARY;
     }
 
     @Nonnull

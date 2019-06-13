@@ -2,7 +2,7 @@ package joshie.enchiridion.items;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
-import joshie.enchiridion.lib.GuiIDs;
+import joshie.enchiridion.lib.EGuis;
 import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
@@ -50,7 +50,7 @@ public class ItemLibrary extends Item { //WAS METADATA 1 BEFORE
 
         if (player.isSneaking()) {
             if (player instanceof ServerPlayerEntity) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, GuiIDs.getLibraryProvider(hand), buf -> buf.writeInt(hand.ordinal()));
+                NetworkHooks.openGui((ServerPlayerEntity) player, EGuis.getLibraryProvider(hand), buf -> buf.writeInt(hand.ordinal()));
                 return new ActionResult<>(ActionResultType.SUCCESS, stack);
             }
         } else {
@@ -63,7 +63,7 @@ public class ItemLibrary extends Item { //WAS METADATA 1 BEFORE
                 }
             } else {
                 if (player instanceof ServerPlayerEntity) {
-                    NetworkHooks.openGui((ServerPlayerEntity) player, GuiIDs.getLibraryProvider(hand), buf -> buf.writeInt(hand.ordinal()));
+                    NetworkHooks.openGui((ServerPlayerEntity) player, EGuis.getLibraryProvider(hand), buf -> buf.writeInt(hand.ordinal()));
                     return new ActionResult<>(ActionResultType.SUCCESS, stack);
                 }
             }

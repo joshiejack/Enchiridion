@@ -167,7 +167,7 @@ public class PenguinFont extends FontRenderer implements ISelectiveResourceReloa
 
                     boldOffset = isBold ? glyph.getBoldOffset() : 0.0F;
                     shadowOffset = hasShadow ? glyph.getShadowOffset() : 0.0F;
-                    this.func_212452_a(texturedGlyph, isBold, isItalic, boldOffset, x + shadowOffset, y + shadowOffset, builder, redCached, greenCached, blueCached, color);
+                    this.renderGlyph(texturedGlyph, isBold, isItalic, boldOffset, x + shadowOffset, y + shadowOffset, builder, redCached, greenCached, blueCached, color);
                 }
 
                 boldOffset = glyph.getAdvance(isBold);

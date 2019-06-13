@@ -14,9 +14,12 @@ import joshie.enchiridion.gui.book.features.recipe.RecipeHandlerShapelessVanilla
 import joshie.enchiridion.gui.library.GuiLibrary;
 import joshie.enchiridion.helpers.DefaultHelper;
 import joshie.enchiridion.helpers.EditHelper;
+import joshie.enchiridion.items.EItems;
 import joshie.enchiridion.items.SmartLibrary;
+import joshie.enchiridion.lib.EGuis;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.library.LibraryHelper;
+import joshie.enchiridion.library.handlers.WritableBookHandler;
 import joshie.enchiridion.util.ECreativeTab;
 import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.EResourcePack;
@@ -24,8 +27,10 @@ import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Hand;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -36,7 +41,7 @@ public class EClientHandler {
 
     public static void setupClient() {
         Minecraft.getInstance().getResourceManager().addResourcePack(EResourcePack.INSTANCE);
-        ScreenManager.registerFactory(ECommonHandler.LIBRARY_CONTAINER, GuiLibrary::new);
+        ScreenManager.registerFactory(EGuis.LIBRARY_CONTAINER, GuiLibrary::new);
         LibraryHelper.resetClient();
         BookRegistry.INSTANCE.loadBooksFromConfig();
         MinecraftForge.EVENT_BUS.register(new SmartLibrary());
@@ -98,7 +103,7 @@ public class EClientHandler {
             ClientRegistry.registerKeyBinding(libraryKeyBinding);
         }
 
-        ItemStack book = new ItemStack(ECommonHandler.BOOK);
+        ItemStack book = new ItemStack(EItems.BOOK);
         book.setTag(new CompoundNBT());
         if (book.getTag() != null) {
             book.getTag().putString("identifier", "enchiridion");
@@ -115,6 +120,18 @@ public class EClientHandler {
             }
         } catch (Exception ignored) {
         }
+    }
+
+    public static void openGuiBook() {
+        Minecraft.getInstance().displayGuiScreen(GuiBook.INSTANCE);
+    }
+
+    public static void openGuiBookCreate() {
+        Minecraft.getInstance().displayGuiScreen(GuiBookCreate.INSTANCE);
+    }
+
+    public static void openWriteableBook(ServerPlayerEntity player, int slot, Hand hand) {
+        Minecraft.getInstance().displayGuiScreen(new WritableBookHandler.GuiScreenWritable(player, slot, hand));
     }
 
     public static void setupFont() {

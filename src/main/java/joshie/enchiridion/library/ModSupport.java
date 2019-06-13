@@ -44,6 +44,9 @@ public class ModSupport {
                         case "blacklist":
                             LibraryRegistry.INSTANCE.unregisterBookHandlerForStackFromJSON(stack, book.shouldMatchNBT());
                             break;
+                        case "customwood":
+                            EnchiridionAPI.library.registerWood(stack, book.shouldMatchNBT());
+                            break;
                         default:
                             LibraryRegistry.INSTANCE.registerBookHandlerForStackFromJSON(book.getHandler(), stack, book.shouldMatchNBT());
                             break;
@@ -65,6 +68,18 @@ public class ModSupport {
                 books.add("copynbt", "guideapi:" + book.getRegistryName().toString().replace(":", "-"), false, false);
             }
         }*/
+
+        books.add("customwood", "minecraft:spruce_planks", false);
+        books.add("customwood", "minecraft:dark_oak_planks", false);
+        books.add("customwood", "biomesoplenty:ebony_planks", false); //Might not be correct
+        books.add("customwood", "botania:livingwood", false);
+        books.add("customwood", "chisel:livingwood-planks", false); //Needs updating
+        books.add("customwood", "chisel:livingwood-raw", false); //Needs updating
+        books.add("customwood", "chisel:planks-dark-oak", false); //Needs updating
+        books.add("customwood", "chisel:planks-spruce", false); //Needs updating
+        books.add("customwood", "chisel:thinWood-dark", false); //Needs updating
+        books.add("customwood", "chisel:thinWood-spruce", false); //Needs updating
+        books.add("customwood", "thaumcraft:plank 0", false); //Needs updating
         books.add("switchclick", "actuallyadditions:item_booklet", false);
         books.add("switchclick", "astralsorcery:itemjournal", false);
         books.add("switchclick", "bibliocraft:stockroomcatalog", false);

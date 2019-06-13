@@ -1,12 +1,11 @@
 package joshie.enchiridion.gui.library;
 
-import joshie.enchiridion.ECommonHandler;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.helpers.HeldHelper;
+import joshie.enchiridion.lib.EGuis;
 import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
@@ -22,11 +21,14 @@ public class ContainerLibrary extends Container {
 
     public ContainerLibrary(int windowID, PlayerInventory playerInventory, PacketBuffer extraData) {
         this(windowID, playerInventory, LibraryHelper.getServerLibraryContents(playerInventory.player), HeldHelper.getHandFromOrdinal(extraData.readInt()));
+        System.out.println("Boop data");
     }
 
     public ContainerLibrary(int windowID, PlayerInventory playerInventory, IInventory library, Hand hand) {
-        super(ECommonHandler.LIBRARY_CONTAINER, windowID);
+        super(EGuis.LIBRARY_CONTAINER, windowID);
         this.library = library;
+
+        System.out.println("Boop");
 
         //Left hand side slots
         for (int i = 0; i < 5; i++) {
@@ -74,6 +76,7 @@ public class ContainerLibrary extends Container {
     @Override
     @Nonnull
     public ItemStack transferStackInSlot(PlayerEntity player, int slotID) {
+        System.out.println("Tranfer stack in slot");
         int size = library.getSizeInventory();
         int low = size + 27;
         int high = low + 9;
@@ -112,8 +115,10 @@ public class ContainerLibrary extends Container {
     @Override
     @Nonnull
     public ItemStack slotClick(int slotID, int mouseButton, ClickType type, PlayerEntity player) {
-        Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : inventorySlots.get(slotID);
+        System.out.println("Slot click");
+        return super.slotClick(slotID, mouseButton, type, player);
+        /*Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : inventorySlots.get(slotID);
         if (!(player instanceof ServerPlayerEntity)) return ItemStack.EMPTY;
-        return slot instanceof SlotBook && ((SlotBook) slot).handle((ServerPlayerEntity) player, mouseButton, slot).isEmpty() ? ItemStack.EMPTY : super.slotClick(slotID, mouseButton, type, player);
+        return slot instanceof SlotBook && ((SlotBook) slot).handle((ServerPlayerEntity) player, mouseButton, slot).isEmpty() ? ItemStack.EMPTY : super.slotClick(slotID, mouseButton, type, player);*/
     }
 }

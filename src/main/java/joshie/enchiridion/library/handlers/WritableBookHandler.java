@@ -1,10 +1,10 @@
 package joshie.enchiridion.library.handlers;
 
+import joshie.enchiridion.EClientHandler;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.packet.PacketSetLibraryBook;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.EditBookScreen;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,9 @@ public class WritableBookHandler implements IBookHandler {
 
     @Override
     public void handle(@Nonnull ItemStack stack, ServerPlayerEntity player, Hand hand, int slotID, boolean isShiftPressed) {
-        Minecraft.getInstance().displayGuiScreen(new EditBookScreen(player, stack, hand));
+        if (player.world.isRemote) {
+            EClientHandler.openWriteableBook(player, slotID, hand);
+        }
     }
 
     //Our own version for the writeable so that we send packets to the library instead of the hand
@@ -42,17 +44,17 @@ public class WritableBookHandler implements IBookHandler {
                 ListNBT nbtList = new ListNBT();
                 this.field_214238_g.stream().map(StringNBT::new).forEach(nbtList::add);
                 if (!this.field_214238_g.isEmpty()) {
-                    this.field_214233_b.setTagInfo("pages", nbtList);
+                    this.book.setTagInfo("pages", nbtList);
                 }
 
                 if (publish) {
-                    this.field_214233_b.setTagInfo("author", new StringNBT(this.field_214232_a.getGameProfile().getName()));
-                    this.field_214233_b.setTagInfo("title", new StringNBT(this.field_214239_h.trim()));
+                    this.book.setTagInfo("author", new StringNBT(this.field_214232_a.getGameProfile().getName()));
+                    this.book.setTagInfo("title", new StringNBT(this.field_214239_h.trim()));
                 }
 
                 //Set the book in the library
-                EnchiridionAPI.library.getLibraryInventory(this.field_214232_a).setInventorySlotContents(slot, this.field_214233_b);
-                PacketHandler.sendToServer(new PacketSetLibraryBook(this.field_214233_b, slot));
+                EnchiridionAPI.library.getLibraryInventory(this.field_214232_a).setInventorySlotContents(slot, this.book);
+                PacketHandler.sendToServer(new PacketSetLibraryBook(this.book, slot));
             }
         }
     }

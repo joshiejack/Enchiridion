@@ -25,7 +25,6 @@ public class EConfig {
         public ForgeConfigSpec.BooleanValue libraryAsItem;
         public ForgeConfigSpec.BooleanValue libraryAsHotkey;
         public ForgeConfigSpec.BooleanValue addWrittenBookRecipeForLibrary;
-        public ForgeConfigSpec.BooleanValue addOreDictionaryRecipeForLibrary;
         public ForgeConfigSpec.ConfigValue<String> defaultText;
         public ForgeConfigSpec.ConfigValue<String> defaultItem;
 
@@ -49,7 +48,6 @@ public class EConfig {
             libraryAsItem = builder.comment("The library can be opened with an item if this is true").define("Enable Library as Item", true);
             libraryAsHotkey = builder.comment("The library can be opened with a hotkey if this is true").define("Enable Library as Hotkey", true);
             addWrittenBookRecipeForLibrary = builder.comment("Disabling this will not add the default recipe for the library in written book form").define("Add a Recipe for the Library Item using Written Books", false);
-            addOreDictionaryRecipeForLibrary = builder.comment("Disabling this will not add the default recipe for the library, note this overrides the other recipe").define("Add a Recipe for the Library Item using Any Books", true);
             builder.pop();
         }
     }

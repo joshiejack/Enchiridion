@@ -24,4 +24,7 @@ public interface ILibraryRegistry {
 
     /** @return Returns the IInventory for this players library **/
     IInventory getLibraryInventory(PlayerEntity player);
+
+    /** Register wood as being able to be used to craft the library **/
+    void registerWood(@Nonnull ItemStack stack, boolean matchNBT);
 }

@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.thread.EffectiveSide;
 import java.util.Collection;
 
 public class LibraryHelper {
+    @OnlyIn(Dist.CLIENT)
     private static LibraryProxy theClient;
     private static LibraryProxyServer theServer;
 
@@ -21,6 +22,7 @@ public class LibraryHelper {
         System.out.println("Server might be null ENCH");
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static void resetClient() {
         theClient = new LibraryProxyClient();
     }

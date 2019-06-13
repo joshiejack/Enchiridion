@@ -1,11 +1,11 @@
 package joshie.enchiridion.items;
 
+import joshie.enchiridion.EClientHandler;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.GuiBook;
 import joshie.enchiridion.gui.book.GuiBookCreate;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -68,11 +68,15 @@ public class ItemBook extends Item {
         if (!held.isEmpty()) {
             IBook book = BookRegistry.INSTANCE.getBook(held);
             if (book != null) {
-                GuiBook.INSTANCE.setBook(book, player.isSneaking());
-                Minecraft.getInstance().displayGuiScreen(GuiBook.INSTANCE);
+                if (world.isRemote) {
+                    GuiBook.INSTANCE.setBook(book, player.isSneaking());
+                    EClientHandler.openGuiBook();
+                }
             } else {
-                GuiBookCreate.INSTANCE.setStack(held);
-                Minecraft.getInstance().displayGuiScreen(GuiBookCreate.INSTANCE);
+                if (world.isRemote) {
+                    GuiBookCreate.INSTANCE.setStack(held);
+                    EClientHandler.openGuiBookCreate();
+                }
             }
         }
         return new ActionResult<>(ActionResultType.SUCCESS, held);

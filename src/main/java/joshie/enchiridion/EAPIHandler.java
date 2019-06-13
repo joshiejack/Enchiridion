@@ -16,7 +16,6 @@ import joshie.enchiridion.gui.book.GuiToolbar;
 import joshie.enchiridion.gui.book.features.FeatureRecipe;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.packet.PacketOpenBook;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.fml.ModList;
@@ -88,7 +87,7 @@ public class EAPIHandler implements IEnchiridionAPI {
             if (book != null) {
                 GuiBook.INSTANCE.setBook(book, false);
                 EnchiridionAPI.book.jumpToPageIfExists(page - 1);
-                Minecraft.getInstance().displayGuiScreen(GuiBook.INSTANCE);
+                //Minecraft.getInstance().displayGuiScreen(GuiBook.INSTANCE); //TODO Server
             }
         } else {
             PacketHandler.sendToClient(new PacketOpenBook(bookID, page), (ServerPlayerEntity) player);
