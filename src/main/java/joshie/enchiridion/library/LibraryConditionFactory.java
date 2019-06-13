@@ -3,6 +3,7 @@ package joshie.enchiridion.library;
 import com.google.gson.JsonObject;
 import joshie.enchiridion.EConfig;
 import net.minecraft.util.JSONUtils;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IConditionSerializer;
 
 import javax.annotation.Nonnull;

@@ -87,7 +87,9 @@ public class EAPIHandler implements IEnchiridionAPI {
             if (book != null) {
                 GuiBook.INSTANCE.setBook(book, false);
                 EnchiridionAPI.book.jumpToPageIfExists(page - 1);
-                //Minecraft.getInstance().displayGuiScreen(GuiBook.INSTANCE); //TODO Server
+                if (player.world.isRemote) {
+                    EClientHandler.openGuiBook();
+                }
             }
         } else {
             PacketHandler.sendToClient(new PacketOpenBook(bookID, page), (ServerPlayerEntity) player);

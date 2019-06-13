@@ -16,10 +16,8 @@ public class LibraryHelper {
 
     public static void resetServer(ServerWorld world) {
         if (world != null) {
-            System.out.println("World is not null ENCH");
             theServer = (new LibraryProxyServer(world));
         }
-        System.out.println("Server might be null ENCH");
     }
 
     @OnlyIn(Dist.CLIENT)

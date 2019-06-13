@@ -23,10 +23,11 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = EInfo.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class LibraryRecipe extends SpecialRecipe {
     public static final Set<SafeStack> VALID_WOODS = new HashSet<>();
-    static final SpecialRecipeSerializer<LibraryRecipe> LIBRARY_SERIALIZER = IRecipeSerializer.register("enchiridon_crafting_special_library", new SpecialRecipeSerializer<>(LibraryRecipe::new));
+    static final SpecialRecipeSerializer<LibraryRecipe> LIBRARY_SERIALIZER = IRecipeSerializer.register("enchiridon:crafting_special_library", new SpecialRecipeSerializer<>(LibraryRecipe::new));
 
     public LibraryRecipe(ResourceLocation location) {
         super(location);
+        System.out.println("Library recipe");
     }
 
     @Override
@@ -50,6 +51,7 @@ public class LibraryRecipe extends SpecialRecipe {
 
     @Override
     public boolean matches(@Nonnull CraftingInventory inv, @Nonnull World world) {
+        System.out.println("Test");
         for (int i = 0; i < 3; i++) {
             ItemStack stack = inv.getStackInSlot(i);
             if (stack.isEmpty() || !isWood(stack)) return false;
@@ -110,6 +112,6 @@ public class LibraryRecipe extends SpecialRecipe {
 
     @SubscribeEvent
     public static void registerRecipe(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-        event.getRegistry().register(LIBRARY_SERIALIZER);
+        //event.getRegistry().register(LIBRARY_SERIALIZER);
     }
 }

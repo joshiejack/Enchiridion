@@ -6,6 +6,7 @@ import joshie.enchiridion.lib.EGuis;
 import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
@@ -115,10 +116,8 @@ public class ContainerLibrary extends Container {
     @Override
     @Nonnull
     public ItemStack slotClick(int slotID, int mouseButton, ClickType type, PlayerEntity player) {
-        System.out.println("Slot click");
-        return super.slotClick(slotID, mouseButton, type, player);
-        /*Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : inventorySlots.get(slotID);
+        Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : inventorySlots.get(slotID);
         if (!(player instanceof ServerPlayerEntity)) return ItemStack.EMPTY;
-        return slot instanceof SlotBook && ((SlotBook) slot).handle((ServerPlayerEntity) player, mouseButton, slot).isEmpty() ? ItemStack.EMPTY : super.slotClick(slotID, mouseButton, type, player);*/
+        return slot instanceof SlotBook && ((SlotBook) slot).handle((ServerPlayerEntity) player, mouseButton, slot).isEmpty() ? ItemStack.EMPTY : super.slotClick(slotID, mouseButton, type, player);
     }
 }

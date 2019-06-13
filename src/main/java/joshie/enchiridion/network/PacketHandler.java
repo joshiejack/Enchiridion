@@ -11,7 +11,7 @@ import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public class PacketHandler {
     public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder
-            .named(new ResourceLocation(EInfo.MODID, "enchiridion_channel"))
+            .named(new ResourceLocation(EInfo.MODID, "channel"))
             .clientAcceptedVersions(v -> true)
             .serverAcceptedVersions(v -> true)
             .networkProtocolVersion(() -> "ENCHIRIDION1")

@@ -6,9 +6,6 @@
     }
   ],
   "type": "minecraft:crafting_shaped",
-  "result": {
-    "item": "enchiridion:library"
-  },
   "pattern": [
     "WWW",
     "BBB",
@@ -16,10 +13,13 @@
   ],
   "key": {
     "W": {
-      "item": "minecraft:spruce_planks"
+      "item": "minecraft:dark_oak_planks"
     },
     "B": {
       "item": "minecraft:writable_book"
     }
+  },
+  "result": {
+    "item": "enchiridion:library"
   }
 }
