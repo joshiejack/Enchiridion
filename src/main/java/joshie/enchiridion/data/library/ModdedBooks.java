@@ -2,13 +2,14 @@ package joshie.enchiridion.data.library;
 
 import joshie.enchiridion.helpers.StackHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ModdedBooks {
-    private List<ModdedBook> books = new ArrayList<>();
-    private List<String> freeBooks = new ArrayList<>();
+    private NonNullList<ModdedBook> books = NonNullList.create();
+    private NonNullList<String> freeBooks = NonNullList.create();
 
     public ModdedBooks() {
     }
@@ -21,7 +22,6 @@ public class ModdedBooks {
     public static class ModdedBook {
         private String item;
         private String handlerType;
-        private boolean matchDamage;
         private boolean matchNBT;
 
         private ModdedBook() {}

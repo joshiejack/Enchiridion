@@ -9,6 +9,7 @@ import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.core.PacketPart;
 import joshie.enchiridion.network.packet.PacketOpenLibrary;
+import joshie.enchiridion.network.packet.PacketSyncLibraryAllowed;
 import joshie.enchiridion.network.packet.PacketSyncLibraryContents;
 import joshie.enchiridion.network.packet.PacketSyncMD5;
 import net.minecraft.client.Minecraft;
@@ -48,11 +49,11 @@ public class LibraryEvents {
                 if (EConfig.SETTINGS.debugMode) Enchiridion.log(Level.INFO, "Did you call me?");
                 //Sync what's allowed in the library
                 String serverName = MCServerHelper.getHostName();
-                //PacketHandler.sendToClient(new PacketSyncLibraryAllowed(PacketPart.SEND_HASH, serverName, ModSupport.getHashcode(serverName)), mp); //TODO
+                PacketHandler.sendToClient(new PacketSyncLibraryAllowed(PacketPart.SEND_HASH, serverName, ModSupport.getHashcode(serverName)), mp);
 
                 //Sync what is in the library
                 LibraryInventory inventory = LibraryHelper.getServerLibraryContents(player);
-                //inventory.addDefaultBooks(); //TODO Fix
+                inventory.addDefaultBooks();
                 PacketHandler.sendToClient(new PacketSyncLibraryContents(inventory), mp);
 
                 //Start the md5 process

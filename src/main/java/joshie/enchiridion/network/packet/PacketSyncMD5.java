@@ -29,12 +29,12 @@ public class PacketSyncMD5 extends PacketSyncStringArray {
     }
 
     public static void encode(PacketSyncMD5 packet, PacketBuffer buf) {
-        fromBytes(packet, buf);
+        toBytes(packet, buf);
     }
 
     public static PacketSyncMD5 decode(PacketBuffer buf) {
         PacketSyncMD5 packet = new PacketSyncMD5(PacketPart.valueOf(buf.readString(32767)), buf.readString(32767), buf.readInt());
-        toBytes(packet, buf);
+        fromBytes(packet, buf);
         return packet;
     }
 

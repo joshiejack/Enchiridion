@@ -28,12 +28,12 @@ public class PacketSyncLibraryAllowed extends PacketSyncStringArray {
     }
 
     public static void encode(PacketSyncLibraryAllowed packet, PacketBuffer buf) {
-        fromBytes(packet, buf);
+        toBytes(packet, buf);
     }
 
     public static PacketSyncLibraryAllowed decode(PacketBuffer buf) {
         PacketSyncLibraryAllowed libraryAllowed = new PacketSyncLibraryAllowed();
-        toBytes(libraryAllowed, buf);
+        fromBytes(libraryAllowed, buf);
         return libraryAllowed;
     }
 
