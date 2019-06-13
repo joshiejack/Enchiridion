@@ -1,7 +1,8 @@
 {
   "enchiridion.creative": "Enchiridion",
-  "enchiridion.library": "Библиотека",
+  "item.enchiridion.library": "Библиотека",
   "enchiridion.new": "Создать %sNEW%s книгу",
+  "enchiridion.container.library": "Библиотека",
   "enchiridion.layers": "Слои",
   "enchiridion.tooltips": "Подсказки включены",
   "enchiridion.select.custom": "Пользовательский",

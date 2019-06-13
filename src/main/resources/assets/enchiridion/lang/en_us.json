@@ -1,7 +1,8 @@
 {
   "enchiridion.creative": "Enchiridion",
-  "enchiridion.library": "Library",
+  "item.enchiridion.library": "Library",
   "enchiridion.new": "Create %sNEW%s Book",
+  "enchiridion.container.library": "Library",
   "enchiridion.layers": "Layers",
   "enchiridion.tooltips": "Tooltips Enabled",
   "enchiridion.select.custom": "Custom",

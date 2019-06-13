@@ -3,7 +3,7 @@ package joshie.enchiridion;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.library.ContainerLibrary;
-import joshie.enchiridion.items.ItemEnchiridion;
+import joshie.enchiridion.items.ItemBook;
 import joshie.enchiridion.items.ItemLibrary;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.lib.GuiIDs;
@@ -23,7 +23,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @Mod.EventBusSubscriber(modid = EInfo.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ECommonHandler {
-    public static final Item BOOK = new ItemEnchiridion(new Item.Properties().group(ECreativeTab.ENCHIRIDION)).setRegistryName(new ResourceLocation(EInfo.MODID, "book"));
+    public static final Item BOOK = new ItemBook(new Item.Properties().group(ECreativeTab.ENCHIRIDION)).setRegistryName(new ResourceLocation(EInfo.MODID, "book"));
     public static final Item LIBRARY = new ItemLibrary(new Item.Properties().group(ECreativeTab.ENCHIRIDION)).setRegistryName(new ResourceLocation(EInfo.MODID, "library"));
 
     @ObjectHolder(GuiIDs.LIBRARY)

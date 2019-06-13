@@ -3,6 +3,9 @@ package joshie.enchiridion.items;
 import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.data.book.BookRegistry;
+import joshie.enchiridion.gui.book.GuiBook;
+import joshie.enchiridion.gui.book.GuiBookCreate;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -11,7 +14,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -25,9 +28,9 @@ import java.util.List;
 import static net.minecraft.util.text.TextFormatting.DARK_GREEN;
 import static net.minecraft.util.text.TextFormatting.RESET;
 
-public class ItemEnchiridion extends Item {
+public class ItemBook extends Item {
 
-    public ItemEnchiridion(Properties properties) {
+    public ItemBook(Properties properties) {
         super(properties);
     }
 
@@ -40,11 +43,11 @@ public class ItemEnchiridion extends Item {
     @Nonnull
     public ITextComponent getDisplayName(@Nonnull ItemStack stack) {
         if (EffectiveSide.get() == LogicalSide.SERVER) {
-            return new StringTextComponent(Enchiridion.format("new", DARK_GREEN, RESET));
+            return new TranslationTextComponent(Enchiridion.format("new", DARK_GREEN, RESET));
         }
 
         IBook book = BookRegistry.INSTANCE.getBook(stack);
-        return book == null ? new StringTextComponent(Enchiridion.format("new", DARK_GREEN, RESET)) : book.getDisplayName();
+        return book == null ? new TranslationTextComponent(Enchiridion.format("new", DARK_GREEN, RESET)) : book.getDisplayName();
     }
 
     @Override
@@ -60,9 +63,21 @@ public class ItemEnchiridion extends Item {
     @Override
     @Nonnull
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
+        ItemStack held = player.getHeldItem(hand);
+
+        if (!held.isEmpty()) {
+            IBook book = BookRegistry.INSTANCE.getBook(held);
+            if (book != null) {
+                GuiBook.INSTANCE.setBook(book, player.isSneaking());
+                Minecraft.getInstance().displayGuiScreen(GuiBook.INSTANCE);
+            } else {
+                GuiBookCreate.INSTANCE.setStack(held);
+                Minecraft.getInstance().displayGuiScreen(GuiBookCreate.INSTANCE);
+            }
+        }
+
         //player.openGui(Enchiridion.instance, GuiIDs.BOOK, world, 0, hand.ordinal(), 0); //TODO
-        return new ActionResult<>(ActionResultType.SUCCESS, stack);
+        return new ActionResult<>(ActionResultType.SUCCESS, held);
     }
 
     /*@Override

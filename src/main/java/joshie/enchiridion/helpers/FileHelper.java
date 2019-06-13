@@ -11,7 +11,10 @@ import java.nio.charset.Charset;
 
 public class FileHelper {
     public static File getConfigFile() {
-        return new File(Enchiridion.root, EInfo.MODID + ".cfg");
+        if (!Enchiridion.root.exists()) {
+            Enchiridion.root.mkdir();
+        }
+        return new File(Enchiridion.root, EInfo.MODID + ".toml");
     }
 
     public static File getLibraryDirectory() {

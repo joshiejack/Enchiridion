@@ -77,7 +77,6 @@ public class ModdedBooks {
         for (int i = 0; i < freeBooks.size(); i++) {
             books[i] = StackHelper.getStackFromString(freeBooks.get(i));
         }
-
         return books;
     }
 

@@ -28,7 +28,7 @@ public class SlotBook extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         //FORBID LIBRARIES
-        return stack.getItem() == ECommonHandler.LIBRARY && EnchiridionAPI.library.getBookHandlerForStack(stack) != null;
+        return stack.getItem() != ECommonHandler.LIBRARY;
     }
 
     @Nonnull

@@ -2,6 +2,8 @@ package joshie.enchiridion.gui.library;
 
 import joshie.enchiridion.ECommonHandler;
 import joshie.enchiridion.api.EnchiridionAPI;
+import joshie.enchiridion.helpers.HeldHelper;
+import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -19,12 +21,11 @@ public class ContainerLibrary extends Container {
     public IInventory library;
 
     public ContainerLibrary(int windowID, PlayerInventory playerInventory, PacketBuffer extraData) {
-        this(windowID, playerInventory, Hand.valueOf(extraData.readString(128)));
+        this(windowID, playerInventory, LibraryHelper.getServerLibraryContents(playerInventory.player), HeldHelper.getHandFromOrdinal(extraData.readInt()));
     }
 
-    public ContainerLibrary(int windowID, PlayerInventory playerInventory, Hand hand) {
+    public ContainerLibrary(int windowID, PlayerInventory playerInventory, IInventory library, Hand hand) {
         super(ECommonHandler.LIBRARY_CONTAINER, windowID);
-        //Set the library
         this.library = library;
 
         //Left hand side slots

@@ -17,19 +17,11 @@ import joshie.enchiridion.gui.book.features.FeatureRecipe;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.packet.PacketOpenBook;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
-import net.minecraftforge.fml.network.NetworkHooks;
 import org.apache.logging.log4j.Level;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.io.File;
 
 public class EAPIHandler implements IEnchiridionAPI {
@@ -95,7 +87,7 @@ public class EAPIHandler implements IEnchiridionAPI {
             if (book != null) {
                 GuiBook.INSTANCE.setBook(book, false);
                 EnchiridionAPI.book.jumpToPageIfExists(page - 1);
-                if (player instanceof ServerPlayerEntity) {
+                /*if (player instanceof ServerPlayerEntity) {
                     NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
                         @Override
                         @Nonnull
@@ -109,7 +101,7 @@ public class EAPIHandler implements IEnchiridionAPI {
                             return player.openContainer;
                         }
                     });
-                }
+                }*/
             }
         } else {
             PacketHandler.sendToClient(new PacketOpenBook(bookID, page), (ServerPlayerEntity) player);

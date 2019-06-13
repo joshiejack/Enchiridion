@@ -7,21 +7,20 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 
 public class LibraryHelper {
-    @OnlyIn(Dist.CLIENT)
     private static LibraryProxy theClient;
     private static LibraryProxyServer theServer;
 
     public static void resetServer(ServerWorld world) {
         if (world != null) {
+            System.out.println("World is not null ENCH");
             theServer = (new LibraryProxyServer(world));
         }
+        System.out.println("Server might be null ENCH");
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void resetClient() {
         theClient = new LibraryProxyClient();
     }
@@ -43,9 +42,8 @@ public class LibraryHelper {
         return theClient.getLibraryInventory(null);
     }
 
-    @Nullable
     public static LibraryInventory getServerLibraryContents(PlayerEntity player) {
-        return theServer != null ? theServer.getLibraryInventory(player) : null;
+        return theServer.getLibraryInventory(player);
     }
 
     public static Collection<LibraryInventory> getAllInventories() {

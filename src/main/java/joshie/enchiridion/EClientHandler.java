@@ -139,14 +139,6 @@ public class EClientHandler {
             return new GuiLibrary(player.inventory, LibraryHelper.getClientLibraryContents(), HeldHelper.getHandFromOrdinal(handOrdinal));
         } else if (ID == GuiIDs.BOOK_FORCE) {
             return GuiBook.INSTANCE;
-        } else {
-            ItemStack held = HeldHelper.getStackFromOrdinal(player, handOrdinal);
-            if (!held.isEmpty() && held.getItem() == ECommonHandler.book) {
-                IBook book = BookRegistry.INSTANCE.getBook(held);
-                if (book != null) {
-                    return GuiBook.INSTANCE.setBook(book, player.isSneaking());
-                } else return GuiBookCreate.INSTANCE.setStack(held);
-            }
         }
         return null;
     }*/

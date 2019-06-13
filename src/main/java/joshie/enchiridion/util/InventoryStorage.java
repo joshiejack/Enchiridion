@@ -58,15 +58,11 @@ public abstract class InventoryStorage implements IInventory {
     public void setInventorySlotContents(int index, @Nonnull ItemStack stack) {
         inventory.set(index, stack);
 
-        if (!stack.isEmpty() && stack.getCount() > getInventoryStackLimit()) {
-            stack.setCount(getInventoryStackLimit());
+        this.inventory.set(index, stack);
+        if (stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
         markDirty();
-    }
-
-    @Override
-    public int getInventoryStackLimit() {
-        return 64;
     }
 
     @Override
@@ -75,19 +71,6 @@ public abstract class InventoryStorage implements IInventory {
 
     @Override
     public boolean isUsableByPlayer(@Nonnull PlayerEntity player) {
-        return true;
-    }
-
-    @Override
-    public void openInventory(@Nonnull PlayerEntity player) {
-    }
-
-    @Override
-    public void closeInventory(@Nonnull PlayerEntity player) {
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {
         return true;
     }
 

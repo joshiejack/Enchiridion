@@ -52,10 +52,8 @@ public class LibraryEvents {
 
                 //Sync what is in the library
                 LibraryInventory inventory = LibraryHelper.getServerLibraryContents(player);
-                if (inventory != null) {
-                    inventory.addDefaultBooks();
-                    PacketHandler.sendToClient(new PacketSyncLibraryContents(inventory), mp);
-                }
+                //inventory.addDefaultBooks(); //TODO Fix
+                PacketHandler.sendToClient(new PacketSyncLibraryContents(inventory), mp);
 
                 //Start the md5 process
                 if (EConfig.SETTINGS.syncDataAndImagesToClients.get()) {
@@ -72,8 +70,7 @@ public class LibraryEvents {
         if (EClientHandler.libraryKeyBinding == null) return; //If the keybinding was never created, skip this
         long handle = Minecraft.getInstance().mainWindow.getHandle();
         if (EClientHandler.libraryKeyBinding.isKeyDown() && Minecraft.getInstance().isGameFocused() && !InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_F3)) {
-            PacketHandler.sendToServer(new PacketOpenLibrary()); //Let the server know!
-            //NetworkHooks.openGui(GuiIDs.LIBRARY); //TODO
+            PacketHandler.sendToServer(new PacketOpenLibrary());
         }
     }
 }

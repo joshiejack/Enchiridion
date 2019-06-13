@@ -1,7 +1,6 @@
 package joshie.enchiridion.library;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 
@@ -23,8 +22,7 @@ public class LibraryProxyServer extends LibraryProxy {
     @Override
     @Nullable
     public LibraryInventory getLibraryInventory(PlayerEntity player) {
-        if (!(player instanceof ServerPlayerEntity)) return null;
-        return data.getLibraryContents((ServerPlayerEntity) player);
+        return data.getLibraryContents(player);
     }
 
     public Collection<LibraryInventory> getAllInventories() {

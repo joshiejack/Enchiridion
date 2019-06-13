@@ -59,42 +59,38 @@ public class ModSupport {
         books.add("enchiridion", "enchiridion:book", false);
         books.add("writeable", "minecraft:writable_book", false);
         books.add("written", "minecraft:written_book", false);
-        books.add("switchclick", "actuallyadditions:item_booklet", false);
-        books.add("switchclick", "astralsorcery:ItemJournal", false);
-        books.add("switchclick", "bibliocraft:BiblioRedBook", false);
-        books.add("switchclick", "bibliocraft:BigBook", false);
-        books.add("switchclick", "bibliocraft:RecipeBook", false);
-        books.add("switchclick", "bibliocraft:StockroomCatalog", false);
-        books.add("switchclick", "pokecube:pokedex", false);
-        books.add("switchclick", "rftools:rftools_manual", false);
-        books.add("switchclick", "rftoolscontrol:rftoolscontrol_manual", false);
-        books.add("switchclick", "theoneprobe:probenote", false);
-        books.add("switchclick", "totemic:totempedia", false);
 
         /*if (EInfo.IS_GUIDEAPI_LOADED) {
             for (Book book : GuideAPI.getBooks().values()) {
                 books.add("copynbt", "guideapi:" + book.getRegistryName().toString().replace(":", "-"), false, false);
             }
         }*/
-
-        books.add("switchclick", "aura:lexicon", false);
+        books.add("switchclick", "actuallyadditions:item_booklet", false);
+        books.add("switchclick", "astralsorcery:itemjournal", false);
+        books.add("switchclick", "bibliocraft:stockroomcatalog", false);
+        books.add("switchclick", "bibliocraft:atlasbook", false);
+        books.add("switchclick", "bibliocraft:bigbook", false);
+        books.add("switchclick", "bibliocraft:recipebook", false);
+        books.add("switchclick", "pokecube:pokedex", false);
+        books.add("switchclick", "rftools:rftools_manual", false);
+        books.add("switchclick", "rftoolscontrol:rftoolscontrol_manual", false);
+        books.add("switchclick", "theoneprobe:probenote", false);
+        books.add("switchclick", "totemic:totempedia", false);
         books.add("switchclick", "botania:lexicon", false);
         books.add("switchclick", "deepresonance:dr_manual", false);
         books.add("switchclick", "environmentaltech:digital_guide", false);
         books.add("switchclick", "extrautils2:book", false);
-        books.add("switchclick", "guidebook:guideBook", false);
+        books.add("switchclick", "gbook:guidebook", false);
         books.add("switchclick", "harvestfestival:book", false);
         books.add("switchclick", "harvestfestival:cookbook", false);
-        books.add("switchclick", "immersiveengineering:tool 3", false);
-        books.add("switchclick", "openblocks:infoBook", false);
-        books.add("switchclick", "opencomputers:tool 4", false);
+        books.add("switchclick", "immersiveengineering:tool 3", false); //Needs updating
+        books.add("switchclick", "openblocks:info_book", false);
+        books.add("switchclick", "opencomputers:manual", false);
         books.add("switchclick", "railcraft:routing_table", false);
         books.add("switchclick", "refraction:book", false);
         books.add("switchclick", "rftoolsdim:rftoolsdim_manual", false);
-        books.add("switchclick", "simpleachievements:achievement_book", false);
         books.add("switchclick", "tconstruct:book", false);
         books.add("switchclick", "thaumcraft:thaumonomicon", false);
-        books.add("switchclick", "villagebox:village_book", false);
         books.add("warpbook", "warpbook:warpbook", false);
         return books;
     }

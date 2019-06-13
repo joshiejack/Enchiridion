@@ -31,7 +31,7 @@ public class PenguinFont extends FontRenderer implements ISelectiveResourceReloa
 
     public static void load() {
         Minecraft mc = Minecraft.getInstance();
-        INSTANCE = new PenguinFont(mc.textureManager, new Font(mc.textureManager, new ResourceLocation("textures/font/ascii.png")));
+        INSTANCE = new PenguinFont(mc.textureManager, new Font(mc.textureManager, new ResourceLocation("textures/font/default.json")));
 
         ((IReloadableResourceManager) mc.getResourceManager()).addReloadListener(INSTANCE);
     }

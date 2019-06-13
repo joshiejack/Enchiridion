@@ -24,7 +24,7 @@ public class LibrarySavedData extends WorldSavedData {
         return players.values();
     }
 
-    public LibraryInventory getLibraryContents(ServerPlayerEntity player) {
+    public LibraryInventory getLibraryContents(PlayerEntity player) {
         UUID uuid = UUIDHelper.getPlayerUUID(player);
         if (players.containsKey(uuid)) {
             return players.get(uuid);
@@ -48,9 +48,9 @@ public class LibrarySavedData extends WorldSavedData {
         if (players.containsKey(uuid)) {
             return players.get(uuid);
         } else {
-            PlayerEntity player = UUIDHelper.getPlayerFromUUID(uuid);
+            ServerPlayerEntity player = UUIDHelper.getPlayerFromUUID(uuid);
             if (player == null) return null;
-            else return getLibraryContents((ServerPlayerEntity) player);
+            else return getLibraryContents(player);
         }
     }
 

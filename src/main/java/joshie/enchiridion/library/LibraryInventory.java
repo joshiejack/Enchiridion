@@ -67,7 +67,6 @@ public class LibraryInventory extends InventoryStorage {
                     break;
                 }
             }
-
             receivedBooks = true;
             markDirty();
         }
