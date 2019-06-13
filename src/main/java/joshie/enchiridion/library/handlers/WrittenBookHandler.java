@@ -1,6 +1,8 @@
 package joshie.enchiridion.library.handlers;
 
 import joshie.enchiridion.api.book.IBookHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.ReadBookScreen;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -15,6 +17,6 @@ public class WrittenBookHandler implements IBookHandler {
 
     @Override
     public void handle(@Nonnull ItemStack stack, ServerPlayerEntity player, Hand hand, int slotID, boolean isShiftPressed) {
-        //NetworkHooks.openGui(GuiIDs.WRITTEN, slotID); //TODO
+        Minecraft.getInstance().displayGuiScreen(new ReadBookScreen(new ReadBookScreen.WrittenBookInfo(stack)));
     }
 }

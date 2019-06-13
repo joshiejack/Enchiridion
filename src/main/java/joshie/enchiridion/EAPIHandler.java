@@ -16,6 +16,7 @@ import joshie.enchiridion.gui.book.GuiToolbar;
 import joshie.enchiridion.gui.book.features.FeatureRecipe;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.packet.PacketOpenBook;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.fml.ModList;
@@ -87,21 +88,7 @@ public class EAPIHandler implements IEnchiridionAPI {
             if (book != null) {
                 GuiBook.INSTANCE.setBook(book, false);
                 EnchiridionAPI.book.jumpToPageIfExists(page - 1);
-                /*if (player instanceof ServerPlayerEntity) {
-                    NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
-                        @Override
-                        @Nonnull
-                        public ITextComponent getDisplayName() {
-                            return new StringTextComponent("Book Force");
-                        }
-
-                        @Nullable
-                        @Override
-                        public Container createMenu(int i, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity player) {
-                            return player.openContainer;
-                        }
-                    });
-                }*/
+                Minecraft.getInstance().displayGuiScreen(GuiBook.INSTANCE);
             }
         } else {
             PacketHandler.sendToClient(new PacketOpenBook(bookID, page), (ServerPlayerEntity) player);

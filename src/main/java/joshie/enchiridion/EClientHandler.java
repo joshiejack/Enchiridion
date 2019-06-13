@@ -128,18 +128,4 @@ public class EClientHandler {
             return -1;
         }, ECommonHandler.LIBRARY);*/
     }
-
-    /*@Override
-    public Object getClientGuiElement(int ID, PlayerEntity player, World world, int slotID, int handOrdinal, int z) { //TODO
-        if (ID == GuiIDs.WRITABLE) {
-            return new GuiScreenWritable(player, slotID);
-        } else if (ID == GuiIDs.WRITTEN) {
-            return new GuiScreenBook(player, EnchiridionAPI.library.getLibraryInventory(player).getStackInSlot(slotID), false);
-        } else if (ID == GuiIDs.LIBRARY) {
-            return new GuiLibrary(player.inventory, LibraryHelper.getClientLibraryContents(), HeldHelper.getHandFromOrdinal(handOrdinal));
-        } else if (ID == GuiIDs.BOOK_FORCE) {
-            return GuiBook.INSTANCE;
-        }
-        return null;
-    }*/
 }

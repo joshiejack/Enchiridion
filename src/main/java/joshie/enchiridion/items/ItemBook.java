@@ -75,8 +75,6 @@ public class ItemBook extends Item {
                 Minecraft.getInstance().displayGuiScreen(GuiBookCreate.INSTANCE);
             }
         }
-
-        //player.openGui(Enchiridion.instance, GuiIDs.BOOK, world, 0, hand.ordinal(), 0); //TODO
         return new ActionResult<>(ActionResultType.SUCCESS, held);
     }
 
