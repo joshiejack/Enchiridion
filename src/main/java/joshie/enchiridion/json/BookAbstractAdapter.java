@@ -6,8 +6,6 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IPage;
 import joshie.enchiridion.data.book.Book;
 import joshie.enchiridion.helpers.JSONHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.StringTextComponent;
 import org.apache.logging.log4j.Level;
 
 import java.lang.reflect.Field;

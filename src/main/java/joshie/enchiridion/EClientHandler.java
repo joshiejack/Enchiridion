@@ -2,7 +2,6 @@ package joshie.enchiridion;
 
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.recipe.IRecipeHandler;
-import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.data.book.Page;
 import joshie.enchiridion.data.book.Template;
 import joshie.enchiridion.gui.book.*;

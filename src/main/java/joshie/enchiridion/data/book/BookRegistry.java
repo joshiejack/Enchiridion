@@ -183,9 +183,9 @@ public class BookRegistry {
     }
 
     public IBook getBook(ItemStack held) {
-        if (held == null || held.isEmpty()) return null;
-        String name = Objects.requireNonNull(held.getItem().getRegistryName()).getPath().replace("book.","");
-        return getBookByName(name);
+        if (held == null || held.isEmpty() || !held.hasTag()) return null;
+        String identifier = Objects.requireNonNull(held.getTag()).getString("identifier");
+        return getBookByName(identifier);
     }
 
     public Collection<String> getUniqueNames() {

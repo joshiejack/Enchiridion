@@ -5,14 +5,16 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.GuiBook;
-import joshie.enchiridion.gui.book.GuiBookCreate;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -42,7 +44,7 @@ public class ItemBook extends Item {
     @Nonnull
     public ITextComponent getDisplayName(@Nonnull ItemStack stack) {
         IBook book = BookRegistry.INSTANCE.getBook(stack);
-        return book == null || stack.getItem() == EItems.BOOK ? new TranslationTextComponent(Enchiridion.format("new", DARK_GREEN, RESET)) : new StringTextComponent(book.getDisplayName());
+        return book == null ? new TranslationTextComponent(Enchiridion.format("new", DARK_GREEN, RESET)) : new StringTextComponent(book.getDisplayName());
     }
 
     @Override
@@ -74,5 +76,20 @@ public class ItemBook extends Item {
             }
         }
         return new ActionResult<>(ActionResultType.SUCCESS, held);
+    }
+
+    @Override
+    public void fillItemGroup(@Nonnull ItemGroup group, @Nonnull NonNullList<ItemStack> list) {
+        if (this.isInGroup(group)) {
+            super.fillItemGroup(group, list);
+            for (String book : BookRegistry.INSTANCE.getUniqueNames()) {
+                ItemStack stack = new ItemStack(this);
+                stack.setTag(new CompoundNBT());
+                if (stack.getTag() != null) {
+                    stack.getTag().putString("identifier", book);
+                }
+                list.add(stack);
+            }
+        }
     }
 }
