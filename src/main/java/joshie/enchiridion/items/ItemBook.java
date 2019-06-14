@@ -14,12 +14,11 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.thread.EffectiveSide;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,12 +41,8 @@ public class ItemBook extends Item {
     @Override
     @Nonnull
     public ITextComponent getDisplayName(@Nonnull ItemStack stack) {
-        if (EffectiveSide.get() == LogicalSide.SERVER) {
-            return new TranslationTextComponent(Enchiridion.format("new", DARK_GREEN, RESET));
-        }
-
         IBook book = BookRegistry.INSTANCE.getBook(stack);
-        return book == null ? new TranslationTextComponent(Enchiridion.format("new", DARK_GREEN, RESET)) : book.getDisplayName();
+        return book == null || stack.getItem() == EItems.BOOK ? new TranslationTextComponent(Enchiridion.format("new", DARK_GREEN, RESET)) : new StringTextComponent(book.getDisplayName());
     }
 
     @Override
@@ -74,21 +69,10 @@ public class ItemBook extends Item {
                 }
             } else {
                 if (world.isRemote) {
-                    GuiBookCreate.INSTANCE.setStack(held);
                     EClientHandler.openGuiBookCreate();
                 }
             }
         }
         return new ActionResult<>(ActionResultType.SUCCESS, held);
     }
-
-    /*@Override
-    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) { //TODO
-
-            for (String book : BookRegistry.INSTANCE.getUniqueNames()) {
-                ItemStack stack = new ItemStack(this);
-                stack.setTagCompound(new NBTTagCompound());
-                stack.getTagCompound().setString("identifier", book);
-                list.add(stack);
-    }*/
 }

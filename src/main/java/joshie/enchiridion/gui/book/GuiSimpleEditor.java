@@ -48,6 +48,7 @@ public class GuiSimpleEditor extends AbstractGuiOverlay implements ITextEditable
     @Override
     public boolean mouseClicked(int mouseX, int mouseY) {
         if (editor != null) {
+            System.out.println("editor not null");
             if (mouseX >= EConfig.SETTINGS.editorXPos && mouseX <= EConfig.SETTINGS.editorXPos + 84 && mouseY >= EConfig.SETTINGS.toolbarYPos.get() - 3 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + 7) {
                 TextEditor.INSTANCE.setEditable(this);
                 return true;

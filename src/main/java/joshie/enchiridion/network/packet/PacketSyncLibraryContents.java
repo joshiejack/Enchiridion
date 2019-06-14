@@ -56,6 +56,7 @@ public class PacketSyncLibraryContents extends PacketNBT {
             for (int i = 0; i < inventory.size(); i++) {
                 LibraryHelper.getClientLibraryContents().setInventorySlotContents(i, inventory.get(i));
             }
+            ctx.get().setPacketHandled(true);
         }
     }
 }

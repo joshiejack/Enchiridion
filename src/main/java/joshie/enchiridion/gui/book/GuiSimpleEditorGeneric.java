@@ -5,7 +5,6 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.api.gui.ISimpleEditorFieldProvider;
 import joshie.enchiridion.util.ITextEditable;
-import joshie.enchiridion.util.PenguinFont;
 import joshie.enchiridion.util.TextEditor;
 import net.minecraft.client.Minecraft;
 
@@ -78,11 +77,10 @@ public class GuiSimpleEditorGeneric extends GuiSimpleEditorAbstract {
     }
 
     public int getLineCount(String text) {
-        text = PenguinFont.INSTANCE.replaceFormatting(text);
-        while (text != null && text.endsWith("\n")) {
+        if (text == null) return 0;
+        while (text.endsWith("\n")) {
             text = text.substring(0, text.length() - 1);
         }
-
         return Minecraft.getInstance().fontRenderer.getWordWrappedHeight(text, 155);
     }
 

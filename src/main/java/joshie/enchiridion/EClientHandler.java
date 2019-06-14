@@ -23,7 +23,6 @@ import joshie.enchiridion.library.handlers.WritableBookHandler;
 import joshie.enchiridion.util.ECreativeTab;
 import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.EResourcePack;
-import joshie.enchiridion.util.PenguinFont;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.settings.KeyBinding;
@@ -43,7 +42,6 @@ public class EClientHandler {
         Minecraft.getInstance().getResourceManager().addResourcePack(EResourcePack.INSTANCE);
         ScreenManager.registerFactory(EGuis.LIBRARY_CONTAINER, GuiLibrary::new);
         LibraryHelper.resetClient();
-        BookRegistry.INSTANCE.loadBooksFromConfig();
         MinecraftForge.EVENT_BUS.register(new SmartLibrary());
         EnchiridionAPI.book = GuiBook.INSTANCE;
         EnchiridionAPI.draw = GuiBook.INSTANCE;
@@ -135,7 +133,6 @@ public class EClientHandler {
     }
 
     public static void setupFont() {
-        PenguinFont.load();
         /* Colorize the books */
         /*Minecraft.getInstance().getItemColors().register((stack, tintIndex) -> { //TODO
                 ItemStack current = LibraryHelper.getLibraryContents(MCClientHelper.getPlayer()).getCurrentBookItem();

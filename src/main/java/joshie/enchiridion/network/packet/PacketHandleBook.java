@@ -45,10 +45,8 @@ public class PacketHandleBook {
                         handler.handle(stack, playerMP, message.hand, message.slot, message.isShiftPressed);
                     }
                     LibraryInventory libraryServer = LibraryHelper.getServerLibraryContents(playerMP);
-                    if (libraryServer != null) {
-                        libraryServer.setCurrentBook(message.slot);
-                        ctx.get().setPacketHandled(true);
-                    }
+                    libraryServer.setCurrentBook(message.slot);
+                    ctx.get().setPacketHandled(true);
                 }
             }
         }

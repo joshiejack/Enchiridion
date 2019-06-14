@@ -11,8 +11,8 @@ import joshie.enchiridion.helpers.FileCopier;
 import joshie.enchiridion.helpers.FileHelper;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.util.ELocation;
-import joshie.enchiridion.util.PenguinFont;
 import joshie.enchiridion.util.TextEditor;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 import javax.imageio.ImageIO;
@@ -200,12 +200,11 @@ public class GuiSimpleEditorButton extends GuiSimpleEditorAbstract {
     }
 
     public int getLineCount(String text) {
-        text = PenguinFont.INSTANCE.replaceFormatting(text);
-        while (text != null && text.endsWith("\n")) {
+        if (text == null) return 0;
+        while (text.endsWith("\n")) {
             text = text.substring(0, text.length() - 1);
         }
-
-        return PenguinFont.INSTANCE.getWordWrappedHeight(text, 155);
+        return Minecraft.getInstance().fontRenderer.getWordWrappedHeight(text, 155);
     }
 
     @Override

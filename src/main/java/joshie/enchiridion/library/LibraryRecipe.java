@@ -50,7 +50,6 @@ public class LibraryRecipe extends SpecialRecipe {
 
     @Override
     public boolean matches(@Nonnull CraftingInventory inv, @Nonnull World world) {
-        System.out.println("matches");
         for (int i = 0; i < 3; i++) {
             ItemStack stack = inv.getStackInSlot(i);
             if (stack.isEmpty() || !isWood(stack)) return false;
@@ -58,7 +57,6 @@ public class LibraryRecipe extends SpecialRecipe {
 
         for (int i = 0; i < 3; i++) {
             ItemStack stack = inv.getStackInSlot(i + 3);
-            System.out.println(EnchiridionAPI.library.getBookHandlerForStack(stack) == null);
             if (stack.isEmpty()) return false;
             else {
                 if (EnchiridionAPI.library.getBookHandlerForStack(stack) == null) return false;

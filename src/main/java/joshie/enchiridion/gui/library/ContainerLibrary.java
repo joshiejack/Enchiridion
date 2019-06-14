@@ -17,19 +17,16 @@ import net.minecraft.util.Hand;
 
 import javax.annotation.Nonnull;
 
-public class ContainerLibrary extends Container {
+public class ContainerLibrary extends Container { //TODO Fix. Broken in Forge atm.
     public IInventory library;
 
     public ContainerLibrary(int windowID, PlayerInventory playerInventory, PacketBuffer extraData) {
         this(windowID, playerInventory, LibraryHelper.getServerLibraryContents(playerInventory.player), HeldHelper.getHandFromOrdinal(extraData.readInt()));
-        System.out.println("Boop data");
     }
 
     public ContainerLibrary(int windowID, PlayerInventory playerInventory, IInventory library, Hand hand) {
         super(EGuis.LIBRARY_CONTAINER, windowID);
         this.library = library;
-
-        System.out.println("Boop");
 
         //Left hand side slots
         for (int i = 0; i < 5; i++) {
@@ -77,7 +74,6 @@ public class ContainerLibrary extends Container {
     @Override
     @Nonnull
     public ItemStack transferStackInSlot(PlayerEntity player, int slotID) {
-        System.out.println("Tranfer stack in slot");
         int size = library.getSizeInventory();
         int low = size + 27;
         int high = low + 9;

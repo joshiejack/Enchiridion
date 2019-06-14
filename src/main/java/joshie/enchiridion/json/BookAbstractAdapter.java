@@ -54,9 +54,9 @@ public class BookAbstractAdapter implements JsonDeserializer<Book> {
             book.setColorAsInt(JSONHelper.getIntegerIfExists(jsonObject, "color"));
         } else book.setMadeIn189();
 
-        if (book.getDisplayName() == null) book.setDisplayName(new StringTextComponent(book.getUniqueName()));
+        if (book.getDisplayName() == null) book.setDisplayName(book.getUniqueName());
         if (book.getLanguageKey() == null)
-            book.setLanguageKey(Minecraft.getInstance().getLanguageManager().getLanguage("en_us"));
+            book.setLanguageKey("en_us");
         if (book.getSaveName() == null) book.setSaveName(book.getUniqueName());
 
         return book;

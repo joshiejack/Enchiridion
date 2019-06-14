@@ -49,8 +49,9 @@ public class EAPIHandler implements IEnchiridionAPI {
         if (mod == null) {
             Enchiridion.log(Level.ERROR, "When attempting to register books with Enchiridion a mod with the modid " + modid + " could not be found");
         } else {
-            String jar = mod.getOwningFile().toString(); //TODO Test
-            BookRegistry.INSTANCE.registerMod(assetsPath, new File(jar));
+            File jar = mod.getOwningFile().getFile().getFilePath().toFile(); //TODO Test
+            System.out.println("ENCH jar test: " + jar);
+            BookRegistry.INSTANCE.registerMod(assetsPath, jar);
         }
     }
 

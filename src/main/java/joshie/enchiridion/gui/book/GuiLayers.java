@@ -38,7 +38,7 @@ public class GuiLayers extends AbstractGuiOverlay {
     public void draw(int mouseX, int mouseY) {
         EnchiridionAPI.draw.drawImage(SIDEBAR, EConfig.SETTINGS.layersXPos.get() - 3, EConfig.SETTINGS.toolbarYPos.get() - 7, EConfig.SETTINGS.layersXPos.get() + 87, EConfig.SETTINGS.timelineYPos.get() + 13);
         EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.layersXPos.get(), EConfig.SETTINGS.toolbarYPos.get() + 7, EConfig.SETTINGS.layersXPos.get() + 85, EConfig.SETTINGS.timelineYPos.get() + 11, 0xFF312921, 0xFF191511);
-        EnchiridionAPI.draw.drawSplitScaledString("[b]" + Enchiridion.format("layers") + "[/b]", EConfig.SETTINGS.layersXPos.get() + 20, EConfig.SETTINGS.toolbarYPos.get() - 2, 250, 0xFFFFFFFF, 1F);
+        EnchiridionAPI.draw.drawSplitScaledString(Enchiridion.format("layers"), EConfig.SETTINGS.layersXPos.get() + 20, EConfig.SETTINGS.toolbarYPos.get() - 2, 250, 0xFFFFFFFF, 1F);
         int layerY = 0;
         int hoverY = 0;
         ArrayList<IFeatureProvider> features = EnchiridionAPI.book.getPage().getFeatures();

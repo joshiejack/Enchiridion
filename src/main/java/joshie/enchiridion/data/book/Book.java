@@ -23,10 +23,10 @@ public class Book implements IBook {
     private String saveName;
 
     //Display Information
-    private ITextComponent displayName;
+    private String displayName;
     private String displayInfo;
     private String colorHex;
-    private Language language;
+    private String language;
     private boolean hasCustomIcon;
 
     //Background, with default texture
@@ -66,11 +66,11 @@ public class Book implements IBook {
     }
 
     public Book(String name, String display) {
-        this.displayName = new StringTextComponent(display);
+        this.displayName = display;
         this.uniqueName = name;
         this.saveName = name;
         this.colorHex = "FFFFFFFF";
-        this.language = MCClientHelper.getLang();
+        this.language = MCClientHelper.getLang().getCode();
         this.hasCustomIcon = true;
         this.showBackground = true;
         this.book = new ArrayList<>();
@@ -98,7 +98,7 @@ public class Book implements IBook {
     }
 
     @Override
-    public ITextComponent getDisplayName() {
+    public String getDisplayName() {
         return displayName;
     }
 
@@ -115,7 +115,7 @@ public class Book implements IBook {
     }
 
     @Override
-    public Language getLanguageKey() {
+    public String getLanguageKey() {
         return language;
     }
 
@@ -204,7 +204,7 @@ public class Book implements IBook {
     }
 
     @Override
-    public void setDisplayName(ITextComponent name) {
+    public void setDisplayName(String name) {
         displayName = name;
     }
 
@@ -215,7 +215,7 @@ public class Book implements IBook {
     }
 
     @Override
-    public void setLanguageKey(Language language) {
+    public void setLanguageKey(String language) {
         this.language = language;
     }
 

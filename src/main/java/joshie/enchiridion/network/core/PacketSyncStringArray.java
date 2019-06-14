@@ -53,6 +53,7 @@ public class PacketSyncStringArray implements IPacketArray {
                 else if (message.part == REQUEST_DATA) message.receivedDataRequest(playerMP);
                 else if (message.part == SEND_DATA) message.receivedData(playerMP);
             }
+            ctx.get().setPacketHandled(true);
         }
     }
 }

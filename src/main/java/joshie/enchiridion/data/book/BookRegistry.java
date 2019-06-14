@@ -14,9 +14,7 @@ import joshie.enchiridion.helpers.MCClientHelper;
 import joshie.enchiridion.json.BookIconTemplate;
 import joshie.enchiridion.json.BookIconTemplate.Icons;
 import joshie.enchiridion.lib.EInfo;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.client.resources.Language;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
@@ -93,9 +91,8 @@ public class BookRegistry {
         }
     }
 
-    private final HashMap<String, HashMap<Language, IBook>> books = new HashMap<>();
+    private final HashMap<String, HashMap<String, IBook>> books = new HashMap<>();
     public final HashMap<String, ModelResourceLocation> locations = new HashMap<>();
-    public final ModelResourceLocation DFLT = new ModelResourceLocation("minecraft:book", "inventory");
 
     public Collection<ModelResourceLocation> getModels() {
         return locations.values();
@@ -110,7 +107,6 @@ public class BookRegistry {
             if (book.getPages() != null) {
                 Enchiridion.log(Level.INFO, "Number of Pages: " + book.getPages().size());
             }
-
             Enchiridion.log(Level.INFO, "==== End Logging of: " + book.getUniqueName());
         }
 
@@ -125,25 +121,21 @@ public class BookRegistry {
                     if (book.wereArrowsVisible()) {
                         DefaultHelper.addArrows(page);
                     }
-
                     page.setPageNumber(i);
-                    if (book.getDisplayName() == null || book.getDisplayName().equals("")) {
-                        book.setDisplayName(new StringTextComponent(book.getUniqueName()));
+                    if (book.getDisplayName() == null || book.getDisplayName().equals(new StringTextComponent(""))) {
+                        book.setDisplayName(book.getUniqueName());
                     }
                 }
-
                 //Initialise everything
                 for (IFeatureProvider feature : page.getFeatures()) {
                     feature.update(page);
                 }
-
                 //Sort the pages
                 page.sort();
             }
         }
-
-        HashMap<Language, IBook> translations = getTranslations(book.getUniqueName());
-        Language language = book.getLanguageKey() == null ? Minecraft.getInstance().getLanguageManager().getLanguage("en_us") : book.getLanguageKey();
+        HashMap<String, IBook> translations = getTranslations(book.getUniqueName());
+        String language = book.getLanguageKey() == null ? "en_us" : book.getLanguageKey();
         translations.put(language, book);
 
         String id = book.getModID() == null || book.getModID().equals("") ? EInfo.MODID : book.getModID();
@@ -180,8 +172,8 @@ public class BookRegistry {
         return book;
     }
 
-    public HashMap<Language, IBook> getTranslations(String identifier) {
-        HashMap<Language, IBook> translations = books.get(identifier);
+    public HashMap<String, IBook> getTranslations(String identifier) {
+        HashMap<String, IBook> translations = books.get(identifier);
         if (translations != null) return translations;
         else {
             translations = new HashMap<>();
@@ -191,10 +183,9 @@ public class BookRegistry {
     }
 
     public IBook getBook(ItemStack held) {
-        if (held == null) return null;
-        if (!held.hasTag()) return null;
-        String identifier = Objects.requireNonNull(held.getTag()).getString("identifier");
-        return getBookByName(identifier);
+        if (held == null || held.isEmpty()) return null;
+        String name = Objects.requireNonNull(held.getItem().getRegistryName()).getPath().replace("book.","");
+        return getBookByName(name);
     }
 
     public Collection<String> getUniqueNames() {
@@ -203,11 +194,11 @@ public class BookRegistry {
 
     public IBook getBookByName(String identifier) {
         if (identifier.equals("")) return null;
-        HashMap<Language, IBook> translations = books.get(identifier);
+        HashMap<String, IBook> translations = books.get(identifier);
         if (translations == null) return null;
-        Language language = MCClientHelper.getLang();
+        String language = MCClientHelper.getLang().getCode();
         IBook translated = translations.get(language);
         if (translated != null) return translated;
-        else return translations.get(Minecraft.getInstance().getLanguageManager().getLanguage("en_us"));
+        else return translations.get("en_us");
     }
 }

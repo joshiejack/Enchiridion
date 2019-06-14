@@ -27,6 +27,7 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class GuiBook extends GuiBase implements IBookHelper {
@@ -170,7 +171,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
 
             TextEditor.INSTANCE.keyTyped(character, key);
             //Update itself
-            group.stream().filter(provider -> provider != null).forEach(provider -> provider.update(getPage()));
+            group.stream().filter(Objects::nonNull).forEach(provider -> provider.update(getPage()));
 
             for (IBookEditorOverlay overlay : overlays) {
                 overlay.keyTyped(character, key);
@@ -188,7 +189,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
         selected.select(mouseX, mouseY + page.getScroll());
         boolean isCtrlPressedNow = MCClientHelper.isCtrlPressed();
         //If we didn't have control before and we do now
-        if ((!wasControlPressedBefore && isCtrlPressedNow) || isCtrlPressedNow) {
+        if (isCtrlPressedNow) {
             wasControlPressedBefore = true; //It has now been pressed
             isGroupMoveMode = false;
         } else if (wasControlPressedBefore) { //Now if it was pressed before but isn't now
@@ -220,7 +221,9 @@ public class GuiBook extends GuiBase implements IBookHelper {
         //Perform clicks for the features
         for (IFeatureProvider feature : page.getFeatures()) {
             if (feature.mouseClicked(mouseX, mouseY + page.getScroll(), mouseButton)) {
-                if (isEditMode && mouseButton == 0) selectLayer(feature);
+                if (isEditMode && mouseButton == 0) {
+                    selectLayer(feature);
+                }
                 return false;
             }
         }
@@ -324,7 +327,6 @@ public class GuiBook extends GuiBase implements IBookHelper {
             page = DefaultHelper.addDefaults(this.book, new Page(0).setBook(this.book));
             book.addPage(page);
         }
-
         return this;
     }
 
