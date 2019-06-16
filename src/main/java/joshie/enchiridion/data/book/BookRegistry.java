@@ -17,7 +17,6 @@ import joshie.enchiridion.lib.EInfo;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Level;
@@ -93,6 +92,7 @@ public class BookRegistry {
 
     private final HashMap<String, HashMap<String, IBook>> books = new HashMap<>();
     public final HashMap<String, ModelResourceLocation> locations = new HashMap<>();
+    public final ModelResourceLocation DFLT = new ModelResourceLocation("minecraft:book", "inventory");
 
     public Collection<ModelResourceLocation> getModels() {
         return locations.values();
@@ -122,7 +122,7 @@ public class BookRegistry {
                         DefaultHelper.addArrows(page);
                     }
                     page.setPageNumber(i);
-                    if (book.getDisplayName() == null || book.getDisplayName().equals(new StringTextComponent(""))) {
+                    if (book.getDisplayName() == null || book.getDisplayName().equals("")) {
                         book.setDisplayName(book.getUniqueName());
                     }
                 }

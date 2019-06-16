@@ -1,7 +1,6 @@
 package joshie.enchiridion;
 
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.api.recipe.IRecipeHandler;
 import joshie.enchiridion.data.book.Page;
 import joshie.enchiridion.data.book.Template;
 import joshie.enchiridion.gui.book.*;
@@ -19,7 +18,7 @@ import joshie.enchiridion.lib.EGuis;
 import joshie.enchiridion.lib.EInfo;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.library.handlers.WritableBookHandler;
-import joshie.enchiridion.util.ECreativeTab;
+import joshie.enchiridion.util.EItemGroup;
 import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.EResourcePack;
 import net.minecraft.client.Minecraft;
@@ -30,7 +29,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Hand;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
 
@@ -105,18 +103,16 @@ public class EClientHandler {
         if (book.getTag() != null) {
             book.getTag().putString("identifier", "enchiridion");
         }
-        ECreativeTab.ENCHIRIDION.setItemStack(book);
-        setupFont();
-    }
+        EItemGroup.ENCHIRIDION.setItemStack(book);
 
-    private static void attemptToRegisterRecipeHandler(Class clazz, String mod) {
-        try {
-            if (ModList.get().isLoaded(mod)) {
-                IRecipeHandler handler = (IRecipeHandler) clazz.newInstance();
-                if (handler != null) EnchiridionAPI.instance.registerRecipeHandler(handler);
-            }
-        } catch (Exception ignored) {
-        }
+        /* Colorize the books */
+        /*Minecraft.getInstance().getItemColors().register((stack, tintIndex) -> { //TODO
+                ItemStack current = LibraryHelper.getLibraryContents(MCClientHelper.getPlayer()).getCurrentBookItem();
+                if (!current.isEmpty()) {
+                    return Minecraft.getInstance().getItemColors().getColor(current, tintIndex);
+                }
+            return -1;
+        }, ECommonHandler.LIBRARY);*/
     }
 
     public static void openGuiBook() {
@@ -129,16 +125,5 @@ public class EClientHandler {
 
     public static void openWriteableBook(ServerPlayerEntity player, int slot, Hand hand) {
         Minecraft.getInstance().displayGuiScreen(new WritableBookHandler.GuiScreenWritable(player, slot, hand));
-    }
-
-    public static void setupFont() {
-        /* Colorize the books */
-        /*Minecraft.getInstance().getItemColors().register((stack, tintIndex) -> { //TODO
-                ItemStack current = LibraryHelper.getLibraryContents(MCClientHelper.getPlayer()).getCurrentBookItem();
-                if (!current.isEmpty()) {
-                    return Minecraft.getInstance().getItemColors().getColor(current, tintIndex);
-                }
-            return -1;
-        }, ECommonHandler.LIBRARY);*/
     }
 }

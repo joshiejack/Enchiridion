@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Random;
 
 @EventBusSubscriber(modid = EInfo.MODID, value = Dist.CLIENT)
-public class SmartLibrary implements IBakedModel {
+public class SmartLibrary implements IBakedModel { //TODO
     private static IBakedModel library;
 
     @Override

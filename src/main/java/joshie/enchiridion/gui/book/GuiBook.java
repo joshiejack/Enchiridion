@@ -106,6 +106,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
                 overlay.addToolTip(TOOLTIP, mouseX, mouseY);
             }
         }
+        TextEditor
 
         renderTooltip(TOOLTIP, x2, y2, mc.fontRenderer);
     }

@@ -1,5 +1,5 @@
 {
-  "parent": "enchiridion:item/book",
+  "parent": "item/generated",
   "textures": {
     "layer0": "enchiridion:items/fancy"
   }

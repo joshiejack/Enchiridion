@@ -10,12 +10,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 
-public class ECreativeTab extends ItemGroup {
-    public static final ECreativeTab ENCHIRIDION = new ECreativeTab(EInfo.MODID);
-    @Nonnull
-    public ItemStack itemstack = ItemStack.EMPTY;
+public class EItemGroup extends ItemGroup {
+    public static final EItemGroup ENCHIRIDION = new EItemGroup(EInfo.MODID);
+    public ItemStack stack = ItemStack.EMPTY;
 
-    public ECreativeTab(String label) {
+    public EItemGroup(String label) {
         super(label);
     }
 
@@ -29,12 +28,12 @@ public class ECreativeTab extends ItemGroup {
     @OnlyIn(Dist.CLIENT)
     @Nonnull
     public ItemStack getIcon() {
-        if (itemstack.isEmpty()) return super.getIcon();
-        else return itemstack;
+        if (this.stack.isEmpty()) return super.getIcon();
+        else return this.stack;
     }
 
     public void setItemStack(@Nonnull ItemStack stack) {
-        itemstack = stack;
+        this.stack = stack;
     }
 
     @Override

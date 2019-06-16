@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
 public class ButtonChangeIcon extends ButtonAbstract {
     public ButtonChangeIcon() {
@@ -34,7 +35,7 @@ public class ButtonChangeIcon extends ButtonAbstract {
                 template.parent = "enchiridion:item/book";
                 template.textures = new Icons();
                 template.textures.layer0 = "enchiridion:items/" + FilenameUtils.removeExtension(file.getName());
-                Writer writer = new OutputStreamWriter(new FileOutputStream(iconJson), "UTF-8");
+                Writer writer = new OutputStreamWriter(new FileOutputStream(iconJson), StandardCharsets.UTF_8);
                 writer.write(GsonHelper.getModifiedGson().toJson(template));
                 writer.close();
 

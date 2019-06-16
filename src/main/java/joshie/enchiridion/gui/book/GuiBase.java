@@ -46,16 +46,14 @@ public class GuiBase extends Screen implements IDrawHelper {
         TOOLTIP.clear();
     }
 
-
     @Override
-    public boolean mouseScrolled(double mX, double mY, double wheel) {
+    public void mouseMoved(double mX, double mY) {
         Minecraft mc = Minecraft.getInstance();
-        int x = (int) (mc.mouseHelper.getMouseX() * ((double) mc.mainWindow.getScaledWidth() / mc.mainWindow.getWidth()));
-        int y = (int) (mc.mouseHelper.getMouseY() * ((double) mc.mainWindow.getScaledHeight() / mc.mainWindow.getHeight()));
+        final double x = mc.mouseHelper.getMouseX() * ((double) mc.mainWindow.getScaledWidth() / mc.mainWindow.getWidth());
+        final double y = mc.mouseHelper.getMouseY() * ((double) mc.mainWindow.getScaledHeight() / mc.mainWindow.getHeight());
 
-        mouseX = x - (width - xSize) / 2;
-        mouseY = y - (height - ySize) / 2;
-        return false;
+        mouseX = (int) (x - (width - xSize) / 2);
+        mouseY = (int) (y - (height - ySize) / 2);
     }
 
     @Override
@@ -286,17 +284,17 @@ public class GuiBase extends Screen implements IDrawHelper {
             this.blitOffset = 300;
             this.itemRenderer.zLevel = 300.0F;
             int l = 0xCC312921;
-            this.blit(l1 - 3, i2 - 4, l1 + i + 3, i2 - 3, l, l);
-            this.blit(l1 - 3, i2 + k + 3, l1 + i + 3, i2 + k + 4, l, l);
-            this.blit(l1 - 3, i2 - 3, l1 + i + 3, i2 + k + 3, l, l);
-            this.blit(l1 - 4, i2 - 3, l1 - 3, i2 + k + 3, l, l);
-            this.blit(l1 + i + 3, i2 - 3, l1 + i + 4, i2 + k + 3, l, l);
+            this.fillGradient(l1 - 3, i2 - 4, l1 + i + 3, i2 - 3, l, l);
+            this.fillGradient(l1 - 3, i2 + k + 3, l1 + i + 3, i2 + k + 4, l, l);
+            this.fillGradient(l1 - 3, i2 - 3, l1 + i + 3, i2 + k + 3, l, l);
+            this.fillGradient(l1 - 4, i2 - 3, l1 - 3, i2 + k + 3, l, l);
+            this.fillGradient(l1 + i + 3, i2 - 3, l1 + i + 4, i2 + k + 3, l, l);
             int i1 = 0xFF191511;
             int j1 = (i1 & 16711422) >> 1 | i1 & -16777216;
-            this.blit(l1 - 3, i2 - 3 + 1, l1 - 3 + 1, i2 + k + 3 - 1, i1, j1);
-            this.blit(l1 + i + 2, i2 - 3 + 1, l1 + i + 3, i2 + k + 3 - 1, i1, j1);
-            this.blit(l1 - 3, i2 - 3, l1 + i + 3, i2 - 3 + 1, i1, i1);
-            this.blit(l1 - 3, i2 + k + 2, l1 + i + 3, i2 + k + 3, j1, j1);
+            this.fillGradient(l1 - 3, i2 - 3 + 1, l1 - 3 + 1, i2 + k + 3 - 1, i1, j1);
+            this.fillGradient(l1 + i + 2, i2 - 3 + 1, l1 + i + 3, i2 + k + 3 - 1, i1, j1);
+            this.fillGradient(l1 - 3, i2 - 3, l1 + i + 3, i2 - 3 + 1, i1, i1);
+            this.fillGradient(l1 - 3, i2 + k + 2, l1 + i + 3, i2 + k + 3, j1, j1);
 
             for (int k1 = 0; k1 < textLines.size(); ++k1) {
                 String s1 = textLines.get(k1);

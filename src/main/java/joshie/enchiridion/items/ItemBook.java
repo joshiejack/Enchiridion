@@ -5,6 +5,8 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.GuiBook;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -82,13 +84,19 @@ public class ItemBook extends Item {
     public void fillItemGroup(@Nonnull ItemGroup group, @Nonnull NonNullList<ItemStack> list) {
         if (this.isInGroup(group)) {
             super.fillItemGroup(group, list);
-            for (String book : BookRegistry.INSTANCE.getUniqueNames()) {
+            for (String uniqueName : BookRegistry.INSTANCE.getUniqueNames()) {
                 ItemStack stack = new ItemStack(this);
                 stack.setTag(new CompoundNBT());
                 if (stack.getTag() != null) {
-                    stack.getTag().putString("identifier", book);
+                    stack.getTag().putString("identifier", uniqueName);
                 }
                 list.add(stack);
+
+                IBook book = BookRegistry.INSTANCE.getBook(stack);
+                if (book != null && stack.hasTag()) {
+                    System.out.println("Book: " + book.getUniqueName() + " location: " + BookRegistry.INSTANCE.locations.get(book.getUniqueName()));
+                    Minecraft.getInstance().getItemRenderer().getItemModelMesher().register(this, book.getUniqueName().equals("boop") ? new ModelResourceLocation("minecraft:red_sand", "inventory") : BookRegistry.INSTANCE.DFLT);
+                }
             }
         }
     }

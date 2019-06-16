@@ -48,12 +48,12 @@ public class WritableBookHandler implements IBookHandler {
                 }
 
                 if (publish) {
-                    this.book.setTagInfo("author", new StringNBT(this.field_214232_a.getGameProfile().getName()));
+                    this.book.setTagInfo("author", new StringNBT(this.editingPlayer.getGameProfile().getName()));
                     this.book.setTagInfo("title", new StringNBT(this.field_214239_h.trim()));
                 }
 
                 //Set the book in the library
-                EnchiridionAPI.library.getLibraryInventory(this.field_214232_a).setInventorySlotContents(slot, this.book);
+                EnchiridionAPI.library.getLibraryInventory(this.editingPlayer).setInventorySlotContents(slot, this.book);
                 PacketHandler.sendToServer(new PacketSetLibraryBook(this.book, slot));
             }
         }
