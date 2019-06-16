@@ -106,7 +106,6 @@ public class GuiBook extends GuiBase implements IBookHelper {
                 overlay.addToolTip(TOOLTIP, mouseX, mouseY);
             }
         }
-        TextEditor
 
         renderTooltip(TOOLTIP, x2, y2, mc.fontRenderer);
     }
@@ -255,6 +254,16 @@ public class GuiBook extends GuiBase implements IBookHelper {
     }
 
     @Override
+    public boolean mouseDragged(double mX, double mY, int p_mouseDragged_5_, double p_mouseDragged_6_, double p_mouseDragged_8_) {
+        if (!GuiLayers.INSTANCE.isDragging()) {
+            for (IFeatureProvider provider : group) {
+                provider.follow(mouseX, mouseY + page.getScroll(), isGroupMoveMode);
+            }
+        }
+        return true;
+    }
+
+    @Override
     public boolean mouseScrolled(double mX, double mY, double wheel) {
         if (wheel != 0) {
             boolean down = wheel < 0;
@@ -270,12 +279,6 @@ public class GuiBook extends GuiBase implements IBookHelper {
 
             page.updateMaximumScroll(0); //Called constantly
             page.scroll(down, 10);
-        }
-
-        if (!GuiLayers.INSTANCE.isDragging()) {
-            for (IFeatureProvider provider : group) {
-                provider.follow(mouseX, mouseY + page.getScroll(), isGroupMoveMode);
-            }
         }
         return super.mouseScrolled(mX, mY, wheel);
     }
