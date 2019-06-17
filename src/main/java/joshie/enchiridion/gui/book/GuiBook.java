@@ -117,6 +117,12 @@ public class GuiBook extends GuiBase implements IBookHelper {
         Minecraft.getInstance().keyboardListener.enableRepeatEvents(true);
         GuiSimpleEditor.INSTANCE.setEditor(null); //Reset the editor
         TextEditor.INSTANCE.clearEditable();
+
+        if (isEditMode) {
+            for (IBookEditorOverlay overlay : overlays) {
+                overlay.init();
+            }
+        }
     }
 
     @Override

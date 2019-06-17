@@ -37,6 +37,10 @@ public abstract class AbstractGuiOverlay implements IBookEditorOverlay {
     }
 
     @Override
+    public void init() {
+    }
+
+    @Override
     public void tick() {
     }
 

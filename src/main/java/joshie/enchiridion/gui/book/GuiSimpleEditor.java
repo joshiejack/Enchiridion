@@ -24,6 +24,10 @@ public class GuiSimpleEditor extends AbstractGuiOverlay {
     public void setEditor(IBookEditorOverlay editor) {
         this.editor = editor;
         this.text = "";
+    }
+
+    @Override
+    public void init() {
         Minecraft mc = Minecraft.getInstance();
         Screen currentScreen = mc.currentScreen;
         if (currentScreen != null) {
@@ -44,7 +48,10 @@ public class GuiSimpleEditor extends AbstractGuiOverlay {
 
     @Override
     public IGuiEventListener getFocused() {
-        return this.textField;
+        if (editor != null) {
+            return this.textField;
+        }
+        return super.getFocused();
     }
 
     @Override
@@ -96,5 +103,9 @@ public class GuiSimpleEditor extends AbstractGuiOverlay {
         if (editor != null) {
             editor.scroll(down, mouseX, mouseY);
         }
+    }
+
+    public String getText() {
+        return text;
     }
 }

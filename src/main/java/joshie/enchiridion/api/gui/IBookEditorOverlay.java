@@ -12,6 +12,7 @@ public interface IBookEditorOverlay {
     void mouseReleased(int mouseX, int mouseY);
     void scroll(boolean down, int mouseX, int mouseY);
     void updateSearch(String string);
+    void init();
     void tick();
     IGuiEventListener getFocused();
 }
