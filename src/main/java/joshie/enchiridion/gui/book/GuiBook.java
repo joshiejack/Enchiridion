@@ -15,11 +15,13 @@ import joshie.enchiridion.helpers.*;
 import joshie.enchiridion.util.ELocation;
 import joshie.enchiridion.util.TextEditor;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -118,6 +120,25 @@ public class GuiBook extends GuiBase implements IBookHelper {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+        if (isEditMode) {
+            for (IBookEditorOverlay overlay : overlays) {
+                overlay.tick();
+            }
+        }
+    }
+
+    @Override
+    @Nullable
+    public IGuiEventListener getFocused() {
+        if (isEditMode) {
+            return GuiSimpleEditor.INSTANCE.getFocused(); //TODO?
+        }
+        return super.getFocused();
+    }
+
+    @Override
     public void removed() {
         Minecraft.getInstance().keyboardListener.enableRepeatEvents(false);
         if (!book.doesBookForgetClose() && page != null) pageCache.put(book.getUniqueName(), page.getPageNumber());
@@ -169,12 +190,12 @@ public class GuiBook extends GuiBase implements IBookHelper {
                 }
             }
 
-            TextEditor.INSTANCE.keyTyped(character, key);
+            TextEditor.INSTANCE.charTyped(character, key);
             //Update itself
             group.stream().filter(Objects::nonNull).forEach(provider -> provider.update(getPage()));
 
             for (IBookEditorOverlay overlay : overlays) {
-                overlay.keyTyped(character, key);
+                overlay.charTyped(character, key);
             }
         }
         Minecraft.getInstance().keyboardListener.enableRepeatEvents(false);

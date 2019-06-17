@@ -2,6 +2,7 @@ package joshie.enchiridion.gui.book;
 
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
 import joshie.enchiridion.util.ELocation;
+import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public abstract class AbstractGuiOverlay implements IBookEditorOverlay {
     }
 
     @Override
-    public void keyTyped(char character, int key) {
+    public void charTyped(char character, int key) {
     }
 
     @Override
@@ -33,5 +34,14 @@ public abstract class AbstractGuiOverlay implements IBookEditorOverlay {
 
     @Override
     public void updateSearch(String search) {
+    }
+
+    @Override
+    public void tick() {
+    }
+
+    @Override
+    public IGuiEventListener getFocused() {
+        return null;
     }
 }

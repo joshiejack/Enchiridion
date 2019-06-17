@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 
 public class GuiBookCreate extends GuiBase {
     public static final GuiBookCreate INSTANCE = new GuiBookCreate();
-    TextFieldWidget textField;
+    private TextFieldWidget textField;
     private String text;
 
     private GuiBookCreate() {

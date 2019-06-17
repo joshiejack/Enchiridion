@@ -40,7 +40,7 @@ public class TextEditor {
         return isTextEditing && editable != null;
     }
 
-    public void keyTyped(char character, int key) {
+    public void charTyped(char character, int key) {
         if (isTextEditing && editable != null) {
             ///Reset is just in case
             setEditable(editable);

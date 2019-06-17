@@ -58,7 +58,7 @@ public class GuiSimpleEditorItem extends AbstractGuiOverlay {
                     }
                 }
             }
-        } else updateSearch(GuiSimpleEditor.INSTANCE.getTextField());
+        }
     }
 
     @Override

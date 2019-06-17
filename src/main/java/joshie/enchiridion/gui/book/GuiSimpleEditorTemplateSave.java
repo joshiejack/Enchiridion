@@ -115,7 +115,7 @@ public class GuiSimpleEditorTemplateSave extends GuiSimpleEditorAbstract impleme
     }
 
     @Override
-    public void keyTyped(char character, int key) {
-        TextEditor.INSTANCE.keyTyped(character, key);
+    public void charTyped(char character, int key) {
+        TextEditor.INSTANCE.charTyped(character, key);
     }
 }
