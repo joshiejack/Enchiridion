@@ -3,8 +3,6 @@ package joshie.enchiridion.gui.book;
 import joshie.enchiridion.EConfig;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.gui.IBookEditorOverlay;
-import joshie.enchiridion.util.ITextEditable;
-import joshie.enchiridion.util.TextEditor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.Screen;
@@ -31,10 +29,9 @@ public class GuiSimpleEditor extends AbstractGuiOverlay {
         Minecraft mc = Minecraft.getInstance();
         Screen currentScreen = mc.currentScreen;
         if (currentScreen != null) {
-            this.textField = new TextFieldWidget(mc.fontRenderer, mc.currentScreen.width / 5, mc.currentScreen.height / 5, 84, 7, "enchiridion.simpleEditor.search");
+            this.textField = new TextFieldWidget(mc.fontRenderer, currentScreen.width / 4 + (EConfig.SETTINGS.editorXPos + 27), currentScreen.height / 4 + (EConfig.SETTINGS.toolbarYPos.get() + 17), 80, 7, "enchiridion.simpleEditor.search");
             this.textField.setMaxStringLength(32);
-            this.textField.changeFocus(true);
-            this.textField.setEnableBackgroundDrawing(true); //TODO Set to false when done
+            this.textField.setEnableBackgroundDrawing(false); //TODO Set to false when done
             this.textField.setText(text != null && !text.isEmpty() ? text : "");
         }
     }
@@ -43,6 +40,7 @@ public class GuiSimpleEditor extends AbstractGuiOverlay {
     public void tick() {
         if (editor != null) {
             textField.tick();
+            this.editor.updateSearch(this.getText());
         }
     }
 
@@ -58,11 +56,14 @@ public class GuiSimpleEditor extends AbstractGuiOverlay {
     public void draw(int mouseX, int mouseY) {
         if (editor != null) {
             /* Draw the Background */
-            EnchiridionAPI.draw.drawImage(SIDEBAR, EConfig.SETTINGS.editorXPos - 3, EConfig.SETTINGS.toolbarYPos.get() - 7, EConfig.SETTINGS.editorXPos + 87, EConfig.SETTINGS.timelineYPos.get() + 13);EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.editorXPos, EConfig.SETTINGS.toolbarYPos.get() + 7, EConfig.SETTINGS.editorXPos + 85, EConfig.SETTINGS.timelineYPos.get() + 11, 0xFF312921, 0xFF191511);
+            EnchiridionAPI.draw.drawImage(SIDEBAR, EConfig.SETTINGS.editorXPos - 3, EConfig.SETTINGS.toolbarYPos.get() - 7, EConfig.SETTINGS.editorXPos + 87, EConfig.SETTINGS.timelineYPos.get() + 13);
+            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.editorXPos, EConfig.SETTINGS.toolbarYPos.get() + 7, EConfig.SETTINGS.editorXPos + 85, EConfig.SETTINGS.timelineYPos.get() + 11, 0xFF312921, 0xFF191511);
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.editorXPos + 2, EConfig.SETTINGS.toolbarYPos.get() + 9, EConfig.SETTINGS.editorXPos + 83, EConfig.SETTINGS.timelineYPos.get() + 9, 0xFFE4D6AE, 0x5579725A);
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.editorXPos, EConfig.SETTINGS.toolbarYPos.get() - 3, EConfig.SETTINGS.editorXPos + 84, EConfig.SETTINGS.toolbarYPos.get() + 7, 0xFF312921, 0xFF191511);
             editor.draw(mouseX, mouseY);
-            textField.render(mouseX, mouseY, 0);
+            if (textField.isFocused()) {
+                textField.renderButton(mouseX, mouseY, 0);
+            }
         }
     }
 
@@ -80,10 +81,14 @@ public class GuiSimpleEditor extends AbstractGuiOverlay {
         if (editor != null) {
             if (mouseX >= EConfig.SETTINGS.editorXPos && mouseX <= EConfig.SETTINGS.editorXPos + 84 && mouseY >= EConfig.SETTINGS.toolbarYPos.get() - 3 && mouseY <= EConfig.SETTINGS.toolbarYPos.get() + 7) {
                 this.textField.mouseClicked(mouseX, mouseY, 0);
+                this.textField.setFocused2(true);
                 return true;
             } else {
+                this.textField.setFocused2(false);
                 return editor.mouseClicked(mouseX, mouseY);
+
             }
+
         }
         return false;
     }
