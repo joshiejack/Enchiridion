@@ -58,11 +58,9 @@ public class GuiSimpleEditor extends AbstractGuiOverlay {
     public void draw(int mouseX, int mouseY) {
         if (editor != null) {
             /* Draw the Background */
-            EnchiridionAPI.draw.drawImage(SIDEBAR, EConfig.SETTINGS.editorXPos - 3, EConfig.SETTINGS.toolbarYPos.get() - 7, EConfig.SETTINGS.editorXPos + 87, EConfig.SETTINGS.timelineYPos.get() + 13);
-            EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.editorXPos, EConfig.SETTINGS.toolbarYPos.get() + 7, EConfig.SETTINGS.editorXPos + 85, EConfig.SETTINGS.timelineYPos.get() + 11, 0xFF312921, 0xFF191511);
+            EnchiridionAPI.draw.drawImage(SIDEBAR, EConfig.SETTINGS.editorXPos - 3, EConfig.SETTINGS.toolbarYPos.get() - 7, EConfig.SETTINGS.editorXPos + 87, EConfig.SETTINGS.timelineYPos.get() + 13);EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.editorXPos, EConfig.SETTINGS.toolbarYPos.get() + 7, EConfig.SETTINGS.editorXPos + 85, EConfig.SETTINGS.timelineYPos.get() + 11, 0xFF312921, 0xFF191511);
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.editorXPos + 2, EConfig.SETTINGS.toolbarYPos.get() + 9, EConfig.SETTINGS.editorXPos + 83, EConfig.SETTINGS.timelineYPos.get() + 9, 0xFFE4D6AE, 0x5579725A);
             EnchiridionAPI.draw.drawBorderedRectangle(EConfig.SETTINGS.editorXPos, EConfig.SETTINGS.toolbarYPos.get() - 3, EConfig.SETTINGS.editorXPos + 84, EConfig.SETTINGS.toolbarYPos.get() + 7, 0xFF312921, 0xFF191511);
-            EnchiridionAPI.draw.drawSplitScaledString(this.text, EConfig.SETTINGS.editorXPos + 5, EConfig.SETTINGS.toolbarYPos.get(), 250, 0xFFFFFFFF, 0.5F);
             editor.draw(mouseX, mouseY);
             textField.render(mouseX, mouseY, 0);
         }
@@ -87,7 +85,6 @@ public class GuiSimpleEditor extends AbstractGuiOverlay {
                 return editor.mouseClicked(mouseX, mouseY);
             }
         }
-
         return false;
     }
 
@@ -106,6 +103,6 @@ public class GuiSimpleEditor extends AbstractGuiOverlay {
     }
 
     public String getText() {
-        return text;
+        return textField.getText();
     }
 }

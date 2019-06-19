@@ -114,7 +114,6 @@ public class GuiBook extends GuiBase implements IBookHelper {
 
     @Override
     public void init() {
-        Minecraft.getInstance().keyboardListener.enableRepeatEvents(true);
         GuiSimpleEditor.INSTANCE.setEditor(null); //Reset the editor
         TextEditor.INSTANCE.clearEditable();
 
@@ -138,10 +137,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
     @Override
     @Nullable
     public IGuiEventListener getFocused() {
-        if (isEditMode) {
-            return GuiSimpleEditor.INSTANCE.getFocused(); //TODO?
-        }
-        return super.getFocused();
+        return GuiSimpleEditor.INSTANCE.getFocused(); //TODO?
     }
 
     @Override
@@ -167,7 +163,7 @@ public class GuiBook extends GuiBase implements IBookHelper {
     public boolean charTyped(char character, int key) {
         Minecraft.getInstance().keyboardListener.enableRepeatEvents(true);
 
-        super.charTyped(character, key);
+        //super.charTyped(character, key);
 
         if (isEditMode) {
             group.stream().filter(g -> g.keyTyped(character, key)).forEach(g -> {
@@ -196,15 +192,14 @@ public class GuiBook extends GuiBase implements IBookHelper {
                 }
             }
 
-            TextEditor.INSTANCE.charTyped(character, key);
             //Update itself
             group.stream().filter(Objects::nonNull).forEach(provider -> provider.update(getPage()));
 
             for (IBookEditorOverlay overlay : overlays) {
                 overlay.charTyped(character, key);
+                overlay.updateSearch(GuiSimpleEditor.INSTANCE.getText());
             }
         }
-        Minecraft.getInstance().keyboardListener.enableRepeatEvents(false);
         return true;
     }
 
