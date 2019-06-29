@@ -1,17 +1,16 @@
 package joshie.enchiridion.lib;
 
-import io.netty.buffer.Unpooled;
 import joshie.enchiridion.gui.library.ContainerLibrary;
+import joshie.enchiridion.items.EItems;
+import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -30,6 +29,11 @@ public class EGuis {
     @ObjectHolder(EGuis.LIBRARY)
     public static ContainerType<ContainerLibrary> LIBRARY_CONTAINER;
 
+    @SubscribeEvent
+    public static void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
+        event.getRegistry().register(new ContainerType<>(EGuis::createLibraryContainer).setRegistryName(LIBRARY));
+    }
+
     public static INamedContainerProvider getLibraryProvider(Hand hand) {
         return new INamedContainerProvider() {
             @Override
@@ -39,16 +43,14 @@ public class EGuis {
             }
 
             @Override
-            public Container createMenu(int id, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity playerEntity) {
-                PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
-                buffer.writeInt(hand.ordinal());
-                return LIBRARY_CONTAINER.create(id, playerInventory, buffer);
+            public Container createMenu(int windowId, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity playerEntity) {
+                return createLibraryContainer(windowId, playerInventory);
             }
         };
     }
 
-    @SubscribeEvent
-    public static void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
-        event.getRegistry().register(IForgeContainerType.create(ContainerLibrary::new).setRegistryName(LIBRARY));
+    private static ContainerLibrary createLibraryContainer(int windowId, PlayerInventory playerInventory) {
+        Hand hand = playerInventory.player.getHeldItemMainhand().getItem() == EItems.LIBRARY ? Hand.MAIN_HAND : Hand.OFF_HAND;
+        return new ContainerLibrary(windowId, playerInventory, LibraryHelper.getLibraryContents(playerInventory.player), hand);
     }
 }

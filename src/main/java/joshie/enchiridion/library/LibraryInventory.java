@@ -56,7 +56,6 @@ public class LibraryInventory extends InventoryStorage {
                 return true; //If we could insert the book, return true
             }
         }
-
         return false;
     }
 

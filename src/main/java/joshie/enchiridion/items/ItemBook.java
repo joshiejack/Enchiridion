@@ -5,8 +5,6 @@ import joshie.enchiridion.Enchiridion;
 import joshie.enchiridion.api.book.IBook;
 import joshie.enchiridion.data.book.BookRegistry;
 import joshie.enchiridion.gui.book.GuiBook;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -92,11 +90,11 @@ public class ItemBook extends Item {
                 }
                 list.add(stack);
 
-                IBook book = BookRegistry.INSTANCE.getBook(stack);
+                /*IBook book = BookRegistry.INSTANCE.getBook(stack);
                 if (book != null && stack.hasTag()) {
                     System.out.println("Book: " + book.getUniqueName() + " location: " + BookRegistry.INSTANCE.locations.get(book.getUniqueName()));
                     Minecraft.getInstance().getItemRenderer().getItemModelMesher().register(this, book.getUniqueName().equals("boop") ? new ModelResourceLocation("minecraft:red_sand", "inventory") : BookRegistry.INSTANCE.DFLT);
-                }
+                }*/
             }
         }
     }

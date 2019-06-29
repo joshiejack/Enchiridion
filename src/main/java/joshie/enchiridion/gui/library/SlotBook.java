@@ -7,7 +7,7 @@ import joshie.enchiridion.items.EItems;
 import joshie.enchiridion.library.LibraryHelper;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.packet.PacketHandleBook;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -32,19 +32,20 @@ public class SlotBook extends Slot {
     }
 
     @Nonnull
-    public ItemStack handle(ServerPlayerEntity player, int mouseButton, Slot slot) {
-        if (mouseButton == 1) {
-            ItemStack stack = slot.getStack();
-            IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(stack);
-            if (handler != null) {
-                if (player.world.isRemote) {
-                    boolean isShiftPressed = MCClientHelper.isShiftPressed();
-                    PacketHandler.sendToServer(new PacketHandleBook(slot.slotNumber, hand, isShiftPressed));
-                    handler.handle(stack, player, hand, slot.slotNumber, isShiftPressed);
-                    LibraryHelper.getClientLibraryContents().setCurrentBook(slot.slotNumber);
-                }
-                return ItemStack.EMPTY;
+    public ItemStack handle(PlayerEntity player, int mouseButton, Slot slot) {
+        ItemStack stack = slot.getStack();
+        IBookHandler handler = EnchiridionAPI.library.getBookHandlerForStack(stack);
+        if (handler != null) {
+            if (player.world.isRemote) {
+                boolean isShiftPressed = MCClientHelper.isShiftPressed();
+                PacketHandler.sendToServer(new PacketHandleBook(slot.slotNumber, hand, isShiftPressed));
+                handler.handle(stack, player, hand, slot.slotNumber, isShiftPressed);
+                System.out.println("Potato");
+                LibraryHelper.getClientLibraryContents().setCurrentBook(slot.slotNumber);
             }
+            System.out.println("Empty");
+
+            return ItemStack.EMPTY;
         }
         return DUMMY;
     }

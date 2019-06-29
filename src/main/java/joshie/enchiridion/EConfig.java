@@ -1,15 +1,12 @@
 package joshie.enchiridion;
 
 import joshie.enchiridion.helpers.StackHelper;
-import joshie.enchiridion.lib.EInfo;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import javax.annotation.Nonnull;
 
-@EventBusSubscriber(modid = EInfo.MODID)
 public class EConfig {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final Settings SETTINGS = new Settings(BUILDER);

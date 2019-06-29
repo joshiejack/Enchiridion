@@ -3,7 +3,7 @@ package joshie.enchiridion.library.handlers;
 import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.helpers.HeldHelper;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -17,7 +17,7 @@ public class TemporarySwitchHandler implements IBookHandler {
     }
 
     @Override
-    public void handle(@Nonnull ItemStack stack, ServerPlayerEntity player, Hand hand, int slotID, boolean isShiftPressed) {
+    public void handle(@Nonnull ItemStack stack, PlayerEntity player, Hand hand, int slotID, boolean isShiftPressed) {
         try {
             ItemStack held = ItemStack.EMPTY; //Set the item to null
             EquipmentSlotType slot = HeldHelper.getSlotFromHand(hand);

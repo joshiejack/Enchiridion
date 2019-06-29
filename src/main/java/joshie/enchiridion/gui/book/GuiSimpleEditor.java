@@ -29,7 +29,7 @@ public class GuiSimpleEditor extends AbstractGuiOverlay {
         Minecraft mc = Minecraft.getInstance();
         Screen currentScreen = mc.currentScreen;
         if (currentScreen != null) {
-            this.textField = new TextFieldWidget(mc.fontRenderer, currentScreen.width / 4 + (EConfig.SETTINGS.editorXPos + 27), currentScreen.height / 4 + (EConfig.SETTINGS.toolbarYPos.get() + 17), 80, 7, "enchiridion.simpleEditor.search");
+            this.textField = new TextFieldWidget(mc.fontRenderer, mc.mainWindow.getScaledWidth() / 4 + (EConfig.SETTINGS.editorXPos + 27), mc.mainWindow.getScaledHeight() / 4 + (EConfig.SETTINGS.toolbarYPos.get() + 17), 80, 7, "enchiridion.simpleEditor.search");
             this.textField.setMaxStringLength(32);
             this.textField.setEnableBackgroundDrawing(false); //TODO Set to false when done
             this.textField.setText(text != null && !text.isEmpty() ? text : "");

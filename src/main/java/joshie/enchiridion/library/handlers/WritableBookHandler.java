@@ -6,6 +6,7 @@ import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.network.PacketHandler;
 import joshie.enchiridion.network.packet.PacketSetLibraryBook;
 import net.minecraft.client.gui.screen.EditBookScreen;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.ListNBT;
@@ -21,7 +22,7 @@ public class WritableBookHandler implements IBookHandler {
     }
 
     @Override
-    public void handle(@Nonnull ItemStack stack, ServerPlayerEntity player, Hand hand, int slotID, boolean isShiftPressed) {
+    public void handle(@Nonnull ItemStack stack, PlayerEntity player, Hand hand, int slotID, boolean isShiftPressed) {
         if (player.world.isRemote) {
             EClientHandler.openWriteableBook(player, slotID, hand);
         }

@@ -24,6 +24,7 @@ import joshie.enchiridion.util.EResourcePack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -123,7 +124,9 @@ public class EClientHandler {
         Minecraft.getInstance().displayGuiScreen(GuiBookCreate.INSTANCE);
     }
 
-    public static void openWriteableBook(ServerPlayerEntity player, int slot, Hand hand) {
-        Minecraft.getInstance().displayGuiScreen(new WritableBookHandler.GuiScreenWritable(player, slot, hand));
+    public static void openWriteableBook(PlayerEntity player, int slot, Hand hand) {
+        if (player instanceof ServerPlayerEntity) {
+            Minecraft.getInstance().displayGuiScreen(new WritableBookHandler.GuiScreenWritable((ServerPlayerEntity) player, slot, hand));
+        }
     }
 }

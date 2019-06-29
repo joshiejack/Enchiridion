@@ -1,18 +1,14 @@
 package joshie.enchiridion.gui.library;
 
 import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.helpers.HeldHelper;
 import joshie.enchiridion.lib.EGuis;
-import joshie.enchiridion.library.LibraryHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 
 import javax.annotation.Nonnull;
@@ -20,13 +16,11 @@ import javax.annotation.Nonnull;
 public class ContainerLibrary extends Container { //TODO Fix. Broken in Forge atm.
     public IInventory library;
 
-    public ContainerLibrary(int windowID, PlayerInventory playerInventory, PacketBuffer extraData) {
-        this(windowID, playerInventory, LibraryHelper.getServerLibraryContents(playerInventory.player), HeldHelper.getHandFromOrdinal(extraData.readInt()));
-    }
-
     public ContainerLibrary(int windowID, PlayerInventory playerInventory, IInventory library, Hand hand) {
         super(EGuis.LIBRARY_CONTAINER, windowID);
         this.library = library;
+
+        System.out.println(hand);
 
         //Left hand side slots
         for (int i = 0; i < 5; i++) {
@@ -77,16 +71,16 @@ public class ContainerLibrary extends Container { //TODO Fix. Broken in Forge at
         int size = library.getSizeInventory();
         int low = size + 27;
         int high = low + 9;
-        ItemStack itemstack = ItemStack.EMPTY;
+        ItemStack returnStack = ItemStack.EMPTY;
         Slot slot = inventorySlots.get(slotID);
 
         if (slot != null && slot.getHasStack()) {
             ItemStack stack = slot.getStack();
-            itemstack = stack.copy();
+            returnStack = stack.copy();
 
             if (slotID < size) {
                 if (!mergeItemStack(stack, size, high, true)) return ItemStack.EMPTY;
-                slot.onSlotChange(stack, itemstack);
+                slot.onSlotChange(stack, returnStack);
             } else if (slotID >= size) {
                 if (EnchiridionAPI.library.getBookHandlerForStack(stack) != null) {
                     if (!mergeItemStack(stack, 0, 65, false)) return ItemStack.EMPTY; //Slots 0-64 for Books
@@ -102,18 +96,17 @@ public class ContainerLibrary extends Container { //TODO Fix. Broken in Forge at
                 slot.onSlotChanged();
             }
 
-            if (stack.getCount() == itemstack.getCount()) return ItemStack.EMPTY;
+            if (stack.getCount() == returnStack.getCount()) return ItemStack.EMPTY;
 
             slot.onTake(player, stack);
         }
-        return itemstack;
+        return returnStack;
     }
 
     @Override
     @Nonnull
     public ItemStack slotClick(int slotID, int mouseButton, ClickType type, PlayerEntity player) {
         Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : inventorySlots.get(slotID);
-        if (!(player instanceof ServerPlayerEntity)) return ItemStack.EMPTY;
-        return slot instanceof SlotBook && ((SlotBook) slot).handle((ServerPlayerEntity) player, mouseButton, slot).isEmpty() ? ItemStack.EMPTY : super.slotClick(slotID, mouseButton, type, player);
+        return mouseButton == 1 && slot instanceof SlotBook && ((SlotBook) slot).handle(player, mouseButton, slot).isEmpty() ? ItemStack.EMPTY : super.slotClick(slotID, mouseButton, type, player);
     }
 }

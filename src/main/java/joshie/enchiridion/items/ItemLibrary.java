@@ -4,7 +4,6 @@ import joshie.enchiridion.api.EnchiridionAPI;
 import joshie.enchiridion.api.book.IBookHandler;
 import joshie.enchiridion.lib.EGuis;
 import joshie.enchiridion.library.LibraryHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -26,7 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemLibrary extends Item { //WAS METADATA 1 BEFORE
+public class ItemLibrary extends Item {
 
     public ItemLibrary(Properties properties) {
         super(properties);
@@ -47,6 +46,8 @@ public class ItemLibrary extends Item { //WAS METADATA 1 BEFORE
     @Nonnull
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
+
+        if (world.isRemote) return new ActionResult<>(ActionResultType.FAIL, stack);
 
         if (player.isSneaking()) {
             if (player instanceof ServerPlayerEntity) {
@@ -75,10 +76,10 @@ public class ItemLibrary extends Item { //WAS METADATA 1 BEFORE
     @OnlyIn(Dist.CLIENT)
     public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
         super.addInformation(stack, world, tooltip, flag);
-        int currentBook = LibraryHelper.getClientLibraryContents().getCurrentBook();
+        /*int currentBook = LibraryHelper.getClientLibraryContents().getCurrentBook(); //TODO Crashes on client startup
         ItemStack internal = LibraryHelper.getClientLibraryContents().getStackInSlot(currentBook);
         if (!internal.isEmpty()) {
             tooltip.addAll(internal.getTooltip(Minecraft.getInstance().player, flag));
-        }
+        }*/
     }
 }
