@@ -13,14 +13,12 @@ import net.minecraft.util.Hand;
 
 import javax.annotation.Nonnull;
 
-public class ContainerLibrary extends Container { //TODO Fix. Broken in Forge atm.
+public class ContainerLibrary extends Container {
     public IInventory library;
 
     public ContainerLibrary(int windowID, PlayerInventory playerInventory, IInventory library, Hand hand) {
         super(EGuis.LIBRARY_CONTAINER, windowID);
         this.library = library;
-
-        System.out.println(hand);
 
         //Left hand side slots
         for (int i = 0; i < 5; i++) {

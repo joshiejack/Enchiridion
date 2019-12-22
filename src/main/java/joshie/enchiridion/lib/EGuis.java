@@ -34,7 +34,7 @@ public class EGuis {
         event.getRegistry().register(new ContainerType<>(EGuis::createLibraryContainer).setRegistryName(LIBRARY));
     }
 
-    public static INamedContainerProvider getLibraryProvider(Hand hand) {
+    public static INamedContainerProvider getLibraryProvider() {
         return new INamedContainerProvider() {
             @Override
             @Nonnull

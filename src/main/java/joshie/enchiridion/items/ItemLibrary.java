@@ -51,7 +51,7 @@ public class ItemLibrary extends Item {
 
         if (player.isSneaking()) {
             if (player instanceof ServerPlayerEntity) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, EGuis.getLibraryProvider(hand), buf -> buf.writeInt(hand.ordinal()));
+                NetworkHooks.openGui((ServerPlayerEntity) player, EGuis.getLibraryProvider(), buf -> buf.writeInt(hand.ordinal()));
                 return new ActionResult<>(ActionResultType.SUCCESS, stack);
             }
         } else {
@@ -64,7 +64,7 @@ public class ItemLibrary extends Item {
                 }
             } else {
                 if (player instanceof ServerPlayerEntity) {
-                    NetworkHooks.openGui((ServerPlayerEntity) player, EGuis.getLibraryProvider(hand), buf -> buf.writeInt(hand.ordinal()));
+                    NetworkHooks.openGui((ServerPlayerEntity) player, EGuis.getLibraryProvider(), buf -> buf.writeInt(hand.ordinal()));
                     return new ActionResult<>(ActionResultType.SUCCESS, stack);
                 }
             }
